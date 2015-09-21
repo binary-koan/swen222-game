@@ -1,5 +1,9 @@
 package client.renderer;
 
+import game.Player;
+
+import java.awt.*;
+
 public interface Drawable {
     class BoundingCube {
         public final int x;
@@ -20,4 +24,5 @@ public interface Drawable {
     }
 
     BoundingCube getBoundingCube();
+    Image getSprite(Player.Position position);
 }

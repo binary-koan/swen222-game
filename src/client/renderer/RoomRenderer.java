@@ -12,21 +12,22 @@ import java.util.*;
 import java.util.List;
 
 public class RoomRenderer {
-    private static final int DISPLAY_WIDTH = 1920;
-    private static final int DISPLAY_HEIGHT = 1080;
+    private static final int DISPLAY_WIDTH = 160;
+    private static final int DISPLAY_HEIGHT = 96;
 
     private class SceneItem {
-        public Drawable drawable;
-        public Rectangle screenBoundingBox;
+        public final Drawable drawable;
+        public final Image sprite;
+        public final Rectangle screenBoundingBox;
 
-        public SceneItem(Drawable drawable, Rectangle screenBoundingBox) {
+        public SceneItem(Drawable drawable, Image sprite, Rectangle screenBoundingBox) {
             this.drawable = drawable;
+            this.sprite = sprite;
             this.screenBoundingBox = screenBoundingBox;
         }
     }
 
     private @NonNull Game game;
-    private @NonNull BufferedImage image = new BufferedImage(DISPLAY_WIDTH, DISPLAY_HEIGHT, BufferedImage.TYPE_4BYTE_ABGR);
 
     private @Nullable Image background;
     private @NonNull List<SceneItem> currentSceneItems = new ArrayList<>();
@@ -42,7 +43,16 @@ public class RoomRenderer {
     }
 
     public @NonNull BufferedImage getCurrentImage() {
-        return image;
+        BufferedImage result = new BufferedImage(DISPLAY_WIDTH, DISPLAY_HEIGHT, BufferedImage.TYPE_4BYTE_ABGR);
+        Graphics2D graphics = result.createGraphics();
+        if (background != null) {
+            graphics.drawImage(background, 0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT, null, null);
+        }
+        for (SceneItem item : currentSceneItems) {
+            Rectangle bounds = item.screenBoundingBox;
+            graphics.drawImage(item.sprite, bounds.x, bounds.y, bounds.width, bounds.height, null, null);
+        }
+        return result;
     }
 
     public @Nullable Drawable getObjectAt(Point point) {
@@ -58,7 +68,8 @@ public class RoomRenderer {
         Player.Position position = player.getPosition();
         setWalls(room, player, scale);
 
-        List<Drawable> roomObjects = new ArrayList<Drawable>(room.getItems());
+        List<Drawable> roomObjects = new ArrayList<>();
+        roomObjects.addAll(room.getItems());
         for (Player p : game.getPlayers()) {
             if (p.getRoom().equals(room) && !p.equals(player)) {
                 roomObjects.add(p);
@@ -70,7 +81,7 @@ public class RoomRenderer {
         for (Drawable drawable : roomObjects) {
             Rectangle boundingBox = boundingBoxFromDirection(position, drawable.getBoundingCube());
             boundingBox = scaleBoundingBox(boundingBox, scale, room);
-            currentSceneItems.add(new SceneItem(drawable, boundingBox));
+            currentSceneItems.add(new SceneItem(drawable, drawable.getSprite(position), boundingBox));
         }
     }
 
