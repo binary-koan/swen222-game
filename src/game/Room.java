@@ -6,6 +6,7 @@ import java.util.List;
 public class Room {
     private Image wallTexture;
     private List<Item> items;
+    private int size;
 
     public Image getWallTexture() {
         return wallTexture;
@@ -17,5 +18,9 @@ public class Room {
 
     public List<Item> getItems() {
         return items;
+    }
+
+    public int getSize() {
+        return size;
     }
 }

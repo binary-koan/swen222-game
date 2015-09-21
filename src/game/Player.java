@@ -15,7 +15,7 @@ public class Player implements Drawable {
     }
 
     public enum Position {
-        ;
+        NORTH, SOUTH, EAST, WEST;
 
         public Position opposite() {
             return null;
