@@ -1,6 +1,7 @@
 package client.renderer;
 
 import game.Game;
+import game.MovementListener;
 import game.Player;
 import game.Room;
 import org.eclipse.jdt.annotation.NonNull;
@@ -11,10 +12,16 @@ import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
 
-public class RoomRenderer {
+/**
+ * Given a player, this class renders the room that the player is in
+ */
+public class RoomRenderer implements MovementListener {
     private static final int DISPLAY_WIDTH = 160;
     private static final int DISPLAY_HEIGHT = 96;
 
+    /**
+     * An item in the list of all scene items
+     */
     private class SceneItem {
         public final Drawable drawable;
         public final Image sprite;
@@ -28,20 +35,39 @@ public class RoomRenderer {
     }
 
     private @NonNull Game game;
+    private @NonNull Player player;
 
     private @Nullable Image background;
     private @NonNull List<SceneItem> currentSceneItems = new ArrayList<>();
 
+    /**
+     * Construct a new RoomRenderer
+     *
+     * @param game the game this renderer is attached to (used to find players etc.)
+     * @param player the player that will be used to find the room this object will render
+     */
     public RoomRenderer(@NonNull Game game, @NonNull Player player) {
         this.game = game;
-        loadPlayerRoom(player);
+        this.player = player;
+
+        player.addMovementListener(this);
+        onMoved();
     }
 
-    public void loadPlayerRoom(@NonNull Player player) {
+    /**
+     * Load the player's new room into the rendering list when the player moves
+     */
+    @Override
+    public void onMoved() {
         currentSceneItems.clear();
-        loadRoom(player.getRoom(), player, 1.0);
+        loadRoom(player.getRoom(), 1.0);
     }
 
+    /**
+     * Build the image corresponding to the current rendering list and return it
+     *
+     * @return the image that was created
+     */
     public @NonNull BufferedImage getCurrentImage() {
         BufferedImage result = new BufferedImage(DISPLAY_WIDTH, DISPLAY_HEIGHT, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D graphics = result.createGraphics();
@@ -55,6 +81,12 @@ public class RoomRenderer {
         return result;
     }
 
+    /**
+     * Return the topmost Drawable instance at the given point
+     *
+     * @param point point to check
+     * @return the object at that point, or null if no object is found
+     */
     public @Nullable Drawable getObjectAt(Point point) {
         for (SceneItem item : currentSceneItems) {
             if (item.screenBoundingBox.contains(point)) {
@@ -64,9 +96,15 @@ public class RoomRenderer {
         return null;
     }
 
-    private void loadRoom(@NonNull Room room, @NonNull Player player, double scale) {
+    /**
+     * Load an entire room into the scene graph at the given scale
+     *
+     * @param room the room to add
+     * @param scale the scale to use when calculating the size and position of items
+     */
+    private void loadRoom(@NonNull Room room, double scale) {
         Player.Position position = player.getPosition();
-        setWalls(room, player, scale);
+        addWalls(room, scale);
 
         List<Drawable> roomObjects = new ArrayList<>();
         roomObjects.addAll(room.getItems());
@@ -85,7 +123,14 @@ public class RoomRenderer {
         }
     }
 
-    private void setWalls(Room room, Player player, double scale) {
+    /**
+     * Sets the scene background to the wall texture of the room. If the room does not have a wall texture, draw the
+     * room in front instead
+     *
+     * @param room room to check for walls or neighbour
+     * @param scale scale currently being used to draw the room
+     */
+    private void addWalls(Room room, double scale) {
         Player.Position position = player.getPosition();
 
         if (room.getWallTexture() != null) {
@@ -94,11 +139,18 @@ public class RoomRenderer {
         else if (scale > 0.25) {
             Room next = room.getConnection(position.opposite());
             if (next != null) {
-                loadRoom(next, player, scale / 2);
+                loadRoom(next, scale / 2);
             }
         }
     }
 
+    /**
+     * Find the face of the cube facing in a given direction
+     *
+     * @param position the position from which the cube is being viewed
+     * @param baseBounds the cube which is being viewed
+     * @return a rectangle representing the "front" face of the cube
+     */
     private @NonNull Rectangle boundingBoxFromDirection(Player.Position position, Drawable.BoundingCube baseBounds) {
         switch (position) {
             case NORTH:
@@ -113,7 +165,15 @@ public class RoomRenderer {
         }
     }
 
-    private @NonNull Rectangle scaleBoundingBox(@NonNull Rectangle boundingBox, double scale, Room room) {
+    /**
+     * Scale the given rectangle based on its position within a room
+     *
+     * @param boundingBox the rectangle to scale
+     * @param scale the base scale multiplier
+     * @param room the room that contains the object described by the rectangle
+     * @return the scaled rectangle
+     */
+    private @NonNull Rectangle scaleBoundingBox(@NonNull Rectangle boundingBox, double scale, @NonNull Room room) {
         double distanceBack = boundingBox.x / room.getSize();
         double scaleForObject = scale * (1 + distanceBack) / 2;
         int newWidth = (int)(boundingBox.width * scaleForObject);
@@ -122,6 +182,13 @@ public class RoomRenderer {
         return new Rectangle(boundingBox.x + newWidth / 2, boundingBox.y + newHeight  / 2, newWidth, newHeight);
     }
 
+    /**
+     * Return a Comparator which compares Drawable objects, where "smaller" objects are those further back when viewed
+     * from the given direction
+     *
+     * @param position position the objects are being viewed from
+     * @return a Comparator which sorts the objects by how far "back" they are
+     */
     private Comparator<Drawable> comparatorForPosition(Player.Position position) {
         switch (position) {
             case NORTH:
