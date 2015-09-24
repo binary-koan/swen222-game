@@ -1,3 +1,7 @@
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.KeyEvent;
+
 import javax.swing.*;
 
 
@@ -5,7 +9,7 @@ public class ApplicationWindow extends JFrame {
 
 	private final GameCanvas canvas;
 	
-	public ApplicaionWindow(String title, GameCanvas canvas) {
+	public ApplicationWindow(String title, GameCanvas canvas) {
 		super(title);
 		this.canvas = canvas;
 		
@@ -64,3 +68,5 @@ public class ApplicationWindow extends JFrame {
 		area.setLayout(new FlowLayout());
 		return area;
 	}
+	
+}
