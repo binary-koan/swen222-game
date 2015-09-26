@@ -1,9 +1,6 @@
 package client.renderer;
 
-import game.Game;
-import game.MovementListener;
-import game.Player;
-import game.Room;
+import game.*;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 

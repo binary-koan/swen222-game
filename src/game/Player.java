@@ -1,9 +1,5 @@
 package game;
 
-import client.renderer.Drawable;
-import client.renderer.RoomRenderer;
-
-import java.awt.*;
 import java.util.ArrayList;
 
 public class Player implements Drawable {

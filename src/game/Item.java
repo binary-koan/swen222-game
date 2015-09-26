@@ -1,9 +1,5 @@
 package game;
 
-import client.renderer.Drawable;
-import game.Player.Position;
-import java.awt.*;
-
 public class Item implements Drawable {
 	private String name;
 
