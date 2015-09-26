@@ -100,7 +100,7 @@ public class RoomRenderer implements MovementListener {
      * @param scale the scale to use when calculating the size and position of items
      */
     private void loadRoom(@NonNull Room room, double scale) {
-        Player.Position position = player.getPosition();
+        Direction position = player.getFacingDirection();
         addWalls(room, scale);
 
         List<Drawable> roomObjects = new ArrayList<>();
@@ -129,7 +129,7 @@ public class RoomRenderer implements MovementListener {
      * @param scale scale currently being used to draw the room
      */
     private void addWalls(@NonNull Room room, double scale) {
-        Player.Position position = player.getPosition();
+        Direction position = player.getFacingDirection();
 
         if (room.getWallTexture() != null) {
             background = room.getWallTexture();
@@ -149,7 +149,7 @@ public class RoomRenderer implements MovementListener {
      * @param baseBounds the cube which is being viewed
      * @return a rectangle representing the "front" face of the cube
      */
-    private @NonNull Rectangle boundingBoxFromDirection(Player.Position position, Drawable.BoundingCube baseBounds) {
+    private @NonNull Rectangle boundingBoxFromDirection(Direction position, Drawable.BoundingCube baseBounds) {
         switch (position) {
             case NORTH:
                 return new Rectangle(DISPLAY_WIDTH - baseBounds.x, baseBounds.y, baseBounds.width, baseBounds.height);
@@ -187,7 +187,7 @@ public class RoomRenderer implements MovementListener {
      * @param position position the objects are being viewed from
      * @return a Comparator which sorts the objects by how far "back" they are
      */
-    private Comparator<Drawable> comparatorForPosition(Player.Position position) {
+    private Comparator<Drawable> comparatorForPosition(Direction position) {
         switch (position) {
             case NORTH:
                 return new Comparator<Drawable>() {

@@ -1,11 +1,10 @@
 package client.renderer;
 
-import game.Player;
+import game.Direction;
 import org.eclipse.jdt.annotation.NonNull;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -40,7 +39,7 @@ public class ResourceLoader {
         }
     }
 
-    public @NonNull BufferedImage getSprite(@NonNull String basename, Player.Position viewingDirection) {
+    public @NonNull BufferedImage getSprite(@NonNull String basename, Direction viewingDirection) {
         BufferedImage image = getImage(basename);
         if (image == notFound) {
             return image;

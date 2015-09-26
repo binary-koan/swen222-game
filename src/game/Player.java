@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class Player implements Drawable {
 	private String name;
     private Room room;
-    private Position position;
+    private Direction facingDirection;
     private ArrayList<Item> inventory;
 
-    public Player(String name, Room room, Position position){
+    public Player(String name, Room room, Direction facingDirection){
     	this.name = name;
     	this.room = room;
-    	this.position = position;
+    	this.facingDirection = facingDirection;
     }
 
     public String getName(){
@@ -22,8 +22,8 @@ public class Player implements Drawable {
         return room;
     }
 
-    public Position getPosition() {
-        return position;
+    public Direction getFacingDirection() {
+        return facingDirection;
     }
 
     public ArrayList<Item> getInventory(){
@@ -47,11 +47,4 @@ public class Player implements Drawable {
         return null;
     }
 
-    public enum Position {
-        NORTH, SOUTH, EAST, WEST;
-
-        public Position opposite() {
-            return null;
-        }
-    }
 }

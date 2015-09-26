@@ -23,7 +23,6 @@ import game.Room;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
@@ -110,7 +109,7 @@ public class ToXML {
 
 			currentPlayer.addContent(new Element("name", p.getName()));
 			currentPlayer.addContent(writeRoom(p.getRoom()));
-			currentPlayer.addContent(new Element("position", p.getPosition().toString()));
+			currentPlayer.addContent(new Element("position", p.getFacingDirection().toString()));
 			Element playerInventory = new Element("playerInventory");
 			if(p.getInventory()!= null){
 				for(Item i : p.getInventory()){
