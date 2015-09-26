@@ -34,7 +34,7 @@ public class RoomRenderer implements MovementListener {
         }
     }
 
-    private @NonNull Game game;
+    private @NonNull ResourceLoader loader;
     private @NonNull Player player;
 
     private @Nullable Image background;
@@ -43,11 +43,11 @@ public class RoomRenderer implements MovementListener {
     /**
      * Construct a new RoomRenderer
      *
-     * @param game the game this renderer is attached to (used to find players etc.)
+     * @param loader a resource loader which will be used to find sprites to draw
      * @param player the player that will be used to find the room this object will render
      */
-    public RoomRenderer(@NonNull Game game, @NonNull Player player) {
-        this.game = game;
+    public RoomRenderer(@NonNull ResourceLoader loader, @NonNull Player player) {
+        this.loader = loader;
         this.player = player;
 
         player.addMovementListener(this);
@@ -108,7 +108,7 @@ public class RoomRenderer implements MovementListener {
 
         List<Drawable> roomObjects = new ArrayList<>();
         roomObjects.addAll(room.getItems());
-        for (Player p : game.getPlayers()) {
+        for (Player p : room.getPlayers()) {
             if (p.getRoom().equals(room) && !p.equals(player)) {
                 roomObjects.add(p);
             }
@@ -117,9 +117,10 @@ public class RoomRenderer implements MovementListener {
         Collections.sort(roomObjects, comparatorForPosition(position));
 
         for (Drawable drawable : roomObjects) {
+            Image sprite = loader.getSprite(drawable.getSpriteName(), position);
             Rectangle boundingBox = boundingBoxFromDirection(position, drawable.getBoundingCube());
             boundingBox = scaleBoundingBox(boundingBox, scale, room);
-            currentSceneItems.add(new SceneItem(drawable, drawable.getSprite(position), boundingBox));
+            currentSceneItems.add(new SceneItem(drawable, sprite, boundingBox));
         }
     }
 
@@ -130,7 +131,7 @@ public class RoomRenderer implements MovementListener {
      * @param room room to check for walls or neighbour
      * @param scale scale currently being used to draw the room
      */
-    private void addWalls(Room room, double scale) {
+    private void addWalls(@NonNull Room room, double scale) {
         Player.Position position = player.getPosition();
 
         if (room.getWallTexture() != null) {

@@ -6,7 +6,7 @@ import game.Player;
 import game.Room;
 
 public interface NetworkListener {
-    void onGameLoaded(Game game);
+    void onPlayerLoaded(Player player);
     void onPlayerMoved(Player player);
     void onItemRemoved(Room room, Item item);
     void onItemAdded(Room room, Item item);

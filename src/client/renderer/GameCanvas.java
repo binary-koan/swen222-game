@@ -17,14 +17,13 @@ import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
 public class GameCanvas extends JPanel implements NetworkListener, MouseListener, MouseMotionListener {
-    private @Nullable Game game;
-    private @NonNull String playerName;
+    private @NonNull ResourceLoader loader;
     private @Nullable Player player;
 
     private @Nullable RoomRenderer roomImage;
 
-    public GameCanvas(@NonNull String playerName, @NonNull NetworkNotifier notifier) {
-        this.playerName = playerName;
+    public GameCanvas(@NonNull NetworkNotifier notifier, @NonNull ResourceLoader loader) {
+        this.loader = loader;
         notifier.addChangeListener(this);
     }
 
@@ -43,10 +42,9 @@ public class GameCanvas extends JPanel implements NetworkListener, MouseListener
     }
 
     @Override
-    public void onGameLoaded(Game game) {
-        this.game = game;
-        player = game.getPlayer(playerName);
-        roomImage = new RoomRenderer(game, player);
+    public void onPlayerLoaded(Player player) {
+        this.player = player;
+        roomImage = new RoomRenderer(loader, player);
     }
 
     @Override
@@ -97,21 +95,21 @@ public class GameCanvas extends JPanel implements NetworkListener, MouseListener
     // placeholder main method
 
     public static void main(String[] args) {
-        final NetworkNotifier notifier = new NetworkNotifier() {
-            @Override
-            public void addChangeListener(NetworkListener listener) {
-            }
-        };
-
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                JFrame frame = new JFrame("GameCanvas");
-                frame.getContentPane().add(new GameCanvas("player", notifier), BorderLayout.CENTER);
-                frame.pack();
-                frame.setVisible(true);
-            }
-        });
+//        final NetworkNotifier notifier = new NetworkNotifier() {
+//            @Override
+//            public void addChangeListener(NetworkListener listener) {
+//            }
+//        };
+//
+//        SwingUtilities.invokeLater(new Runnable()
+//        {
+//            public void run()
+//            {
+//                JFrame frame = new JFrame("GameCanvas");
+//                frame.getContentPane().add(new GameCanvas("player", notifier), BorderLayout.CENTER);
+//                frame.pack();
+//                frame.setVisible(true);
+//            }
+//        });
     }
 }

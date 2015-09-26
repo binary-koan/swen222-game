@@ -8,6 +8,7 @@ public class Room {
     private Image wallTexture;
     private List<Item> items;
     private int size;
+    private List<Player> players;
 
     public Room(String name, List<Item> items){
     	this.name = name;
@@ -32,5 +33,9 @@ public class Room {
 
     public String getName(){
     	return name;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }
