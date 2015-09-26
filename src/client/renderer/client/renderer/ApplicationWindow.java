@@ -1,3 +1,5 @@
+package client.renderer;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.KeyEvent;
@@ -25,7 +27,7 @@ public class ApplicationWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		pack();
-		setResizeable(false);
+		setResizable(false);
 		setVisible(true);
 			
 	}
