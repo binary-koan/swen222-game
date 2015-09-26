@@ -1,11 +1,6 @@
 package client.renderer;
 
-import client.NetworkListener;
-import client.NetworkNotifier;
-import game.Game;
-import game.Item;
 import game.Player;
-import game.Room;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -16,15 +11,12 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
-public class GameCanvas extends JPanel implements NetworkListener, MouseListener, MouseMotionListener {
+public class GameCanvas extends JPanel implements MouseListener, MouseMotionListener {
     private @NonNull ResourceLoader loader;
-    private @Nullable Player player;
-
     private @Nullable RoomRenderer roomImage;
 
-    public GameCanvas(@NonNull NetworkNotifier notifier, @NonNull ResourceLoader loader) {
+    public GameCanvas(@NonNull ResourceLoader loader) {
         this.loader = loader;
-        notifier.addChangeListener(this);
     }
 
     @Override
@@ -38,25 +30,23 @@ public class GameCanvas extends JPanel implements NetworkListener, MouseListener
             g.drawImage(image, (getWidth() - width) / 2, (getHeight() - height) / 2, width, height, null, null);
         }
 
+        //TODO remove - just for debugging
         g.drawRect(0, 0, 200, 200);
     }
 
-    @Override
-    public void onPlayerLoaded(Player player) {
-        this.player = player;
-        roomImage = new RoomRenderer(loader, player);
+    public void setPlayer(@Nullable Player player) {
+        if (player == null) {
+            roomImage = null;
+        }
+        else {
+            roomImage = new RoomRenderer(loader, player);
+        }
     }
 
-    @Override
-    public void onPlayerMoved(Player player) {
-    }
-
-    @Override
-    public void onItemRemoved(Room room, Item item) {
-    }
-
-    @Override
-    public void onItemAdded(Room room, Item item) {
+    public void update() {
+        if (roomImage != null) {
+            roomImage.updateRoom();
+        }
     }
 
     @Override

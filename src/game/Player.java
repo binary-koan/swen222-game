@@ -34,9 +34,6 @@ public class Player implements Drawable {
     	this.inventory = inventory;
     }
 
-    public void addMovementListener(MovementListener movementListener) {
-    }
-
     @Override
     public BoundingCube getBoundingCube() {
         return null;

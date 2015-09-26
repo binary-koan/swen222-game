@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Given a player, this class renders the room that the player is in
  */
-public class RoomRenderer implements MovementListener {
+public class RoomRenderer {
     private static final int DISPLAY_WIDTH = 160;
     private static final int DISPLAY_HEIGHT = 96;
 
@@ -47,15 +47,13 @@ public class RoomRenderer implements MovementListener {
         this.loader = loader;
         this.player = player;
 
-        player.addMovementListener(this);
-        onMoved();
+        updateRoom();
     }
 
     /**
-     * Load the player's new room into the rendering list when the player moves
+     * Load the player's new room into the rendering list
      */
-    @Override
-    public void onMoved() {
+    public void updateRoom() {
         currentSceneItems.clear();
         loadRoom(player.getRoom(), 1.0);
     }
