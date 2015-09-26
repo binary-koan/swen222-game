@@ -47,7 +47,7 @@ public class Player implements Drawable {
     }
 
     @Override
-    public Image getSprite(Position position) {
+    public String getSpriteName() {
         return null;
     }
 

@@ -24,5 +24,5 @@ public interface Drawable {
     }
 
     BoundingCube getBoundingCube();
-    Image getSprite(Player.Position position);
+    String getSpriteName();
 }

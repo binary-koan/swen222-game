@@ -18,7 +18,7 @@ public class Item implements Drawable {
 	}
 
 	@Override
-	public Image getSprite(Position position) {
+	public String getSpriteName() {
 		// TODO Auto-generated method stub
 		return null;
 	}
