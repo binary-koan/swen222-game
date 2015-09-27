@@ -1,4 +1,4 @@
-package client.renderer;
+package client;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;

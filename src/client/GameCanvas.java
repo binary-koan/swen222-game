@@ -1,5 +1,7 @@
-package client.renderer;
+package client;
 
+import client.renderer.ResourceLoader;
+import client.renderer.RoomRenderer;
 import game.Player;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
