@@ -22,6 +22,7 @@ public class Player implements Drawable {
         return room;
     }
 
+    @Override
     public Direction getFacingDirection() {
         return facingDirection;
     }

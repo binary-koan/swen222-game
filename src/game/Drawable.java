@@ -23,6 +23,7 @@ public interface Drawable {
         }
     }
 
+    Direction getFacingDirection();
     BoundingCube getBoundingCube();
     String getSpriteName();
 }

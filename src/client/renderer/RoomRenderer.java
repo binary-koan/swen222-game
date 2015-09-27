@@ -98,7 +98,7 @@ public class RoomRenderer {
      * @param scale the scale to use when calculating the size and position of items
      */
     private void loadRoom(@NonNull Room room, double scale) {
-        Direction position = player.getFacingDirection();
+        Direction direction = player.getFacingDirection();
         addWalls(room, scale);
 
         List<Drawable> roomObjects = new ArrayList<>();
@@ -109,11 +109,11 @@ public class RoomRenderer {
             }
         }
 
-        Collections.sort(roomObjects, comparatorForPosition(position));
+        Collections.sort(roomObjects, comparatorForPosition(direction));
 
         for (Drawable drawable : roomObjects) {
-            Image sprite = loader.getSprite(drawable.getSpriteName(), position);
-            Rectangle boundingBox = boundingBoxFromDirection(position, drawable.getBoundingCube());
+            Image sprite = loader.getSprite(drawable.getSpriteName(), drawable.getFacingDirection().viewFrom(direction));
+            Rectangle boundingBox = boundingBoxFromDirection(direction, drawable.getBoundingCube());
             boundingBox = scaleBoundingBox(boundingBox, scale, room);
             currentSceneItems.add(new SceneItem(drawable, sprite, boundingBox));
         }

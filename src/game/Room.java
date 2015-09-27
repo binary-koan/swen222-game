@@ -16,6 +16,11 @@ public class Room {
         }
 
         @Override
+        public Direction getFacingDirection() {
+            return facingDirection;
+        }
+
+        @Override
         public BoundingCube getBoundingCube() {
             return boundingCube;
         }
