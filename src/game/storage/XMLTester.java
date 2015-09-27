@@ -10,7 +10,9 @@ import game.Item;
 import game.Player;
 import game.Room;
 
-
+//I'm just using this to help with an xml object to parse, but 
+//anyone is welcome to use it to test stuff for rendering, gamelogic 
+//etc and fill in the blanks with getters/setters
 
 public class XMLTester {
 
