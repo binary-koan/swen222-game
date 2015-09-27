@@ -6,38 +6,40 @@ import game.Player;
 import game.Room;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameData {
 
-	private ArrayList<Room> rooms;
-	private ArrayList<Item> items;
+	private HashMap<String, Room> rooms;
+	private HashMap<String, Item> items;
 
-	public GameData(ArrayList<Room> rooms, ArrayList<Item> items){
+	public GameData(HashMap<String, Room> rooms, HashMap<String, Item> items){
 		this.rooms = rooms;
 		this.items = items;
 	}
 
-	public ArrayList<Room> getRooms(){
+	public HashMap<String , Room> getRooms(){
 		return rooms;
 	}
 
 	public Room getRoom(String name){
-		for(Room r : rooms){
-			if(r.getName() == name){
-				return r;
+		for(Map.Entry<String, Room> r : rooms.entrySet()){
+			if(r.getKey() == name){
+				return r.getValue();
 			}
 		}
 		return null;
 	}
 
-	public ArrayList<Item> getItems(){
+	public HashMap<String, Item> getItems(){
 		return items;
 	}
 
 	public Item getItem(String name){
-		for(Item i : items){
-			if(i.getName() == name){
-				return i;
+		for(Map.Entry<String, Item> i : items.entrySet()){
+			if(i.getKey() == name){
+				return i.getValue();
 			}
 		}
 		return null;

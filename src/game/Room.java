@@ -1,6 +1,7 @@
 package game;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Room {
@@ -15,10 +16,11 @@ public class Room {
             this.boundingCube = boundingCube;
         }
 
-        @Override
-        public Direction getFacingDirection() {
-            return facingDirection;
-        }
+		@Override
+		public Direction getFacingDirection() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 
         @Override
         public BoundingCube getBoundingCube() {
@@ -37,9 +39,9 @@ public class Room {
     private int size;
     private List<Player> players;
 
-    public Room(String name, List<ItemInstance> items){
+    public Room(String name){
     	this.name = name;
-    	this.items = items;
+    	players = new ArrayList<Player>();
     }
 
     public Image getWallTexture() {
@@ -64,5 +66,9 @@ public class Room {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public void addPlayer(Player player){
+    	players.add(player);
     }
 }
