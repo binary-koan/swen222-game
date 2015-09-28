@@ -13,6 +13,12 @@ public class Player extends MoveableCharacter {
 		this.name = name;
 	}
 	
-
+	public Room getRoom() {
+		return room;
+	}
+	
+	public String getPlayerName() {
+		return name;
+	}
 
 }
