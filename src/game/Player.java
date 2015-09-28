@@ -1,17 +1,19 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Player implements Drawable {
 	private String name;
+	private String spriteName;
     private Room room;
     private Direction facingDirection;
-    private ArrayList<Item> inventory;
+    private HashMap<String, Item> inventory;
 
-    public Player(String name, Room room, Direction facingDirection){
+    public Player(String name, String spriteName){
     	this.name = name;
-    	this.room = room;
-    	this.facingDirection = facingDirection;
+    	this.spriteName = spriteName;
+    	inventory = new HashMap<String, Item>();
     }
 
     public String getName(){
@@ -22,17 +24,24 @@ public class Player implements Drawable {
         return room;
     }
 
-    @Override
+    public void setRoom(Room room){
+    	this.room = room;
+    }
+
     public Direction getFacingDirection() {
         return facingDirection;
     }
 
-    public ArrayList<Item> getInventory(){
+    public void setFacingDirection(Direction facingDirection) {
+        this.facingDirection = facingDirection;
+    }
+
+    public HashMap<String, Item> getInventory(){
     	return inventory;
     }
 
-    public void setInventory(ArrayList<Item> inventory){
-    	this.inventory = inventory;
+    public void addInventoryItem(Item item){
+    	this.inventory.put(item.getName(), item);
     }
 
     @Override
@@ -42,7 +51,7 @@ public class Player implements Drawable {
 
     @Override
     public String getSpriteName() {
-        return null;
+        return spriteName;
     }
 
 }
