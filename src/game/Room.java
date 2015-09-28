@@ -9,7 +9,7 @@ public class Room {
         private Direction facingDirection;
         private Drawable.BoundingCube boundingCube;
 
-        public ItemInstance(Item item, Direction facingDirection, Drawable.BoundingCube boundingCube) {
+        public ItemInstance(Item item, Direction facingDirection, BoundingCube boundingCube) {
             this.item = item;
             this.facingDirection = facingDirection;
             this.boundingCube = boundingCube;

@@ -144,9 +144,11 @@ public class ToXML {
 		currentRoom.addContent(new Element("name", r.getName()));
 		//Add the roomItems element, and then to that element add the items.
 		Element roomItems = new Element("roomItems");
-		for(Item i : r.getItems()){
-			roomItems.addContent(writeItem(i));
-		}
+
+		//TODO commented out because rooms now contain ItemInstances rather than Items - Jono
+//		for(Item i : r.getItems()){
+//			roomItems.addContent(writeItem(i));
+//		}
 		currentRoom.addContent(roomItems);
 
 		return currentRoom;

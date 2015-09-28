@@ -103,9 +103,11 @@ public class RoomRenderer {
 
         List<Drawable> roomObjects = new ArrayList<>();
         roomObjects.addAll(room.getItems());
-        for (Player p : room.getPlayers()) {
-            if (p.getRoom().equals(room) && !p.equals(player)) {
-                roomObjects.add(p);
+        if (room.getPlayers() != null) {
+            for (Player p : room.getPlayers()) {
+                if (p.getRoom().equals(room) && !p.equals(player)) {
+                    roomObjects.add(p);
+                }
             }
         }
 

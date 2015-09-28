@@ -2,7 +2,7 @@ package client;
 
 import client.renderer.ResourceLoader;
 import client.renderer.RoomRenderer;
-import game.Player;
+import game.*;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class GameCanvas extends JPanel implements MouseListener, MouseMotionListener {
     private @NonNull ResourceLoader loader;
@@ -42,12 +43,14 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         }
         else {
             roomImage = new RoomRenderer(loader, player);
+            repaint();
         }
     }
 
     public void update() {
         if (roomImage != null) {
             roomImage.updateRoom();
+            repaint();
         }
     }
 
@@ -87,6 +90,41 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
     // placeholder main method
 
     public static void main(String[] args) {
+        final ResourceLoader loader = new ResourceLoader("resources");
+        final Room room = new Room("Some name", new ArrayList<Room.ItemInstance>()) {
+            {
+                Item item = new Item("Item name") {
+                    @Override
+                    public String getSpriteName() { return "objects/bed.png"; }
+                };
+                getItems().add(new ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(0, 0, 0, 10, 10, 10)));
+            }
+
+            @Override
+            public int getSize() {
+                return 40;
+            }
+        };
+        final Player player = new Player("Person", room, Direction.NORTH) {
+            @Override
+            public String getSpriteName() {
+                return "characters/1.png";
+            }
+        };
+
+        SwingUtilities.invokeLater(new Runnable()
+        {
+            public void run()
+            {
+                JFrame frame = new JFrame("GameCanvas");
+                GameCanvas canvas = new GameCanvas(loader);
+                frame.getContentPane().add(canvas, BorderLayout.CENTER);
+                frame.pack();
+                frame.setVisible(true);
+
+                canvas.setPlayer(player);
+            }
+        });
 //        final NetworkNotifier notifier = new NetworkNotifier() {
 //            @Override
 //            public void addChangeListener(NetworkListener listener) {
