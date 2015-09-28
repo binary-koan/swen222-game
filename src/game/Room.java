@@ -18,8 +18,7 @@ public class Room {
 
 		@Override
 		public Direction getFacingDirection() {
-			// TODO Auto-generated method stub
-			return null;
+			return facingDirection;
 		}
 
         @Override
@@ -34,18 +33,18 @@ public class Room {
     }
 
 	private String name;
-    private Image wallTexture;
-    private List<ItemInstance> items;
+    private String wallImage;
+    private List<ItemInstance> items = new ArrayList<>();
     private int size;
     private List<Player> players;
 
-    public Room(String name){
+    public Room(String name) {
     	this.name = name;
-    	players = new ArrayList<Player>();
+    	players = new ArrayList<>();
     }
 
-    public Image getWallTexture() {
-        return wallTexture;
+    public String getWallImage() {
+        return wallImage;
     }
 
     public Room getConnection(Direction position) {

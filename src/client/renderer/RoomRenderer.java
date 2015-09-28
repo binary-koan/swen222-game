@@ -131,8 +131,8 @@ public class RoomRenderer {
     private void addWalls(@NonNull Room room, double scale) {
         Direction position = player.getFacingDirection();
 
-        if (room.getWallTexture() != null) {
-            background = room.getWallTexture();
+        if (room.getWallImage() != null) {
+            background = loader.getImage(room.getWallImage());
         }
         else if (scale > 0.25) {
             Room next = room.getConnection(position.opposite());

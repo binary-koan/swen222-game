@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,14 +28,15 @@ public class ResourceLoader {
             return imageCache.get(basename);
         }
         else {
+            Path path = Paths.get(root + "/" + basename);
             try {
-                File imageFile = new File(root + "/" + basename + ".png");
+                File imageFile = new File(path.toAbsolutePath().toString());
                 BufferedImage image = ImageIO.read(imageFile);
                 imageCache.put(basename, image);
                 return image;
             }
             catch (IOException e) {
-                JOptionPane.showMessageDialog(null, "Error: Couldn't find image " + root + "/" + basename);
+                JOptionPane.showMessageDialog(null, "Error: Couldn't find image " + path.toAbsolutePath().toString());
                 return notFound;
             }
         }

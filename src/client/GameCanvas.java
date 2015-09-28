@@ -32,9 +32,6 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
 
             g.drawImage(image, (getWidth() - width) / 2, (getHeight() - height) / 2, width, height, null, null);
         }
-
-        //TODO remove - just for debugging
-        g.drawRect(0, 0, 200, 200);
     }
 
     public void setPlayer(@Nullable Player player) {
@@ -91,31 +88,38 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
 
     public static void main(String[] args) {
         final ResourceLoader loader = new ResourceLoader("resources");
-        final Room room = new Room("Some name", new ArrayList<Room.ItemInstance>()) {
-            {
-                Item item = new Item("Item name") {
-                    @Override
-                    public String getSpriteName() { return "objects/bed.png"; }
-                };
-                getItems().add(new ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(0, 0, 0, 10, 10, 10)));
-            }
-
+        final Room room = new Room("Some name") {
             @Override
             public int getSize() {
                 return 40;
             }
-        };
-        final Player player = new Player("Person", room, Direction.NORTH) {
+
             @Override
-            public String getSpriteName() {
-                return "characters/1.png";
+            public String getWallImage() {
+                return "backgrounds/room.png";
+            }
+
+            {
+                Item item = new Item("Item name", "objects/bed.png");
+                getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(0, 0, 0, 10, 10, 10)));
             }
         };
 
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            public void run()
-            {
+        final Player player = new Player("Person", "characters/1.png") {
+            @Override
+            public BoundingCube getBoundingCube() {
+                return new BoundingCube(0, 0, 0, 10, 10, 10);
+            }
+
+            @Override
+            public Room getRoom() {
+                return room;
+            }
+        };
+        player.setFacingDirection(Direction.NORTH);
+
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
                 JFrame frame = new JFrame("GameCanvas");
                 GameCanvas canvas = new GameCanvas(loader);
                 frame.getContentPane().add(canvas, BorderLayout.CENTER);
