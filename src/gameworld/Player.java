@@ -13,10 +13,19 @@ public class Player extends MoveableCharacter {
 		this.name = name;
 	}
 	
-	public Room getRoom() {
-		return room;
+	public Room getRoom() throws NullPointerException  {
+		try {
+			return room;
+		} catch (Exception e) {
+			System.out.println("Player not assigned to room");
+		}
+		return null;
 	}
 	
+	public void setRoom(Room room) {
+		this.room = room;
+		
+	}
 	public String getPlayerName() {
 		return name;
 	}
