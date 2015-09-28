@@ -1,6 +1,8 @@
 package gameworld;
 
-public abstract class Character {
+import game.Drawable;
+
+public abstract class Character implements Drawable{
 
 	protected int x;
 	protected int y;

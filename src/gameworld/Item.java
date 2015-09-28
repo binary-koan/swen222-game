@@ -1,6 +1,6 @@
 package gameworld;
 
-public interface Item {
+public class Item {
 
 
 }
