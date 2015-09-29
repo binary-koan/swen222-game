@@ -8,9 +8,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -108,7 +106,7 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         final Player player = new Player("Person", "characters/1.png") {
             @Override
             public BoundingCube getBoundingCube() {
-                return new BoundingCube(0, 0, 0, 10, 10, 10);
+                return new BoundingCube(0, 0, 0, 10, 0, 10);
             }
 
             @Override
@@ -118,10 +116,36 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         };
         player.setFacingDirection(Direction.NORTH);
 
+        final GameCanvas canvas = new GameCanvas(loader);
+
+        final KeyListener keyListener = new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_LEFT:
+                        player.setFacingDirection(player.getFacingDirection().previous());
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        player.setFacingDirection(player.getFacingDirection().next());
+                }
+                canvas.update();
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        };
+
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 JFrame frame = new JFrame("GameCanvas");
-                GameCanvas canvas = new GameCanvas(loader);
+                frame.addKeyListener(keyListener);
+                frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
                 frame.getContentPane().add(canvas, BorderLayout.CENTER);
                 frame.pack();
                 frame.setVisible(true);
@@ -129,21 +153,5 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
                 canvas.setPlayer(player);
             }
         });
-//        final NetworkNotifier notifier = new NetworkNotifier() {
-//            @Override
-//            public void addChangeListener(NetworkListener listener) {
-//            }
-//        };
-//
-//        SwingUtilities.invokeLater(new Runnable()
-//        {
-//            public void run()
-//            {
-//                JFrame frame = new JFrame("GameCanvas");
-//                frame.getContentPane().add(new GameCanvas("player", notifier), BorderLayout.CENTER);
-//                frame.pack();
-//                frame.setVisible(true);
-//            }
-//        });
     }
 }

@@ -55,4 +55,26 @@ public enum Direction {
             return first.opposite();
         }
     }
+
+    public Direction previous() {
+        Direction[] values = Direction.values();
+
+        if (this == values[0]) {
+            return values[values.length - 1];
+        }
+        else {
+            return values[ordinal() - 1];
+        }
+    }
+
+    public Direction next() {
+        Direction[] values = Direction.values();
+
+        if (this == values[values.length - 1]) {
+            return values[0];
+        }
+        else {
+            return values[ordinal() + 1];
+        }
+    }
 }

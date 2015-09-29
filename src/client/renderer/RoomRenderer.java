@@ -114,9 +114,12 @@ public class RoomRenderer {
         Collections.sort(roomObjects, comparatorForPosition(direction));
 
         for (Drawable drawable : roomObjects) {
+            System.out.println("Drawing object: " + drawable.toString());
             Image sprite = loader.getSprite(drawable.getSpriteName(), drawable.getFacingDirection().viewFrom(direction));
             Rectangle boundingBox = boundingBoxFromDirection(direction, drawable.getBoundingCube());
+            System.out.println(boundingBox.x + "," + boundingBox.y + "," + boundingBox.width + "," + boundingBox.height);
             boundingBox = scaleBoundingBox(boundingBox, scale, room);
+            System.out.println(boundingBox.x + "," + boundingBox.y + "," + boundingBox.width + "," + boundingBox.height);
             currentSceneItems.add(new SceneItem(drawable, sprite, boundingBox));
         }
     }
@@ -150,16 +153,18 @@ public class RoomRenderer {
      * @return a rectangle representing the "front" face of the cube
      */
     private @NonNull Rectangle boundingBoxFromDirection(Direction position, Drawable.BoundingCube baseBounds) {
+        int actualY = DISPLAY_HEIGHT - baseBounds.y - baseBounds.height;
+
         switch (position) {
             case NORTH:
-                return new Rectangle(DISPLAY_WIDTH - baseBounds.x, baseBounds.y, baseBounds.width, baseBounds.height);
+                return new Rectangle(DISPLAY_WIDTH - baseBounds.x - baseBounds.width, actualY, baseBounds.width, baseBounds.height);
             case SOUTH:
-                return new Rectangle(baseBounds.x, baseBounds.y, baseBounds.width, baseBounds.height);
+                return new Rectangle(baseBounds.x, actualY, baseBounds.width, baseBounds.height);
             case EAST:
-                return new Rectangle(DISPLAY_WIDTH - baseBounds.z, baseBounds.y, baseBounds.depth, baseBounds.height);
+                return new Rectangle(DISPLAY_WIDTH - baseBounds.z - baseBounds.depth, actualY, baseBounds.depth, baseBounds.height);
             case WEST:
             default:
-                return new Rectangle(baseBounds.z, baseBounds.y, baseBounds.depth, baseBounds.height);
+                return new Rectangle(baseBounds.z, actualY, baseBounds.depth, baseBounds.height);
         }
     }
 
@@ -176,8 +181,10 @@ public class RoomRenderer {
         double scaleForObject = scale * (1 + distanceBack) / 2;
         int newWidth = (int)(boundingBox.width * scaleForObject);
         int newHeight = (int)(boundingBox.height * scaleForObject);
+        int newX = boundingBox.x + (boundingBox.width - newWidth) / 2;
+        int newY = boundingBox.y + (boundingBox.height - newHeight) / 2;
 
-        return new Rectangle(boundingBox.x + newWidth / 2, boundingBox.y + newHeight  / 2, newWidth, newHeight);
+        return new Rectangle(newX, newY, newWidth, newHeight);
     }
 
     /**
