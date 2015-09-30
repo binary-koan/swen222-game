@@ -97,7 +97,6 @@ public class RoomRenderer {
         for (SceneItem item : currentSceneItems) {
             Rectangle bounds = item.screenBoundingBox;
             graphics.drawImage(item.sprite, bounds.x - bounds.width / 2, bounds.y - bounds.height, bounds.width, bounds.height, null, null);
-            graphics.fillRect(bounds.x - bounds.width / 2, bounds.y - bounds.height, bounds.width, bounds.height);
         }
         return result;
     }

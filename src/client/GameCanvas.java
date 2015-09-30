@@ -103,13 +103,16 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
 
             {
                 Item item = new Item("Item name", "objects/bed.png");
-                getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(80, 0, 80, 20, 20, 20)));
+                getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(80, 0, 80, 48, 32, 48)));
 
-                item = new Item("Item name", "objects/bed.png");
-                getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(40, 0, 120, 40, 20, 40)));
+                item = new Item("Item name", "objects/chest.png");
+                getItems().add(new Room.ItemInstance(item, Direction.EAST, new Drawable.BoundingCube(40, 0, 120, 48, 32, 48)));
 
-                item = new Item("Item name", "objects/bed.png");
-                getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(140, 40, 20, 20, 40, 20)));
+                item = new Item("Item name", "objects/key.png");
+                getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(140, 60, 20, 32, 32, 32)));
+
+                item = new Item("Item name", "objects/door.png");
+                getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.BoundingCube(140, 0, 80, 32, 48, 32)));
             }
         };
 
