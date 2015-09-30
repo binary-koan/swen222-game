@@ -13,6 +13,8 @@ import java.util.List;
  * Given a player, this class renders the room that the player is in
  */
 public class RoomRenderer {
+    private static final int RENDER_SCALE = 5;
+
     private static final Map<Direction, Comparator<Drawable>> sceneItemComparators = new HashMap<>();
     static {
         sceneItemComparators.put(Direction.NORTH, new Comparator<Drawable>() {
@@ -89,14 +91,25 @@ public class RoomRenderer {
      * @return the image that was created
      */
     public @NonNull BufferedImage getCurrentImage() {
-        BufferedImage result = new BufferedImage(Room.ROOM_SIZE, Room.CEILING_HEIGHT, BufferedImage.TYPE_4BYTE_ABGR);
+        BufferedImage result = new BufferedImage(Room.ROOM_SIZE * RENDER_SCALE, Room.CEILING_HEIGHT * RENDER_SCALE, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D graphics = result.createGraphics();
         if (background != null) {
-            graphics.drawImage(background, 0, 0, Room.ROOM_SIZE, Room.CEILING_HEIGHT, null, null);
+            graphics.drawImage(
+                    background, 0, 0,
+                    Room.ROOM_SIZE * RENDER_SCALE, Room.CEILING_HEIGHT * RENDER_SCALE,
+                    null, null
+            );
         }
         for (SceneItem item : currentSceneItems) {
             Rectangle bounds = item.screenBoundingBox;
-            graphics.drawImage(item.sprite, bounds.x - bounds.width / 2, bounds.y - bounds.height, bounds.width, bounds.height, null, null);
+            graphics.drawImage(
+                    item.sprite,
+                    (bounds.x - bounds.width / 2) * RENDER_SCALE,
+                    (bounds.y - bounds.height) * RENDER_SCALE,
+                    bounds.width * RENDER_SCALE,
+                    bounds.height * RENDER_SCALE,
+                    null, null
+            );
         }
         return result;
     }
