@@ -13,8 +13,33 @@ import java.util.List;
  * Given a player, this class renders the room that the player is in
  */
 public class RoomRenderer {
-    private static final int DISPLAY_WIDTH = 160;
-    private static final int DISPLAY_HEIGHT = 96;
+    private static final Map<Direction, Comparator<Drawable>> sceneItemComparators = new HashMap<>();
+    static {
+        sceneItemComparators.put(Direction.NORTH, new Comparator<Drawable>() {
+            @Override
+            public int compare(Drawable o1, Drawable o2) {
+                return Integer.compare(o1.getBoundingCube().z, o2.getBoundingCube().z);
+            }
+        });
+        sceneItemComparators.put(Direction.EAST, new Comparator<Drawable>() {
+            @Override
+            public int compare(Drawable o1, Drawable o2) {
+                return -Integer.compare(o1.getBoundingCube().x, o2.getBoundingCube().x);
+            }
+        });
+        sceneItemComparators.put(Direction.WEST, new Comparator<Drawable>() {
+            @Override
+            public int compare(Drawable o1, Drawable o2) {
+                return Integer.compare(o1.getBoundingCube().x, o2.getBoundingCube().x);
+            }
+        });
+        sceneItemComparators.put(Direction.SOUTH, new Comparator<Drawable>() {
+            @Override
+            public int compare(Drawable o1, Drawable o2) {
+                return -Integer.compare(o1.getBoundingCube().z, o2.getBoundingCube().z);
+            }
+        });
+    }
 
     /**
      * An item in the list of all scene items
@@ -64,14 +89,15 @@ public class RoomRenderer {
      * @return the image that was created
      */
     public @NonNull BufferedImage getCurrentImage() {
-        BufferedImage result = new BufferedImage(DISPLAY_WIDTH, DISPLAY_HEIGHT, BufferedImage.TYPE_4BYTE_ABGR);
+        BufferedImage result = new BufferedImage(Room.ROOM_SIZE, Room.CEILING_HEIGHT, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D graphics = result.createGraphics();
         if (background != null) {
-            graphics.drawImage(background, 0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT, null, null);
+            graphics.drawImage(background, 0, 0, Room.ROOM_SIZE, Room.CEILING_HEIGHT, null, null);
         }
         for (SceneItem item : currentSceneItems) {
             Rectangle bounds = item.screenBoundingBox;
-            graphics.drawImage(item.sprite, bounds.x, bounds.y, bounds.width, bounds.height, null, null);
+            graphics.drawImage(item.sprite, bounds.x - bounds.width / 2, bounds.y - bounds.height, bounds.width, bounds.height, null, null);
+            graphics.fillRect(bounds.x - bounds.width / 2, bounds.y - bounds.height, bounds.width, bounds.height);
         }
         return result;
     }
@@ -111,16 +137,21 @@ public class RoomRenderer {
             }
         }
 
-        Collections.sort(roomObjects, comparatorForPosition(direction));
+        Collections.sort(roomObjects, sceneItemComparators.get(direction));
 
         for (Drawable drawable : roomObjects) {
             System.out.println("Drawing object: " + drawable.toString());
+
             Image sprite = loader.getSprite(drawable.getSpriteName(), drawable.getFacingDirection().viewFrom(direction));
-            Rectangle boundingBox = boundingBoxFromDirection(direction, drawable.getBoundingCube());
-            System.out.println(boundingBox.x + "," + boundingBox.y + "," + boundingBox.width + "," + boundingBox.height);
-            boundingBox = scaleBoundingBox(boundingBox, scale, room);
-            System.out.println(boundingBox.x + "," + boundingBox.y + "," + boundingBox.width + "," + boundingBox.height);
-            currentSceneItems.add(new SceneItem(drawable, sprite, boundingBox));
+
+            Drawable.BoundingCube boundingBox = drawable.getBoundingCube();
+            Rectangle screenBounds = flattenBoundingBox(boundingBox, direction);
+            int z = findDistanceBack(boundingBox, direction);
+            System.out.println(screenBounds.x + "," + screenBounds.y + "," + screenBounds.width + "," + screenBounds.height);
+
+            scaleBoundingBox(screenBounds, z, scale, room);
+            System.out.println(screenBounds.x + "," + screenBounds.y + "," + screenBounds.width + "," + screenBounds.height);
+            currentSceneItems.add(new SceneItem(drawable, sprite, screenBounds));
         }
     }
 
@@ -148,83 +179,64 @@ public class RoomRenderer {
     /**
      * Find the face of the cube facing in a given direction
      *
-     * @param position the position from which the cube is being viewed
      * @param baseBounds the cube which is being viewed
+     * @param position the position from which the cube is being viewed
      * @return a rectangle representing the "front" face of the cube
      */
-    private @NonNull Rectangle boundingBoxFromDirection(Direction position, Drawable.BoundingCube baseBounds) {
-        int actualY = DISPLAY_HEIGHT - baseBounds.y - baseBounds.height;
-
+    private Rectangle flattenBoundingBox(Drawable.BoundingCube baseBounds, Direction position) {
         switch (position) {
             case NORTH:
-                return new Rectangle(DISPLAY_WIDTH - baseBounds.x - baseBounds.width, actualY, baseBounds.width, baseBounds.height);
+                return new Rectangle(Room.ROOM_SIZE - baseBounds.x, baseBounds.y, baseBounds.width, baseBounds.height);
             case SOUTH:
-                return new Rectangle(baseBounds.x, actualY, baseBounds.width, baseBounds.height);
+                return new Rectangle(baseBounds.x, baseBounds.y, baseBounds.width, baseBounds.height);
             case EAST:
-                return new Rectangle(DISPLAY_WIDTH - baseBounds.z - baseBounds.depth, actualY, baseBounds.depth, baseBounds.height);
+                return new Rectangle(Room.ROOM_SIZE - baseBounds.z - baseBounds.depth, baseBounds.y, baseBounds.depth, baseBounds.height);
             case WEST:
             default:
-                return new Rectangle(baseBounds.z, actualY, baseBounds.depth, baseBounds.height);
+                return new Rectangle(baseBounds.z, baseBounds.y, baseBounds.depth, baseBounds.height);
+        }
+    }
+
+    /**
+     * Find and return the distance back an object is in the room, when viewed from a particular angle
+     *
+     * @param boundingBox the bounding box of the object
+     * @param direction the direction the room is being viewed from
+     * @return a value from 0 to {@link Room#ROOM_SIZE} which represents how far back the object is from the viewer
+     */
+    private int findDistanceBack(Drawable.BoundingCube boundingBox, Direction direction) {
+        switch (direction) {
+            case NORTH:
+                return boundingBox.z;
+            case EAST:
+                return Room.ROOM_SIZE - boundingBox.x;
+            case WEST:
+                return boundingBox.x;
+            case SOUTH:
+            default:
+                return Room.ROOM_SIZE - boundingBox.z;
         }
     }
 
     /**
      * Scale the given rectangle based on its position within a room
      *
-     * @param boundingBox the rectangle to scale
+     * @param boundingBox the rectangle to scale (will be modified)
+     * @param z the distance back the object is in the room (perpendicular direction to `boundingBox.x`)
      * @param scale the base scale multiplier
      * @param room the room that contains the object described by the rectangle
-     * @return the scaled rectangle
      */
-    private @NonNull Rectangle scaleBoundingBox(@NonNull Rectangle boundingBox, double scale, @NonNull Room room) {
-        double distanceBack = boundingBox.x / room.getSize();
+    private void scaleBoundingBox(@NonNull Rectangle boundingBox, int z, double scale, @NonNull Room room) {
+        double distanceBack = (float)z / Room.ROOM_SIZE;
         double scaleForObject = scale * (1 + distanceBack) / 2;
+
+        int xFromCenter = (int)((boundingBox.x - Room.ROOM_SIZE / 2) * scaleForObject);
+        int yFromCenter = (int)((Room.CEILING_HEIGHT / 2 - boundingBox.y) * scaleForObject);
+
         int newWidth = (int)(boundingBox.width * scaleForObject);
         int newHeight = (int)(boundingBox.height * scaleForObject);
-        int newX = boundingBox.x + (boundingBox.width - newWidth) / 2;
-        int newY = boundingBox.y + (boundingBox.height - newHeight) / 2;
 
-        return new Rectangle(newX, newY, newWidth, newHeight);
-    }
-
-    /**
-     * Return a Comparator which compares Drawable objects, where "smaller" objects are those further back when viewed
-     * from the given direction
-     *
-     * @param position position the objects are being viewed from
-     * @return a Comparator which sorts the objects by how far "back" they are
-     */
-    private Comparator<Drawable> comparatorForPosition(Direction position) {
-        switch (position) {
-            case NORTH:
-                return new Comparator<Drawable>() {
-                    @Override
-                    public int compare(Drawable o1, Drawable o2) {
-                        return Integer.compare(o1.getBoundingCube().z, o2.getBoundingCube().z);
-                    }
-                };
-            case SOUTH:
-                return new Comparator<Drawable>() {
-                    @Override
-                    public int compare(Drawable o1, Drawable o2) {
-                        return -Integer.compare(o1.getBoundingCube().z, o2.getBoundingCube().z);
-                    }
-                };
-            case EAST:
-                return new Comparator<Drawable>() {
-                    @Override
-                    public int compare(Drawable o1, Drawable o2) {
-                        return -Integer.compare(o1.getBoundingCube().x, o2.getBoundingCube().x);
-                    }
-                };
-            case WEST:
-            default:
-                return new Comparator<Drawable>() {
-                    @Override
-                    public int compare(Drawable o1, Drawable o2) {
-                        return Integer.compare(o1.getBoundingCube().x, o2.getBoundingCube().x);
-                    }
-                };
-        }
+        boundingBox.setLocation((Room.ROOM_SIZE / 2) + xFromCenter, (Room.CEILING_HEIGHT / 2) + yFromCenter);
+        boundingBox.setSize(newWidth, newHeight);
     }
 }

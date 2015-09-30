@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Room {
+    public static int ROOM_SIZE = 160;
+    public static int CEILING_HEIGHT = 96;
+
     public class ItemInstance implements Drawable {
         private Item item;
         private Direction facingDirection;
@@ -35,7 +38,6 @@ public class Room {
 	private String name;
     private String wallImage;
     private List<ItemInstance> items = new ArrayList<>();
-    private int size;
     private List<Player> players;
 
     public Room(String name) {
@@ -53,10 +55,6 @@ public class Room {
 
     public List<ItemInstance> getItems() {
         return items;
-    }
-
-    public int getSize() {
-        return size;
     }
 
     public String getName(){

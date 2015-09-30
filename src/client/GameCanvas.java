@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class GameCanvas extends JPanel implements MouseListener, MouseMotionListener {
     private @NonNull ResourceLoader loader;
     private @Nullable RoomRenderer roomImage;
+    private @Nullable Player player;
 
     public GameCanvas(@NonNull ResourceLoader loader) {
         this.loader = loader;
@@ -25,14 +26,20 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         if (roomImage != null) {
             BufferedImage image = roomImage.getCurrentImage();
             double scale = Math.min(getWidth() / image.getWidth(), getHeight() / image.getHeight());
-            int width = (int)(image.getWidth() * scale);
-            int height = (int)(image.getHeight() * scale);
+            int width = (int) (image.getWidth() * scale);
+            int height = (int) (image.getHeight() * scale);
 
             g.drawImage(image, (getWidth() - width) / 2, (getHeight() - height) / 2, width, height, null, null);
+        }
+
+        if (player != null) {
+            g.drawString("In " + player.getRoom().getName() + " facing " + player.getFacingDirection().opposite(), 10, 20);
         }
     }
 
     public void setPlayer(@Nullable Player player) {
+        this.player = player;
+
         if (player == null) {
             roomImage = null;
         }
@@ -88,25 +95,20 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         final ResourceLoader loader = new ResourceLoader("resources");
         final Room room = new Room("Some name") {
             @Override
-            public int getSize() {
-                return 40;
-            }
-
-            @Override
             public String getWallImage() {
                 return "backgrounds/room.png";
             }
 
             {
                 Item item = new Item("Item name", "objects/bed.png");
-                getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(0, 0, 0, 10, 10, 10)));
+                getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(80, 0, 80, 20, 20, 20)));
             }
         };
 
         final Player player = new Player("Person", "characters/1.png") {
             @Override
             public BoundingCube getBoundingCube() {
-                return new BoundingCube(0, 0, 0, 10, 0, 10);
+                return new BoundingCube(80, 0, 80, 20, 20, 20);
             }
 
             @Override
