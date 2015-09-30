@@ -23,6 +23,8 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
 
     @Override
     protected void paintComponent(Graphics g) {
+        g.clearRect(0, 0, getWidth(), getHeight());
+
         if (roomImage != null) {
             BufferedImage image = roomImage.getCurrentImage();
             double scale = Math.min(getWidth() / image.getWidth(), getHeight() / image.getHeight());
@@ -102,6 +104,12 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
             {
                 Item item = new Item("Item name", "objects/bed.png");
                 getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(80, 0, 80, 20, 20, 20)));
+
+                item = new Item("Item name", "objects/bed.png");
+                getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(40, 0, 120, 40, 20, 40)));
+
+                item = new Item("Item name", "objects/bed.png");
+                getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(140, 40, 20, 20, 40, 20)));
             }
         };
 

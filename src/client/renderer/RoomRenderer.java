@@ -180,17 +180,17 @@ public class RoomRenderer {
      * Find the face of the cube facing in a given direction
      *
      * @param baseBounds the cube which is being viewed
-     * @param position the position from which the cube is being viewed
+     * @param direction the direction from which the cube is being viewed
      * @return a rectangle representing the "front" face of the cube
      */
-    private Rectangle flattenBoundingBox(Drawable.BoundingCube baseBounds, Direction position) {
-        switch (position) {
+    private Rectangle flattenBoundingBox(Drawable.BoundingCube baseBounds, Direction direction) {
+        switch (direction) {
             case NORTH:
                 return new Rectangle(Room.ROOM_SIZE - baseBounds.x, baseBounds.y, baseBounds.width, baseBounds.height);
             case SOUTH:
                 return new Rectangle(baseBounds.x, baseBounds.y, baseBounds.width, baseBounds.height);
             case EAST:
-                return new Rectangle(Room.ROOM_SIZE - baseBounds.z - baseBounds.depth, baseBounds.y, baseBounds.depth, baseBounds.height);
+                return new Rectangle(Room.ROOM_SIZE - baseBounds.z, baseBounds.y, baseBounds.depth, baseBounds.height);
             case WEST:
             default:
                 return new Rectangle(baseBounds.z, baseBounds.y, baseBounds.depth, baseBounds.height);

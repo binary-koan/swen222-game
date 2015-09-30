@@ -1,7 +1,7 @@
 package game;
 
 public enum Direction {
-    NORTH, SOUTH, EAST, WEST;
+    NORTH, EAST, SOUTH, WEST;
 
     public Direction opposite() {
         switch (this) {
