@@ -12,6 +12,7 @@ import game.Room;
 import game.Drawable.BoundingCube;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -79,7 +80,7 @@ public class ApplicationWindow extends JFrame {
 
 	private JPanel setupLowerBar() {
 		JPanel area = new JPanel();
-		area.setLayout(new FlowLayout());
+		area.setBackground(Color.BLUE); //Test background to know its there 
 		return area;
 	}
 
