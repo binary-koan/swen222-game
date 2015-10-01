@@ -1,8 +1,12 @@
 package client;
 
+import game.Bed;
 import game.Direction;
+import game.Door;
 import game.Drawable;
 import game.Item;
+import game.Chest;
+import game.Key;
 import game.Player;
 import game.Room;
 import game.Drawable.BoundingCube;
@@ -19,11 +23,10 @@ import client.renderer.ResourceLoader;
 
 public class ApplicationWindow extends JFrame {
 
-	private final GameCanvas canvas;
+	
 
 	public ApplicationWindow(String title, GameCanvas canvas) {
 		super(title);
-		this.canvas = canvas;
 
 		final JMenuBar menuBar = setupMenuBar();
 		JPanel lowerBar = setupLowerBar();
@@ -37,7 +40,6 @@ public class ApplicationWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		pack();
-		setVisible(true);
 
 	}
 
@@ -89,16 +91,16 @@ public class ApplicationWindow extends JFrame {
             }
 
             {
-                Item item = new Item("Item name", "objects/bed.png");
+                Item item = new Bed("Item name", "objects/bed.png");
                 getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(80, 0, 80, 48, 32, 48)));
 
-                item = new Item("Item name", "objects/chest.png");
+                item = new Chest("Item name", "objects/chest.png");
                 getItems().add(new Room.ItemInstance(item, Direction.EAST, new Drawable.BoundingCube(40, 0, 120, 48, 32, 48)));
 
-                item = new Item("Item name", "objects/key.png");
+                item = new Key("Item name", "objects/key.png");
                 getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(140, 60, 20, 32, 32, 32)));
 
-                item = new Item("Item name", "objects/door.png");
+                item = new Door("Item name", "objects/door.png");
                 getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.BoundingCube(140, 0, 80, 32, 48, 32)));
             }
         };
@@ -138,10 +140,14 @@ public class ApplicationWindow extends JFrame {
             @Override
             public void keyReleased(KeyEvent e) {
             }
+       
         };
+        
+        
 
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
+            	
                 new ApplicationWindow("Game", canvas).setVisible(true);
             }
         });

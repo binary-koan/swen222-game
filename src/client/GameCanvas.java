@@ -3,7 +3,10 @@ package client;
 import client.renderer.ResourceLoader;
 import client.renderer.RoomRenderer;
 import game.*;
+<<<<<<< HEAD
 import game.Room.ItemInstance;
+=======
+>>>>>>> d3da4ab6f6c1879476ee68e4ec35a02e74e07ea2
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -31,6 +34,7 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         addMouseListener(this);
         addMouseMotionListener(this);
     }
+
 
     @Override
     protected void paintComponent(Graphics g) {

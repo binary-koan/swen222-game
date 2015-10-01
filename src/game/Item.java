@@ -1,9 +1,8 @@
 package game;
 
-public class Item {
+public abstract class Item {
 	private String name;
 	private String spriteName;
-	private Player holder;
 	private Room room;
 
 	public Item(String name, String spriteName){
@@ -12,20 +11,11 @@ public class Item {
 	}
 
 	public String getSpriteName() {
-		// TODO Auto-generated method stub
 		return spriteName;
 	}
 
 	public String getName() {
 		return this.name;
-	}
-
-	public void setHolder(Player holder){
-		this.holder = holder;
-	}
-
-	public Player getHolder() {
-		return holder;
 	}
 
 	public void setRoom(Room room){
