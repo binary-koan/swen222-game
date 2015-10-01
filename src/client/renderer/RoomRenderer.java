@@ -1,6 +1,8 @@
 package client.renderer;
 
 import game.*;
+import game.Room.ItemInstance;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -51,10 +53,13 @@ public class RoomRenderer {
         public final Image sprite;
         public final Rectangle screenBoundingBox;
 
-        public SceneItem(Drawable drawable, Image sprite, Rectangle screenBoundingBox) {
+        public final Item item;
+
+        public SceneItem(Drawable drawable, Image sprite, Rectangle screenBoundingBox, Item item) {
             this.drawable = drawable;
             this.sprite = sprite;
             this.screenBoundingBox = screenBoundingBox;
+            this.item = item;
         }
     }
 
@@ -122,6 +127,7 @@ public class RoomRenderer {
      */
     public @Nullable Drawable getObjectAt(Point point) {
         for (SceneItem item : currentSceneItems) {
+        	System.out.println(item.screenBoundingBox);
             if (item.screenBoundingBox.contains(point)) {
                 return item.drawable;
             }
@@ -163,7 +169,13 @@ public class RoomRenderer {
 
             scaleBoundingBox(screenBounds, z, scale, room);
             System.out.println(screenBounds.x + "," + screenBounds.y + "," + screenBounds.width + "," + screenBounds.height);
-            currentSceneItems.add(new SceneItem(drawable, sprite, screenBounds));
+
+            Item item = null;
+            if (drawable instanceof ItemInstance) {
+            	item = ((ItemInstance)drawable).getItem();
+            }
+
+            currentSceneItems.add(new SceneItem(drawable, sprite, screenBounds, item));
         }
     }
 

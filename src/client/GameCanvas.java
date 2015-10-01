@@ -3,6 +3,10 @@ package client;
 import client.renderer.ResourceLoader;
 import client.renderer.RoomRenderer;
 import game.*;
+<<<<<<< HEAD
+import game.Room.ItemInstance;
+=======
+>>>>>>> d3da4ab6f6c1879476ee68e4ec35a02e74e07ea2
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -16,13 +20,21 @@ import java.util.ArrayList;
 
 public class GameCanvas extends JPanel implements MouseListener, MouseMotionListener {
     private @NonNull ResourceLoader loader;
+
+    private double roomImageScale;
+    private @Nullable Point roomImagePosition;
     private @Nullable RoomRenderer roomImage;
+
     private @Nullable Player player;
+
+    private Item clickedItem;
 
     public GameCanvas(@NonNull ResourceLoader loader) {
         this.loader = loader;
+        addMouseListener(this);
+        addMouseMotionListener(this);
     }
-    
+
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -30,16 +42,27 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
 
         if (roomImage != null) {
             BufferedImage image = roomImage.getCurrentImage();
-            double scale = Math.min(getWidth() / image.getWidth(), getHeight() / image.getHeight());
-            int width = (int) (image.getWidth() * scale);
-            int height = (int) (image.getHeight() * scale);
+            roomImageScale = Math.min((double)getWidth() / image.getWidth(), (double)getHeight() / image.getHeight());
+            int width = (int) (image.getWidth() * roomImageScale);
+            int height = (int) (image.getHeight() * roomImageScale);
+            roomImagePosition = new Point((getWidth() - width) / 2, (getHeight() - height) / 2);
 
-            g.drawImage(image, (getWidth() - width) / 2, (getHeight() - height) / 2, width, height, null, null);
+            Image scaled = image.getScaledInstance(width, height, Image.SCALE_FAST);
+            g.drawImage(scaled, roomImagePosition.x, roomImagePosition.y, width, height, null, null);
         }
 
         if (player != null) {
             g.drawString("In " + player.getRoom().getName() + " facing " + player.getFacingDirection().opposite(), 10, 20);
         }
+
+        if (clickedItem != null) {
+        	g.drawString("Clicked on " + clickedItem.getName(), 10, 50);
+        }
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+    	return new Dimension(Room.ROOM_SIZE, Room.CEILING_HEIGHT);
     }
 
     public void setPlayer(@Nullable Player player) {
@@ -68,7 +91,20 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        //TODO stuff
+    	System.out.println(roomImageScale);
+    	System.out.println(roomImagePosition);
+    	Point relative = new Point(
+    			(int)((e.getX() - roomImagePosition.x) / (roomImageScale * 5)),
+    			(int)((e.getY() - roomImagePosition.y) / (roomImageScale * 5))
+    	);
+    	System.out.println(relative);
+
+        Drawable drawable = roomImage.getObjectAt(relative);
+        System.out.println(drawable);
+        if (drawable instanceof ItemInstance) {
+        	clickedItem = ((ItemInstance)drawable).getItem();
+        	repaint();
+        }
     }
 
     // Stub events
@@ -105,16 +141,16 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
             }
 
             {
-            	Item item = new Bed("Item name", "objects/bed.png");
+                Item item = new Item("Bed", "objects/bed.png");
                 getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(80, 0, 80, 48, 32, 48)));
 
-                item = new Chest("Item name", "objects/chest.png");
+                item = new Item("Chest", "objects/chest.png");
                 getItems().add(new Room.ItemInstance(item, Direction.EAST, new Drawable.BoundingCube(40, 0, 120, 48, 32, 48)));
 
-                item = new Key("Item name", "objects/key.png");
+                item = new Item("Key", "objects/key.png");
                 getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(140, 60, 20, 32, 32, 32)));
 
-                item = new Door("Item name", "objects/door.png");
+                item = new Item("Door", "objects/door.png");
                 getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.BoundingCube(140, 0, 80, 32, 48, 32)));
             }
         };
