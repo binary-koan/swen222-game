@@ -13,10 +13,16 @@ import game.Drawable.BoundingCube;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import client.renderer.ResourceLoader;
@@ -80,8 +86,40 @@ public class ApplicationWindow extends JFrame {
 
 	private JPanel setupLowerBar() {
 		JPanel area = new JPanel();
-		area.setBackground(Color.BLUE); //Test background to know its there 
+		area.setLayout(new BorderLayout());
+		
+		JPanel inventory = new JPanel();
+		inventory.setLayout(new FlowLayout());
+		inventory.add(new ImagePanel("key"));
+		inventory.add(new ImagePanel("fireplace"));
+		
+		//inventory.setBackground(Color.BLACK);
+		
+		area.add(inventory, BorderLayout.EAST);
 		return area;
+	}
+	
+	private class ImagePanel extends JPanel {
+		private BufferedImage image;
+		
+		public ImagePanel(String item) {
+			try {
+				image = ImageIO.read(new File("resources/objects/"+item+".png"));
+				image = image.getSubimage(0, 0, image.getWidth(), image.getHeight());
+			} catch (IOException ex) {
+				
+			}
+			
+			this.setPreferredSize(new Dimension(40, 40));
+			this.setBackground(Color.DARK_GRAY);
+		
+		}
+		
+		protected void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			g.drawImage(image, 5, 5, this.getWidth() - 5, this.getHeight() - 5, null);
+		
+		}
 	}
 
 	public static void main(String[] args) {
