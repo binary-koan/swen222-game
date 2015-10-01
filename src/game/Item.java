@@ -1,6 +1,6 @@
 package game;
 
-public abstract class Item {
+public class Item {
 	private String name;
 	private String spriteName;
 	private Room room;
