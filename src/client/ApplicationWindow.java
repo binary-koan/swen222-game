@@ -23,11 +23,12 @@ import client.renderer.ResourceLoader;
 
 public class ApplicationWindow extends JFrame {
 
+	private GameCanvas canvas;
 	
-
 	public ApplicationWindow(String title, GameCanvas canvas) {
 		super(title);
-
+		this.canvas = canvas;
+		
 		final JMenuBar menuBar = setupMenuBar();
 		JPanel lowerBar = setupLowerBar();
 		setLayout(new BorderLayout());
@@ -39,11 +40,11 @@ public class ApplicationWindow extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		pack();
-
 	}
 
-
+	public GameCanvas getGameCanvas() {
+		return canvas;
+	}
 	private JMenuBar setupMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
 
@@ -83,6 +84,9 @@ public class ApplicationWindow extends JFrame {
 	}
 
 	public static void main(String[] args) {
+		final Player player2 = new Player("Player 2", "characters/o1.png");
+    	player2.setFacingDirection(Direction.NORTH);
+
 		final ResourceLoader loader = new ResourceLoader("resources");
         final Room room = new Room("Some name") {
             @Override
@@ -91,21 +95,25 @@ public class ApplicationWindow extends JFrame {
             }
 
             {
-                Item item = new Bed("Item name", "objects/bed.png");
-                getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(80, 0, 80, 48, 32, 48)));
+            	 Item item = new Item("Bed", "objects/bed.png");
+                 getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(80, 0, 80, 48, 32, 48)));
 
-                item = new Chest("Item name", "objects/chest.png");
-                getItems().add(new Room.ItemInstance(item, Direction.EAST, new Drawable.BoundingCube(40, 0, 120, 48, 32, 48)));
+                 item = new Item("Chest", "objects/chest.png");
+                 getItems().add(new Room.ItemInstance(item, Direction.EAST, new Drawable.BoundingCube(40, 0, 120, 48, 32, 48)));
 
-                item = new Key("Item name", "objects/key.png");
-                getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(140, 60, 20, 32, 32, 32)));
+                 item = new Item("Key", "objects/key.png");
+                 getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(140, 60, 20, 32, 32, 32)));
 
-                item = new Door("Item name", "objects/door.png");
-                getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.BoundingCube(140, 0, 80, 32, 48, 32)));
+                 item = new Item("Door", "objects/door.png");
+                 getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.BoundingCube(140, 0, 80, 32, 48, 32)));
+
+                 player2.setBoundingBox(new Drawable.BoundingCube(80, 80, 80, 32, 32, 32));
+                 getPlayers().add(player2);
             }
         };
+        player2.setRoom(room);
 
-        final Player player = new Player("Person", "characters/1.png") {
+        final Player player = new Player("Player 1", "characters/o1.png") {
             @Override
             public BoundingCube getBoundingCube() {
                 return new BoundingCube(80, 0, 80, 20, 20, 20);
@@ -143,12 +151,18 @@ public class ApplicationWindow extends JFrame {
        
         };
         
-        
+        canvas.addKeyListener(keyListener);
 
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
             	
-                new ApplicationWindow("Game", canvas).setVisible(true);
+                ApplicationWindow aw = new ApplicationWindow("Game", canvas);
+                aw.addKeyListener(keyListener);
+                aw.pack();
+                aw.setVisible(true);
+               
+                aw.getGameCanvas().setPlayer(player);
+                
             }
         });
 	}
