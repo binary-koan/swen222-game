@@ -4,6 +4,7 @@ import game.Game;
 import game.Item;
 import game.Player;
 import game.Room;
+import game.Room.ItemInstance;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -100,14 +101,13 @@ public class ToXML {
 			currentPlayer.addContent(new Element("spriteName").setText(p.getSpriteName()));
 			currentPlayer.addContent(new Element("room").setText(p.getRoom().getName()));
 			//currentPlayer.addContent(new Element("facingDirection", p.getFacingDirection().toString()));
-			Element inventory = new Element("inventory");
-			if(p.getInventory()!= null){
-				for(Map.Entry<String, Item> i : p.getInventory().entrySet()){
-					inventory.addContent(new Element("name").setText(i.getValue().getName()));
-				}
-			}
-			currentPlayer.addContent(inventory);
-
+//			Element inventory = new Element("inventory");
+//			if(p.getInventory()!= null){
+//				for(Map.Entry<String, Item> i : p.getInventory().entrySet()){
+//					inventory.addContent(new Element("name").setText(i.getValue().getName()));
+//				}
+//			}
+//			currentPlayer.addContent(inventory);
 			return currentPlayer;
 	}
 
@@ -122,13 +122,39 @@ public class ToXML {
 		currentItem.addContent(new Element("name").setText( i.getName()));
 		currentItem.addContent(new Element("spriteName").setText(i.getSpriteName()));
 		//currentItem.addContent(new Element("facingDirection", i.getFacingDirection().toString()));
-		if(i.getHolder() != null){
-			currentItem.addContent(new Element("holder").setText(i.getHolder().getName()));
-		}
-		if(i.getRoom() != null){
-			currentItem.addContent(new Element("room").setText(i.getRoom().getName()));
-		}
+//		if(i.getHolder() != null){
+//			currentItem.addContent(new Element("holder").setText(i.getHolder().getName()));
+//		}
+//		if(i.getRoom() != null){
+//			currentItem.addContent(new Element("room").setText(i.getRoom().getName()));
+//		}
 		return currentItem;
+	}
+
+
+	/**
+	 * Reads an item instance form a room, adds its data as child elements
+	 * @param i roomInstance item to be read
+	 * @return
+	 */
+	private Element writeItemInstance(ItemInstance i){
+		Element currentItemInstance = new Element("itemInstance");
+		currentItemInstance.addContent(new Element("item").setText(i.getItem().getName()));
+		currentItemInstance.addContent(new Element("facingDirection").setText(i.getFacingDirection().toString()));
+
+		//The item's bounding box
+		Element boundingBox = new Element("boundingBox");
+		boundingBox.addContent(new Element("x").setText("x"+i.getBoundingCube().x));
+		boundingBox.addContent(new Element("y").setText("y"+i.getBoundingCube().x));
+		boundingBox.addContent(new Element("z").setText("z"+i.getBoundingCube().x));
+		boundingBox.addContent(new Element("width").setText("w"+i.getBoundingCube().x));
+		boundingBox.addContent(new Element("height").setText("h"+i.getBoundingCube().x));
+		boundingBox.addContent(new Element("depth").setText("d"+i.getBoundingCube().x));
+
+		currentItemInstance.addContent(boundingBox);
+
+
+		return currentItemInstance;
 	}
 
 	/**
@@ -138,22 +164,19 @@ public class ToXML {
 	 */
 	private Element writeRoom(Room r){
 		Element currentRoom = new Element("room");
-		//Add the name of the room.
+
 		currentRoom.addContent(new Element("name").setText(r.getName()));
 
-//		Element roomItems = new Element("roomItems");
-//		for(Item i : r.getItems()){
-//			roomItems.addContent(writeItem(i));
-//		}
-//		currentRoom.addContent(roomItems);
-
-
-		Element roomPlayers = new Element("roomPlayers");
-		for(Player p : r.getPlayers()){
-			roomPlayers.addContent(new Element("name").setText(p.getName()));
+		Element roomItems = new Element("roomItems");
+		for(ItemInstance i : r.getItems()){
+			roomItems.addContent(writeItemInstance(i));
 		}
-		currentRoom.addContent(roomPlayers);
-
+		currentRoom.addContent(roomItems);
+//		Element roomPlayers = new Element("roomPlayers");
+//		for(Player p : r.getPlayers()){
+//			roomPlayers.addContent(new Element("name").setText(p.getName()));
+//		}
+//		currentRoom.addContent(roomPlayers);
 		return currentRoom;
 	}
 

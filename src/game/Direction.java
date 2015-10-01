@@ -77,4 +77,20 @@ public enum Direction {
             return values[ordinal() + 1];
         }
     }
+
+    public static Direction fromString(String s){
+    	if(s.equals("NORTH")){
+    		return NORTH;
+    	}
+    	else if(s.equals("SOUTH")){
+    		return SOUTH;
+    	}
+    	else if(s.equals("EAST")){
+    		return EAST;
+    	}
+    	else if(s.equals("WEST")){
+    		return WEST;
+    	}
+    	return NORTH;
+    }
 }
