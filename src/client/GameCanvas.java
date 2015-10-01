@@ -130,6 +130,9 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
     // placeholder main method
 
     public static void main(String[] args) {
+    	final Player player2 = new Player("Player 2", "characters/o1.png");
+    	player2.setFacingDirection(Direction.NORTH);
+
         final ResourceLoader loader = new ResourceLoader("resources");
         final Room room = new Room("Some name") {
             @Override
@@ -149,8 +152,12 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
 
                 item = new Item("Door", "objects/door.png");
                 getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.BoundingCube(140, 0, 80, 32, 48, 32)));
+
+                player2.setBoundingBox(new Drawable.BoundingCube(80, 80, 80, 32, 32, 32));
+                getPlayers().add(player2);
             }
         };
+        player2.setRoom(room);
 
         final Player player = new Player("Person", "characters/1.png") {
             @Override

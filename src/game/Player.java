@@ -1,5 +1,7 @@
 package game;
 
+import game.Drawable.BoundingCube;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,6 +11,7 @@ public class Player implements Drawable {
     private Room room;
     private Direction facingDirection;
     private HashMap<String, Item> inventory;
+    private BoundingCube boundingCube;
 
     public Player(String name, String spriteName){
     	this.name = name;
@@ -46,12 +49,16 @@ public class Player implements Drawable {
 
     @Override
     public BoundingCube getBoundingCube() {
-        return null;
+        return boundingCube;
     }
 
     @Override
     public String getSpriteName() {
         return spriteName;
     }
+
+	public void setBoundingBox(BoundingCube boundingCube) {
+		this.boundingCube = boundingCube;
+	}
 
 }
