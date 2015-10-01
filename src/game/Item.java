@@ -5,7 +5,6 @@ public class Item {
 	private String spriteName;
 	private Player holder;
 	private Room room;
-	private Direction facingDirection;
 
 	public Item(String name, String spriteName){
 		this.name = name;
@@ -35,14 +34,6 @@ public class Item {
 
 	public Room getRoom(){
 		return this.room;
-	}
-
-	public void setFacingDirection(Direction facingDirection){
-		this.facingDirection = facingDirection;
-	}
-
-	public Direction getFacingDirection(){
-		return this.facingDirection;
 	}
 
 }
