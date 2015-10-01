@@ -16,7 +16,6 @@
 	//
 	// Copyright 2010, David James Pearce. 
 
-	package pacman.control;
 
 	import java.util.*;
 	import java.io.*;
