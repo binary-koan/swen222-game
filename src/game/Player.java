@@ -49,7 +49,19 @@ public class Player implements Drawable {
 
     @Override
     public BoundingCube getBoundingCube() {
-        return boundingCube;
+    	//return this.boundingCube;
+    	switch (this.facingDirection) {
+    	case NORTH:
+    		return new BoundingCube(80, 0, 0, 32, 32, 32);
+    	case SOUTH:
+    		return new BoundingCube(80, 0, 160, 32, 32, 32);
+    	case EAST:
+    		return new BoundingCube(160, 0, 80, 32, 32, 32);
+    	case WEST:
+    		return new BoundingCube(0, 0, 80, 32, 32, 32);
+    	default:
+    		return new BoundingCube(80, 40, 80, 32, 32, 32);
+    	}
     }
 
     @Override
