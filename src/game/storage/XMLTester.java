@@ -78,6 +78,9 @@ public class XMLTester {
 		//ToXML(gameFrom, "") to a valid directory.
 		//Eg /u/students/studenname/workspace/swen222-game/saveFile1.xml
 		//===========================================
+		//Here we are basically writing the game object defined above to XML,
+		//reading a game object from that, and then writing back to XML from
+		//that returned game object. The two files should be identical
 		ToXML toTester1 = new ToXML(gameTo, "/u/students/holdawscot/saveFile1.xml");
 		toTester1.writeRoot();
 
