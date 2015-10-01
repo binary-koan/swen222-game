@@ -10,8 +10,8 @@ import game.Item;
 import game.Player;
 import game.Room;
 
-//I'm just using this to help with an xml object to parse, but 
-//anyone is welcome to use it to test stuff for rendering, gamelogic 
+//I'm just using this to help with an xml object to parse, but
+//anyone is welcome to use it to test stuff for rendering, gamelogic
 //etc and fill in the blanks with getters/setters
 
 public class XMLTester {
@@ -77,13 +77,13 @@ public class XMLTester {
 		//ToXML(gameFrom, "") to a valid directory.
 		//Eg /u/students/studenname/workspace/swen222-game/saveFile1.xml
 		//===========================================
-		ToXML toTester1 = new ToXML(gameTo, "/u/students/holdawscot/workspace/saveFile1.xml");
+		ToXML toTester1 = new ToXML(gameTo, "/u/students/mingarjona/tmp/saveFile1.xml");
 		toTester1.writeRoot();
 
-		FromXML fromTester = new FromXML("/u/students/holdawscot/workspace/saveFile1.xml");
+		FromXML fromTester = new FromXML("/u/students/mingarjona/tmp/saveFile1.xml");
 		Game gameFrom = fromTester.readRoot();
 
-		ToXML toTester2 = new ToXML(gameFrom, "/u/students/holdawscot/workspace/saveFile2.xml");
+		ToXML toTester2 = new ToXML(gameFrom, "/u/students/mingarjona/tmp/saveFile2.xml");
 		toTester2.writeRoot();
 
 	}

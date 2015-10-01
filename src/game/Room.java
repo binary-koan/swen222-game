@@ -33,6 +33,10 @@ public class Room {
         public String getSpriteName() {
             return item.getSpriteName();
         }
+
+        public Item getItem() {
+        	return item;
+        }
     }
 
 	private String name;
