@@ -134,16 +134,16 @@ public class ApplicationWindow extends JFrame {
             }
 
             {
-            	 Item item = new Item("Bed", "objects/bed.png");
+            	 Item item = new Bed("Bed", "objects/bed.png");
                  getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(80, 0, 80, 48, 32, 48)));
 
-                 item = new Item("Chest", "objects/chest.png");
+                 item = new Chest("Chest", "objects/chest.png");
                  getItems().add(new Room.ItemInstance(item, Direction.EAST, new Drawable.BoundingCube(40, 0, 120, 48, 32, 48)));
 
-                 item = new Item("Key", "objects/key.png");
+                 item = new Key("Key", "objects/key.png");
                  getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(140, 60, 20, 32, 32, 32)));
 
-                 item = new Item("Door", "objects/door.png");
+                 item = new Door("Door", "objects/door.png");
                  getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.BoundingCube(140, 0, 80, 32, 48, 32)));
 
                  player2.setBoundingBox(new Drawable.BoundingCube(80, 80, 80, 32, 32, 32));
