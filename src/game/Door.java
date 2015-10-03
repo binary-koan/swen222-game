@@ -7,7 +7,7 @@ public class Door extends Item  {
 	public Door(String name, String spriteName) {
 		super(name, spriteName, false);
 	}
-
+	
 	public Room getTargetRoom() {
 		return targetRoom;
 	}

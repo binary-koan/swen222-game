@@ -5,6 +5,7 @@ import java.util.*;
 public class Chest extends Item{
 
 	private List<Item> chestItems;
+	private boolean hasOpened; 
 	
 	public Chest(String name, String spriteName, Item...items) {	
 		super(name, spriteName, false);
@@ -16,7 +17,7 @@ public class Chest extends Item{
 			}
 			j++;
 		}
-		
+		this.hasOpened = false;
 	}
 
 	public String quiz() {
@@ -27,6 +28,9 @@ public class Chest extends Item{
 		return chestItems;
 	}
 	
+	public void openedChest() {
+		hasOpened = true;
+	}
 	@Override
 	public Direction getFacingDirection() {
 		// TODO Auto-generated method stub
