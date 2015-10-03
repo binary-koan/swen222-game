@@ -1,13 +1,15 @@
 package game;
 
-public class Item {
+public abstract class Item implements Drawable{
 	private String name;
 	private String spriteName;
-	private Room room;
-
-	public Item(String name, String spriteName){
+	private boolean canBePickedUp;
+	
+	
+	public Item(String name, String spriteName, boolean canBePickedUp){
 		this.name = name;
 		this.spriteName = spriteName;
+		this.canBePickedUp = canBePickedUp;
 	}
 
 	public String getSpriteName() {
@@ -17,13 +19,8 @@ public class Item {
 	public String getName() {
 		return this.name;
 	}
-
-	public void setRoom(Room room){
-		this.room = room;
+	
+	public boolean pickedUp() {
+		return canBePickedUp;
 	}
-
-	public Room getRoom(){
-		return this.room;
-	}
-
 }
