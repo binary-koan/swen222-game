@@ -89,7 +89,6 @@ public class XMLTester {
 
 		ToXML toTester2 = new ToXML(gameFrom, "/u/students/holdawscot/saveFile2.xml");
 		toTester2.writeRoot();
-
 	}
 }
 

@@ -10,13 +10,13 @@ public class Player implements Drawable {
 	private String spriteName;
     private Room room;
     private Direction facingDirection;
-    private HashMap<String, Item> inventory;
+    private ArrayList<Item> inventory;
     private BoundingCube boundingCube;
 
     public Player(String name, String spriteName){
     	this.name = name;
     	this.spriteName = spriteName;
-    	inventory = new HashMap<String, Item>();
+    	inventory = new ArrayList<Item>();
     }
 
     public String getName(){
@@ -39,12 +39,12 @@ public class Player implements Drawable {
         this.facingDirection = facingDirection;
     }
 
-    public HashMap<String, Item> getInventory(){
+    public ArrayList<Item> getInventory(){
     	return inventory;
     }
 
     public void addInventoryItem(Item item){
-    	this.inventory.put(item.getName(), item);
+    	this.inventory.add(item);
     }
 
     @Override

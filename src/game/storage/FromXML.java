@@ -108,7 +108,7 @@ public class FromXML {
 	}
 
 	private Item readItem(Element e){
-		Item currentItem = new Item(e.getChildText("name"), e.getChildText("spriteName"));
+		Item currentItem = Item(e.getChildText("name"), e.getChildText("spriteName"));
 //		currentItem.setFacingDirection(e.getChildText("direction"));
 //		currentItem.setStuff(e.getChildText("stuff"));
 		return currentItem;
