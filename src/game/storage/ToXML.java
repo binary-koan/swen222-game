@@ -94,20 +94,21 @@ public class ToXML {
 	 * @return
 	 */
 	private Element writePlayer(Player p){
-		//Sc\\ Error checking needed here.
 			Element currentPlayer = new Element("player");
 
 			currentPlayer.addContent(new Element("name").setText(p.getName()));
 			currentPlayer.addContent(new Element("spriteName").setText(p.getSpriteName()));
 			currentPlayer.addContent(new Element("room").setText(p.getRoom().getName()));
-			//currentPlayer.addContent(new Element("facingDirection", p.getFacingDirection().toString()));
-//			Element inventory = new Element("inventory");
-//			if(p.getInventory()!= null){
-//				for(Map.Entry<String, Item> i : p.getInventory().entrySet()){
-//					inventory.addContent(new Element("name").setText(i.getValue().getName()));
-//				}
-//			}
-//			currentPlayer.addContent(inventory);
+			if(p.getFacingDirection() != null){
+				currentPlayer.addContent(new Element("facingDirection").setText(p.getFacingDirection().toString()));
+			}
+			Element inventory = new Element("playerInventory");
+			if(p.getInventory()!= null){
+				for(Item i : p.getInventory()){
+					inventory.addContent(new Element("name").setText(i.getName()));
+				}
+			}
+			currentPlayer.addContent(inventory);
 			return currentPlayer;
 	}
 
@@ -121,6 +122,7 @@ public class ToXML {
 
 		currentItem.addContent(new Element("name").setText( i.getName()));
 		currentItem.addContent(new Element("spriteName").setText(i.getSpriteName()));
+		currentItem.addContent(new Element("subClass").setText(i.getClass().toString()));
 		//currentItem.addContent(new Element("facingDirection", i.getFacingDirection().toString()));
 //		if(i.getHolder() != null){
 //			currentItem.addContent(new Element("holder").setText(i.getHolder().getName()));

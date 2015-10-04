@@ -109,15 +109,12 @@ public class FromXML {
 
 	private Item readItem(Element e){
 		Item currentItem = Item(e.getChildText("name"), e.getChildText("spriteName"));
-//		currentItem.setFacingDirection(e.getChildText("direction"));
-//		currentItem.setStuff(e.getChildText("stuff"));
 		return currentItem;
 	}
 
 	private Player readPlayer(Element e){
 		Player currentPlayer = new Player(e.getChildText("name"), e.getChildText("spriteName"));
-//		currentPlayer.setFacingDirection(e.getChildText("direction"));
-//		currentPlayer.setStuff(e.getChildText("stuff"));
+		currentPlayer.setFacingDirection(Direction.fromString(e.getChildText("direction")));
 		return currentPlayer;
 	}
 
