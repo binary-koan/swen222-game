@@ -19,7 +19,7 @@ public class Chest extends Item {
 		this.hasOpened = false;
 	}
 
-	public String quiz() {
+	public String mathQuiz() {
 		return "Whats 2 + 5?";
 	}
 
@@ -27,7 +27,7 @@ public class Chest extends Item {
 		return chestItems;
 	}
 
-	public void openedChest() {
+	public void openChest() {
 		hasOpened = true;
 	}
 

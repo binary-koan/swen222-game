@@ -25,14 +25,18 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import client.renderer.ResourceLoader;
 
 
 public class ApplicationWindow extends JFrame {
+	
+	private @NonNull ResourceLoader loader;
 
 	private GameCanvas canvas;
 
-	public ApplicationWindow(String title, GameCanvas canvas) {
+	public ApplicationWindow(String title, GameCanvas canvas, @NonNull ResourceLoader loader) {
 		super(title);
 		this.canvas = canvas;
 
@@ -92,16 +96,18 @@ public class ApplicationWindow extends JFrame {
 
 	private JPanel setupLowerBar() {
 		JPanel area = new JPanel();
-		area.setLayout(new BorderLayout());
+//		area.setLayout(new BorderLayout());
 
 		JPanel inventory = new JPanel();
+	
+		//inventory.setPreferredSize(new Dimension(area.getWidth()/2, (int) (area.getHeight() * 0.4)));
 		inventory.setLayout(new FlowLayout());
 		inventory.add(new ImagePanel("key"));
 		inventory.add(new ImagePanel("fireplace"));
 
-		//inventory.setBackground(Color.BLACK);
+		
 
-		area.add(inventory, BorderLayout.EAST);
+		area.add(inventory);
 		return area;
 	}
 
@@ -194,8 +200,9 @@ public class ApplicationWindow extends JFrame {
 
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-
-                ApplicationWindow aw = new ApplicationWindow("Game", canvas);
+            	final ResourceLoader loader = new ResourceLoader("resources");
+            	
+                ApplicationWindow aw = new ApplicationWindow("Game", canvas, loader);
                 aw.addKeyListener(keyListener);
                 aw.pack();
                 aw.setVisible(true);
