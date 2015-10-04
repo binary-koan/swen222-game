@@ -108,25 +108,27 @@ public class FromXML {
 		Item currentItem;
 
 		switch(currentClass){
-		case "Chest":
+		case "class game.Chest":
 			currentItem = new Chest(e.getChildText("name"), e.getChildText("spriteName"));
 			return currentItem;
-		case "Key":
-			currentItem = new Chest(e.getChildText("name"), e.getChildText("spriteName"));
+		case "class game.Key":
+			currentItem = new Key(e.getChildText("name"), e.getChildText("spriteName"));
 			return currentItem;
-		case "Bed":
-			currentItem = new Chest(e.getChildText("name"), e.getChildText("spriteName"));
+		case "class game.Bed":
+			currentItem = new Bed(e.getChildText("name"), e.getChildText("spriteName"));
 			return currentItem;
-		case "Door":
-			currentItem = new Chest(e.getChildText("name"), e.getChildText("spriteName"));
+		case "class game.Door":
+			currentItem = new Door(e.getChildText("name"), e.getChildText("spriteName"));
 			return currentItem;
 		}
-		return null;
+		return new Chest(e.getChildText("name"), e.getChildText("spriteName"));
 	}
 
 	private Player readPlayer(Element e){
 		Player currentPlayer = new Player(e.getChildText("name"), e.getChildText("spriteName"));
-		currentPlayer.setFacingDirection(Direction.fromString(e.getChildText("direction")));
+		if(currentPlayer.getFacingDirection() != null){
+			currentPlayer.setFacingDirection(Direction.fromString(e.getChildText("facingDirection")));
+		}
 		return currentPlayer;
 	}
 
