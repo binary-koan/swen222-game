@@ -1,9 +1,6 @@
 package game;
 
-import game.Drawable.BoundingCube;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Player implements Drawable {
 	private String name;
@@ -11,7 +8,6 @@ public class Player implements Drawable {
     private Room room;
     private Direction facingDirection;
     private ArrayList<Item> inventory;
-    private BoundingCube boundingCube;
 
     public Player(String name, String spriteName){
     	this.name = name;
@@ -48,19 +44,18 @@ public class Player implements Drawable {
     }
 
     @Override
-    public BoundingCube getBoundingCube() {
+    public Point3D getPosition() {
     	//return this.boundingCube;
     	switch (this.facingDirection) {
     	case NORTH:
-    		return new BoundingCube(80, 0, 0, 32, 32, 32);
+    		return new Point3D(80, 0, 0);
     	case SOUTH:
-    		return new BoundingCube(80, 0, 160, 32, 32, 32);
+    		return new Point3D(80, 0, 160);
     	case EAST:
-    		return new BoundingCube(160, 0, 80, 32, 32, 32);
+    		return new Point3D(160, 0, 80);
     	case WEST:
-    		return new BoundingCube(0, 0, 80, 32, 32, 32);
-    	default:
-    		return new BoundingCube(80, 40, 80, 32, 32, 32);
+		default:
+    		return new Point3D(0, 0, 80);
     	}
     }
 
@@ -68,9 +63,5 @@ public class Player implements Drawable {
     public String getSpriteName() {
         return spriteName;
     }
-
-	public void setBoundingBox(BoundingCube boundingCube) {
-		this.boundingCube = boundingCube;
-	}
 
 }

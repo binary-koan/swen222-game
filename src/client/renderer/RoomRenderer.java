@@ -22,25 +22,25 @@ public class RoomRenderer {
         sceneItemComparators.put(Direction.NORTH, new Comparator<Drawable>() {
             @Override
             public int compare(Drawable o1, Drawable o2) {
-                return Integer.compare(o1.getBoundingCube().z, o2.getBoundingCube().z);
+                return Integer.compare(o1.getPosition().z, o2.getPosition().z);
             }
         });
         sceneItemComparators.put(Direction.EAST, new Comparator<Drawable>() {
             @Override
             public int compare(Drawable o1, Drawable o2) {
-                return -Integer.compare(o1.getBoundingCube().x, o2.getBoundingCube().x);
+                return -Integer.compare(o1.getPosition().x, o2.getPosition().x);
             }
         });
         sceneItemComparators.put(Direction.WEST, new Comparator<Drawable>() {
             @Override
             public int compare(Drawable o1, Drawable o2) {
-                return Integer.compare(o1.getBoundingCube().x, o2.getBoundingCube().x);
+                return Integer.compare(o1.getPosition().x, o2.getPosition().x);
             }
         });
         sceneItemComparators.put(Direction.SOUTH, new Comparator<Drawable>() {
             @Override
             public int compare(Drawable o1, Drawable o2) {
-                return -Integer.compare(o1.getBoundingCube().z, o2.getBoundingCube().z);
+                return -Integer.compare(o1.getPosition().z, o2.getPosition().z);
             }
         });
     }
@@ -160,11 +160,11 @@ public class RoomRenderer {
         for (Drawable drawable : roomObjects) {
             System.out.println("Drawing object: " + drawable.toString());
 
-            Image sprite = loader.getSprite(drawable.getSpriteName(), drawable.getFacingDirection().viewFrom(direction));
+            BufferedImage sprite = loader.getSprite(drawable.getSpriteName(), drawable.getFacingDirection().viewFrom(direction));
 
-            Drawable.BoundingCube boundingBox = drawable.getBoundingCube();
-            Rectangle screenBounds = flattenBoundingBox(boundingBox, direction);
-            int z = findDistanceBack(boundingBox, direction);
+            Drawable.Point3D position = drawable.getPosition();
+            Rectangle screenBounds = calculateBoundingBox(position, sprite, direction);
+            int z = calculateZIndex(position, direction);
             System.out.println(screenBounds.x + "," + screenBounds.y + "," + screenBounds.width + "," + screenBounds.height);
 
             scaleBoundingBox(screenBounds, z, scale, room);
@@ -203,42 +203,43 @@ public class RoomRenderer {
     /**
      * Find the face of the cube facing in a given direction
      *
-     * @param baseBounds the cube which is being viewed
+     * @param position the position of the object being viewed
+     * @param sprite the image of the object which will be drawn
      * @param direction the direction from which the cube is being viewed
      * @return a rectangle representing the "front" face of the cube
      */
-    private Rectangle flattenBoundingBox(Drawable.BoundingCube baseBounds, Direction direction) {
+    private Rectangle calculateBoundingBox(Drawable.Point3D position, BufferedImage sprite, Direction direction) {
         switch (direction) {
             case NORTH:
-                return new Rectangle(Room.ROOM_SIZE - baseBounds.x, baseBounds.y, baseBounds.width, baseBounds.height);
+                return new Rectangle(Room.ROOM_SIZE - position.x, position.y, sprite.getWidth(), sprite.getHeight());
             case SOUTH:
-                return new Rectangle(baseBounds.x, baseBounds.y, baseBounds.width, baseBounds.height);
+                return new Rectangle(position.x, position.y, sprite.getWidth(), sprite.getHeight());
             case EAST:
-                return new Rectangle(Room.ROOM_SIZE - baseBounds.z, baseBounds.y, baseBounds.depth, baseBounds.height);
+                return new Rectangle(Room.ROOM_SIZE - position.z, position.y, sprite.getWidth(), sprite.getHeight());
             case WEST:
             default:
-                return new Rectangle(baseBounds.z, baseBounds.y, baseBounds.depth, baseBounds.height);
+                return new Rectangle(position.z, position.y, sprite.getWidth(), sprite.getHeight());
         }
     }
 
     /**
      * Find and return the distance back an object is in the room, when viewed from a particular angle
      *
-     * @param boundingBox the bounding box of the object
+     * @param position the position of the object
      * @param direction the direction the room is being viewed from
      * @return a value from 0 to {@link Room#ROOM_SIZE} which represents how far back the object is from the viewer
      */
-    private int findDistanceBack(Drawable.BoundingCube boundingBox, Direction direction) {
+    private int calculateZIndex(Drawable.Point3D position, Direction direction) {
         switch (direction) {
             case NORTH:
-                return boundingBox.z;
+                return position.z;
             case EAST:
-                return Room.ROOM_SIZE - boundingBox.x;
+                return Room.ROOM_SIZE - position.x;
             case WEST:
-                return boundingBox.x;
+                return position.x;
             case SOUTH:
             default:
-                return Room.ROOM_SIZE - boundingBox.z;
+                return Room.ROOM_SIZE - position.z;
         }
     }
 
