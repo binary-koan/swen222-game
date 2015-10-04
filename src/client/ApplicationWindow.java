@@ -42,8 +42,6 @@ public class ApplicationWindow extends JFrame {
 		scale.setSize(screenSize.getWidth() * 0.6, screenSize.getHeight() * 0.7);
 		setPreferredSize(scale);
 		
-		
-		
 		final JMenuBar menuBar = setupMenuBar();
 		JPanel lowerBar = setupLowerBar();
 		setLayout(new BorderLayout());
