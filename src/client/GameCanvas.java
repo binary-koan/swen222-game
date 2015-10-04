@@ -59,7 +59,7 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
 
     @Override
     public Dimension getPreferredSize() {
-    	return new Dimension(Room.ROOM_SIZE, Room.CEILING_HEIGHT);
+    	return new Dimension(Room.ROOM_SIZE * 3, Room.CEILING_HEIGHT * 3);
     }
 
     public void setPlayer(@Nullable Player player) {
@@ -98,6 +98,7 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
 
         Drawable drawable = roomImage.getObjectAt(relative);
         System.out.println(drawable);
+
         if (drawable instanceof ItemInstance) {
         	clickedItem = ((ItemInstance)drawable).getItem();
         	repaint();
@@ -142,29 +143,23 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
 
             {
                 Item item = new Bed("Bed", "objects/bed.png");
-                getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(80, 0, 80, 48, 32, 48)));
+                getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.Point3D(80, 0, 80)));
 
                 item = new Chest("Chest", "objects/chest.png");
-                getItems().add(new Room.ItemInstance(item, Direction.EAST, new Drawable.BoundingCube(40, 0, 120, 48, 32, 48)));
+                getItems().add(new Room.ItemInstance(item, Direction.EAST, new Drawable.Point3D(40, 0, 120)));
 
                 item = new Key("Key", "objects/key.png");
-                getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(140, 60, 20, 32, 32, 32)));
+                getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.Point3D(140, 60, 20)));
 
                 item = new Door("Door", "objects/door.png");
-                getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.BoundingCube(140, 0, 80, 32, 48, 32)));
+                getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.Point3D(140, 0, 80)));
 
-                player2.setBoundingBox(new Drawable.BoundingCube(80, 80, 80, 32, 32, 32));
                 getPlayers().add(player2);
             }
         };
         player2.setRoom(room);
 
         final Player player = new Player("Person", "characters/1.png") {
-            @Override
-            public BoundingCube getBoundingCube() {
-                return new BoundingCube(80, 0, 80, 20, 20, 20);
-            }
-
             @Override
             public Room getRoom() {
                 return room;

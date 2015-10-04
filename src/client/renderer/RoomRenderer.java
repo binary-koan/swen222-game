@@ -109,8 +109,8 @@ public class RoomRenderer {
             Rectangle bounds = item.screenBoundingBox;
             graphics.drawImage(
                     item.sprite,
-                    (bounds.x - bounds.width / 2) * RENDER_SCALE,
-                    (bounds.y - bounds.height) * RENDER_SCALE,
+                    bounds.x * RENDER_SCALE,
+                    bounds.y * RENDER_SCALE,
                     bounds.width * RENDER_SCALE,
                     bounds.height * RENDER_SCALE,
                     null, null
@@ -209,17 +209,25 @@ public class RoomRenderer {
      * @return a rectangle representing the "front" face of the cube
      */
     private Rectangle calculateBoundingBox(Drawable.Point3D position, BufferedImage sprite, Direction direction) {
-        switch (direction) {
-            case NORTH:
-                return new Rectangle(Room.ROOM_SIZE - position.x, position.y, sprite.getWidth(), sprite.getHeight());
-            case SOUTH:
-                return new Rectangle(position.x, position.y, sprite.getWidth(), sprite.getHeight());
-            case EAST:
-                return new Rectangle(Room.ROOM_SIZE - position.z, position.y, sprite.getWidth(), sprite.getHeight());
-            case WEST:
-            default:
-                return new Rectangle(position.z, position.y, sprite.getWidth(), sprite.getHeight());
+    	int width = sprite.getWidth() * 2;
+    	int height = sprite.getHeight() * 2;
+
+    	int y = Room.CEILING_HEIGHT - position.y - height;
+    	int x;
+        if (direction == Direction.NORTH) {
+        	x = Room.ROOM_SIZE - position.x - width / 2;
         }
+        else if (direction == Direction.SOUTH) {
+        	x = position.x - width / 2;
+        }
+        else if (direction == Direction.EAST) {
+        	x = Room.ROOM_SIZE - position.z - width / 2;
+        }
+        else {
+        	x = position.z - width / 2;
+        }
+
+        return new Rectangle(x, y, width, height);
     }
 
     /**
@@ -256,7 +264,7 @@ public class RoomRenderer {
         double scaleForObject = scale * (1 + distanceBack) / 2;
 
         int xFromCenter = (int)((boundingBox.x - Room.ROOM_SIZE / 2) * scaleForObject);
-        int yFromCenter = (int)((Room.CEILING_HEIGHT / 2 - boundingBox.y) * scaleForObject);
+        int yFromCenter = (int)((boundingBox.y - Room.CEILING_HEIGHT / 2) * scaleForObject);
 
         int newWidth = (int)(boundingBox.width * scaleForObject);
         int newHeight = (int)(boundingBox.height * scaleForObject);
