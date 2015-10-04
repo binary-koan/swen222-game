@@ -15,19 +15,4 @@ public class Door extends Item  {
 	public void setTargetRoom(Room targetRoom) {
 		this.targetRoom = targetRoom;
 	}
-
-	@Override
-	public Direction getFacingDirection() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public BoundingCube getBoundingCube() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
 }

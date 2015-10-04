@@ -1,6 +1,5 @@
 package game;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +10,12 @@ public class Room {
     public class ItemInstance implements Drawable {
         private Item item;
         private Direction facingDirection;
-        private Drawable.BoundingCube boundingCube;
+        private Point3D position;
 
-        public ItemInstance(Item item, Direction facingDirection, BoundingCube boundingCube) {
+        public ItemInstance(Item item, Direction facingDirection, Point3D position) {
             this.item = item;
             this.facingDirection = facingDirection;
-            this.boundingCube = boundingCube;
+            this.position = position;
         }
 
 		@Override
@@ -25,8 +24,8 @@ public class Room {
 		}
 
         @Override
-        public BoundingCube getBoundingCube() {
-            return boundingCube;
+        public Point3D getPosition() {
+            return position;
         }
 
         @Override

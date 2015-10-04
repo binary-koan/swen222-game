@@ -1,29 +1,19 @@
 package game;
 
-import game.Player;
-
-import java.awt.*;
-
 public interface Drawable {
-    class BoundingCube {
+    public class Point3D {
         public final int x;
-        public final int width;
         public final int y;
-        public final int height;
         public final int z;
-        public final int depth;
 
-        public BoundingCube(int x, int y, int z, int width, int height, int depth) {
+        public Point3D(int x, int y, int z) {
             this.x = x;
-            this.width = width;
             this.y = y;
-            this.height = height;
             this.z = z;
-            this.depth = depth;
         }
     }
 
     Direction getFacingDirection();
-    BoundingCube getBoundingCube();
+    Point3D getPosition();
     String getSpriteName();
 }
