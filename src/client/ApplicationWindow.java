@@ -16,6 +16,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -36,18 +37,31 @@ public class ApplicationWindow extends JFrame {
 		super(title);
 		this.canvas = canvas;
 		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		Dimension scale = new Dimension();
+		scale.setSize(screenSize.getWidth() * 0.6, screenSize.getHeight() * 0.7);
+		setPreferredSize(scale);
+		
+		
+		
 		final JMenuBar menuBar = setupMenuBar();
 		JPanel lowerBar = setupLowerBar();
 		setLayout(new BorderLayout());
 
+		
 		//Add items to the frame
 		add(menuBar, BorderLayout.NORTH);
 		add(canvas, BorderLayout.CENTER);
 		add(lowerBar, BorderLayout.SOUTH);
-
+		
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
+
+	
+	
 
 	public GameCanvas getGameCanvas() {
 		return canvas;
