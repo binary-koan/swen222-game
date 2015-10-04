@@ -40,6 +40,13 @@ public class FromXML {
 		this.filename = filename;
 	}
 
+
+	/**
+	 * The "main" method of reading an xml file. Reads through the document, creating
+	 * items, rooms and players collections in a Game (in that order). It then calls
+	 * set data to allocate all the attributes/associations
+	 * @return
+	 */
 	public Game readRoot(){
 		SAXBuilder builder = new SAXBuilder();
 		File xmlFile = new File(filename);
@@ -98,10 +105,13 @@ public class FromXML {
 	private Room readRoom(Element e){
 		Room currentRoom = new Room(e.getChildText("name"));
 		return currentRoom;
-
-
 	}
 
+	/**
+	 * Reads an item, and depending on its actual subtype creates an item of that subtype
+	 * @param e The element to be read
+	 * @return
+	 */
 	private Item readItem(Element e){
 		//Working on a more robust, less error prone method.
 		String currentClass = e.getChildText("subClass");
@@ -124,6 +134,12 @@ public class FromXML {
 		return new Chest(e.getChildText("name"), e.getChildText("spriteName"));
 	}
 
+	/**
+	 * Reads a player and creates a player in basic form, leaving the setting of its attributes
+	 * to later.
+	 * @param e The element to be read
+	 * @return
+	 */
 	private Player readPlayer(Element e){
 		Player currentPlayer = new Player(e.getChildText("name"), e.getChildText("spriteName"));
 		if(currentPlayer.getFacingDirection() != null){
@@ -141,11 +157,6 @@ public class FromXML {
 		Element playersRoot = rootNode.getChild("gamePlayers");
 		Element itemsRoot = rootNode.getChild("gameItems");
 		Element roomsRoot = rootNode.getChild("gameRooms");
-
-
-
-
-
 
 		Room placeHolderRoom = new Room("placeholder"){
 		@Override

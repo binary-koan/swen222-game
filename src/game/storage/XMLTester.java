@@ -83,6 +83,9 @@ public class XMLTester {
 		FromXML fromTester = new FromXML("/u/students/holdawscot/saveFile1.xml");
 		Game gameFrom = fromTester.readRoot();
 
+//		Item itemTest = new Bed("tester", "objects/bed.png");
+//		gameFrom.getData().getItems().put(itemTest.getName(), itemTest);
+
 		ToXML toTester2 = new ToXML(gameFrom, "/u/students/holdawscot/saveFile2.xml");
 		toTester2.writeRoot();
 	}

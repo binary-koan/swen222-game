@@ -15,4 +15,16 @@ public class Door extends Item  {
 	public void setTargetRoom(Room targetRoom) {
 		this.targetRoom = targetRoom;
 	}
+
+	@Override
+	public String toXML() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void loadXML(String xml) {
+		// TODO Auto-generated method stub
+
+	}
 }

@@ -1,6 +1,8 @@
 package game;
 
-public abstract class Item {
+import game.storage.Serializable;
+
+public abstract class Item implements Serializable {
 	private String name;
 	private String spriteName;
 	private boolean canBePickedUp;

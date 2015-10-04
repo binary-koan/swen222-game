@@ -6,4 +6,16 @@ public class Bed extends Item {
 		super(name, spriteName, false);
 
 	}
+
+	@Override
+	public String toXML() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void loadXML(String xml) {
+		// TODO Auto-generated method stub
+
+	}
 }

@@ -30,4 +30,16 @@ public class Chest extends Item {
 	public void openedChest() {
 		hasOpened = true;
 	}
+
+	@Override
+	public String toXML() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void loadXML(String xml) {
+		// TODO Auto-generated method stub
+
+	}
 }
