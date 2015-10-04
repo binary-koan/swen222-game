@@ -98,8 +98,6 @@ public class FromXML {
 	private Room readRoom(Element e){
 		Room currentRoom = new Room(e.getChildText("name"));
 		return currentRoom;
-
-
 	}
 
 	private Item readItem(Element e){
