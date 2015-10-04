@@ -55,15 +55,18 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         }
 
         if (currentTooltip != null) {
-        	int width = (int) (currentTooltip.getWidth() * roomImageScale * 5);
-        	int height = (int) (currentTooltip.getHeight() * roomImageScale * 5);
-
         	Rectangle itemPosition = roomImage.getBounds(activeObject);
-        	int x = (int) ((itemPosition.x + itemPosition.width / 2) * roomImageScale * 5);
-        	int y = (int) ((itemPosition.y - 10) * roomImageScale * 5);
 
-        	Image scaled = currentTooltip.getScaledInstance(width, height, Image.SCALE_FAST);
-        	g.drawImage(scaled, x - width / 2, y - width / 2, width, height, null, null);
+        	if (itemPosition != null) {
+	        	int width = (int) (currentTooltip.getWidth() * roomImageScale * 5);
+	        	int height = (int) (currentTooltip.getHeight() * roomImageScale * 5);
+
+	        	int x = (int) ((itemPosition.x + itemPosition.width / 2) * roomImageScale * 5);
+	        	int y = (int) ((itemPosition.y - 5) * roomImageScale * 5);
+
+	        	Image scaled = currentTooltip.getScaledInstance(width, height, Image.SCALE_FAST);
+	        	g.drawImage(scaled, x - width / 2, y - width / 2, width, height, null, null);
+        	}
         }
     }
 
@@ -96,6 +99,17 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         Point scenePosition = calculateScenePosition(e);
         Drawable drawable = roomImage.getObjectAt(scenePosition);
 
+        // Check if a tooltip needs to be drawn/updated
+        if (drawable == null) {
+        	activeObject = null;
+        	currentTooltip = null;
+        	return;
+        }
+        else if (drawable.equals(activeObject)) {
+        	return;
+        }
+
+        // Create a new tooltip for the hovered object
         activeObject = drawable;
         if (drawable instanceof ItemInstance) {
         	Item item = ((ItemInstance)drawable).getItem();
