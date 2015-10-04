@@ -2,6 +2,7 @@ package client;
 
 import client.renderer.ResourceLoader;
 import client.renderer.RoomRenderer;
+import client.renderer.TooltipRenderer;
 import game.*;
 import game.Room.ItemInstance;
 
@@ -24,7 +25,8 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
 
     private @Nullable Player player;
 
-    private Item clickedItem;
+    private BufferedImage currentTooltip;
+    private Drawable activeObject;
 
     public GameCanvas(@NonNull ResourceLoader loader) {
         this.loader = loader;
@@ -52,8 +54,16 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
             g.drawString("In " + player.getRoom().getName() + " facing " + player.getFacingDirection().opposite(), 10, 20);
         }
 
-        if (clickedItem != null) {
-        	g.drawString("Clicked on " + clickedItem.getName(), 10, 50);
+        if (currentTooltip != null) {
+        	int width = (int) (currentTooltip.getWidth() * roomImageScale * 5);
+        	int height = (int) (currentTooltip.getHeight() * roomImageScale * 5);
+
+        	Rectangle itemPosition = roomImage.getBounds(activeObject);
+        	int x = (int) ((itemPosition.x + itemPosition.width / 2) * roomImageScale * 5);
+        	int y = (int) ((itemPosition.y - 10) * roomImageScale * 5);
+
+        	Image scaled = currentTooltip.getScaledInstance(width, height, Image.SCALE_FAST);
+        	g.drawImage(scaled, x - width / 2, y - width / 2, width, height, null, null);
         }
     }
 
@@ -83,27 +93,34 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        //TODO show popup
+        Point scenePosition = calculateScenePosition(e);
+        Drawable drawable = roomImage.getObjectAt(scenePosition);
+
+        activeObject = drawable;
+        if (drawable instanceof ItemInstance) {
+        	Item item = ((ItemInstance)drawable).getItem();
+        	currentTooltip = TooltipRenderer.createForItem(item);
+        	repaint();
+        }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-    	System.out.println(roomImageScale);
-    	System.out.println(roomImagePosition);
-    	Point relative = new Point(
+    	Point scenePosition = calculateScenePosition(e);
+        Drawable drawable = roomImage.getObjectAt(scenePosition);
+
+//        if (drawable instanceof ItemInstance) {
+//        	activeItem = ((ItemInstance)drawable).getItem();
+//        	repaint();
+//        }
+    }
+
+	private Point calculateScenePosition(MouseEvent e) {
+		return new Point(
     			(int)((e.getX() - roomImagePosition.x) / (roomImageScale * 5)),
     			(int)((e.getY() - roomImagePosition.y) / (roomImageScale * 5))
     	);
-    	System.out.println(relative);
-
-        Drawable drawable = roomImage.getObjectAt(relative);
-        System.out.println(drawable);
-
-        if (drawable instanceof ItemInstance) {
-        	clickedItem = ((ItemInstance)drawable).getItem();
-        	repaint();
-        }
-    }
+	}
 
     // Stub events
 

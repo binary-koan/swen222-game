@@ -62,6 +62,7 @@ public class RoomRenderer {
     private @NonNull ResourceLoader loader;
     private @NonNull Player player;
 
+    private @Nullable Image tooltip;
     private @Nullable Image background;
     private @NonNull List<SceneItem> currentSceneItems = new ArrayList<>();
 
@@ -127,6 +128,18 @@ public class RoomRenderer {
     		SceneItem item = iterator.previous();
     		if (item.screenBoundingBox.contains(point)) {
     			return item.drawable;
+    		}
+    	}
+    	return null;
+    }
+
+    /**
+     * Get the position and size on screen of a particular object
+     */
+    public @Nullable Rectangle getBounds(Drawable object) {
+    	for (SceneItem item : currentSceneItems) {
+    		if (item.drawable.equals(object)) {
+    			return item.screenBoundingBox;
     		}
     	}
     	return null;
