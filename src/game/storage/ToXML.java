@@ -145,15 +145,13 @@ public class ToXML {
 		currentItemInstance.addContent(new Element("facingDirection").setText(i.getFacingDirection().toString()));
 
 		//The item's bounding box
-		Element boundingBox = new Element("boundingBox");
-		boundingBox.addContent(new Element("x").setText("x"+i.getBoundingCube().x));
-		boundingBox.addContent(new Element("y").setText("y"+i.getBoundingCube().x));
-		boundingBox.addContent(new Element("z").setText("z"+i.getBoundingCube().x));
-		boundingBox.addContent(new Element("width").setText("w"+i.getBoundingCube().x));
-		boundingBox.addContent(new Element("height").setText("h"+i.getBoundingCube().x));
-		boundingBox.addContent(new Element("depth").setText("d"+i.getBoundingCube().x));
+		Element position = new Element("boundingBox");
+		position.addContent(new Element("x").setText("x"+i.getPosition().x));
+		position.addContent(new Element("y").setText("y"+i.getPosition().y));
+		position.addContent(new Element("z").setText("z"+i.getPosition().z));
 
-		currentItemInstance.addContent(boundingBox);
+
+		currentItemInstance.addContent(position);
 
 
 		return currentItemInstance;

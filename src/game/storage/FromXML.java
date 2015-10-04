@@ -1,12 +1,7 @@
 package game.storage;
 //Author: Scott Holdaway
-import game.Direction;
-import game.Game;
-import game.Item;
-import game.Player;
-import game.Room;
-import game.Room.ItemInstance;
-import game.Drawable.BoundingCube;
+import game.*;
+import game.Drawable.Point3D;
 
 import java.awt.List;
 import java.io.File;
@@ -108,8 +103,25 @@ public class FromXML {
 	}
 
 	private Item readItem(Element e){
-		Item currentItem = Item(e.getChildText("name"), e.getChildText("spriteName"));
-		return currentItem;
+		//Working on a more robust, less error prone method.
+		String currentClass = e.getChildText("subClass");
+		Item currentItem;
+
+		switch(currentClass){
+		case "Chest":
+			currentItem = new Chest(e.getChildText("name"), e.getChildText("spriteName"));
+			return currentItem;
+		case "Key":
+			currentItem = new Chest(e.getChildText("name"), e.getChildText("spriteName"));
+			return currentItem;
+		case "Bed":
+			currentItem = new Chest(e.getChildText("name"), e.getChildText("spriteName"));
+			return currentItem;
+		case "Door":
+			currentItem = new Chest(e.getChildText("name"), e.getChildText("spriteName"));
+			return currentItem;
+		}
+		return null;
 	}
 
 	private Player readPlayer(Element e){
@@ -149,12 +161,9 @@ public class FromXML {
 						int bX = Integer.parseInt(itemInstance.getChild("boundingBox").getChildText("x").substring(1));
 						int bY = Integer.parseInt(itemInstance.getChild("boundingBox").getChildText("y").substring(1));
 						int bZ = Integer.parseInt(itemInstance.getChild("boundingBox").getChildText("z").substring(1));
-						int bWidth = Integer.parseInt(itemInstance.getChild("boundingBox").getChildText("width").substring(1));
-						int bHeight = Integer.parseInt(itemInstance.getChild("boundingBox").getChildText("height").substring(1));
-						int bDepth = Integer.parseInt(itemInstance.getChild("boundingBox").getChildText("depth").substring(1));
 
-						BoundingCube itemCube = new BoundingCube(bX, bY, bZ, bWidth, bHeight, bDepth);
-						ItemInstance roomItem = new ItemInstance(itemTo, itemDir, itemCube);
+						Point3D itemPoint = new Point3D(bX, bY, bZ);
+						ItemInstance roomItem = new ItemInstance(itemTo, itemDir, itemPoint);
 						rooms.get(room.getChildText("name")).getItems().add(roomItem);
 					}
 				}

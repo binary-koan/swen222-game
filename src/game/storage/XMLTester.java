@@ -5,8 +5,8 @@ package game.storage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import game.Direction;
 import game.*;
+import game.Drawable.Point3D;
 import game.Room.ItemInstance;
 
 //I'm just using this to help with an xml object to parse, but
@@ -30,19 +30,19 @@ public class XMLTester {
         {
 		Item item = new Bed("Bed", "objects/bed.png");
 		testItems.put(item.getName(), item);
-        getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(80, 0, 80, 48, 32, 48)));
+        getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Point3D(80, 0, 80)));
 
         item = new Chest("Chest", "objects/chest.png");
         testItems.put(item.getName(), item);
-        getItems().add(new Room.ItemInstance(item, Direction.EAST, new Drawable.BoundingCube(40, 0, 120, 48, 32, 48)));
+        getItems().add(new Room.ItemInstance(item, Direction.EAST, new Point3D(40, 0, 120)));
 
         item = new Key("Key", "objects/key.png");
         testItems.put(item.getName(), item);
-        getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.BoundingCube(140, 60, 20, 32, 32, 32)));
+        getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Point3D(140, 60, 20)));
 
         item = new Door("Door", "objects/door.png");
         testItems.put(item.getName(), item);
-        getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.BoundingCube(140, 0, 80, 32, 48, 32)));
+        getItems().add(new Room.ItemInstance(item, Direction.WEST, new Point3D(140, 0, 80)));
 
         }
 		};
