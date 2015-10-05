@@ -16,6 +16,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -80,6 +82,13 @@ public class ApplicationWindow extends JFrame {
 
 	     JMenuItem exitMenuItem = new JMenuItem("Exit");
 	     exitMenuItem.setActionCommand("Exit");
+	     exitMenuItem.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent event) {
+	                System.exit(0);
+	            }
+	        });
+	     
 
 	     fileMenu.add(newMenuItem);
 	     fileMenu.add(openMenuItem);
