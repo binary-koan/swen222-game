@@ -34,6 +34,11 @@ import client.renderer.ResourceLoader;
 
 public class ApplicationWindow extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6273791834646480175L;
+
 	private @NonNull ResourceLoader loader;
 
 	private GameCanvas canvas;
