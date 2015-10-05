@@ -162,7 +162,7 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
     // placeholder main method
 
     public static void main(String[] args) {
-    	final Player player2 = new Player("Player 2", "characters/o1.png");
+    	final Player player2 = new Player("Player 2", "characters/alien1.png");
     	player2.setFacingDirection(Direction.NORTH);
 
         final ResourceLoader loader = new ResourceLoader("resources");

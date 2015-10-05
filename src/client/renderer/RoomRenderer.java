@@ -214,8 +214,8 @@ public class RoomRenderer {
      * @return a rectangle representing the "front" face of the cube
      */
     private Rectangle calculateBoundingBox(Drawable.Point3D position, BufferedImage sprite, Direction direction) {
-    	int width = sprite.getWidth() * 2;
-    	int height = sprite.getHeight() * 2;
+    	int width = sprite.getWidth();
+    	int height = sprite.getHeight();
 
     	int y = Room.CEILING_HEIGHT - position.y - height;
     	int x;

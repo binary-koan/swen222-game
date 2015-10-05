@@ -5,6 +5,7 @@ import org.eclipse.jdt.annotation.NonNull;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -16,11 +17,14 @@ import java.util.Map;
 public class ResourceLoader {
     private @NonNull String root;
     private @NonNull Map<String, BufferedImage> imageCache = new HashMap<>();
-    private @NonNull BufferedImage notFound = new BufferedImage(1, 1, BufferedImage.TYPE_4BYTE_ABGR);
+    private @NonNull BufferedImage notFound = new BufferedImage(32, 32, BufferedImage.TYPE_4BYTE_ABGR);
 
     public ResourceLoader(@NonNull String root) {
         this.root = root;
-        notFound.setRGB(0, 0, 0xff0000);
+
+        Graphics2D graphics = notFound.createGraphics();
+        graphics.setColor(new Color(0xff0000));
+        graphics.fillRect(0, 0, 32, 32);
     }
 
     public @NonNull BufferedImage getImage(@NonNull String basename) {

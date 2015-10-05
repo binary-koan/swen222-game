@@ -144,7 +144,7 @@ public class ApplicationWindow extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		final Player player2 = new Player("Player 2", "characters/o1.png");
+		final Player player2 = new Player("Player 2", "characters/alien2.png");
     	player2.setFacingDirection(Direction.NORTH);
 
 		final ResourceLoader loader = new ResourceLoader("resources");
@@ -172,7 +172,7 @@ public class ApplicationWindow extends JFrame {
         };
         player2.setRoom(room);
 
-        final Player player = new Player("Player 1", "characters/o1.png") {
+        final Player player = new Player("Player 1", "characters/alien1.png") {
             @Override
             public Room getRoom() {
                 return room;
