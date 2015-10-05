@@ -45,16 +45,14 @@ public class ApplicationWindow extends JFrame {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension scale = new Dimension();
 		scale.setSize(screenSize.getWidth() * 0.6, screenSize.getHeight() * 0.7);
-		setPreferredSize(scale);
+		this.canvas.setPreferredSize(scale);
 
-		final JMenuBar menuBar = setupMenuBar();
-		JPanel lowerBar = setupLowerBar();
 		setLayout(new BorderLayout());
 
 		//Add items to the frame
-		add(menuBar, BorderLayout.NORTH);
+		add(setupMenuBar(), BorderLayout.NORTH);
 		add(canvas, BorderLayout.CENTER);
-		add(lowerBar, BorderLayout.SOUTH);
+		add(setupLowerBar(), BorderLayout.SOUTH);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -70,9 +68,9 @@ public class ApplicationWindow extends JFrame {
 		JMenu fileMenu = new JMenu("File");
 		JMenu editMenu = new JMenu("Game");
 
-		JMenuItem newMenuItem = new JMenuItem("New");
+		JMenuItem newMenuItem = new JMenuItem("Penis");
 		newMenuItem.setMnemonic(KeyEvent.VK_N);
-		newMenuItem.setActionCommand("New");
+		newMenuItem.setActionCommand("Penis");
 
 	     JMenuItem openMenuItem = new JMenuItem("Open");
 	     openMenuItem.setActionCommand("Open");
@@ -105,18 +103,18 @@ public class ApplicationWindow extends JFrame {
 
 	private JPanel setupLowerBar() {
 		JPanel area = new JPanel();
-//		area.setLayout(new BorderLayout());
+		area.setLayout(new BorderLayout());
 
 		JPanel inventory = new JPanel();
 	
-		//inventory.setPreferredSize(new Dimension(area.getWidth()/2, (int) (area.getHeight() * 0.4)));
+		
 		inventory.setLayout(new FlowLayout());
 		inventory.add(new ImagePanel("key"));
 		inventory.add(new ImagePanel("fireplace"));
 
 		
 
-		area.add(inventory);
+		area.add(inventory, BorderLayout.EAST);
 		return area;
 	}
 
@@ -124,12 +122,8 @@ public class ApplicationWindow extends JFrame {
 		private BufferedImage image;
 
 		public ImagePanel(String item) {
-			try {
-				image = ImageIO.read(new File("resources/objects/"+item+".png"));
-				image = image.getSubimage(0, 0, image.getWidth(), image.getHeight());
-			} catch (IOException ex) {
-
-			}
+			//image = loader.getImage(item);
+			//image = image.getSubimage(0, 0, image.getWidth(), image.getHeight());
 
 			this.setPreferredSize(new Dimension(40, 40));
 			this.setBackground(Color.DARK_GRAY);
@@ -138,7 +132,7 @@ public class ApplicationWindow extends JFrame {
 
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
-			g.drawImage(image, 5, 5, this.getWidth() - 5, this.getHeight() - 5, null);
+			//g.drawImage(image, 5, 5, this.getWidth() - 5, this.getHeight() - 5, null);
 
 		}
 	}
