@@ -172,8 +172,8 @@ public class ApplicationWindow extends JFrame {
 		final ResourceLoader loader = new ResourceLoader("resources");
         final Room room = new Room("Some name") {
             @Override
-            public String getWallImage() {
-                return "backgrounds/room.png";
+            public boolean hasWall(Direction position) {
+                return true;
             }
 
             {

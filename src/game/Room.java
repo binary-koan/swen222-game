@@ -53,7 +53,6 @@ public class Room implements Serializable{
     }
 
 	private String name;
-    private String wallImage = "backgrounds/room.png";
     private List<ItemInstance> items = new ArrayList<>();
     private List<Player> players;
 
@@ -62,12 +61,12 @@ public class Room implements Serializable{
     	players = new ArrayList<>();
     }
 
-    public String getWallImage() {
-        return wallImage;
-    }
+	public boolean hasWall(Direction position) {
+		return false; //TODO
+	}
 
     public Room getConnection(Direction position) {
-        return null;
+        return null; //TODO
     }
 
     public List<ItemInstance> getItems() {

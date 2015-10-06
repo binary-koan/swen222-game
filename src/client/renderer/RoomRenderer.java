@@ -62,8 +62,9 @@ public class RoomRenderer {
     private @NonNull ResourceLoader loader;
     private @NonNull Player player;
 
-    private @Nullable Image tooltip;
-    private @Nullable Image background;
+    private @Nullable Image backgroundLeft;
+    private @Nullable Image backgroundCenter;
+    private @Nullable Image backgroundRight;
     private @NonNull List<SceneItem> currentSceneItems = new ArrayList<>();
 
     /**
@@ -95,13 +96,7 @@ public class RoomRenderer {
     public @NonNull BufferedImage getCurrentImage() {
         BufferedImage result = new BufferedImage(Room.ROOM_SIZE * RENDER_SCALE, Room.CEILING_HEIGHT * RENDER_SCALE, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D graphics = result.createGraphics();
-        if (background != null) {
-            graphics.drawImage(
-                    background, 0, 0,
-                    Room.ROOM_SIZE * RENDER_SCALE, Room.CEILING_HEIGHT * RENDER_SCALE,
-                    null, null
-            );
-        }
+        drawBackground(graphics);
         for (SceneItem item : currentSceneItems) {
             Rectangle bounds = item.screenBoundingBox;
             graphics.drawImage(
@@ -114,6 +109,39 @@ public class RoomRenderer {
             );
         }
         return result;
+    }
+
+    /**
+     * Draw the left, central and right portions of the current room's background
+     * @param graphics surface to draw on
+     */
+    private void drawBackground(Graphics2D graphics) {
+        int x = 0;
+        if (backgroundLeft != null) {
+            graphics.drawImage(
+                    backgroundLeft, x, 0,
+                    Room.ROOM_SIZE * RENDER_SCALE / 4, Room.CEILING_HEIGHT * RENDER_SCALE,
+                    null, null
+            );
+        }
+
+        x += Room.ROOM_SIZE * RENDER_SCALE / 4 * 2;
+        if (backgroundCenter != null) {
+            graphics.drawImage(
+                    backgroundCenter, x, 0,
+                    Room.ROOM_SIZE * RENDER_SCALE / 4 * 2, Room.CEILING_HEIGHT * RENDER_SCALE,
+                    null, null
+            );
+        }
+
+        x += Room.ROOM_SIZE * RENDER_SCALE / 4;
+        if (backgroundRight != null) {
+            graphics.drawImage(
+                    backgroundRight, x, 0,
+                    Room.ROOM_SIZE * RENDER_SCALE / 4, Room.CEILING_HEIGHT * RENDER_SCALE,
+                    null, null
+            );
+        }
     }
 
     /**
@@ -194,14 +222,32 @@ public class RoomRenderer {
     private void addWalls(@NonNull Room room, double scale) {
         Direction position = player.getFacingDirection();
 
-        if (room.getWallImage() != null) {
-            background = loader.getImage(room.getWallImage());
+        if (room.hasWall(position.next())) {
+            backgroundLeft = loader.getImage("backgrounds/room-wall-left.png");
         }
-        else if (scale > 0.25) {
-            Room next = room.getConnection(position.opposite());
-            if (next != null) {
-                loadRoom(next, scale / 2);
+        else {
+            backgroundLeft = loader.getImage("backgrounds/room-nowall-left.png");
+        }
+
+        if (room.hasWall(position.opposite())) {
+            backgroundCenter = loader.getImage("backgrounds/room-wall-center.png");
+
+            if (scale > 0.25) {
+                Room next = room.getConnection(position.opposite());
+                if (next != null) {
+                    loadRoom(next, scale / 2);
+                }
             }
+        }
+        else {
+            backgroundCenter = loader.getImage("backgrounds/room-nowall-center.png");
+        }
+
+        if (room.hasWall(position.previous())) {
+            backgroundRight = loader.getImage("backgrounds/room-wall-right.png");
+        }
+        else {
+            backgroundRight = loader.getImage("backgrounds/room-nowall-right.png");
         }
     }
 
