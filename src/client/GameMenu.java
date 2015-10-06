@@ -59,7 +59,7 @@ public class GameMenu {
 				}
 				JFrame frame = new JFrame("Haunted House");
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.add(new GameOptions());
+				frame.add(new GameOptions(frame));
 				frame.pack();
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
@@ -81,7 +81,7 @@ public class GameMenu {
 		private Map<String, Rectangle> menuBounds;
 
 
-		public GameOptions() {
+		public GameOptions(JFrame frame) {
 			setBackground(Color.BLACK);
 			painter = new SimpleMenuItemPainter();
 			menuItems = new ArrayList<>(25);
@@ -186,6 +186,13 @@ public class GameMenu {
 							}
 						});
 						
+						frame.setVisible(false);
+						
+						
+						
+					}
+					if(selectMenuItem == "Exit") {
+						System.exit(0);
 					}
 
 				}
