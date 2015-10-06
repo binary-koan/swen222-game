@@ -1,13 +1,27 @@
 package game;
 
+import game.Drawable.Point3D;
+import game.storage.GameData;
+import game.storage.Serializable;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Room {
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
+
+public class Room implements Serializable{
     public static int ROOM_SIZE = 160;
     public static int CEILING_HEIGHT = 96;
 
-    public class ItemInstance implements Drawable {
+    public class ItemInstance implements Drawable{
         private Item item;
         private Direction facingDirection;
         private Point3D position;
@@ -39,7 +53,7 @@ public class Room {
     }
 
 	private String name;
-    private String wallImage;
+    private String wallImage = "backgrounds/room.png";
     private List<ItemInstance> items = new ArrayList<>();
     private List<Player> players;
 
@@ -83,4 +97,67 @@ public class Room {
     public void removeRoomItemInstance(ItemInstance item){
     	items.remove(item);
     }
+
+	@Override
+	public void toXML() {
+		SAXBuilder builder = new SAXBuilder();
+		File xmlFile = new File("/u/students/holdawscot/saveFile1.xml");
+		try{
+			Document document = builder.build(xmlFile);
+			Element rootNode = document.getRootElement();
+			for(Element r : rootNode.getChild("gameRooms").getChildren()){
+				if(r.getChildText("name").equals(this.getName())){
+					r.getChild("roomItems").removeContent();
+					for(ItemInstance i : this.items){
+						r.getChild("roomItems").addContent("itemInstance");
+						r.getChild("roomItems").getChild("itemsInstance").addContent("name").setText(i.getItem().getName());
+						r.getChild("roomItems").getChild("itemsInstance").addContent("facingDirection").setText(i.getFacingDirection().toString());
+						r.getChild("roomItems").getChild("itemsInstance").addContent("boundingBox");
+						r.getChild("roomItems").getChild("itemsInstance").getChild("boundingBox").addContent("x").setText("x"+Integer.toString(i.getPosition().x));
+						r.getChild("roomItems").getChild("itemsInstance").getChild("boundingBox").addContent("y").setText("y"+Integer.toString(i.getPosition().y));
+						r.getChild("roomItems").getChild("itemsInstance").getChild("boundingBox").addContent("z").setText("z"+Integer.toString(i.getPosition().z));
+					}
+				}
+			}
+			XMLOutputter xmlOutput = new XMLOutputter();
+			xmlOutput.setFormat(Format.getPrettyFormat());
+			xmlOutput.output(document, new FileWriter("/u/students/holdawscot/saveFile1.xml"));
+		}catch (IOException io) {
+			System.out.println(io.getMessage());
+		}catch (JDOMException jdomex) {
+			System.out.println(jdomex.getMessage());
+		}
+	}
+
+	@Override
+	public Object loadXML(GameData gameData) {
+		// TODO Auto-generated method stub
+		SAXBuilder builder = new SAXBuilder();
+		File xmlFile = new File("/u/students/holdawscot/saveFile1.xml");
+		try{
+			Document document = builder.build(xmlFile);
+			Element rootNode = document.getRootElement();
+			for(Element r : rootNode.getChild("gameRooms").getChildren()){
+				if(r.getChildText("name").equals(this.getName())){
+					this.items.removeAll(items);
+					for(Element i : r.getChild("roomItems").getChildren()){
+						Item ir = gameData.getItem(i.getChildText("item"));
+						Direction dr = Direction.fromString(i.getChildText("facingDirection"));
+						int xr = Integer.parseInt(i.getChild("boundingBox").getChildText("x").substring(1));
+						int yr = Integer.parseInt(i.getChild("boundingBox").getChildText("y").substring(1));
+						int zr = Integer.parseInt(i.getChild("boundingBox").getChildText("z").substring(1));
+						Point3D pr = new Point3D(xr, yr, zr);
+						ItemInstance itemI = new ItemInstance (ir, dr, pr);
+						this.addRoomItemInstance(itemI);
+					}
+				}
+			}
+			return null;
+		}catch (IOException io) {
+			System.out.println(io.getMessage());
+		}catch (JDOMException jdomex) {
+			System.out.println(jdomex.getMessage());
+		}
+		return null;
+	}
 }

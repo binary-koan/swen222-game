@@ -47,15 +47,19 @@ public class XMLTester {
         }
 		};
 
+		Room testRoom2 = new Room("testRoom2");
 
         Player player1 = new Player("Player1","characters/o1.png");
         player1.setRoom(testRoom1);
         Player player2 = new Player("Player2", "characters/o2.png");
         player2.setRoom(testRoom1);
 
+        player1.setFacingDirection(Direction.NORTH);
+        player2.setFacingDirection(Direction.SOUTH);
 
 
         testRooms.put(testRoom1.getName(), testRoom1);
+        testRooms.put(testRoom2.getName(), testRoom2);
         testPlayers.add(player1);
         testPlayers.add(player2);
 
@@ -65,9 +69,9 @@ public class XMLTester {
 
 
 
-		GameData gameData = new GameData(testRooms, testItems);
-
-		Game gameTo = new Game(testPlayers, gameData);
+//		GameData gameData = new GameData(testRooms, testItems);
+//
+//		Game gameTo = new Game(testPlayers, gameData);
 
 		//==================Note=====================
 		//Here change the file directory for ToXML(gameTo, ""), FromXML("") and
@@ -77,11 +81,19 @@ public class XMLTester {
 		//Here we are basically writing the game object defined above to XML,
 		//reading a game object from that, and then writing back to XML from
 		//that returned game object. The two files should be identical
-		ToXML toTester1 = new ToXML(gameTo, "/u/students/holdawscot/saveFile1.xml");
-		toTester1.writeRoot();
+//		ToXML toTester1 = new ToXML(gameTo, "/u/students/holdawscot/saveFile1.xml");
+//		toTester1.writeRoot();
+
+
+//		player1.addInventoryItem(new Chest("testiitem", "o4.png"));
+//		player1.toXML();
+//		player1.loadXML(gameTo);
+//		System.out.println(player1.getRoom().getName());
 
 		FromXML fromTester = new FromXML("/u/students/holdawscot/saveFile1.xml");
 		Game gameFrom = fromTester.readRoot();
+
+
 
 //		Item itemTest = new Bed("tester", "objects/bed.png");
 //		gameFrom.getData().getItems().put(itemTest.getName(), itemTest);
@@ -90,4 +102,5 @@ public class XMLTester {
 		toTester2.writeRoot();
 	}
 }
+
 

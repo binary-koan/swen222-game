@@ -1,5 +1,15 @@
 package game;
 
+import game.storage.GameData;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+
 public class Door extends Item  {
 
 	private Room targetRoom;
@@ -17,14 +27,15 @@ public class Door extends Item  {
 	}
 
 	@Override
-	public String toXML() {
+	public void toXML() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Object loadXML(GameData gameData) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public void loadXML(String xml) {
-		// TODO Auto-generated method stub
-
-	}
 }

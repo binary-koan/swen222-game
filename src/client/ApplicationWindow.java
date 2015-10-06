@@ -4,11 +4,13 @@ import game.Bed;
 import game.Direction;
 import game.Door;
 import game.Drawable;
+import game.Game;
 import game.Item;
 import game.Chest;
 import game.Key;
 import game.Player;
 import game.Room;
+import game.storage.GameData;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -33,9 +35,9 @@ import client.renderer.ResourceLoader;
 
 
 public class ApplicationWindow extends JFrame {
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 6273791834646480175L;
 
@@ -91,7 +93,7 @@ public class ApplicationWindow extends JFrame {
 	                System.exit(0);
 	            }
 	        });
-	     
+
 
 	     fileMenu.add(newMenuItem);
 	     fileMenu.add(openMenuItem);
@@ -111,13 +113,13 @@ public class ApplicationWindow extends JFrame {
 		area.setLayout(new BorderLayout());
 
 		JPanel inventory = new JPanel();
-	
-		
+
+
 		inventory.setLayout(new FlowLayout());
 		inventory.add(new ImagePanel("key"));
 		inventory.add(new ImagePanel("fireplace"));
 
-		
+
 
 		area.add(inventory, BorderLayout.EAST);
 		return area;
@@ -143,6 +145,27 @@ public class ApplicationWindow extends JFrame {
 	}
 
 	public static void main(String[] args) {
+//		GameData gameData = new GameData("/u/students/holdawscot/saveFile1.xml");
+//		Game game = new Game (gameData);
+//		final Player player1 = game.getPlayers().get(0);
+//    	player1.setFacingDirection(Direction.NORTH);
+//    	player1.setRoom(game.getData().getRoom("testRoom1"));
+//
+//        final Player player = new Player("Player 1", "characters/alien1.png") {
+//            @Override
+//            public Room getRoom() {
+//                return game.getData().getRoom("testRoom1");
+//            }
+//        };
+//        player.setFacingDirection(Direction.NORTH);
+
+
+
+
+
+
+
+
 		final Player player2 = new Player("Player 2", "characters/alien2.png");
     	player2.setFacingDirection(Direction.NORTH);
 
@@ -209,7 +232,7 @@ public class ApplicationWindow extends JFrame {
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
             	final ResourceLoader loader = new ResourceLoader("resources");
-            	
+
                 ApplicationWindow aw = new ApplicationWindow("Game", canvas, loader);
                 aw.addKeyListener(keyListener);
                 aw.pack();

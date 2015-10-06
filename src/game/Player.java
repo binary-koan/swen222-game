@@ -1,8 +1,21 @@
 package game;
 
+import game.storage.GameData;
+import game.storage.Serializable;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
-public class Player implements Drawable {
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
+
+public class Player implements Drawable, Serializable{
 	private String name;
 	private String spriteName;
     private Room room;
@@ -67,5 +80,58 @@ public class Player implements Drawable {
     public String getSpriteName() {
         return spriteName;
     }
+
+	@Override
+	public void toXML() {
+		SAXBuilder builder = new SAXBuilder();
+		File xmlFile = new File("/u/students/holdawscot/saveFile1.xml");
+		try{
+			Document document = builder.build(xmlFile);
+			Element rootNode = document.getRootElement();
+			for(Element p : rootNode.getChild("gamePlayers").getChildren()){
+				if(p.getChildText("name").equals(this.getName())){
+					p.getChild("room").setText(this.getRoom().getName());
+					p.getChild("facingDirection").setText(this.getFacingDirection().toString());
+					p.getChild("playerInventory").removeContent();
+					for(Item i : this.inventory){
+						p.getChild("playerInventory").addContent(new Element("name").setText(i.getName()));
+					}
+				}
+			}
+			XMLOutputter xmlOutput = new XMLOutputter();
+			xmlOutput.setFormat(Format.getPrettyFormat());
+			xmlOutput.output(document, new FileWriter("/u/students/holdawscot/saveFile1.xml"));
+		}catch (IOException io) {
+			System.out.println(io.getMessage());
+		}catch (JDOMException jdomex) {
+			System.out.println(jdomex.getMessage());
+		}
+	}
+
+	@Override
+	public Player loadXML(GameData gameData) {
+		// TODO Auto-generated method stub
+		SAXBuilder builder = new SAXBuilder();
+		File xmlFile = new File("/u/students/holdawscot/saveFile1.xml");
+		try{
+			Document document = builder.build(xmlFile);
+			Element rootNode = document.getRootElement();
+			for(Element p : rootNode.getChild("gamePlayers").getChildren()){
+				if(p.getChildText("name").equals(this.getName())){
+					this.setRoom(gameData.getRoom(p.getChildText("room")));
+					this.inventory.removeAll(inventory);
+					for(Element i : p.getChild("playerInventory").getChildren()){
+						this.addInventoryItem(gameData.getItem(i.getText()));
+					}
+				}
+			}
+			return null;
+		}catch (IOException io) {
+			System.out.println(io.getMessage());
+		}catch (JDOMException jdomex) {
+			System.out.println(jdomex.getMessage());
+		}
+		return null;
+	}
 
 }

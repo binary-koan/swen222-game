@@ -77,7 +77,7 @@ public class FromXML {
 			//Create all the items from the document, put them in the Map items
 			Element playersRoot = rootNode.getChild("gamePlayers");
 			for(Element e : playersRoot.getChildren()){
-				Player currentPlayer = readPlayer(e);
+				Player currentPlayer = readPlayer(e, null);	//				//	//			//
 				players.put(currentPlayer.getName(), currentPlayer);
 			}
 
@@ -88,11 +88,11 @@ public class FromXML {
 				playerList.add(p.getValue());
 			}
 
-			GameData data = new GameData(rooms, items);
-			Game game = new Game(playerList, data);
+			//GameData data = new GameData(rooms, items);
+			//Game game = new Game(playerList, data);
 			System.out.println("File Read!");
-
-			return game;
+			return null;
+			//return game;
 
 		}catch (IOException io) {
 			System.out.println(io.getMessage());
@@ -102,7 +102,7 @@ public class FromXML {
 		return null;
 	}
 
-	private Room readRoom(Element e){
+	public static Room readRoom(Element e){
 		Room currentRoom = new Room(e.getChildText("name"));
 		return currentRoom;
 	}
@@ -112,7 +112,7 @@ public class FromXML {
 	 * @param e The element to be read
 	 * @return
 	 */
-	private Item readItem(Element e){
+	public static Item readItem(Element e){
 		//Working on a more robust, less error prone method.
 		String currentClass = e.getChildText("subClass");
 		Item currentItem;
@@ -140,11 +140,15 @@ public class FromXML {
 	 * @param e The element to be read
 	 * @return
 	 */
-	private Player readPlayer(Element e){
+	public static Player readPlayer(Element e, GameData data){
 		Player currentPlayer = new Player(e.getChildText("name"), e.getChildText("spriteName"));
 		if(currentPlayer.getFacingDirection() != null){
 			currentPlayer.setFacingDirection(Direction.fromString(e.getChildText("facingDirection")));
 		}
+		for(Element i : e.getChild("playerInventory").getChildren()){
+			currentPlayer.addInventoryItem(data.getItem(i.getText()));
+		}
+		currentPlayer.setRoom(data.getRoom(e.getChildText("room")));
 		return currentPlayer;
 	}
 
@@ -217,4 +221,3 @@ public class FromXML {
 	}
 
 }
-
