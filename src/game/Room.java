@@ -71,4 +71,16 @@ public class Room {
     public void addPlayer(Player player){
     	players.add(player);
     }
+
+    public void removePlayer(Player player){
+    	players.remove(player);
+    }
+
+    public void addRoomItemInstance(ItemInstance item){
+    	items.add(item);
+    }
+
+    public void removeRoomItemInstance(ItemInstance item){
+    	items.remove(item);
+    }
 }

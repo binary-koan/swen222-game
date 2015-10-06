@@ -43,6 +43,10 @@ public class Player implements Drawable {
     	this.inventory.add(item);
     }
 
+    public void removeInventoryItem(Item item){
+    	this.inventory.remove(item);
+    }
+
     @Override
     public Point3D getPosition() {
     	//return this.boundingCube;
