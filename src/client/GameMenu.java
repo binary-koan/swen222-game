@@ -10,6 +10,7 @@ import game.Key;
 import game.Player;
 import game.Room;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -23,11 +24,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
@@ -59,7 +64,9 @@ public class GameMenu {
 				}
 				JFrame frame = new JFrame("Haunted House");
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.add(new GameOptions(frame));
+				frame.setLayout(new BorderLayout());
+				frame.add(new GameOptions(frame), BorderLayout.WEST);
+				frame.add(new ImagePanel(), BorderLayout.EAST);
 				frame.pack();
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
@@ -71,6 +78,24 @@ public class GameMenu {
 		});
 	}
 
+	public class ImagePanel extends JPanel {
+		
+		private BufferedImage image;
+		
+		public ImagePanel() {
+			try {
+				image = ImageIO.read(new File("resources/backgrounds/haunted_house_contruction.jpg"));
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+		
+		protected void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			g.drawImage(image, 0, 0, null);
+		}
+	}
+	
 	public class GameOptions extends JPanel {
 
 		private List<String> menuItems;
