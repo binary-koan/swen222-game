@@ -28,21 +28,23 @@ import org.eclipse.jdt.annotation.NonNull;
 import client.renderer.ResourceLoader;
 
 
-public class ApplicationWindow extends JFrame {
+public class ApplicationWindow extends JFrame implements KeyListener {
 
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 6273791834646480175L;
 
+    private Player player;
 	private @NonNull ResourceLoader loader;
-
 	private GameCanvas canvas;
 
-	public ApplicationWindow(String title, GameCanvas canvas, @NonNull ResourceLoader loader) {
-		super(title);
-		this.canvas = canvas;
-		this.loader = loader;
+	public ApplicationWindow(Player player) {
+		super("Game");
+        this.player = player;
+        this.loader = new ResourceLoader("resources");
+        this.canvas = new GameCanvas(this, loader);
+        canvas.setPlayer(player);
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension scale = new Dimension();
@@ -56,8 +58,8 @@ public class ApplicationWindow extends JFrame {
 		add(canvas, BorderLayout.CENTER);
 		add(setupLowerBar(), BorderLayout.SOUTH);
 
+        addKeyListener(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 	}
 
 	public GameCanvas getGameCanvas() {
@@ -120,7 +122,11 @@ public class ApplicationWindow extends JFrame {
 		return area;
 	}
 
-	private class ImagePanel extends JPanel {
+    public void handleAction(Item item, Item.Action action) {
+        //TODO
+    }
+
+    private class ImagePanel extends JPanel {
 		private BufferedImage image;
 
 		public ImagePanel(String item) {
@@ -138,6 +144,26 @@ public class ApplicationWindow extends JFrame {
 
 		}
 	}
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_LEFT:
+                player.setFacingDirection(player.getFacingDirection().previous());
+                break;
+            case KeyEvent.VK_RIGHT:
+                player.setFacingDirection(player.getFacingDirection().next());
+        }
+        canvas.update();
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+    }
 
 	public static void main(String[] args) {
 //		GameData gameData = new GameData("/u/students/holdawscot/saveFile1.xml");
@@ -172,13 +198,13 @@ public class ApplicationWindow extends JFrame {
             }
 
             {
-            	 Item item = new Bed("Bucket", "", "objects/bucket.png");
+            	 Item item = new Bed("Bucket", "Looks like this could be used to hold liquid of some sort ...", "objects/bucket.png");
                  getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.Point3D(160, 0, 160)));
 
-                 item = new Chest("Chest", "", "objects/crate.png");
+                 item = new Chest("Crate", "There might be something inside!", "objects/crate.png");
                  getItems().add(new Room.ItemInstance(item, Direction.EAST, new Drawable.Point3D(80, 0, 240)));
 
-                 item = new Door("Door", "", "objects/door.png");
+                 item = new Door("Door", "You can get to [insert room here] through here.", "objects/door.png");
                  getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.Point3D(320, -10, 160)));
 
                  getPlayers().add(player2);
@@ -194,44 +220,11 @@ public class ApplicationWindow extends JFrame {
         };
         player.setFacingDirection(Direction.NORTH);
 
-        final GameCanvas canvas = new GameCanvas(loader);
-
-        final KeyListener keyListener = new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                switch (e.getKeyCode()) {
-                    case KeyEvent.VK_LEFT:
-                        player.setFacingDirection(player.getFacingDirection().previous());
-                        break;
-                    case KeyEvent.VK_RIGHT:
-                        player.setFacingDirection(player.getFacingDirection().next());
-                }
-                canvas.update();
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-
-        };
-
-        canvas.addKeyListener(keyListener);
-
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-            	final ResourceLoader loader = new ResourceLoader("resources");
-
-                ApplicationWindow aw = new ApplicationWindow("Game", canvas, loader);
-                aw.addKeyListener(keyListener);
+                ApplicationWindow aw = new ApplicationWindow(player);
                 aw.pack();
                 aw.setVisible(true);
-
-                aw.getGameCanvas().setPlayer(player);
-
             }
         });
 	}

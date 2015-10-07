@@ -2,7 +2,7 @@ package control;
 
 /**
  * The Clock Thread is responsible for producing a consistent "pulse" which is
- * used to update the game state, and refresh the display. Setting the pulse
+ * used to showObject the game state, and refresh the display. Setting the pulse
  * rate too high may cause problems, when the point is reached at which the work
  * done to service a given pulse exceeds the time between pulses.
  * 

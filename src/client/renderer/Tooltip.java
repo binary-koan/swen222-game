@@ -6,15 +6,19 @@ import game.Room;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Tooltip extends JPanel {
+    private Item.Action primaryAction;
+    private Item.Action secondaryAction;
 
-	JLabel nameLabel = new JLabel("(no name)");
-	JLabel primaryActionLabel = new JLabel();
-	JLabel secondaryActionLabel = new JLabel();
+	private JLabel nameLabel = new JLabel("(no name)");
+    private JLabel descriptionLabel = new JLabel();
+	private JLabel primaryActionLabel = new JLabel();
+	private JLabel secondaryActionLabel = new JLabel();
 
 	public Tooltip(ResourceLoader loader) {
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -24,36 +28,67 @@ public class Tooltip extends JPanel {
 		setBorder(new LineBorder(background, 10));
 
 		Color foreground = new Color(0xffffff);
-		nameLabel.setForeground(foreground);
-		primaryActionLabel.setForeground(foreground);
+
+        nameLabel.setForeground(foreground);
+        nameLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
+
+        descriptionLabel.setVisible(false);
+        descriptionLabel.setVerticalAlignment(JLabel.TOP);
+        descriptionLabel.setForeground(foreground);
+        descriptionLabel.setPreferredSize(new Dimension(200, 75));
+        descriptionLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
+
+        Font actionFont = new Font(Font.SANS_SERIF, Font.BOLD, 14);
+
+        primaryActionLabel.setForeground(foreground);
+        primaryActionLabel.setFont(actionFont);
 		primaryActionLabel.setIcon(new ImageIcon(loader.getImage("ui/mouse-leftclick.png")));
+        primaryActionLabel.setIconTextGap(8);
+
 		secondaryActionLabel.setForeground(foreground);
+        secondaryActionLabel.setFont(actionFont);
 		secondaryActionLabel.setIcon(new ImageIcon(loader.getImage("ui/mouse-rightclick.png")));
+        secondaryActionLabel.setIconTextGap(8);
 
 		add(nameLabel);
+        add(descriptionLabel);
+        add(Box.createVerticalStrut(10));
+        add(Box.createVerticalGlue());
 		add(primaryActionLabel);
 		add(secondaryActionLabel);
 	}
 
-	public void update(String name, List<String> actions) {
-		nameLabel.setText(name);
+	public void showObject(String name, Item.Action primary, Item.Action secondary) {
+        primaryAction = primary;
+        secondaryAction = secondary;
 
-		if (actions != null && actions.size() > 0) {
-			primaryActionLabel.setText(actions.get(0));
+        descriptionLabel.setVisible(false);
+		nameLabel.setText(name.toUpperCase());
 
-			if (actions.size() == 2) {
-				secondaryActionLabel.setText(actions.get(1));
-			}
-			else if (actions.size() > 2) {
-				secondaryActionLabel.setText("Other ...");
-			}
-			else {
-				secondaryActionLabel.setVisible(false);
-			}
-		}
-		else {
-			primaryActionLabel.setVisible(false);
+        if (primary != null) {
+            primaryActionLabel.setText(primary.toString());
+        }
+
+		if (secondary == null) {
 			secondaryActionLabel.setVisible(false);
 		}
+		else {
+			secondaryActionLabel.setVisible(true);
+			secondaryActionLabel.setText(secondary.toString());
+		}
 	}
+
+    public Item.Action getPrimaryAction() {
+        return primaryAction;
+    }
+
+    public Item.Action getSecondaryAction() {
+        return secondaryAction;
+    }
+
+    public void showDescription(String description) {
+        descriptionLabel.setVisible(true);
+        // Using HTML in the label makes it word wrap and allows for markup in descriptions
+        descriptionLabel.setText("<html>" + description + "</html>");
+    }
 }

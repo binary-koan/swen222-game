@@ -132,81 +132,81 @@ public class GameMenu {
 					}
 
 					if (selectMenuItem == "Start Game") {
-						final Player player2 = new Player("Player 2", "characters/alien2.png");
-						player2.setFacingDirection(Direction.NORTH);
-
-						final ResourceLoader loader = new ResourceLoader("resources");
-						final Room room = new Room("Some name") {
-							{
-								Item item = new Bed("Bed", "", "objects/bucket.png");
-								//getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.Point3D(80, 0, 80)));
-
-								item = new Chest("Chest", "", "objects/crate.png");
-								getItems().add(new Room.ItemInstance(item, Direction.EAST, new Drawable.Point3D(40, 0, 120)));
-
-								item = new Key("Key", "", "objects/key-blue.png");
-								getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.Point3D(140, 60, 20)));
-
-								item = new Door("Door", "", "objects/door.png");
-								getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.Point3D(140, 0, 80)));
-
-								getPlayers().add(player2);
-							}
-						};
-						player2.setRoom(room);
-
-						final Player player = new Player("Player 1", "characters/alien1.png") {
-							@Override
-							public Room getRoom() {
-								return room;
-							}
-						};
-						player.setFacingDirection(Direction.NORTH);
-
-						final GameCanvas canvas = new GameCanvas(loader);
-
-						final KeyListener keyListener = new KeyListener() {
-							@Override
-							public void keyPressed(KeyEvent e) {
-								switch (e.getKeyCode()) {
-								case KeyEvent.VK_LEFT:
-									player.setFacingDirection(player.getFacingDirection().next());
-									break;
-								case KeyEvent.VK_RIGHT:
-									player.setFacingDirection(player.getFacingDirection().previous());
-								}
-								canvas.update();
-							}
-
-							@Override
-							public void keyTyped(KeyEvent e) {
-							}
-
-							@Override
-							public void keyReleased(KeyEvent e) {
-							}
-
-						};
-
-						canvas.addKeyListener(keyListener);
-
-						SwingUtilities.invokeLater(new Runnable() {
-							public void run() {
-								final ResourceLoader loader = new ResourceLoader("resources");
-
-								ApplicationWindow aw = new ApplicationWindow("Game", canvas, loader);
-								aw.addKeyListener(keyListener);
-								aw.pack();
-								aw.setVisible(true);
-
-
-								aw.getGameCanvas().setPlayer(player);
-
-							}
-						});
-						
-						frame.setVisible(false);
-						
+//						final Player player2 = new Player("Player 2", "characters/alien2.png");
+//						player2.setFacingDirection(Direction.NORTH);
+//
+//						final ResourceLoader loader = new ResourceLoader("resources");
+//						final Room room = new Room("Some name") {
+//							{
+//								Item item = new Bed("Bed", "", "objects/bucket.png");
+//								//getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.Point3D(80, 0, 80)));
+//
+//								item = new Chest("Chest", "", "objects/crate.png");
+//								getItems().add(new Room.ItemInstance(item, Direction.EAST, new Drawable.Point3D(40, 0, 120)));
+//
+//								item = new Key("Key", "", "objects/key-blue.png");
+//								getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.Point3D(140, 60, 20)));
+//
+//								item = new Door("Door", "", "objects/door.png");
+//								getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.Point3D(140, 0, 80)));
+//
+//								getPlayers().add(player2);
+//							}
+//						};
+//						player2.setRoom(room);
+//
+//						final Player player = new Player("Player 1", "characters/alien1.png") {
+//							@Override
+//							public Room getRoom() {
+//								return room;
+//							}
+//						};
+//						player.setFacingDirection(Direction.NORTH);
+//
+//						final GameCanvas canvas = new GameCanvas(loader);
+//
+//						final KeyListener keyListener = new KeyListener() {
+//							@Override
+//							public void keyPressed(KeyEvent e) {
+//								switch (e.getKeyCode()) {
+//								case KeyEvent.VK_LEFT:
+//									player.setFacingDirection(player.getFacingDirection().next());
+//									break;
+//								case KeyEvent.VK_RIGHT:
+//									player.setFacingDirection(player.getFacingDirection().previous());
+//								}
+//								canvas.update();
+//							}
+//
+//							@Override
+//							public void keyTyped(KeyEvent e) {
+//							}
+//
+//							@Override
+//							public void keyReleased(KeyEvent e) {
+//							}
+//
+//						};
+//
+//						canvas.addKeyListener(keyListener);
+//
+//						SwingUtilities.invokeLater(new Runnable() {
+//							public void run() {
+//								final ResourceLoader loader = new ResourceLoader("resources");
+//
+//								ApplicationWindow aw = new ApplicationWindow("Game", canvas, loader);
+//								aw.addKeyListener(keyListener);
+//								aw.pack();
+//								aw.setVisible(true);
+//
+//
+//								aw.getGameCanvas().setPlayer(player);
+//
+//							}
+//						});
+//
+//						frame.setVisible(false);
+//
 						
 						
 					}

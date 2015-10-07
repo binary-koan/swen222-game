@@ -14,11 +14,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("serial")
 public class GameCanvas extends JPanel implements MouseListener, MouseMotionListener {
+    private @NonNull ApplicationWindow parent;
     private @NonNull ResourceLoader loader;
 
     private double roomImageScale;
@@ -30,8 +30,9 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
     private Tooltip tooltip;
     private Drawable activeObject;
 
-    public GameCanvas(@NonNull ResourceLoader loader) {
+    public GameCanvas(@NonNull ApplicationWindow parent, @NonNull ResourceLoader loader) {
         this.loader = loader;
+        this.parent = parent;
 
         tooltip = new Tooltip(loader);
         tooltip.setVisible(false);
@@ -105,9 +106,28 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
 
         if (drawable instanceof ItemInstance) {
             Item item = ((ItemInstance) drawable).getItem();
-            tooltip.update(item.getName(), null); //TODO actions
+            List<Item.Action> actions = item.getAllowedActions();
+            if (actions.size() > 2) {
+                tooltip.showObject(item.getName(), item.getAllowedActions().get(0), Item.Action.SHOW_MENU);
+            }
+            else if (actions.size() > 1) {
+                tooltip.showObject(item.getName(), item.getAllowedActions().get(0), item.getAllowedActions().get(1));
+            }
+            else if (actions.size() > 0) {
+                tooltip.showObject(item.getName(), item.getAllowedActions().get(0), null);
+            }
+            else {
+                tooltip.showObject(item.getName(), null, null);
+            }
         }
 
+        updateTooltipPosition(drawable);
+
+        tooltip.setVisible(true);
+        repaint();
+    }
+
+    private void updateTooltipPosition(Drawable drawable) {
         Rectangle renderBounds = roomImage.getBounds(drawable);
         if (renderBounds != null) {
             Dimension size = tooltip.getPreferredSize();
@@ -120,23 +140,44 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
                     size.width, size.height
             );
         }
-
-        tooltip.setVisible(true);
-        repaint();
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
     	Point scenePosition = calculateScenePosition(e);
         Drawable drawable = roomImage.getObjectAt(scenePosition);
+        activeObject = drawable;
 
-//        if (drawable instanceof ItemInstance) {
-//        	activeItem = ((ItemInstance)drawable).getItem();
-//        	repaint();
-//        }
+        if (drawable != null) {
+            Item.Action action = (e.getButton() == MouseEvent.BUTTON1) ?
+                    tooltip.getPrimaryAction() : tooltip.getSecondaryAction();
+
+            if (drawable instanceof ItemInstance) {
+                handleItemAction((ItemInstance)drawable, action);
+            }
+        }
     }
 
-	private Point calculateScenePosition(MouseEvent e) {
+    private void handleItemAction(ItemInstance drawable, Item.Action action) {
+        Item item = drawable.getItem();
+
+        if (action == null) {
+            return;
+        }
+        else if (action == Item.Action.EXAMINE) {
+            System.out.println("Examining");
+            tooltip.showDescription(item.getDescription());
+            updateTooltipPosition(drawable);
+        }
+        else if (action == Item.Action.SHOW_MENU) {
+            //TODO show menu
+        }
+        else {
+            parent.handleAction(item, action);
+        }
+    }
+
+    private Point calculateScenePosition(MouseEvent e) {
 		return new Point(
     			(int)((e.getX() - roomImagePosition.x) / (roomImageScale * 5)),
     			(int)((e.getY() - roomImagePosition.y) / (roomImageScale * 5))

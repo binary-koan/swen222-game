@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class Item implements Serializable {
 	public enum Action {
-		PICK_UP("Pick up"), SEARCH("Search");
+		EXAMINE("Examine"), PICK_UP("Pick up"), SEARCH("Search"), SHOW_MENU("Other ...");
 
 		private final String text;
 
@@ -27,8 +27,6 @@ public abstract class Item implements Serializable {
 			return text;
 		}
 	}
-
-	public class IllegalActionException extends Exception { }
 
 	private String name;
 	private String description;
@@ -52,6 +50,9 @@ public abstract class Item implements Serializable {
 		return description;
 	}
 
-	public abstract List<Action> getAllowedActions();
-	public abstract void performAction(Action action, Player player);
+    public List<Action> getAllowedActions() {
+        List<Action> result = new ArrayList<>();
+        result.add(Action.EXAMINE);
+        return result;
+    }
 }

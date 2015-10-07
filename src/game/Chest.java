@@ -44,14 +44,4 @@ public class Chest extends Item {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public List<Action> getAllowedActions() {
-		return null; //TODO
-	}
-
-	@Override
-	public void performAction(Action action, Player player) {
-		//TODO
-	}
 }

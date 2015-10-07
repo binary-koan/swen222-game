@@ -10,16 +10,6 @@ public class Bed extends Item {
 	}
 
 	@Override
-	public List<Action> getAllowedActions() {
-		return null; //TODO
-	}
-
-	@Override
-	public void performAction(Action action, Player player) {
-		//TODO
-	}
-
-	@Override
 	public void toXML() {
 		// TODO Auto-generated method stub
 	}
