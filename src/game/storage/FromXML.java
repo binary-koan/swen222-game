@@ -163,10 +163,6 @@ public class FromXML {
 		Element roomsRoot = rootNode.getChild("gameRooms");
 
 		Room placeHolderRoom = new Room("placeholder"){
-		@Override
-	    public String getWallImage() {
-	        return "backgrounds/room.png";
-	    }
 		{
 			Element roomsRoot = rootNode.getChild("gameRooms");
 

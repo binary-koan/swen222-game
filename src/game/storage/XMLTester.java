@@ -23,10 +23,6 @@ public class XMLTester {
         ArrayList<Player> testPlayers = new ArrayList<Player>();
 
 		Room testRoom1 = new Room("testRoom1"){
-		@Override
-        public String getWallImage() {
-            return "backgrounds/room.png";
-        }
         {
 		Item item = new Bed("Bed", "objects/bed.png");
 		testItems.put(item.getName(), item);

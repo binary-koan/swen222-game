@@ -138,11 +138,6 @@ public class GameMenu {
 
 						final ResourceLoader loader = new ResourceLoader("resources");
 						final Room room = new Room("Some name") {
-							@Override
-							public String getWallImage() {
-								return "backgrounds/room.png";
-							}
-
 							{
 								Item item = new Bed("Bed", "objects/bucket.png");
 								//getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.Point3D(80, 0, 80)));
