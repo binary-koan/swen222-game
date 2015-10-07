@@ -4,13 +4,10 @@ import game.Bed;
 import game.Direction;
 import game.Door;
 import game.Drawable;
-import game.Game;
 import game.Item;
 import game.Chest;
-import game.Key;
 import game.Player;
 import game.Room;
-import game.storage.GameData;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -23,10 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -178,17 +172,14 @@ public class ApplicationWindow extends JFrame {
             }
 
             {
-            	 Item item = new Bed("Bed", "objects/bucket.png");
-                 //getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.Point3D(80, 0, 80)));
+            	 Item item = new Bed("Bucket", "objects/bucket.png");
+                 getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.Point3D(160, 0, 160)));
 
                  item = new Chest("Chest", "objects/crate.png");
-                 getItems().add(new Room.ItemInstance(item, Direction.EAST, new Drawable.Point3D(40, 0, 120)));
-
-                 item = new Key("Key", "objects/key-blue.png");
-                 getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.Point3D(140, 60, 20)));
+                 getItems().add(new Room.ItemInstance(item, Direction.EAST, new Drawable.Point3D(80, 0, 240)));
 
                  item = new Door("Door", "objects/door.png");
-                 getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.Point3D(140, 0, 80)));
+                 getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.Point3D(320, -10, 160)));
 
                  getPlayers().add(player2);
             }

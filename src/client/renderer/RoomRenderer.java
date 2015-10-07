@@ -24,13 +24,13 @@ public class RoomRenderer {
                 return Integer.compare(o1.getPosition().z, o2.getPosition().z);
             }
         });
-        sceneItemComparators.put(Direction.EAST, new Comparator<Drawable>() {
+        sceneItemComparators.put(Direction.WEST, new Comparator<Drawable>() {
             @Override
             public int compare(Drawable o1, Drawable o2) {
                 return -Integer.compare(o1.getPosition().x, o2.getPosition().x);
             }
         });
-        sceneItemComparators.put(Direction.WEST, new Comparator<Drawable>() {
+        sceneItemComparators.put(Direction.EAST, new Comparator<Drawable>() {
             @Override
             public int compare(Drawable o1, Drawable o2) {
                 return Integer.compare(o1.getPosition().x, o2.getPosition().x);
@@ -222,7 +222,7 @@ public class RoomRenderer {
     private void addWalls(@NonNull Room room, double scale) {
         Direction position = player.getFacingDirection();
 
-        if (room.hasWall(position.next())) {
+        if (room.hasWall(position.previous())) {
             backgroundLeft = loader.getImage("backgrounds/room-wall-left.png");
         }
         else {
@@ -243,7 +243,7 @@ public class RoomRenderer {
             backgroundCenter = loader.getImage("backgrounds/room-nowall-back.png");
         }
 
-        if (room.hasWall(position.previous())) {
+        if (room.hasWall(position.next())) {
             backgroundRight = loader.getImage("backgrounds/room-wall-right.png");
         }
         else {
@@ -271,7 +271,7 @@ public class RoomRenderer {
         else if (direction == Direction.SOUTH) {
         	x = position.x - width / 2;
         }
-        else if (direction == Direction.EAST) {
+        else if (direction == Direction.WEST) {
         	x = Room.ROOM_SIZE - position.z - width / 2;
         }
         else {
@@ -292,9 +292,9 @@ public class RoomRenderer {
         switch (direction) {
             case NORTH:
                 return position.z;
-            case EAST:
-                return Room.ROOM_SIZE - position.x;
             case WEST:
+                return Room.ROOM_SIZE - position.x;
+            case EAST:
                 return position.x;
             case SOUTH:
             default:

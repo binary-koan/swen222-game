@@ -17,7 +17,6 @@ import java.awt.EventQueue;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.MenuItem;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -171,10 +170,10 @@ public class GameMenu {
 							public void keyPressed(KeyEvent e) {
 								switch (e.getKeyCode()) {
 								case KeyEvent.VK_LEFT:
-									player.setFacingDirection(player.getFacingDirection().previous());
+									player.setFacingDirection(player.getFacingDirection().next());
 									break;
 								case KeyEvent.VK_RIGHT:
-									player.setFacingDirection(player.getFacingDirection().next());
+									player.setFacingDirection(player.getFacingDirection().previous());
 								}
 								canvas.update();
 							}

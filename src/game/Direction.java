@@ -56,7 +56,7 @@ public enum Direction {
         }
     }
 
-    public Direction previous() {
+    public Direction next() {
         Direction[] values = Direction.values();
 
         if (this == values[0]) {
@@ -67,7 +67,7 @@ public enum Direction {
         }
     }
 
-    public Direction next() {
+    public Direction previous() {
         Direction[] values = Direction.values();
 
         if (this == values[values.length - 1]) {

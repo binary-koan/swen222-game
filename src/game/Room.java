@@ -18,8 +18,8 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 public class Room implements Serializable{
-    public static int ROOM_SIZE = 160;
-    public static int CEILING_HEIGHT = 96;
+    public static int ROOM_SIZE = 320;
+    public static int CEILING_HEIGHT = 192;
 
     public class ItemInstance implements Drawable{
         private Item item;
