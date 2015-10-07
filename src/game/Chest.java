@@ -8,9 +8,9 @@ public class Chest extends Item {
 	private List<Item> chestItems;
 	private boolean hasOpened;
 
-	public Chest(String name, String spriteName, Item...items) {
-		super(name, spriteName, false);
-		this.chestItems = new ArrayList<Item>();
+	public Chest(String name, String description, String spriteName, Item...items) {
+		super(name, description, spriteName);
+		this.chestItems = new ArrayList<>();
 		int j = 0;
 		for(Item i : items) {
 			if (j <= 3) {
@@ -45,4 +45,13 @@ public class Chest extends Item {
 		return null;
 	}
 
+	@Override
+	public List<Action> getAllowedActions() {
+		return null; //TODO
+	}
+
+	@Override
+	public void performAction(Action action, Player player) {
+		//TODO
+	}
 }

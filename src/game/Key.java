@@ -2,15 +2,16 @@ package game;
 
 import game.storage.GameData;
 
+import java.util.List;
+
 public class Key extends Item {
-	public Key(String name, String spriteName) {
-		super(name, spriteName, true);
+	public Key(String name, String description, String spriteName) {
+		super(name, description, spriteName);
 	}
 
 	@Override
 	public void toXML() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -19,4 +20,13 @@ public class Key extends Item {
 		return null;
 	}
 
+	@Override
+	public List<Action> getAllowedActions() {
+		return null; //TODO
+	}
+
+	@Override
+	public void performAction(Action action, Player player) {
+		//TODO
+	}
 }

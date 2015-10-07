@@ -24,19 +24,19 @@ public class XMLTester {
 
 		Room testRoom1 = new Room("testRoom1"){
         {
-		Item item = new Bed("Bed", "objects/bed.png");
+		Item item = new Bed("Bed", "", "objects/bed.png");
 		testItems.put(item.getName(), item);
         getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Point3D(80, 0, 80)));
 
-        item = new Chest("Chest", "objects/chest.png");
+        item = new Chest("Chest", "", "objects/chest.png");
         testItems.put(item.getName(), item);
         getItems().add(new Room.ItemInstance(item, Direction.EAST, new Point3D(40, 0, 120)));
 
-        item = new Key("Key", "objects/key.png");
+        item = new Key("Key", "", "objects/key.png");
         testItems.put(item.getName(), item);
         getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Point3D(140, 60, 20)));
 
-        item = new Door("Door", "objects/door.png");
+        item = new Door("Door", "", "objects/door.png");
         testItems.put(item.getName(), item);
         getItems().add(new Room.ItemInstance(item, Direction.WEST, new Point3D(140, 0, 80)));
 

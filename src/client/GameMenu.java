@@ -138,16 +138,16 @@ public class GameMenu {
 						final ResourceLoader loader = new ResourceLoader("resources");
 						final Room room = new Room("Some name") {
 							{
-								Item item = new Bed("Bed", "objects/bucket.png");
+								Item item = new Bed("Bed", "", "objects/bucket.png");
 								//getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.Point3D(80, 0, 80)));
 
-								item = new Chest("Chest", "objects/crate.png");
+								item = new Chest("Chest", "", "objects/crate.png");
 								getItems().add(new Room.ItemInstance(item, Direction.EAST, new Drawable.Point3D(40, 0, 120)));
 
-								item = new Key("Key", "objects/key-blue.png");
+								item = new Key("Key", "", "objects/key-blue.png");
 								getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.Point3D(140, 60, 20)));
 
-								item = new Door("Door", "objects/door.png");
+								item = new Door("Door", "", "objects/door.png");
 								getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.Point3D(140, 0, 80)));
 
 								getPlayers().add(player2);

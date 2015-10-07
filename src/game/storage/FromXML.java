@@ -119,19 +119,19 @@ public class FromXML {
 
 		switch(currentClass){
 		case "class game.Chest":
-			currentItem = new Chest(e.getChildText("name"), e.getChildText("spriteName"));
+			currentItem = new Chest(e.getChildText("name"), "", e.getChildText("spriteName"));
 			return currentItem;
 		case "class game.Key":
-			currentItem = new Key(e.getChildText("name"), e.getChildText("spriteName"));
+			currentItem = new Key(e.getChildText("name"), "", e.getChildText("spriteName"));
 			return currentItem;
 		case "class game.Bed":
-			currentItem = new Bed(e.getChildText("name"), e.getChildText("spriteName"));
+			currentItem = new Bed(e.getChildText("name"), "", e.getChildText("spriteName"));
 			return currentItem;
 		case "class game.Door":
-			currentItem = new Door(e.getChildText("name"), e.getChildText("spriteName"));
+			currentItem = new Door(e.getChildText("name"), "", e.getChildText("spriteName"));
 			return currentItem;
 		}
-		return new Chest(e.getChildText("name"), e.getChildText("spriteName"));
+		return new Chest(e.getChildText("name"), "", e.getChildText("spriteName"));
 	}
 
 	/**

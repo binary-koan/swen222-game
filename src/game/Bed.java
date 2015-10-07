@@ -2,17 +2,26 @@ package game;
 
 import game.storage.GameData;
 
+import java.util.List;
+
 public class Bed extends Item {
+	public Bed(String name, String description, String spriteName) {
+		super(name, description, spriteName);
+	}
 
-	public Bed(String name, String spriteName) {
-		super(name, spriteName, false);
+	@Override
+	public List<Action> getAllowedActions() {
+		return null; //TODO
+	}
 
+	@Override
+	public void performAction(Action action, Player player) {
+		//TODO
 	}
 
 	@Override
 	public void toXML() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -20,7 +29,4 @@ public class Bed extends Item {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
-
 }

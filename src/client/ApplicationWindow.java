@@ -172,13 +172,13 @@ public class ApplicationWindow extends JFrame {
             }
 
             {
-            	 Item item = new Bed("Bucket", "objects/bucket.png");
+            	 Item item = new Bed("Bucket", "", "objects/bucket.png");
                  getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.Point3D(160, 0, 160)));
 
-                 item = new Chest("Chest", "objects/crate.png");
+                 item = new Chest("Chest", "", "objects/crate.png");
                  getItems().add(new Room.ItemInstance(item, Direction.EAST, new Drawable.Point3D(80, 0, 240)));
 
-                 item = new Door("Door", "objects/door.png");
+                 item = new Door("Door", "", "objects/door.png");
                  getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.Point3D(320, -10, 160)));
 
                  getPlayers().add(player2);
