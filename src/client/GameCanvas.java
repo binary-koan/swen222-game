@@ -1,5 +1,6 @@
 package client;
 
+import client.renderer.ActionMenu;
 import client.renderer.ResourceLoader;
 import client.renderer.RoomRenderer;
 import client.renderer.Tooltip;
@@ -28,6 +29,7 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
     private @Nullable Player player;
 
     private Tooltip tooltip;
+    private ActionMenu openMenu;
     private Drawable activeObject;
 
     public GameCanvas(@NonNull ApplicationWindow parent, @NonNull ResourceLoader loader) {
@@ -89,6 +91,10 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
 
     @Override
     public void mouseMoved(MouseEvent e) {
+        if (openMenu != null) {
+            return;
+        }
+
         Point scenePosition = calculateScenePosition(e);
         Drawable drawable = roomImage.getObjectAt(scenePosition);
 
@@ -121,20 +127,20 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
             }
         }
 
-        updateTooltipPosition(drawable);
+        positionAboveObject(drawable, tooltip);
 
         tooltip.setVisible(true);
         repaint();
     }
 
-    private void updateTooltipPosition(Drawable drawable) {
+    private void positionAboveObject(Drawable drawable, JComponent component) {
         Rectangle renderBounds = roomImage.getBounds(drawable);
         if (renderBounds != null) {
-            Dimension size = tooltip.getPreferredSize();
+            Dimension size = component.getPreferredSize();
 
             int x = (int) ((renderBounds.x + renderBounds.width / 2) * roomImageScale * 5);
             int y = (int) ((renderBounds.y - 5) * roomImageScale * 5);
-            tooltip.setBounds(
+            component.setBounds(
                     x + roomImagePosition.x - size.width / 2,
                     y + roomImagePosition.y - size.height,
                     size.width, size.height
@@ -144,7 +150,12 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
 
     @Override
     public void mouseClicked(MouseEvent e) {
-    	Point scenePosition = calculateScenePosition(e);
+    	if (openMenu != null) {
+            remove(openMenu);
+            openMenu = null;
+        }
+
+        Point scenePosition = calculateScenePosition(e);
         Drawable drawable = roomImage.getObjectAt(scenePosition);
         activeObject = drawable;
 
@@ -167,10 +178,13 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         else if (action == Item.Action.EXAMINE) {
             System.out.println("Examining");
             tooltip.showDescription(item.getDescription());
-            updateTooltipPosition(drawable);
+            positionAboveObject(drawable, tooltip);
         }
         else if (action == Item.Action.SHOW_MENU) {
-            //TODO show menu
+            tooltip.setVisible(false);
+            openMenu = new ActionMenu(item.getAllowedActions());
+            add(openMenu);
+            positionAboveObject(drawable, openMenu);
         }
         else {
             parent.handleAction(item, action);

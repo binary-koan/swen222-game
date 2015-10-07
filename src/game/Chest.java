@@ -33,6 +33,14 @@ public class Chest extends Item {
 		hasOpened = true;
 	}
 
+    @Override
+    public List<Action> getAllowedActions() {
+        List<Action> list = super.getAllowedActions();
+        list.add(0, Action.SEARCH);
+        list.add(0, Action.PICK_UP); //TODO remove (this one is just for testing)
+        return list;
+    }
+
 	@Override
 	public void toXML() {
 		// TODO Auto-generated method stub
