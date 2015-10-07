@@ -19,7 +19,7 @@ public class XMLTester {
 		// Just a very crude testing class to make sure the file is writing ok.
 
 		HashMap<String, Room> testRooms = new HashMap<String, Room>();
-        HashMap<String, Item> testItems = new HashMap<String, Item>();
+        final HashMap<String, Item> testItems = new HashMap<String, Item>();
         ArrayList<Player> testPlayers = new ArrayList<Player>();
 
 		Room testRoom1 = new Room("testRoom1"){

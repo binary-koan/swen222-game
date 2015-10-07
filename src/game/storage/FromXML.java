@@ -157,7 +157,7 @@ public class FromXML {
 	 * and then sets that item's field to the actual object.
 	 * @param rootNode
 	 */
-	private void setData(Element rootNode){
+	private void setData(final Element rootNode){
 		Element playersRoot = rootNode.getChild("gamePlayers");
 		Element itemsRoot = rootNode.getChild("gameItems");
 		Element roomsRoot = rootNode.getChild("gameRooms");

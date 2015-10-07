@@ -125,7 +125,7 @@ public class RoomRenderer {
             );
         }
 
-        x += Room.ROOM_SIZE * RENDER_SCALE / 4 * 2;
+        x += Room.ROOM_SIZE * RENDER_SCALE / 4;
         if (backgroundCenter != null) {
             graphics.drawImage(
                     backgroundCenter, x, 0,
@@ -134,7 +134,7 @@ public class RoomRenderer {
             );
         }
 
-        x += Room.ROOM_SIZE * RENDER_SCALE / 4;
+        x += Room.ROOM_SIZE * RENDER_SCALE / 4 * 2;
         if (backgroundRight != null) {
             graphics.drawImage(
                     backgroundRight, x, 0,
@@ -230,7 +230,7 @@ public class RoomRenderer {
         }
 
         if (room.hasWall(position.opposite())) {
-            backgroundCenter = loader.getImage("backgrounds/room-wall-center.png");
+            backgroundCenter = loader.getImage("backgrounds/room-wall-back.png");
 
             if (scale > 0.25) {
                 Room next = room.getConnection(position.opposite());
@@ -240,7 +240,7 @@ public class RoomRenderer {
             }
         }
         else {
-            backgroundCenter = loader.getImage("backgrounds/room-nowall-center.png");
+            backgroundCenter = loader.getImage("backgrounds/room-nowall-back.png");
         }
 
         if (room.hasWall(position.previous())) {

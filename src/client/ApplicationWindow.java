@@ -48,6 +48,7 @@ public class ApplicationWindow extends JFrame {
 	public ApplicationWindow(String title, GameCanvas canvas, @NonNull ResourceLoader loader) {
 		super(title);
 		this.canvas = canvas;
+		this.loader = loader;
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension scale = new Dimension();

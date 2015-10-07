@@ -106,7 +106,7 @@ public class GameMenu {
 		private Map<String, Rectangle> menuBounds;
 
 
-		public GameOptions(JFrame frame) {
+		public GameOptions(final JFrame frame) {
 			setBackground(Color.BLACK);
 			painter = new SimpleMenuItemPainter();
 			menuItems = new ArrayList<>(25);
