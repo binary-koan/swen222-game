@@ -1,7 +1,7 @@
 package client;
 
-import game.Bed;
-import game.Chest;
+import game.Furniture;
+import game.Container;
 import game.Direction;
 import game.Door;
 import game.Drawable;

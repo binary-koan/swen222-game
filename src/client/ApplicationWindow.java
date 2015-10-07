@@ -1,11 +1,11 @@
 package client;
 
-import game.Bed;
+import game.Furniture;
 import game.Direction;
 import game.Door;
 import game.Drawable;
 import game.Item;
-import game.Chest;
+import game.Container;
 import game.Player;
 import game.Room;
 
@@ -198,10 +198,10 @@ public class ApplicationWindow extends JFrame implements KeyListener {
             }
 
             {
-            	 Item item = new Bed("Bucket", "Looks like this could be used to hold liquid of some sort ...", "objects/bucket.png");
+            	 Item item = new Furniture("Bucket", "Looks like this could be used to hold liquid of some sort ...", "objects/bucket.png");
                  getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.Point3D(160, 0, 160)));
 
-                 item = new Chest("Crate", "There might be something inside!", "objects/crate.png");
+                 item = new Container("Crate", "There might be something inside!", "objects/crate.png");
                  getItems().add(new Room.ItemInstance(item, Direction.EAST, new Drawable.Point3D(80, 0, 240)));
 
                  item = new Door("Door", "You can get to [insert room here] through here.", "objects/door.png");

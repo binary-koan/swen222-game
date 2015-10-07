@@ -4,11 +4,11 @@ import game.storage.GameData;
 
 import java.util.*;
 
-public class Chest extends Item {
+public class Container extends Item {
 	private List<Item> chestItems;
 	private boolean hasOpened;
 
-	public Chest(String name, String description, String spriteName, Item...items) {
+	public Container(String name, String description, String spriteName, Item...items) {
 		super(name, description, spriteName);
 		this.chestItems = new ArrayList<>();
 		int j = 0;

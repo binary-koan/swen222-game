@@ -4,8 +4,8 @@ import game.storage.GameData;
 
 import java.util.List;
 
-public class Bed extends Item {
-	public Bed(String name, String description, String spriteName) {
+public class Furniture extends Item {
+	public Furniture(String name, String description, String spriteName) {
 		super(name, description, spriteName);
 	}
 
