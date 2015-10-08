@@ -103,11 +103,11 @@ public class ToXML {
 				currentPlayer.addContent(new Element("facingDirection").setText(p.getFacingDirection().toString()));
 			}
 			Element inventory = new Element("playerInventory");
-			if(p.getInventory()!= null){
-				for(Item i : p.getInventory()){
-					inventory.addContent(new Element("name").setText(i.getName()));
-				}
-			}
+//			if(p.getInventory()!= null){
+//				for(Item i : p.getInventory()){
+//					inventory.addContent(new Element("name").setText(i.getName()));
+//				}
+//			}
 			currentPlayer.addContent(inventory);
 			return currentPlayer;
 	}

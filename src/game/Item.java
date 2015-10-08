@@ -28,6 +28,15 @@ public abstract class Item implements Serializable {
 		}
 	}
 
+	public enum Colour{
+		BLUE,GREEN, YELLOW, RED;
+	}
+
+	public Colour getColour(){
+		return null;
+
+	}
+
 	private String name;
 	private String description;
 	private String spriteName;

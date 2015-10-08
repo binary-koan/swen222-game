@@ -4,7 +4,7 @@ import game.storage.GameData;
 
 import java.util.*;
 
-public class Container extends Item {
+public class Container extends Item implements Pickable {
 	private List<Item> chestItems;
 	private boolean hasOpened;
 

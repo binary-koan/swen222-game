@@ -4,7 +4,7 @@ import game.storage.GameData;
 
 import java.util.List;
 
-public class Key extends Item {
+public class Key extends Item implements Pickable {
 	public Key(String name, String description, String spriteName) {
 		super(name, description, spriteName);
 	}

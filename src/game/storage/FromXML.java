@@ -145,9 +145,9 @@ public class FromXML {
 		if(currentPlayer.getFacingDirection() != null){
 			currentPlayer.setFacingDirection(Direction.fromString(e.getChildText("facingDirection")));
 		}
-		for(Element i : e.getChild("playerInventory").getChildren()){
-			currentPlayer.addInventoryItem(data.getItem(i.getText()));
-		}
+//		for(Element i : e.getChild("playerInventory").getChildren()){
+//			currentPlayer.addInventoryItem(data.getItem(i.getText()));
+//		}
 		currentPlayer.setRoom(data.getRoom(e.getChildText("room")));
 		return currentPlayer;
 	}
