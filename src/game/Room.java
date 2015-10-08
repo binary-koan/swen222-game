@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -55,6 +56,9 @@ public class Room implements Serializable{
 	private String name;
     private List<ItemInstance> items = new ArrayList<>();
     private List<Player> players;
+    private Map<Direction, Room> roomConnections;
+    private Map<Direction, Boolean> wallConnections;
+    private List<Door> doors;
 
     public Room(String name) {
     	this.name = name;
