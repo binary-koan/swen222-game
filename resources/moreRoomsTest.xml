@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<saveGame>
+  <gameRooms>
+    <room>
+      <name>testRoom1</name>
+      <roomItems>
+        <itemInstance>
+          <item>Bed</item>
+          <facingDirection>NORTH</facingDirection>
+          <boundingBox>
+            <x>x80</x>
+            <y>y0</y>
+            <z>z80</z>
+          </boundingBox>
+        </itemInstance>
+        <itemInstance>
+          <item>Chest</item>
+          <facingDirection>EAST</facingDirection>
+          <boundingBox>
+            <x>x40</x>
+            <y>y0</y>
+            <z>z120</z>
+          </boundingBox>
+        </itemInstance>
+        <itemInstance>
+          <item>Key</item>
+          <facingDirection>NORTH</facingDirection>
+          <boundingBox>
+            <x>x140</x>
+            <y>y60</y>
+            <z>z20</z>
+          </boundingBox>
+        </itemInstance>
+        <itemInstance>
+          <item>Door</item>
+          <facingDirection>WEST</facingDirection>
+          <boundingBox>
+            <x>x140</x>
+            <y>y0</y>
+            <z>z80</z>
+          </boundingBox>
+        </itemInstance>
+      </roomItems>
+    </room>
+    <room>
+      <name>testRoom2</name>
+      <roomItems>
+	<itemInstance>
+	  <item>wallLight1</item>
+	  <facingDirection>NORTH</facingDirection>
+	  <boundingBox>
+	    <x>x0</x>
+	    <y>y40</y>
+	    <z>z80</z>
+	  </boundingBox>
+	</itemInstance>
+	<itemInstance>
+	  <item>crate1</item>
+	  <facingDirection>NORTH</facingDirection>
+	  <boundingBox>
+	    <x>x80</x>
+	    <y>y0</y>
+	    <z>z80</z>
+	  </boundingBox>
+	 </itemInstance>
+       </roomItems>
+      </room>
+  </gameRooms>
+  <gameItems>
+    <item>
+      <name>Bed</name>
+      <spriteName>decoration/blue-light.png</spriteName>
+      <subClass>class game.Bed</subClass>
+    </item>
+    <item>
+      <name>Chest</name>
+      <spriteName>objects/crate.png</spriteName>
+      <subClass>class game.Chest</subClass>
+    </item>
+    <item>
+      <name>Key</name>
+      <spriteName>objects/key-blue.png</spriteName>
+      <subClass>class game.Key</subClass>
+    </item>
+    <item>
+      <name>Door</name>
+      <spriteName>objects/door.png</spriteName>
+      <subClass>class game.Door</subClass>
+    </item>
+    <item>
+     <name>wallLight1</name>
+     <spriteName>decoration/red-light.png</spriteName>
+     <subClass>class game.Key</subClass>
+    </item> 
+    <item>
+     <name>crate1</name>
+     <spriteName>objects/crate.png</spriteName>
+     <subClass>class game.Bed</subClass>
+    </item> 
+  </gameItems>
+  <gamePlayers>
+    <player>
+      <name>Player1</name>
+      <spriteName>characters/alien1.png</spriteName>
+      <room>testRoom1</room>
+      <facingDirection>NORTH</facingDirection>
+      <playerInventory />
+    </player>
+    <player>
+      <name>Player2</name>
+      <spriteName>characters/alien2.png</spriteName>
+      <room>testRoom1</room>
+      <facingDirection>SOUTH</facingDirection>
+      <playerInventory />
+    </player>
+  </gamePlayers>
+</saveGame>
