@@ -1,0 +1,49 @@
+<!-- Synth skin that includes an image for buttons -->
+<synth>
+    <!-- Style that all regions will use -->
+    <style id="backingStyle">
+        <!-- Make all the regions that use this skin opaque-->
+        <opaque value="TRUE"/>
+        <font name="SansSerif" size="12" style="BOLD"/>
+        <state>
+            <color type="FOREGROUND" value="#B4C6C7"/>
+            <color type="BACKGROUND" value="#252A2A"/>
+            <!-- The color used in highlighting components. -->
+            <color type="FOCUS" value="#777700"/>
+        </state>
+    </style>
+    <bind style="backingStyle" type="region" key=".*"/>
+
+    <style id="menuBarStyle">
+        <state>
+            <imagePainter method="menuBarBackground" path="style/menu-background.png"
+                          sourceInsets="0 0 2 0"/>
+        </state>
+        <state value="MOUSE_OVER">
+            <color value="RED" type="TEXT_FOREGROUND" />
+        </state>
+    </style>
+    <bind style="menuBarStyle" type="region" key="menuBar"/>
+
+    <style id="menuStyle">
+        <insets top="7" left="10" right="10" bottom="8"/>
+        <state value="SELECTED">
+            <imagePainter method="menuBackground" path="style/background-hover.png"
+                          sourceInsets="0 0 0 0"/>
+        </state>
+    </style>
+    <bind style="menuStyle" type="region" key="menu"/>
+
+    <style id="menuItemStyle">
+        <insets top="8" left="10" right="50" bottom="8"/>
+        <state>
+            <imagePainter method="menuItemBackground" path="style/background-hover.png"
+                          sourceInsets="0 0 0 0"/>
+        </state>
+        <state value="MOUSE_OVER">
+            <imagePainter method="menuItemBackground" path="style/background.png"
+                          sourceInsets="0 0 0 0"/>
+        </state>
+    </style>
+    <bind style="menuItemStyle" type="region" key="menuItem"/>
+</synth>

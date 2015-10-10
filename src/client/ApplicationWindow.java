@@ -20,8 +20,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.text.ParseException;
 
 import javax.swing.*;
+import javax.swing.plaf.synth.SynthLookAndFeel;
 
 import org.eclipse.jdt.annotation.NonNull;
 
@@ -219,6 +223,15 @@ public class ApplicationWindow extends JFrame implements KeyListener {
             }
         };
         player.setFacingDirection(Direction.NORTH);
+
+		SynthLookAndFeel lookAndFeel = new SynthLookAndFeel();
+		try {
+			lookAndFeel.load(ApplicationWindow.class.getResourceAsStream("style/synthStyle.xml"), ApplicationWindow.class);
+			UIManager.setLookAndFeel(lookAndFeel);
+		}
+		catch (ParseException | UnsupportedLookAndFeelException e) {
+			JOptionPane.showMessageDialog(null, "Could not load UI style: " + e.getMessage());
+		}
 
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
