@@ -116,22 +116,25 @@ public class FromXML {
 		//Working on a more robust, less error prone method.
 		String currentClass = e.getChildText("subClass");
 		Item currentItem;
+		String name = e.getChildText("name");
+		String description = e.getChildText("description");
+		String spriteName = e.getChildText("spriteName");
 
 		switch(currentClass){
-		case "class game.Chest":
-			currentItem = new Container(e.getChildText("name"), "", e.getChildText("spriteName"));
+		case "class game.Container":
+			currentItem = new Container(name, description, spriteName);
 			return currentItem;
 		case "class game.Key":
-			currentItem = new Key(e.getChildText("name"), "", e.getChildText("spriteName"));
+			currentItem = new Key(name, description, spriteName);
 			return currentItem;
-		case "class game.Bed":
-			currentItem = new Furniture(e.getChildText("name"), "", e.getChildText("spriteName"));
+		case "class game.Furniture":
+			currentItem = new Furniture(name, description, spriteName);
 			return currentItem;
 		case "class game.Door":
-			currentItem = new Door(e.getChildText("name"), "", e.getChildText("spriteName"));
+			currentItem = new Door(name, description, spriteName);
 			return currentItem;
 		}
-		return new Container(e.getChildText("name"), "", e.getChildText("spriteName"));
+		return new Container(name, description, spriteName);
 	}
 
 	/**

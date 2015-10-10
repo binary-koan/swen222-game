@@ -1,23 +1,25 @@
 package game;
 
+import game.Drawable.Point3D;
+import game.Room.ItemInstance;
 import game.storage.GameData;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
+
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 
 public class Container extends Item implements Pickable {
 	private List<Item> chestItems;
 	private boolean hasOpened;
 
-	public Container(String name, String description, String spriteName, Item...items) {
+	public Container(String name, String description, String spriteName) {
 		super(name, description, spriteName);
 		this.chestItems = new ArrayList<>();
-		int j = 0;
-		for(Item i : items) {
-			if (j <= 3) {
-				this.chestItems.add(i);
-			}
-			j++;
-		}
 		this.hasOpened = false;
 	}
 
@@ -49,7 +51,26 @@ public class Container extends Item implements Pickable {
 
 	@Override
 	public Object loadXML(GameData gameData) {
-		// TODO Auto-generated method stub
+		SAXBuilder builder = new SAXBuilder();
+		File xmlFile = new File("resources/mainGame.xml");
+		try{
+			Document document = builder.build(xmlFile);
+			Element rootNode = document.getRootElement();
+			for(Element gameItem : rootNode.getChild("gameItems").getChildren()){
+				if(gameItem.getChildText("name").equals(this.getName())){
+					this.chestItems.removeAll(chestItems);
+					for(Element chestItem : gameItem.getChild("chestItems").getChildren()){
+						this.getItems().add(gameData.getItem(chestItem.getText()));
+					}
+					this.hasOpened = Boolean.getBoolean(gameItem.getChildText("hasOpened"));
+				}
+			}
+			return null;
+		}catch (IOException io) {
+			System.out.println(io.getMessage());
+		}catch (JDOMException jdomex) {
+			System.out.println(jdomex.getMessage());
+		}
 		return null;
 	}
 }

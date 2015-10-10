@@ -114,6 +114,10 @@ public class XMLTester {
         	System.out.println(r.getValue().getName());
         }
         Room room2 = room.getConnection(Direction.NORTH);
+        Container i = (Container) data.getItem("purpleChest");
+        for(Item j : i.getItems()){
+        	System.out.println(j.getName());
+        }
 
 	}
 }

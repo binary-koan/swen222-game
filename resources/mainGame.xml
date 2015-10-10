@@ -42,7 +42,7 @@
 	<entry>WEST-true</entry>
       </wallConnections>
     </room>
-
+    
     <room>
       <name>engineRoomWestNorth</name>
       <roomItems>
@@ -66,22 +66,22 @@
         </itemInstance>
       </roomItems>
       <roomConnections>
-	<entry>SOUTH-engineRoomWestSouth</entry>
+        <entry>SOUTH-engineRoomWestSouth</entry>
       </roomConnections>
       <wallConnections>
-	<entry>NORTH-true</entry>
-	<entry>EAST-true</entry>
-	<entry>SOUTH-false</entry>
-	<entry>WEST-true</entry>
+        <entry>NORTH-true</entry>
+        <entry>EAST-true</entry>
+        <entry>SOUTH-false</entry>
+        <entry>WEST-true</entry>
       </wallConnections>
     </room>
-
-
+    
+      
   </gameRooms>
-
-
-
-
+  
+  
+  
+  
   <gameItems>
     <item>
       <name>engineFunctional</name>
@@ -94,6 +94,11 @@
       <description>A purple chest.</description>
       <spriteName>objects/crate.png</spriteName>
       <subClass>class game.Container</subClass>
+      <chestItems>
+	<item>fusionPistol</item>
+	<item>yellowKey</item>
+      </chestItems>
+      <hasOpened>false</hasOpened>
     </item>
     <item>
       <name>empBomb</name>
@@ -106,6 +111,11 @@
       <description>A yellow chest.</description>
       <spriteName>objects/crate.png</spriteName>
       <subClass>class game.Container</subClass>
+      <chestItems>
+	<item>torch</item>
+	<item>torch</item>
+      </chestItems>
+      <hasOpened>false</hasOpened>
     </item>
     <item>
       <name>lightSwitch</name>
@@ -113,10 +123,28 @@
       <spriteName>decoration/yellow-light.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
+    <item>
+      <name>torch</name>
+      <description>An E-class 2187 pattern-A torch (second generation).</description>
+      <spriteName>decoration/yellow-light.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <name>fusionPistol</name>
+      <description>A standard issue alien sidearm.</description>
+      <spriteName>objects/fusion-pistol.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <name>yellowKey</name>
+      <description>A yellow key.</description>
+      <spriteName>decoration/yellow-light.png</spriteName>
+      <subClass>class game.Key</subClass>
+    </item>
   </gameItems>
-
-
-
+  
+  
+  
   <gamePlayers>
   </gamePlayers>
 </saveGame>
