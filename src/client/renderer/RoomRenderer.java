@@ -86,6 +86,7 @@ public class RoomRenderer {
     public void updateRoom() {
         currentSceneItems.clear();
         loadRoom(player.getRoom(), 1.0);
+        addWalls(player.getRoom(), 1.0);
     }
 
     /**
@@ -181,7 +182,6 @@ public class RoomRenderer {
      */
     private void loadRoom(@NonNull Room room, double scale) {
         Direction direction = player.getFacingDirection();
-        addWalls(room, scale);
 
         List<Drawable> roomObjects = new ArrayList<>();
         roomObjects.addAll(room.getItems());
@@ -231,6 +231,9 @@ public class RoomRenderer {
 
         if (room.hasWall(position.opposite())) {
             backgroundCenter = loader.getImage("backgrounds/room-wall-back.png");
+        }
+        else {
+            backgroundCenter = loader.getImage("backgrounds/room-nowall-back.png");
 
             if (scale > 0.25) {
                 Room next = room.getConnection(position.opposite());
@@ -238,9 +241,6 @@ public class RoomRenderer {
                     loadRoom(next, scale / 2);
                 }
             }
-        }
-        else {
-            backgroundCenter = loader.getImage("backgrounds/room-nowall-back.png");
         }
 
         if (room.hasWall(position.next())) {

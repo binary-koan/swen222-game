@@ -61,6 +61,7 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         }
 
         if (player != null) {
+            g.setColor(Color.BLACK);
             g.drawString("In " + player.getRoom().getName() + " facing " + player.getFacingDirection().opposite(), 10, 20);
         }
     }
