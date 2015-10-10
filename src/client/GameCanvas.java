@@ -29,7 +29,7 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
     private @Nullable Player player;
 
     private Tooltip tooltip;
-    private ActionMenu openMenu;
+    private ActionMenu actionMenu;
     private Drawable activeObject;
 
     public GameCanvas(@NonNull ApplicationWindow parent, @NonNull ResourceLoader loader) {
@@ -91,7 +91,7 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        if (openMenu != null) {
+        if (actionMenu != null && actionMenu.isVisible()) {
             return;
         }
 
@@ -127,32 +127,33 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
             }
         }
 
-        positionAboveObject(drawable, tooltip);
-
+        repositionTooltipAbove(drawable);
         tooltip.setVisible(true);
         repaint();
     }
 
-    private void positionAboveObject(Drawable drawable, JComponent component) {
+    private void repositionTooltipAbove(Drawable drawable) {
+        Point position = positionAboveObject(drawable, tooltip);
+        Dimension size = tooltip.getPreferredSize();
+        tooltip.setBounds(position.x, position.y, size.width, size.height);
+    }
+
+    private Point positionAboveObject(Drawable drawable, JComponent component) {
         Rectangle renderBounds = roomImage.getBounds(drawable);
         if (renderBounds != null) {
             Dimension size = component.getPreferredSize();
-
             int x = (int) ((renderBounds.x + renderBounds.width / 2) * roomImageScale * 5);
             int y = (int) ((renderBounds.y - 5) * roomImageScale * 5);
-            component.setBounds(
-                    x + roomImagePosition.x - size.width / 2,
-                    y + roomImagePosition.y - size.height,
-                    size.width, size.height
-            );
+
+            return new Point(x + roomImagePosition.x - size.width / 2, y + roomImagePosition.y - size.height);
         }
+        return new Point(0, 0);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-    	if (openMenu != null) {
-            remove(openMenu);
-            openMenu = null;
+    	if (actionMenu != null && actionMenu.isVisible()) {
+            return;
         }
 
         Point scenePosition = calculateScenePosition(e);
@@ -164,29 +165,26 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
                     tooltip.getPrimaryAction() : tooltip.getSecondaryAction();
 
             if (drawable instanceof ItemInstance) {
-                handleItemAction((ItemInstance)drawable, action);
+                performAction((ItemInstance)drawable, action);
             }
         }
     }
 
-    private void handleItemAction(ItemInstance drawable, Item.Action action) {
+    public void performAction(ItemInstance drawable, Item.Action action) {
         Item item = drawable.getItem();
 
-        if (action == null) {
-            return;
-        }
-        else if (action == Item.Action.EXAMINE) {
-            System.out.println("Examining");
+        if (action == Item.Action.EXAMINE) {
             tooltip.showDescription(item.getDescription());
             positionAboveObject(drawable, tooltip);
         }
         else if (action == Item.Action.SHOW_MENU) {
             tooltip.setVisible(false);
-            openMenu = new ActionMenu(item.getAllowedActions());
-            add(openMenu);
-            positionAboveObject(drawable, openMenu);
+
+            actionMenu = new ActionMenu(this, drawable);
+            Point position = positionAboveObject(drawable, actionMenu);
+            actionMenu.show(this, position.x, position.y);
         }
-        else {
+        else if (action != null) {
             parent.handleAction(item, action);
         }
     }

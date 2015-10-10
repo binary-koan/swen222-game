@@ -14,17 +14,16 @@
     </style>
     <bind style="backingStyle" type="region" key=".*"/>
 
+    <!-- Menu bar background -->
     <style id="menuBarStyle">
         <state>
             <imagePainter method="menuBarBackground" path="style/menu-background.png"
                           sourceInsets="0 0 2 0"/>
         </state>
-        <state value="MOUSE_OVER">
-            <color value="RED" type="TEXT_FOREGROUND" />
-        </state>
     </style>
     <bind style="menuBarStyle" type="region" key="menuBar"/>
 
+    <!-- Selected menu background (in menu bar) -->
     <style id="menuStyle">
         <insets top="7" left="10" right="10" bottom="8"/>
         <state value="SELECTED">
@@ -34,6 +33,7 @@
     </style>
     <bind style="menuStyle" type="region" key="menu"/>
 
+    <!-- Menu item styles -->
     <style id="menuItemStyle">
         <insets top="8" left="10" right="50" bottom="8"/>
         <state>
@@ -46,4 +46,18 @@
         </state>
     </style>
     <bind style="menuItemStyle" type="region" key="menuItem"/>
+
+    <!-- Invert background and hover style for ActionMenu -->
+    <style id="actionMenuStyle">
+        <insets top="8" left="10" right="50" bottom="8"/>
+        <state>
+            <imagePainter method="menuItemBackground" path="style/background.png"
+                          sourceInsets="0 0 0 0"/>
+        </state>
+        <state value="MOUSE_OVER">
+            <imagePainter method="menuItemBackground" path="style/background-hover.png"
+                          sourceInsets="0 0 0 0"/>
+        </state>
+    </style>
+    <bind style="actionMenuStyle" type="name" key="actionMenuItem"/>
 </synth>

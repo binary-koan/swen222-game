@@ -4,6 +4,7 @@ import game.Item;
 import game.Room;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -22,31 +23,18 @@ public class Tooltip extends JPanel {
 
 	public Tooltip(ResourceLoader loader) {
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		setBorder(new EmptyBorder(10, 10, 10, 10));
 
-		Color background = new Color(0x222222);
-		setBackground(background);
-		setBorder(new LineBorder(background, 10));
-
-		Color foreground = new Color(0xffffff);
-
-        nameLabel.setForeground(foreground);
         nameLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
 
         descriptionLabel.setVisible(false);
         descriptionLabel.setVerticalAlignment(JLabel.TOP);
-        descriptionLabel.setForeground(foreground);
         descriptionLabel.setPreferredSize(new Dimension(200, 75));
         descriptionLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
 
-        Font actionFont = new Font(Font.SANS_SERIF, Font.BOLD, 14);
-
-        primaryActionLabel.setForeground(foreground);
-        primaryActionLabel.setFont(actionFont);
 		primaryActionLabel.setIcon(new ImageIcon(loader.getImage("ui/mouse-leftclick.png")));
         primaryActionLabel.setIconTextGap(8);
 
-		secondaryActionLabel.setForeground(foreground);
-        secondaryActionLabel.setFont(actionFont);
 		secondaryActionLabel.setIcon(new ImageIcon(loader.getImage("ui/mouse-rightclick.png")));
         secondaryActionLabel.setIconTextGap(8);
 
