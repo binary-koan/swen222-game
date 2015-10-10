@@ -176,12 +176,12 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 //		Game game = new Game (gameData);
 //		final Player player2 = new Player("Player 2", "characters/alien2.png");
 //    	player2.setFacingDirection(Direction.NORTH);
-//    	player2.setRoom(game.getData().getRoom("engineRoomWestNorth"));
+//    	player2.setRoom(game.getData().getRoom("rx0y4"));
 //
 //        final Player player = new Player("Player 1", "characters/alien1.png") {
 //            @Override
 //            public Room getRoom() {
-//                return game.getData().getRoom("engineRoomWestNorth");
+//                return game.getData().getRoom("rx0y4");
 //            }
 //        };
 //        player.setFacingDirection(Direction.NORTH);
