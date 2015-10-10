@@ -15,8 +15,8 @@ public class Door extends Item {
 
 	private Room targetRoom;
 
-	public Door(String name, String description, String spriteName) {
-		super(name, description, spriteName);
+	public Door(String id, String name, String description, String spriteName) {
+		super(id, name, description, spriteName);
 	}
 
 	public Room getTargetRoom() {
@@ -35,7 +35,22 @@ public class Door extends Item {
 
 	@Override
 	public Object loadXML(GameData gameData) {
-		// TODO Auto-generated method stub
+		SAXBuilder builder = new SAXBuilder();
+		File xmlFile = new File("resources/mainGame.xml");
+		try{
+			Document document = builder.build(xmlFile);
+			Element rootNode = document.getRootElement();
+			for(Element gameRoom : rootNode.getChild("gameItems").getChildren()){
+				if(gameRoom.getChildText("id").equals(this.getID())){
+					//this.targetRoom = gameData.getRoom(gameRoom.getChild("targetRoom").getText());
+				}
+			}
+			return null;
+		}catch (IOException io) {
+			System.out.println(io.getMessage());
+		}catch (JDOMException jdomex) {
+			System.out.println(jdomex.getMessage());
+		}
 		return null;
 	}
 }

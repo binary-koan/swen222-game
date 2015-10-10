@@ -16,11 +16,12 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 public class Player implements Drawable, Serializable{
+	private String id;
 	private String name;
 	private String spriteName;
     private Room room;
     private Direction facingDirection;
-    //private ArrayList<Item> inventory;
+    private ArrayList<Item> inventory;
     private Weapon weapon = null;
 
     public Player(String name, String spriteName){
@@ -31,6 +32,10 @@ public class Player implements Drawable, Serializable{
 
     public String getName(){
     	return name;
+    }
+
+    public String getID(){
+    	return id;
     }
 
     public Room getRoom() {
@@ -61,9 +66,9 @@ public class Player implements Drawable, Serializable{
 //    	return inventory;
 //    }
 
-//    public void addInventoryItem(Item item){
-//    	this.inventory.add(item);
-//    }
+    public void addInventoryItem(Item item){
+    	this.inventory.add(item);
+    }
 
 //    public void removeInventoryItem(Item item){
 //    	this.inventory.remove(item);
@@ -98,12 +103,13 @@ public class Player implements Drawable, Serializable{
 			Element rootNode = document.getRootElement();
 			for(Element p : rootNode.getChild("gamePlayers").getChildren()){
 				if(p.getChildText("name").equals(this.getName())){
-					p.getChild("room").setText(this.getRoom().getName());
+					p.getChild("room").setText(this.getRoom().getID());
 					p.getChild("facingDirection").setText(this.getFacingDirection().toString());
+					p.getChild("weapon").setText(this.weapon.getID());
 					p.getChild("playerInventory").removeContent();
-//					for(Item i : this.inventory){
-//						p.getChild("playerInventory").addContent(new Element("name").setText(i.getName()));
-//					}
+					for(Item i : this.inventory){
+						p.getChild("playerInventory").addContent(new Element("item").setText(i.getID()));
+					}
 				}
 			}
 			XMLOutputter xmlOutput = new XMLOutputter();
@@ -127,9 +133,13 @@ public class Player implements Drawable, Serializable{
 			for(Element p : rootNode.getChild("gamePlayers").getChildren()){
 				if(p.getChildText("name").equals(this.getName())){
 					this.setRoom(gameData.getRoom(p.getChildText("room")));
-					//this.inventory.removeAll(inventory);
+					this.setFacingDirection(Direction.fromString(p.getChildText("facingDirection")));
+					//if(p.getWeapon() != null){
+						//this.setWeapongameData.getItem((p.getChildText("weapon")));
+					//}
+					this.inventory.removeAll(inventory);
 					for(Element i : p.getChild("playerInventory").getChildren()){
-						//this.addInventoryItem(gameData.getItem(i.getText()));
+						this.addInventoryItem(gameData.getItem(i.getText()));
 					}
 				}
 			}

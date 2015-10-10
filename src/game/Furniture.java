@@ -5,8 +5,8 @@ import game.storage.GameData;
 import java.util.List;
 
 public class Furniture extends Item {
-	public Furniture(String name, String description, String spriteName) {
-		super(name, description, spriteName);
+	public Furniture(String id, String name, String description, String spriteName) {
+		super(id, name, description, spriteName);
 	}
 
 	@Override

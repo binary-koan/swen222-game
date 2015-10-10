@@ -17,19 +17,6 @@ import org.jdom2.output.XMLOutputter;
 
 public class ToXML {
 
-	// Hey guys, just uploaded a super basic write to XML class (read XML coming soon),
-	// along with a class to test it if it works and also a game data class. I'm not
-	// sure what the plans are on how to implement the game state and all, so this can
-	// be changed no prob. Also I'm not sure if this is good git etiquette but I went
-	// and made a bunch of basic fields/constructors/getters for game, player, item and
-	// room to help make my thing work, but these can be changed later ofc. Also made
-	// XMLTester, which crudely makes a very basic Game object to see if my stuff worked.
-	// You can run that, but first you will need to change the file directory in class
-	// XML tester in to a place on your machine (commented). Right now I'm
-	// not sure on what fields we've decided for each class, so ofc its all pretty simple
-	// in terms of what it actually records in XML. Basically I have no idea what I'm doing
-	// and if I am completely on the wrong track or doing something real bad pls tell me haha.
-	// Let me know if this doesn't work/messes up your plans.
 
 	private Game game;
 	private String filename;

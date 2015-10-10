@@ -4,8 +4,8 @@ import game.storage.GameData;
 
 public class Weapon extends Item implements Pickable {
 
-	public Weapon(String name, String description, String spriteName){
-		super(name, description,spriteName);
+	public Weapon(String id, String name, String description, String spriteName){
+		super(id, name, description,spriteName);
 	}
 
 	@Override

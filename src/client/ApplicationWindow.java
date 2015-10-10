@@ -176,12 +176,12 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 //		Game game = new Game (gameData);
 //		final Player player2 = new Player("Player 2", "characters/alien2.png");
 //    	player2.setFacingDirection(Direction.NORTH);
-//    	player2.setRoom(game.getData().getRoom("engineRoomWestNorth"));
+//    	player2.setRoom(game.getData().getRoom("rx0y4"));
 //
 //        final Player player = new Player("Player 1", "characters/alien1.png") {
 //            @Override
 //            public Room getRoom() {
-//                return game.getData().getRoom("engineRoomWestNorth");
+//                return game.getData().getRoom("rx0y4");
 //            }
 //        };
 //        player.setFacingDirection(Direction.NORTH);
@@ -190,27 +190,27 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 
 
 
-        //commentoutbelow
 
+		//comment out below
 
 		final Player player2 = new Player("Player 2", "characters/alien2.png");
     	player2.setFacingDirection(Direction.NORTH);
 
 		final ResourceLoader loader = new ResourceLoader("resources");
-        final Room room = new Room("Some name") {
+        final Room room = new Room("someID","Some name") {
             @Override
             public boolean hasWall(Direction position) {
                 return true;
             }
 
             {
-            	 Item item = new Furniture("Bucket", "Looks like this could be used to hold liquid of some sort ...", "objects/bucket.png");
+            	 Item item = new Furniture("xx", "Bucket", "Looks like this could be used to hold liquid of some sort ...", "objects/bucket.png");
                  getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.Point3D(160, 0, 160)));
 
-                 item = new Container("Crate", "There might be something inside!", "objects/crate.png");
+                 item = new Container("yz", "Crate", "There might be something inside!", "objects/crate.png");
                  getItems().add(new Room.ItemInstance(item, Direction.EAST, new Drawable.Point3D(80, 0, 240)));
 
-                 item = new Door("Door", "You can get to [insert room here] through here.", "objects/door.png");
+                 item = new Door("de", "Door", "You can get to [insert room here] through here.", "objects/door.png");
                  getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.Point3D(320, -10, 160)));
 
                  getPlayers().add(player2);
@@ -226,7 +226,7 @@ public class ApplicationWindow extends JFrame implements KeyListener {
         };
         player.setFacingDirection(Direction.NORTH);
 
-        //commentoutabove
+        //comment out above
 
 		SynthLookAndFeel lookAndFeel = new SynthLookAndFeel();
 		try {

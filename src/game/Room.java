@@ -54,16 +54,22 @@ public class Room implements Serializable{
         }
     }
 
+    private String id;
 	private String name;
-    private List<ItemInstance> items = new ArrayList<>();
-    private List<Player> players;
+    private List<ItemInstance> items = new ArrayList<ItemInstance>();
+    private List<Player> players = new ArrayList<Player>();
     public Map<Direction, Room> roomConnections = new HashMap<Direction, Room>();
     private Map<Direction, Boolean> wallConnections = new HashMap<Direction, Boolean>();
-    private List<Door> doors;
+    private List<Door> doors = new ArrayList<Door>();
 
-    public Room(String name) {
+    public Room(String id, String name) {
+    	this.id = id;
     	this.name = name;
-    	players = new ArrayList<>();
+
+    }
+
+    public String getID(){
+    	return id;
     }
 
 	public boolean hasWall(Direction position) {
@@ -109,17 +115,25 @@ public class Room implements Serializable{
 		try{
 			Document document = builder.build(xmlFile);
 			Element rootNode = document.getRootElement();
-			for(Element r : rootNode.getChild("gameRooms").getChildren()){
-				if(r.getChildText("name").equals(this.getName())){
-					r.getChild("roomItems").removeContent();
+			for(Element room : rootNode.getChild("gameRooms").getChildren()){
+				if(room.getChildText("id").equals(this.getID())){
+					room.getChild("roomItems").removeContent();
 					for(ItemInstance i : this.items){
-						r.getChild("roomItems").addContent("itemInstance");
-						r.getChild("roomItems").getChild("itemsInstance").addContent("name").setText(i.getItem().getName());
-						r.getChild("roomItems").getChild("itemsInstance").addContent("facingDirection").setText(i.getFacingDirection().toString());
-						r.getChild("roomItems").getChild("itemsInstance").addContent("boundingBox");
-						r.getChild("roomItems").getChild("itemsInstance").getChild("boundingBox").addContent("x").setText("x"+Integer.toString(i.getPosition().x));
-						r.getChild("roomItems").getChild("itemsInstance").getChild("boundingBox").addContent("y").setText("y"+Integer.toString(i.getPosition().y));
-						r.getChild("roomItems").getChild("itemsInstance").getChild("boundingBox").addContent("z").setText("z"+Integer.toString(i.getPosition().z));
+						room.getChild("roomItems").addContent("itemInstance");
+						room.getChild("roomItems").getChild("itemsInstance").addContent("item").setText(i.getItem().getID());
+						room.getChild("roomItems").getChild("itemsInstance").addContent("facingDirection").setText(i.getFacingDirection().toString());
+						room.getChild("roomItems").getChild("itemsInstance").addContent("boundingBox");
+						room.getChild("roomItems").getChild("itemsInstance").getChild("boundingBox").addContent("x").setText("x"+Integer.toString(i.getPosition().x));
+						room.getChild("roomItems").getChild("itemsInstance").getChild("boundingBox").addContent("y").setText("y"+Integer.toString(i.getPosition().y));
+						room.getChild("roomItems").getChild("itemsInstance").getChild("boundingBox").addContent("z").setText("z"+Integer.toString(i.getPosition().z));
+					}
+					room.getChild("roomConnections").removeContent();
+					for(Map.Entry<Direction, Room> roomConnection : this.roomConnections.entrySet()){
+						room.getChild("roomConnections").addContent("entry").setText((roomConnection.getKey().toString()+"-"+roomConnection.getValue().getID()));
+					}
+					room.getChild("wallConnections").removeContent();
+					for(Map.Entry<Direction, Boolean> wallConnection : this.wallConnections.entrySet()){
+						room.getChild("wallConnections").addContent("entry").setText(wallConnection.getKey().toString()+"-"+wallConnection.toString());
 					}
 				}
 			}
@@ -141,7 +155,7 @@ public class Room implements Serializable{
 			Document document = builder.build(xmlFile);
 			Element rootNode = document.getRootElement();
 			for(Element gameRoom : rootNode.getChild("gameRooms").getChildren()){
-				if(gameRoom.getChildText("name").equals(this.getName())){
+				if(gameRoom.getChildText("id").equals(this.getID())){
 					this.items.removeAll(items);
 					for(Element roomItem : gameRoom.getChild("roomItems").getChildren()){
 						Item ir = gameData.getItem(roomItem.getChildText("item"));

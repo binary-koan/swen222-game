@@ -67,12 +67,12 @@ public class FromXML {
 			}
 
 			//Create all the rooms from the document, put them in the Map rooms
-			Element roomsRoot = rootNode.getChild("gameRooms");
-			for(Element e : roomsRoot.getChildren()){
-				Room currentRoom = readRoom(e);
-
-				rooms.put(currentRoom.getName(), currentRoom);
-			}
+//			Element roomsRoot = rootNode.getChild("gameRooms");
+//			for(Element e : roomsRoot.getChildren()){
+//				Room currentRoom = readRoom(e);
+//
+//				rooms.put(currentRoom.getName(), currentRoom);
+//			}
 
 			//Create all the items from the document, put them in the Map items
 			Element playersRoot = rootNode.getChild("gamePlayers");
@@ -102,10 +102,10 @@ public class FromXML {
 		return null;
 	}
 
-	public static Room readRoom(Element e){
-		Room currentRoom = new Room(e.getChildText("name"));
-		return currentRoom;
-	}
+//	public static Room readRoom(Element e){
+//		Room currentRoom = new Room(e.getChildText("name"));
+//		return currentRoom;
+//	}
 
 	/**
 	 * Reads an item, and depending on its actual subtype creates an item of that subtype
@@ -119,22 +119,22 @@ public class FromXML {
 		String name = e.getChildText("name");
 		String description = e.getChildText("description");
 		String spriteName = e.getChildText("spriteName");
-
-		switch(currentClass){
-		case "class game.Container":
-			currentItem = new Container(name, description, spriteName);
-			return currentItem;
-		case "class game.Key":
-			currentItem = new Key(name, description, spriteName);
-			return currentItem;
-		case "class game.Furniture":
-			currentItem = new Furniture(name, description, spriteName);
-			return currentItem;
-		case "class game.Door":
-			currentItem = new Door(name, description, spriteName);
-			return currentItem;
-		}
-		return new Container(name, description, spriteName);
+		return null;
+//		switch(currentClass){
+//		case "class game.Container":
+//			currentItem = new Container(name, description, spriteName);
+//			return currentItem;
+//		case "class game.Key":
+//			currentItem = new Key(name, description, spriteName);
+//			return currentItem;
+//		case "class game.Furniture":
+//			currentItem = new Furniture(name, description, spriteName);
+//			return currentItem;
+//		case "class game.Door":
+//			currentItem = new Door(name, description, spriteName);
+//			return currentItem;
+//		}
+//		return new Container(name, description, spriteName);
 	}
 
 	/**
@@ -165,28 +165,28 @@ public class FromXML {
 		Element itemsRoot = rootNode.getChild("gameItems");
 		Element roomsRoot = rootNode.getChild("gameRooms");
 
-		Room placeHolderRoom = new Room("placeholder"){
-		{
-			Element roomsRoot = rootNode.getChild("gameRooms");
-
-			for(Element room : roomsRoot.getChildren()){
-				for(Element roomItems : room.getChildren("roomItems")){
-					for(Element itemInstance : roomItems.getChildren()){
-						Item itemTo = items.get(itemInstance.getChildText("item"));
-						Direction itemDir = Direction.fromString(itemInstance.getChildText("facingDirection"));
-						int bX = Integer.parseInt(itemInstance.getChild("boundingBox").getChildText("x").substring(1));
-						int bY = Integer.parseInt(itemInstance.getChild("boundingBox").getChildText("y").substring(1));
-						int bZ = Integer.parseInt(itemInstance.getChild("boundingBox").getChildText("z").substring(1));
-
-						Point3D itemPoint = new Point3D(bX, bY, bZ);
-						ItemInstance roomItem = new ItemInstance(itemTo, itemDir, itemPoint);
-						rooms.get(room.getChildText("name")).getItems().add(roomItem);
-					}
-				}
-			}
-		}
-
-		};
+//		Room placeHolderRoom = new Room("placeholder"){
+//		{
+//			Element roomsRoot = rootNode.getChild("gameRooms");
+//
+//			for(Element room : roomsRoot.getChildren()){
+//				for(Element roomItems : room.getChildren("roomItems")){
+//					for(Element itemInstance : roomItems.getChildren()){
+//						Item itemTo = items.get(itemInstance.getChildText("item"));
+//						Direction itemDir = Direction.fromString(itemInstance.getChildText("facingDirection"));
+//						int bX = Integer.parseInt(itemInstance.getChild("boundingBox").getChildText("x").substring(1));
+//						int bY = Integer.parseInt(itemInstance.getChild("boundingBox").getChildText("y").substring(1));
+//						int bZ = Integer.parseInt(itemInstance.getChild("boundingBox").getChildText("z").substring(1));
+//
+//						Point3D itemPoint = new Point3D(bX, bY, bZ);
+//						ItemInstance roomItem = new ItemInstance(itemTo, itemDir, itemPoint);
+//						rooms.get(room.getChildText("name")).getItems().add(roomItem);
+//					}
+//				}
+//			}
+//		}
+//
+//		};
 
 //
 //

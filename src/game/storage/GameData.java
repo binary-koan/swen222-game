@@ -44,9 +44,9 @@ public class GameData {
 		return rooms;
 	}
 
-	public Room getRoom(String name){
+	public Room getRoom(String id){
 		for(Map.Entry<String, Room> r : rooms.entrySet()){
-			if(r.getKey().equals(name)){
+			if(r.getKey().equals(id)){
 				return r.getValue();
 			}
 		}
@@ -57,9 +57,9 @@ public class GameData {
 		return items;
 	}
 
-	public Item getItem(String name){
+	public Item getItem(String id){
 		for(Map.Entry<String, Item> i : items.entrySet()){
-			if(i.getKey().equals(name)){
+			if(i.getKey().equals(id)){
 				return i.getValue();
 			}
 		}
@@ -77,7 +77,7 @@ public class GameData {
 			Element itemsRoot = rootNode.getChild("gameItems");
 			for(Element e : itemsRoot.getChildren()){
 				Item currentItem = readItem(e);
-				items.put(currentItem.getName(), currentItem);
+				items.put(currentItem.getID(), currentItem);
 			}
 			return items;
 		}catch (IOException io) {
@@ -92,25 +92,26 @@ public class GameData {
 		//Working on a more robust, less error prone method.
 		String currentClass = e.getChildText("subClass");
 		Item currentItem;
+		String id = e.getChildText("id");
 		String name = e.getChildText("name");
 		String description = e.getChildText("description");
 		String spriteName = e.getChildText("spriteName");
 
 		switch(currentClass){
 		case "class game.Container":
-			currentItem = new Container(name, description, spriteName);
+			currentItem = new Container(id, name, description, spriteName);
 			return currentItem;
 		case "class game.Key":
-			currentItem = new Key(name, description, spriteName);
+			currentItem = new Key(id, name, description, spriteName);
 			return currentItem;
 		case "class game.Furniture":
-			currentItem = new Furniture(name, description, spriteName);
+			currentItem = new Furniture(id, name, description, spriteName);
 			return currentItem;
 		case "class game.Door":
-			currentItem = new Door(name, description, spriteName);
+			currentItem = new Door(id, name, description, spriteName);
 			return currentItem;
 		}
-		return new Furniture(name, description, spriteName);
+		return new Furniture(id, name, description, spriteName);
 	}
 
 	public HashMap<String, Room> loadRooms(){
@@ -124,7 +125,7 @@ public class GameData {
 			Element roomsRoot = rootNode.getChild("gameRooms");
 			for(Element e : roomsRoot.getChildren()){
 				Room currentRoom = readRoom(e);
-				rooms.put(currentRoom.getName(), currentRoom);
+				rooms.put(currentRoom.getID(), currentRoom);
 			}
 			return rooms;
 		}catch (IOException io) {
@@ -136,7 +137,8 @@ public class GameData {
 	}
 
 	private Room readRoom(Element e){
-		Room currentRoom = new Room(e.getChildText("name"));
+		Room currentRoom = new Room(e.getChildText("id"), e.getChildText("name"));
+		System.out.println(e.getChildText("id"));
 		return currentRoom;
 	}
 
