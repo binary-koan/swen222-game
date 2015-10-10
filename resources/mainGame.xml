@@ -86,13 +86,13 @@
     <item>
       <name>engineFunctional</name>
       <description>Port engine of the spacecraft. It's working fine.</description>
-      <spriteName>objects/emp-bomb.png</spriteName>
+      <spriteName>objects/engine-working.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
     <item>
       <name>purpleChest</name>
       <description>A purple chest.</description>
-      <spriteName>objects/crate.png</spriteName>
+      <spriteName>objects/chest-blue.png</spriteName>
       <subClass>class game.Container</subClass>
       <chestItems>
 	<item>fusionPistol</item>
@@ -109,7 +109,7 @@
     <item>
       <name>yellowChest</name>
       <description>A yellow chest.</description>
-      <spriteName>objects/crate.png</spriteName>
+      <spriteName>objects/chest-yellow.png</spriteName>
       <subClass>class game.Container</subClass>
       <chestItems>
 	<item>torch</item>
@@ -120,13 +120,13 @@
     <item>
       <name>lightSwitch</name>
       <description>A simple light switch.</description>
-      <spriteName>decoration/yellow-light.png</spriteName>
+      <spriteName>objects/light-switch-off.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
     <item>
       <name>torch</name>
       <description>An E-class 2187 pattern-A torch (second generation).</description>
-      <spriteName>decoration/yellow-light.png</spriteName>
+      <spriteName>objects/torch.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
     <item>
@@ -138,7 +138,7 @@
     <item>
       <name>yellowKey</name>
       <description>A yellow key.</description>
-      <spriteName>decoration/yellow-light.png</spriteName>
+      <spriteName>decoration/key-yellow.png</spriteName>
       <subClass>class game.Key</subClass>
     </item>
   </gameItems>
