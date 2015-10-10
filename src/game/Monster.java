@@ -4,8 +4,8 @@ import game.storage.GameData;
 
 public class Monster extends Item{
 
-	public Monster(String name, String description, String spriteName) {
-		super(name, description, spriteName);
+	public Monster(String id, String name, String description, String spriteName) {
+		super(id, name, description, spriteName);
 	}
 
 	public void attack(){

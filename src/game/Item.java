@@ -28,24 +28,31 @@ public abstract class Item implements Serializable {
 		}
 	}
 
-	public enum Colour{
-		BLUE,GREEN, YELLOW, RED;
+	public enum Color{
+		BLUE, GREEN, YELLOW, RED;
 	}
 
-	public Colour getColour(){
-		return null;
+	public Color getColor(){
+		return this.color;
 
 	}
 
+	private String id;
 	private String name;
 	private String description;
 	private String spriteName;
+	private Color color;
 
-	public Item(String name, String description, String spriteName){
+	public Item(String id, String name, String description, String spriteName){
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.spriteName = spriteName;
 	}
+
+	public String getID(){
+    	return id;
+    }
 
 	public String getSpriteName() {
 		return spriteName;
@@ -65,3 +72,4 @@ public abstract class Item implements Serializable {
         return result;
     }
 }
+

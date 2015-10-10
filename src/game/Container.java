@@ -5,6 +5,7 @@ import game.Room.ItemInstance;
 import game.storage.GameData;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
@@ -12,14 +13,16 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 public class Container extends Item implements Pickable {
-	private List<Item> chestItems;
+	private List<Item> containerItems;
 	private boolean hasOpened;
 
-	public Container(String name, String description, String spriteName) {
-		super(name, description, spriteName);
-		this.chestItems = new ArrayList<>();
+	public Container(String id, String name, String description, String spriteName) {
+		super(id, name, description, spriteName);
+		this.containerItems = new ArrayList<>();
 		this.hasOpened = false;
 	}
 
@@ -28,7 +31,7 @@ public class Container extends Item implements Pickable {
 	}
 
 	public List<Item> getItems() {
-		return chestItems;
+		return containerItems;
 	}
 
 	public void openChest() {
@@ -45,7 +48,28 @@ public class Container extends Item implements Pickable {
 
 	@Override
 	public void toXML() {
-		// TODO Auto-generated method stub
+		SAXBuilder builder = new SAXBuilder();
+		File xmlFile = new File("/u/students/holdawscot/saveFile1.xml");
+		try{
+			Document document = builder.build(xmlFile);
+			Element rootNode = document.getRootElement();
+			for(Element container : rootNode.getChild("gameRooms").getChildren()){
+				if(container.getChildText("id").equals(this.getID())){
+					container.getChild("containerItems").removeContent();
+					for(Item i : this.containerItems){
+						container.getChild("containerItems").addContent("item").setText(i.getID());
+					}
+					container.getChild("hasOpened").setText(Boolean.toString(this.hasOpened));
+				}
+			}
+			XMLOutputter xmlOutput = new XMLOutputter();
+			xmlOutput.setFormat(Format.getPrettyFormat());
+			xmlOutput.output(document, new FileWriter("/u/students/holdawscot/saveFile1.xml"));
+		}catch (IOException io) {
+			System.out.println(io.getMessage());
+		}catch (JDOMException jdomex) {
+			System.out.println(jdomex.getMessage());
+		}
 
 	}
 
@@ -57,8 +81,8 @@ public class Container extends Item implements Pickable {
 			Document document = builder.build(xmlFile);
 			Element rootNode = document.getRootElement();
 			for(Element gameItem : rootNode.getChild("gameItems").getChildren()){
-				if(gameItem.getChildText("name").equals(this.getName())){
-					this.chestItems.removeAll(chestItems);
+				if(gameItem.getChildText("id").equals(this.getID())){
+					this.containerItems.removeAll(containerItems);
 					for(Element chestItem : gameItem.getChild("chestItems").getChildren()){
 						this.getItems().add(gameData.getItem(chestItem.getText()));
 					}
