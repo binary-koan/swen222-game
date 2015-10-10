@@ -134,24 +134,35 @@ public class Room implements Serializable{
 
 	@Override
 	public Object loadXML(GameData gameData) {
-		// TODO Auto-generated method stub
 		SAXBuilder builder = new SAXBuilder();
 		File xmlFile = new File("/u/students/holdawscot/saveFile1.xml");
 		try{
 			Document document = builder.build(xmlFile);
 			Element rootNode = document.getRootElement();
-			for(Element r : rootNode.getChild("gameRooms").getChildren()){
-				if(r.getChildText("name").equals(this.getName())){
+			for(Element gameRoom : rootNode.getChild("gameRooms").getChildren()){
+				if(gameRoom.getChildText("name").equals(this.getName())){
 					this.items.removeAll(items);
-					for(Element i : r.getChild("roomItems").getChildren()){
-						Item ir = gameData.getItem(i.getChildText("item"));
-						Direction dr = Direction.fromString(i.getChildText("facingDirection"));
-						int xr = Integer.parseInt(i.getChild("boundingBox").getChildText("x").substring(1));
-						int yr = Integer.parseInt(i.getChild("boundingBox").getChildText("y").substring(1));
-						int zr = Integer.parseInt(i.getChild("boundingBox").getChildText("z").substring(1));
+					for(Element roomItem : gameRoom.getChild("roomItems").getChildren()){
+						Item ir = gameData.getItem(roomItem.getChildText("item"));
+						Direction dr = Direction.fromString(roomItem.getChildText("facingDirection"));
+						int xr = Integer.parseInt(roomItem.getChild("boundingBox").getChildText("x").substring(1));
+						int yr = Integer.parseInt(roomItem.getChild("boundingBox").getChildText("y").substring(1));
+						int zr = Integer.parseInt(roomItem.getChild("boundingBox").getChildText("z").substring(1));
 						Point3D pr = new Point3D(xr, yr, zr);
 						ItemInstance itemI = new ItemInstance (ir, dr, pr);
 						this.addRoomItemInstance(itemI);
+					}
+					for(Element roomConnection : gameRoom.getChildren("roomConnections")){
+						String[] splitResult = roomConnection.getText().split("\\|", 2);
+						String dir = splitResult[0];
+						String room = splitResult[1];
+						this.roomConnections.put(Direction.fromString(dir), gameData.getRoom(room));
+					}
+					for(Element wallConnection : gameRoom.getChildren("wallConnections")){
+						String[] splitResult = wallConnection.getText().split("\\|", 2);
+						String dir = splitResult[0];
+						Boolean wall = Boolean.valueOf(splitResult[1]);
+						this.wallConnections.put(Direction.fromString(dir), wall);
 					}
 				}
 			}
