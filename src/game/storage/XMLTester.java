@@ -4,6 +4,7 @@ package game.storage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import game.*;
 import game.Drawable.Point3D;
@@ -18,46 +19,46 @@ public class XMLTester {
 	public static void main(String[] args) {
 		// Just a very crude testing class to make sure the file is writing ok.
 
-		HashMap<String, Room> testRooms = new HashMap<String, Room>();
-        final HashMap<String, Item> testItems = new HashMap<String, Item>();
-        ArrayList<Player> testPlayers = new ArrayList<Player>();
-
-		Room testRoom1 = new Room("testRoom1"){
-        {
-		Item item = new Furniture("Bed", "", "objects/bed.png");
-		testItems.put(item.getName(), item);
-        getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Point3D(80, 0, 80)));
-
-        item = new Container("Chest", "", "objects/chest.png");
-        testItems.put(item.getName(), item);
-        getItems().add(new Room.ItemInstance(item, Direction.EAST, new Point3D(40, 0, 120)));
-
-        item = new Key("Key", "", "objects/key.png");
-        testItems.put(item.getName(), item);
-        getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Point3D(140, 60, 20)));
-
-        item = new Door("Door", "", "objects/door.png");
-        testItems.put(item.getName(), item);
-        getItems().add(new Room.ItemInstance(item, Direction.WEST, new Point3D(140, 0, 80)));
-
-        }
-		};
-
-		Room testRoom2 = new Room("testRoom2");
-
-        Player player1 = new Player("Player1","characters/o1.png");
-        player1.setRoom(testRoom1);
-        Player player2 = new Player("Player2", "characters/o2.png");
-        player2.setRoom(testRoom1);
-
-        player1.setFacingDirection(Direction.NORTH);
-        player2.setFacingDirection(Direction.SOUTH);
-
-
-        testRooms.put(testRoom1.getName(), testRoom1);
-        testRooms.put(testRoom2.getName(), testRoom2);
-        testPlayers.add(player1);
-        testPlayers.add(player2);
+//		HashMap<String, Room> testRooms = new HashMap<String, Room>();
+//        final HashMap<String, Item> testItems = new HashMap<String, Item>();
+//        ArrayList<Player> testPlayers = new ArrayList<Player>();
+//
+//		Room testRoom1 = new Room("testRoom1"){
+//        {
+//		Item item = new Furniture("Bed", "", "objects/bed.png");
+//		testItems.put(item.getName(), item);
+//        getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Point3D(80, 0, 80)));
+//
+//        item = new Container("Chest", "", "objects/chest.png");
+//        testItems.put(item.getName(), item);
+//        getItems().add(new Room.ItemInstance(item, Direction.EAST, new Point3D(40, 0, 120)));
+//
+//        item = new Key("Key", "", "objects/key.png");
+//        testItems.put(item.getName(), item);
+//        getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Point3D(140, 60, 20)));
+//
+//        item = new Door("Door", "", "objects/door.png");
+//        testItems.put(item.getName(), item);
+//        getItems().add(new Room.ItemInstance(item, Direction.WEST, new Point3D(140, 0, 80)));
+//
+//        }
+//		};
+//
+//		Room testRoom2 = new Room("testRoom2");
+//
+//        Player player1 = new Player("Player1","characters/o1.png");
+//        player1.setRoom(testRoom1);
+//        Player player2 = new Player("Player2", "characters/o2.png");
+//        player2.setRoom(testRoom1);
+//
+//        player1.setFacingDirection(Direction.NORTH);
+//        player2.setFacingDirection(Direction.SOUTH);
+//
+//
+//        testRooms.put(testRoom1.getName(), testRoom1);
+//        testRooms.put(testRoom2.getName(), testRoom2);
+//        testPlayers.add(player1);
+//        testPlayers.add(player2);
 
 
         //player2.setBoundingBox(new Drawable.BoundingCube(80, 80, 80, 32, 32, 32));
@@ -86,16 +87,34 @@ public class XMLTester {
 //		player1.loadXML(gameTo);
 //		System.out.println(player1.getRoom().getName());
 
-		FromXML fromTester = new FromXML("/u/students/holdawscot/saveFile1.xml");
-		Game gameFrom = fromTester.readRoot();
+//		FromXML fromTester = new FromXML("/u/students/holdawscot/saveFile1.xml");
+//		Game gameFrom = fromTester.readRoot();
 
 
 
 //		Item itemTest = new Bed("tester", "objects/bed.png");
 //		gameFrom.getData().getItems().put(itemTest.getName(), itemTest);
 
-		ToXML toTester2 = new ToXML(gameFrom, "/u/students/holdawscot/saveFile2.xml");
-		toTester2.writeRoot();
+//		ToXML toTester2 = new ToXML(gameFrom, "/u/students/holdawscot/saveFile2.xml");
+//		toTester2.writeRoot();
+
+
+        GameData data = new GameData("resources/mainGame.xml");
+        Game game = new Game(data);
+
+        Room room = game.getData().getRoom("engineRoomWestNorth");
+        room.getName();
+        for(Map.Entry<String, Item> i : data.getItems().entrySet()){
+        	System.out.println(i.getValue().getName());
+        }
+        for(Map.Entry<String, Room> r : data.getRooms().entrySet()){
+        	System.out.println(r.getValue().getName());
+        }
+        for(Map.Entry<Direction, Room> r : room.roomConnections.entrySet()){
+        	System.out.println(r.getValue().getName());
+        }
+        Room room2 = room.getConnection(Direction.NORTH);
+
 	}
 }
 

@@ -89,8 +89,8 @@ public class GameData {
 			//Create all the items from the document, put them in the Map items
 			Element roomsRoot = rootNode.getChild("gameRooms");
 			for(Element e : roomsRoot.getChildren()){
-				Room currentItem = game.storage.FromXML.readRoom(e);
-				rooms.put(currentItem.getName(), currentItem);
+				Room currentRoom = game.storage.FromXML.readRoom(e);
+				rooms.put(currentRoom.getName(), currentRoom);
 			}
 			return rooms;
 		}catch (IOException io) {

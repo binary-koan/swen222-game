@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,8 +57,8 @@ public class Room implements Serializable{
 	private String name;
     private List<ItemInstance> items = new ArrayList<>();
     private List<Player> players;
-    private Map<Direction, Room> roomConnections;
-    private Map<Direction, Boolean> wallConnections;
+    public Map<Direction, Room> roomConnections = new HashMap<Direction, Room>();
+    private Map<Direction, Boolean> wallConnections = new HashMap<Direction, Boolean>();
     private List<Door> doors;
 
     public Room(String name) {
@@ -66,11 +67,11 @@ public class Room implements Serializable{
     }
 
 	public boolean hasWall(Direction position) {
-		return false; //TODO
+		return this.wallConnections.get(position);
 	}
 
     public Room getConnection(Direction position) {
-        return null; //TODO
+        return this.roomConnections.get(position);
     }
 
     public List<ItemInstance> getItems() {
@@ -135,7 +136,7 @@ public class Room implements Serializable{
 	@Override
 	public Object loadXML(GameData gameData) {
 		SAXBuilder builder = new SAXBuilder();
-		File xmlFile = new File("/u/students/holdawscot/saveFile1.xml");
+		File xmlFile = new File("resources/mainGame.xml");
 		try{
 			Document document = builder.build(xmlFile);
 			Element rootNode = document.getRootElement();
@@ -152,14 +153,14 @@ public class Room implements Serializable{
 						ItemInstance itemI = new ItemInstance (ir, dr, pr);
 						this.addRoomItemInstance(itemI);
 					}
-					for(Element roomConnection : gameRoom.getChildren("roomConnections")){
-						String[] splitResult = roomConnection.getText().split("\\|", 2);
+					for(Element roomConnection : gameRoom.getChild("roomConnections").getChildren()){
+						String[] splitResult = roomConnection.getText().split("-", 2);
 						String dir = splitResult[0];
 						String room = splitResult[1];
 						this.roomConnections.put(Direction.fromString(dir), gameData.getRoom(room));
 					}
-					for(Element wallConnection : gameRoom.getChildren("wallConnections")){
-						String[] splitResult = wallConnection.getText().split("\\|", 2);
+					for(Element wallConnection : gameRoom.getChild("wallConnections").getChildren()){
+						String[] splitResult = wallConnection.getText().split("-", 2);
 						String dir = splitResult[0];
 						Boolean wall = Boolean.valueOf(splitResult[1]);
 						this.wallConnections.put(Direction.fromString(dir), wall);

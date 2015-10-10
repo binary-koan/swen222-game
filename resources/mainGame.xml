@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<saveGame>
+  <gameRooms>
+    <room>
+      <name>engineRoomWestSouth</name>
+      <roomItems>
+        <itemInstance>
+          <item>engineFunctional</item>
+          <facingDirection>NORTH</facingDirection>
+          <boundingBox>
+            <x>x160</x>
+            <y>y0</y>
+            <z>z10</z>
+          </boundingBox>
+        </itemInstance>
+	<itemInstance>
+          <item>purpleChest</item>
+          <facingDirection>NORTH</facingDirection>
+          <boundingBox>
+            <x>x10</x>
+            <y>y0</y>
+            <z>z160</z>
+          </boundingBox>
+        </itemInstance>
+	<itemInstance>
+          <item>empBomb</item>
+          <facingDirection>NORTH</facingDirection>
+          <boundingBox>
+            <x>x240</x>
+            <y>y0</y>
+            <z>z80</z>
+          </boundingBox>
+        </itemInstance>
+      </roomItems>
+      <roomConnections>
+	<entry>NORTH-engineRoomWestNorth</entry>
+      </roomConnections>
+      <wallConnections>
+	<entry>NORTH-false</entry>
+	<entry>EAST-true</entry>
+	<entry>SOUTH-true</entry>
+	<entry>WEST-true</entry>
+      </wallConnections>
+    </room>
+
+    <room>
+      <name>engineRoomWestNorth</name>
+      <roomItems>
+        <itemInstance>
+          <item>yellowChest</item>
+          <facingDirection>NORTH</facingDirection>
+          <boundingBox>
+            <x>x320</x>
+            <y>y0</y>
+            <z>z320</z>
+          </boundingBox>
+        </itemInstance>
+	<itemInstance>
+          <item>lightSwitch</item>
+          <facingDirection>NORTH</facingDirection>
+          <boundingBox>
+            <x>x0</x>
+            <y>y80</y>
+            <z>z240</z>
+          </boundingBox>
+        </itemInstance>
+      </roomItems>
+      <roomConnections>
+	<entry>SOUTH-engineRoomWestSouth</entry>
+      </roomConnections>
+      <wallConnections>
+	<entry>NORTH-true</entry>
+	<entry>EAST-true</entry>
+	<entry>SOUTH-false</entry>
+	<entry>WEST-true</entry>
+      </wallConnections>
+    </room>
+
+
+  </gameRooms>
+
+
+
+
+  <gameItems>
+    <item>
+      <name>engineFunctional</name>
+      <description>Port engine of the spacecraft. It's working fine.</description>
+      <spriteName>objects/emp-bomb.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <name>purpleChest</name>
+      <description>A purple chest.</description>
+      <spriteName>objects/crate.png</spriteName>
+      <subClass>class game.Container</subClass>
+    </item>
+    <item>
+      <name>empBomb</name>
+      <description>A dangerous looking electronic device.</description>
+      <spriteName>objects/emp-bomb.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <name>yellowChest</name>
+      <description>A yellow chest.</description>
+      <spriteName>objects/crate.png</spriteName>
+      <subClass>class game.Container</subClass>
+    </item>
+    <item>
+      <name>lightSwitch</name>
+      <description>A simple light switch.</description>
+      <spriteName>decoration/yellow-light.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+  </gameItems>
+
+
+
+  <gamePlayers>
+  </gamePlayers>
+</saveGame>
