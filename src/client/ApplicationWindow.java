@@ -4,10 +4,12 @@ import game.Furniture;
 import game.Direction;
 import game.Door;
 import game.Drawable;
+import game.Game;
 import game.Item;
 import game.Container;
 import game.Player;
 import game.Room;
+import game.storage.GameData;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -170,16 +172,16 @@ public class ApplicationWindow extends JFrame implements KeyListener {
     }
 
 	public static void main(String[] args) {
-//		GameData gameData = new GameData("/u/students/holdawscot/saveFile1.xml");
+//		GameData gameData = new GameData("resources/mainGame.xml");
 //		Game game = new Game (gameData);
-//		final Player player1 = game.getPlayers().get(0);
-//    	player1.setFacingDirection(Direction.NORTH);
-//    	player1.setRoom(game.getData().getRoom("testRoom1"));
+//		final Player player2 = new Player("Player 2", "characters/alien2.png");
+//    	player2.setFacingDirection(Direction.NORTH);
+//    	player2.setRoom(game.getData().getRoom("engineRoomWestNorth"));
 //
 //        final Player player = new Player("Player 1", "characters/alien1.png") {
 //            @Override
 //            public Room getRoom() {
-//                return game.getData().getRoom("testRoom1");
+//                return game.getData().getRoom("engineRoomWestNorth");
 //            }
 //        };
 //        player.setFacingDirection(Direction.NORTH);
@@ -188,7 +190,7 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 
 
 
-
+        //commentoutbelow
 
 
 		final Player player2 = new Player("Player 2", "characters/alien2.png");
@@ -223,6 +225,8 @@ public class ApplicationWindow extends JFrame implements KeyListener {
             }
         };
         player.setFacingDirection(Direction.NORTH);
+
+        //commentoutabove
 
 		SynthLookAndFeel lookAndFeel = new SynthLookAndFeel();
 		try {
