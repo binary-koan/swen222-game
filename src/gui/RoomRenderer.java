@@ -208,18 +208,18 @@ public class RoomRenderer {
         Collections.sort(roomObjects, sceneItemComparators.get(direction));
 
         for (Drawable drawable : roomObjects) {
-            System.out.println("Drawing object: " + drawable.toString());
+            Drawable.Point3D position = drawable.getPosition();
+            int z = calculateZIndex(position, direction);
+
+            // Don't render items which are too close to the viewer
+            if (z > Room.ROOM_SIZE - 40) {
+                continue;
+            }
 
             BufferedImage sprite = loader.getSprite(drawable.getSpriteName(), drawable.getFacingDirection().viewFrom(direction));
-
-            Drawable.Point3D position = drawable.getPosition();
             Rectangle screenBounds = calculateBoundingBox(position, sprite, direction);
-            int z = calculateZIndex(position, direction);
-            System.out.println(screenBounds.x + "," + screenBounds.y + "," + screenBounds.width + "," + screenBounds.height);
 
             scaleBoundingBox(screenBounds, z, scale, room);
-            System.out.println(screenBounds.x + "," + screenBounds.y + "," + screenBounds.width + "," + screenBounds.height);
-
             currentSceneItems.add(new SceneItem(drawable, sprite, screenBounds, isCurrent));
         }
     }
@@ -294,7 +294,8 @@ public class RoomRenderer {
     }
 
     /**
-     * Find and return the distance back an object is in the room, when viewed from a particular angle
+     * Find and return the distance back an object is in the room, when viewed from a particular angle. Lower values
+     * indicate the object is further away; higher values indicate it's closer
      *
      * @param position the position of the object
      * @param direction the direction the room is being viewed from
