@@ -1,18 +1,13 @@
-package client.renderer;
+package client.popups;
 
+import client.ResourceLoader;
 import game.Item;
-import game.Room;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
 
-public class Tooltip extends JPanel {
+public class InfoTooltip extends JPanel {
     private Item.Action primaryAction;
     private Item.Action secondaryAction;
 
@@ -21,7 +16,7 @@ public class Tooltip extends JPanel {
 	private JLabel primaryActionLabel = new JLabel();
 	private JLabel secondaryActionLabel = new JLabel();
 
-	public Tooltip(ResourceLoader loader) {
+	public InfoTooltip(ResourceLoader loader) {
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 
