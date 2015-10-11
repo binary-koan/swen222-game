@@ -1,4 +1,4 @@
-package game.storage;
+package storage;
 //Author: Scott Holdaway
 
 import game.Container;

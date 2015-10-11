@@ -1,4 +1,4 @@
-package game.storage;
+package storage;
 
 import org.jdom2.Element;
 
