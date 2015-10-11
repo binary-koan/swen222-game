@@ -1,8 +1,8 @@
-package client;
+package gui;
 
-import client.popups.ActionMenu;
-import client.popups.ContentsMenu;
-import client.popups.InfoTooltip;
+import gui.popups.ActionMenu;
+import gui.popups.ContentsMenu;
+import gui.popups.InfoTooltip;
 import game.*;
 import game.Container;
 import game.Room.ItemInstance;

@@ -1,6 +1,5 @@
-package client;
+package gui;
 
-import client.ResourceLoader;
 import game.*;
 
 import org.eclipse.jdt.annotation.NonNull;

@@ -1,4 +1,4 @@
-package client.popups;
+package gui.popups;
 
 import game.ActionReceiver;
 import game.Item;

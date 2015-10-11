@@ -1,6 +1,6 @@
-package client.popups;
+package gui.popups;
 
-import client.ResourceLoader;
+import gui.ResourceLoader;
 import game.ActionReceiver;
 import game.Direction;
 import game.Item;
