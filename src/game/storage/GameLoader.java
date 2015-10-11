@@ -29,9 +29,10 @@ public class GameLoader {
 	private HashMap<String, Player> players;
 	private String XMLFilename;
 	private Document gameDoc;
-	private Game currentGame;
+	private Game game;
 
-	public GameLoader(String filename){
+	public GameLoader(Game game, String filename){
+		this.game = game;
 		this.XMLFilename = filename;
 		SAXBuilder builder = new SAXBuilder();
 		File xmlFile = new File(this.XMLFilename);
@@ -43,9 +44,11 @@ public class GameLoader {
 		}catch (JDOMException jdomex) {
 			System.out.println(jdomex.getMessage());
 		}
-
 		this.items = loadItemsInitial();
 		this.rooms = loadRoomsInitial();
+		this.players = loadPlayersInitial();
+
+
 		//Now we have items and rooms constructed in basic form and able to be referenced,
 		//we assign them all their associations by reading from the same XML doc.
 	}
@@ -180,17 +183,9 @@ public class GameLoader {
 				player.getValue().loadXML(game, playerElement);
 			}
 		}
-		currentGame.setItems(this.items);
-		currentGame.setRooms(this.rooms);
-		currentGame.setPlayers(this.players);
-	}
-
-	public void setCurrentGame(Game currentGame){
-		this.currentGame = currentGame;
-	}
-
-	public Game getCurrentGame(){
-		return currentGame;
+		game.setItems(this.items);
+		game.setRooms(this.rooms);
+		game.setPlayers(this.players);
 	}
 
 	public String getXMLFilename(){
