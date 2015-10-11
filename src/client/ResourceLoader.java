@@ -14,11 +14,19 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Loads and caches resources such as images and sprites, to be displayed by the renderer
+ */
 public class ResourceLoader {
     private @NonNull String root;
     private @NonNull Map<String, BufferedImage> imageCache = new HashMap<>();
     private @NonNull BufferedImage notFound = new BufferedImage(32, 32, BufferedImage.TYPE_4BYTE_ABGR);
 
+    /**
+     * Create a new ResourceLoader which will load all files relative to the given root directory
+     *
+     * @param root directory to load resources from
+     */
     public ResourceLoader(@NonNull String root) {
         this.root = root;
 
@@ -27,16 +35,23 @@ public class ResourceLoader {
         graphics.fillRect(0, 0, 32, 32);
     }
 
-    public @NonNull BufferedImage getImage(@NonNull String basename) {
-        if (imageCache.containsKey(basename)) {
-            return imageCache.get(basename);
+    /**
+     * Loads and returns the image at the given file path. Shows a message dialog and returns a red square if the image
+     * cannot be loaded
+     *
+     * @param filename path to the image file to load (relative to the root directory)
+     * @return the loaded image
+     */
+    public @NonNull BufferedImage getImage(@NonNull String filename) {
+        if (imageCache.containsKey(filename)) {
+            return imageCache.get(filename);
         }
         else {
-            Path path = Paths.get(root + "/" + basename);
+            Path path = Paths.get(root + "/" + filename);
             try {
                 File imageFile = new File(path.toAbsolutePath().toString());
                 BufferedImage image = ImageIO.read(imageFile);
-                imageCache.put(basename, image);
+                imageCache.put(filename, image);
                 return image;
             }
             catch (IOException e) {
@@ -46,8 +61,16 @@ public class ResourceLoader {
         }
     }
 
-    public @NonNull BufferedImage getSprite(@NonNull String basename, Direction viewingDirection) {
-        BufferedImage image = getImage(basename);
+    /**
+     * Loads and returns one image from the spritesheet at the given file path. Spritesheets are assumed to be 4x1
+     * frames, representing the NORTH, EAST, WEST and SOUTH faces of the object respectively
+     *
+     * @param filename image file path {@link #getImage}
+     * @param viewingDirection direction the sprite is being viewed from
+     * @return one frame of the loaded image
+     */
+    public @NonNull BufferedImage getSprite(@NonNull String filename, Direction viewingDirection) {
+        BufferedImage image = getImage(filename);
         if (image == notFound) {
             return image;
         }

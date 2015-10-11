@@ -15,8 +15,11 @@ import java.util.List;
  * Given a player, this class renders the room that the player is in
  */
 public class RoomRenderer {
-    private static final int RENDER_SCALE = 5;
+    /** The scale the room will be rendered at off-screen */
+    public static final int RENDER_SCALE = 5;
 
+    // A static map of comparators which can compare objects (based on their distance "back" in the scene) from any
+    // direction
     private static final Map<Direction, Comparator<Drawable>> sceneItemComparators = new HashMap<>();
     static {
         sceneItemComparators.put(Direction.NORTH, new Comparator<Drawable>() {
@@ -165,6 +168,9 @@ public class RoomRenderer {
 
     /**
      * Get the position and size on screen of a particular object
+     *
+     * @param object object to calculate dimensions from
+     * @return a rectangle representing the position and size of the object
      */
     public @Nullable Rectangle getBounds(Drawable object) {
     	for (SceneItem item : currentSceneItems) {
