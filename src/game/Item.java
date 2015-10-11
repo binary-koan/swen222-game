@@ -1,6 +1,6 @@
 package game;
 
-import game.storage.Serializable;
+import storage.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
