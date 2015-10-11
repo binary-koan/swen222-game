@@ -7,7 +7,7 @@ public interface ActionReceiver {
      * @param item the item being activated
      * @param action the action taken
      */
-    void performAction(Item item, Item.Action action);
+    void performAction(Item item, Action action);
 
     /**
      * Handle an action being sent to an item in a container
@@ -16,5 +16,5 @@ public interface ActionReceiver {
      * @param item the item being activated
      * @param action the action taken
      */
-    void performAction(Container container, Item item, Item.Action action);
+    void performAction(Container container, Item item, Action action);
 }

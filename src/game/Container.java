@@ -1,19 +1,8 @@
 package game;
 
-import game.Drawable.Point3D;
-import game.Room.ItemInstance;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.*;
 
-import org.jdom2.Document;
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
 
 public class Container extends Item implements Pickable {
 	private List<Item> containerItems;
@@ -48,11 +37,12 @@ public class Container extends Item implements Pickable {
 	@Override
 	public Element toXML() {
 		Element container = super.toXML();
-   		container.addContent("containerItems");
+   		container.addContent(new Element("containerItems"));
    		for(Item item : this.containerItems){
-   			container.getChild("containerItems").addContent("item").setText(item.getID());
+   			Element containerItem = new Element("item").setText(item.getID());
+   			container.getChild("containerItems").addContent(containerItem);
    		}
-   		container.addContent("hasOpened").setText(Boolean.toString(this.hasOpened));
+   		container.addContent(new Element("hasOpened").setText(Boolean.toString(this.hasOpened)));
    		return container;
 	}
 
@@ -60,9 +50,9 @@ public class Container extends Item implements Pickable {
 	public void loadXML(Game game, Element objectElement) {
 		super.loadXML(game, objectElement);
 		this.containerItems.removeAll(containerItems);
-		for(Element containerItem : objectElement.getChild("containerItems").getChildren()){
-			this.containerItems.add(game.getItem(containerItem.getText()));
-		}
+			for(Element containerItem : objectElement.getChild("containerItems").getChildren()){
+				this.containerItems.add(game.getItem(containerItem.getText()));
+			}
 		this.hasOpened = Boolean.getBoolean(objectElement.getChildText("hasOpened"));
 	}
 }

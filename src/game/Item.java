@@ -8,27 +8,6 @@ import java.util.List;
 import org.jdom2.Element;
 
 public abstract class Item implements Serializable {
-	public enum Action {
-		EXAMINE("Examine"), PICK_UP("Pick up"), SEARCH("Search"), SHOW_MENU("Other ..."), TAKE("Take");
-
-		private final String text;
-
-		/**
-		 * Create a new action
-		 * @param text string representation of the action
-		 */
-		Action(final String text) {
-			this.text = text;
-		}
-
-		/* (non-Javadoc)
-         * @see java.lang.Enum#toString()
-         */
-		@Override
-		public String toString() {
-			return text;
-		}
-	}
 
 	public enum Color{
 		BLUE, GREEN, YELLOW, RED;
@@ -89,26 +68,34 @@ public abstract class Item implements Serializable {
         return result;
     }
 
-
-
+    /**
+     * Author: Scott Holdaway
+     * Creates an XML element of the item by reading through all the fields
+	 * of the item. Subclasses will call this method and add their specific
+	 * data to it.
+     */
     public Element toXML() {
     	Element itemElement = new Element("item");
-    	itemElement.addContent("id").setText(this.getID());
-    	itemElement.addContent("name").setText(this.getName());
-    	itemElement.addContent("description").setText(this.getDescription());
-    	itemElement.addContent("spriteName").setText(this.getSpriteName());
-    	itemElement.addContent("subclass").setText(this.getClass().toString());
+    	itemElement.addContent(new Element("id").setText(this.getID()));
+    	itemElement.addContent(new Element("name").setText(this.getName()));
+    	itemElement.addContent(new Element("description").setText(this.getDescription()));
+    	itemElement.addContent(new Element("spriteName").setText(this.getSpriteName()));
+    	itemElement.addContent(new Element("subclass").setText(this.getClass().toString()));
     	if(this.color != null){
-    		itemElement.addContent("color").setText(this.color.toString());
+    		itemElement.addContent(new Element("color").setText(this.color.toString()));
     	}
     	return itemElement;
     }
 
+    /**
+     * Author: Scott Holdaway
+     * Sets all the fields in this item based on an XML element of this item.
+     * Subclasses will call this method and add their specific data to it.
+     */
     public void loadXML(Game game, Element objectElement){
     	this.name = objectElement.getChildText("name");
     	this.description = objectElement.getChildText("description");
     	this.spriteName = objectElement.getChildText("spriteName");
-
     	if(objectElement.getChildText("color") != null){
     		this.color = Color.fromString(objectElement.getChildText("color"));
     	}

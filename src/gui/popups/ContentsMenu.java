@@ -1,10 +1,8 @@
 package gui.popups;
 
-import gui.ResourceLoader;
-import game.ActionReceiver;
-import game.Direction;
-import game.Item;
+import game.*;
 import game.Container;
+import gui.ResourceLoader;
 import org.eclipse.jdt.annotation.NonNull;
 
 import javax.swing.*;
@@ -53,7 +51,7 @@ public class ContentsMenu extends JPopupMenu implements ActionListener {
         // Figure out which item was activated and send a TAKE action to the receiver
         for (Item item : container.getItems()) {
             if (e.getActionCommand().equals(item.getID())) {
-                receiver.performAction(container, item, Item.Action.TAKE);
+                receiver.performAction(container, item, game.Action.TAKE);
                 return;
             }
         }

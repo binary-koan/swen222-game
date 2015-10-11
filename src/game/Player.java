@@ -79,14 +79,14 @@ public class Player implements Drawable, Serializable {
     public Point3D getPosition() {
         switch (this.facingDirection) {
             case NORTH:
-                return new Point3D(160, 0, 10);
+                return new Point3D(160, 0, 40);
             case SOUTH:
-                return new Point3D(160, 0, 310);
+                return new Point3D(160, 0, 280);
             case EAST:
-                return new Point3D(310, 0, 160);
+                return new Point3D(280, 0, 160);
             case WEST:
             default:
-                return new Point3D(10, 0, 160);
+                return new Point3D(40, 0, 160);
         }
     }
 
@@ -160,23 +160,37 @@ public class Player implements Drawable, Serializable {
 
     // Serialization
 
+    /**
+     * Author: Scott Holdaway
+     * Creates an XML element of the player by reading through all the fields
+	 * of the player.
+     */
 	@Override
 	public Element toXML() {
 		Element player = new Element("player");
-		player.addContent("name").setText(this.name);
-		player.addContent("spriteName").setText(this.name);
-		player.addContent("room").setText(this.room.getID());
-		player.addContent("facingDirection").setText(this.facingDirection.toString());
-		player.addContent("heldItem").setText(heldItem.getID());
+		player.addContent(new Element("name").setText(this.name));
+		player.addContent(new Element("spriteName").setText(this.spriteName));
+		player.addContent(new Element("room").setText(this.room.getID()));
+		player.addContent(new Element("facingDirection").setText(this.facingDirection.toString()));
+		player.addContent(new Element("heldItem"));
+		if(this.heldItem != null){
+			player.getChild("heldItem").setText(heldItem.getID());
+		}
 		return player;
 	}
 
+	/**
+	 * Author: Scott Holdaway.
+	 * Sets all the fields in this player based on and XML element of this player.
+	 */
 	@Override
 	public void loadXML(Game game, Element objectElement) {
 		this.name = objectElement.getChildText("name");
 		this.spriteName = objectElement.getChildText("spriteName");
 		this.room = game.getRoom(objectElement.getChildText("room"));
-		this.facingDirection = Direction.fromString(objectElement.getChildText("facingDirectiom"));
-		this.heldItem = game.getItem(objectElement.getChildText("heldItem"));
+		this.facingDirection = Direction.fromString(objectElement.getChildText("facingDirection"));
+		if(game.getItem(objectElement.getChildText("heldItem")) != null){
+			this.heldItem = game.getItem(objectElement.getChildText("heldItem"));
+		}
 	}
 }
