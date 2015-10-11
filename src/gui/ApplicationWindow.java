@@ -1,11 +1,10 @@
-package client;
+package gui;
 
 import game.*;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
@@ -151,10 +150,10 @@ public class ApplicationWindow extends JFrame implements KeyListener, ActionRece
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
-                player.setFacingDirection(player.getFacingDirection().previous());
+                player.turn(player.getFacingDirection().previous());
                 break;
             case KeyEvent.VK_RIGHT:
-                player.setFacingDirection(player.getFacingDirection().next());
+                player.turn(player.getFacingDirection().next());
         }
         canvas.update();
     }
@@ -171,7 +170,7 @@ public class ApplicationWindow extends JFrame implements KeyListener, ActionRece
 //		GameData gameData = new GameData("resources/mainGame.xml");
 //		Game game = new Game (gameData);
 //		final Player player2 = new Player("Player 2", "characters/alien2.png");
-//    	player2.setFacingDirection(Direction.NORTH);
+//    	player2.turn(Direction.NORTH);
 //    	player2.setRoom(game.getData().getRoom("rx0y4"));
 //
 //        final Player player = new Player("Player 1", "characters/alien1.png") {
@@ -180,17 +179,13 @@ public class ApplicationWindow extends JFrame implements KeyListener, ActionRece
 //                return game.getData().getRoom("rx0y4");
 //            }
 //        };
-//        player.setFacingDirection(Direction.NORTH);
+//        player.turn(Direction.NORTH);
 
 
 
 
 
         //commentoutbelow
-
-
-		final Player player2 = new Player("Player 2", "characters/alien2.png");
-    	player2.setFacingDirection(Direction.NORTH);
 
 		final ResourceLoader loader = new ResourceLoader("resources");
         final Room room = new Room("sadasd", "Some name") {
@@ -210,19 +205,13 @@ public class ApplicationWindow extends JFrame implements KeyListener, ActionRece
 
                  item = new Door("ssssss", "Door", "You can get to [insert room here] through here.", "objects/door.png");
                  getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.Point3D(320, -10, 160)));
-
-                 getPlayers().add(player2);
             }
         };
-        player2.setRoom(room);
+        final Player player2 = new Player("Player 2", "characters/alien2.png", room);
+        player2.turn(Direction.NORTH);
 
-        final Player player = new Player("Player 1", "characters/alien1.png") {
-            @Override
-            public Room getRoom() {
-                return room;
-            }
-        };
-        player.setFacingDirection(Direction.NORTH);
+        final Player player = new Player("Player 1", "characters/alien1.png", room);
+        player.turn(Direction.NORTH);
 
         //comment out above
 

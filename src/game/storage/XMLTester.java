@@ -51,8 +51,8 @@ public class XMLTester {
 //        Player player2 = new Player("Player2", "characters/o2.png");
 //        player2.setRoom(testRoom1);
 //
-//        player1.setFacingDirection(Direction.NORTH);
-//        player2.setFacingDirection(Direction.SOUTH);
+//        player1.turn(Direction.NORTH);
+//        player2.turn(Direction.SOUTH);
 //
 //
 //        testRooms.put(testRoom1.getName(), testRoom1);

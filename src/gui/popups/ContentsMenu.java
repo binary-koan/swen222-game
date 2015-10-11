@@ -1,11 +1,11 @@
-package client.popups;
+package gui.popups;
 
-import client.GameCanvas;
-import client.ResourceLoader;
+import gui.ResourceLoader;
 import game.ActionReceiver;
 import game.Direction;
 import game.Item;
 import game.Container;
+import org.eclipse.jdt.annotation.NonNull;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -14,11 +14,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
+/**
+ * Popup menu displaying the contents of a particular container
+ */
 public class ContentsMenu extends JPopupMenu implements ActionListener {
-    private Container container;
-    private ActionReceiver receiver;
+    private @NonNull Container container;
+    private @NonNull ActionReceiver receiver;
 
-    public ContentsMenu(ResourceLoader loader, ActionReceiver receiver, Container container, String description) {
+    /**
+     * Create a new contents menu
+     *
+     * @param loader used to retrieve the sprites of the items in the container
+     * @param receiver object which will be notified when an action is selected
+     * @param container box to display items from
+     * @param description text description of the action that can be taken with these items (eg. "Click to pick up")
+     */
+    public ContentsMenu(@NonNull ResourceLoader loader, @NonNull ActionReceiver receiver, @NonNull Container container,
+                        @NonNull String description) {
         this.receiver = receiver;
         this.container = container;
 
@@ -27,7 +39,6 @@ public class ContentsMenu extends JPopupMenu implements ActionListener {
             addLabel(description);
 
             for (Item item : container.getItems()) {
-                System.out.println("Adding menu item");
                 addMenuItem(item.getID(), item.getName(), loader.getSprite(item.getSpriteName(), Direction.NORTH));
             }
         }
@@ -36,6 +47,21 @@ public class ContentsMenu extends JPopupMenu implements ActionListener {
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // Figure out which item was activated and send a TAKE action to the receiver
+        for (Item item : container.getItems()) {
+            if (e.getActionCommand().equals(item.getID())) {
+                receiver.performAction(container, item, Item.Action.TAKE);
+                return;
+            }
+        }
+    }
+
+    /**
+     * Add a label to the menu
+     */
     private void addLabel(String text) {
         JLabel label = new JLabel(text);
         label.setBorder(new EmptyBorder(10, 10, 0, 10));
@@ -43,6 +69,9 @@ public class ContentsMenu extends JPopupMenu implements ActionListener {
         add(label);
     }
 
+    /**
+     * Add a menu item to the menu. id becomes its actionCommand; text and sprite are displayed
+     */
     private void addMenuItem(String id, String text, BufferedImage sprite) {
         ImageIcon icon = new ImageIcon(sprite.getScaledInstance(24, -1, Image.SCALE_DEFAULT));
         JMenuItem menuItem = new JMenuItem(text, icon);
@@ -50,15 +79,5 @@ public class ContentsMenu extends JPopupMenu implements ActionListener {
         menuItem.setActionCommand(id);
         menuItem.addActionListener(this);
         add(menuItem);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        for (Item item : container.getItems()) {
-            if (e.getActionCommand().equals(item.getID())) {
-                receiver.performAction(container, item, Item.Action.TAKE);
-                return;
-            }
-        }
     }
 }

@@ -125,7 +125,8 @@ public class GameLoader {
 	}
 
 	private Player constructPlayerInitial(Element e){
-		Player currentPlayer = new Player(e.getChildText("name"), e.getChildText("spriteName"));
+		// Hmm ... is it possible to have the player's room passed in here? - Jono
+		Player currentPlayer = new Player(e.getChildText("name"), e.getChildText("spriteName"), null);
 		return currentPlayer;
 	}
 

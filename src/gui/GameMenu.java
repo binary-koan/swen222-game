@@ -1,4 +1,4 @@
-package client;
+package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -122,7 +122,7 @@ public class GameMenu {
 
 					if (selectMenuItem == "Start Game") {
 //						final Player player2 = new Player("Player 2", "characters/alien2.png");
-//						player2.setFacingDirection(Direction.NORTH);
+//						player2.turn(Direction.NORTH);
 //
 //						final ResourceLoader loader = new ResourceLoader("resources");
 //						final Room room = new Room("Some name") {
@@ -150,7 +150,7 @@ public class GameMenu {
 //								return room;
 //							}
 //						};
-//						player.setFacingDirection(Direction.NORTH);
+//						player.turn(Direction.NORTH);
 //
 //						final GameCanvas canvas = new GameCanvas(loader);
 //
@@ -159,10 +159,10 @@ public class GameMenu {
 //							public void keyPressed(KeyEvent e) {
 //								switch (e.getKeyCode()) {
 //								case KeyEvent.VK_LEFT:
-//									player.setFacingDirection(player.getFacingDirection().next());
+//									player.turn(player.getFacingDirection().next());
 //									break;
 //								case KeyEvent.VK_RIGHT:
-//									player.setFacingDirection(player.getFacingDirection().previous());
+//									player.turn(player.getFacingDirection().previous());
 //								}
 //								canvas.update();
 //							}
