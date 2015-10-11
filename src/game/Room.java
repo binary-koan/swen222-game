@@ -21,7 +21,7 @@ public class Room implements Serializable{
     public static int ROOM_SIZE = 320;
     public static int CEILING_HEIGHT = 192;
 
-    public class ItemInstance implements Drawable{
+	public class ItemInstance implements Drawable{
         private Item item;
         private Direction facingDirection;
         private Point3D position;
@@ -97,13 +97,13 @@ public class Room implements Serializable{
     	players.remove(player);
     }
 
-    public void addRoomItemInstance(ItemInstance item){
-    	items.add(item);
-    }
-
-    public void removeRoomItemInstance(ItemInstance item){
-    	items.remove(item);
-    }
+	public void addItem(Item item) {
+		Point3D position = new Point3D(
+				50 + (int)(Math.random() * (Room.ROOM_SIZE - 100)), 0,
+				50 + (int)(Math.random() * (Room.ROOM_SIZE - 100))
+		);
+		items.add(new ItemInstance(item, Direction.random(), position));
+	}
 
     @Override
    	public Element toXML() {
@@ -146,7 +146,7 @@ public class Room implements Serializable{
 			int zr = Integer.parseInt(roomItem.getChild("boundingBox").getChildText("z").substring(1));
 			Point3D pr = new Point3D(xr, yr, zr);
 			ItemInstance itemI = new ItemInstance (ir, dr, pr);
-			this.addRoomItemInstance(itemI);
+			items.add(itemI);
 		}
 		this.roomConnections.clear();
 		for(Element roomConnection : objectElement.getChild("roomConnections").getChildren()){

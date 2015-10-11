@@ -38,7 +38,7 @@ public class PlayerTest {
         Player player = MockPlayer.create();
 
         assertTrue(player.pickUp(item));
-        assertEquals(player.getHeldItem(), item);
+        assertEquals(item, player.getHeldItem());
     }
 
     @Test
@@ -49,6 +49,24 @@ public class PlayerTest {
 
         assertTrue(player.pickUp(item));
         assertFalse(player.pickUp(item2));
-        assertEquals(player.getHeldItem(), item);
+        assertEquals(item, player.getHeldItem());
+    }
+
+    @Test
+    public void testDropItem_valid() {
+        Player player = MockPlayer.createWithHeldItem();
+        Item item = player.getHeldItem();
+
+        assertEquals(item, player.dropItem());
+    }
+
+    @Test
+    public void testDropItem_notHoldingAnything() {
+        Player player = MockPlayer.create();
+
+        assertNull(player.dropItem());
+        for (Room.ItemInstance instance : player.getRoom().getItems()) {
+            assertNotNull(instance.getItem());
+        }
     }
 }

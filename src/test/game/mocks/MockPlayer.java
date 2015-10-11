@@ -1,5 +1,6 @@
 package test.game.mocks;
 
+import game.Item;
 import game.Player;
 import game.Room;
 
@@ -15,5 +16,10 @@ public class MockPlayer {
         return new Player("Player " + playerCount, "", room);
     }
 
-    private MockPlayer() { }
+    public static Player createWithHeldItem() {
+        Player player = create();
+        Item item = MockItem.createKey();
+        player.pickUp(item);
+        return player;
+    }
 }

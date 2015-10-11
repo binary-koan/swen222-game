@@ -141,6 +141,23 @@ public class Player implements Drawable, Serializable {
         }
     }
 
+    /**
+     * Unsets the player's held item and adds it to the current room
+     *
+     * @return the dropped item
+     */
+    public Item dropItem() {
+        if (heldItem == null) {
+            return null;
+        }
+        else {
+            Item item = heldItem;
+            getRoom().addItem(item);
+            heldItem = null;
+            return item;
+        }
+    }
+
     // Serialization
 
 	@Override
@@ -162,5 +179,4 @@ public class Player implements Drawable, Serializable {
 		this.facingDirection = Direction.fromString(objectElement.getChildText("facingDirectiom"));
 		this.heldItem = game.getItem(objectElement.getChildText("heldItem"));
 	}
-
 }
