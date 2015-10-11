@@ -10,7 +10,7 @@ public class Furniture extends Item {
 	}
 
 	@Override
-	public void toXML() {
+	public void toXML(Document gameDoc) {
 		// TODO Auto-generated method stub
 	}
 

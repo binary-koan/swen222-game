@@ -17,7 +17,7 @@ public class Key extends Item implements Pickable {
 	}
 
 	@Override
-	public void toXML() {
+	public void toXML(Document gameDoc) {
 		// TODO Auto-generated method stub
 	}
 

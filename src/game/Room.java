@@ -109,7 +109,7 @@ public class Room implements Serializable{
     }
 
 	@Override
-	public void toXML() {
+	public void toXML(Document gameDoc) {
 		SAXBuilder builder = new SAXBuilder();
 		File xmlFile = new File("/u/students/holdawscot/saveFile1.xml");
 		try{

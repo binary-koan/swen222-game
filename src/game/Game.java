@@ -21,7 +21,7 @@ public class Game {
     public Game(GameData data){
     	this.XMLFilename = data.getXMLFilename();
     	this.data = data;
-    	this.players = loadPlayers();
+    	this.players = loadPlayersInitial();
     }
 
     public Player getPlayer(String playerName) {
@@ -36,7 +36,7 @@ public class Game {
     	return data;
     }
 
-    public List<Player> loadPlayers(){
+    public List<Player> loadPlayersInitial(){
     	SAXBuilder builder = new SAXBuilder();
 		File xmlFile = new File(this.XMLFilename);
 		List<Player> players = new ArrayList<Player>();
@@ -57,5 +57,7 @@ public class Game {
 		}
 		return null;
     }
+
+
 }
 

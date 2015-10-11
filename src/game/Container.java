@@ -47,7 +47,7 @@ public class Container extends Item implements Pickable {
     }
 
 	@Override
-	public void toXML() {
+	public void toXML(Document gameDoc) {
 		SAXBuilder builder = new SAXBuilder();
 		File xmlFile = new File("/u/students/holdawscot/saveFile1.xml");
 		try{

@@ -95,7 +95,7 @@ public class Player implements Drawable, Serializable{
     }
 
 	@Override
-	public void toXML() {
+	public void toXML(Document gameDoc) {
 		SAXBuilder builder = new SAXBuilder();
 		File xmlFile = new File("/u/students/holdawscot/saveFile1.xml");
 		try{
@@ -135,7 +135,7 @@ public class Player implements Drawable, Serializable{
 					this.setRoom(gameData.getRoom(p.getChildText("room")));
 					this.setFacingDirection(Direction.fromString(p.getChildText("facingDirection")));
 					//if(p.getWeapon() != null){
-						//this.setWeapongameData.getItem((p.getChildText("weapon")));
+						//this.setWeapon(gameData.getItem(p.getChildText("weapon")));
 					//}
 					this.inventory.removeAll(inventory);
 					for(Element i : p.getChild("playerInventory").getChildren()){

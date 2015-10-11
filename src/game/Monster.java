@@ -1,5 +1,7 @@
 package game;
 
+import org.jdom2.Document;
+
 import game.storage.GameData;
 
 public class Monster extends Item{
@@ -13,7 +15,7 @@ public class Monster extends Item{
 	}
 
 	@Override
-	public void toXML() {
+	public void toXML(Document gameDoc) {
 		// TODO Auto-generated method stub
 
 	}

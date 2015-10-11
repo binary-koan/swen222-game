@@ -1,5 +1,7 @@
 package game;
 
+import org.jdom2.Document;
+
 import game.storage.GameData;
 
 public class Weapon extends Item implements Pickable {
@@ -9,7 +11,7 @@ public class Weapon extends Item implements Pickable {
 	}
 
 	@Override
-	public void toXML() {
+	public void toXML(Document gameDoc) {
 		// TODO Auto-generated method stub
 
 	}

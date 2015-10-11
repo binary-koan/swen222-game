@@ -34,7 +34,6 @@ public abstract class Item implements Serializable {
 
 	public Color getColor(){
 		return this.color;
-
 	}
 
 	private String id;
