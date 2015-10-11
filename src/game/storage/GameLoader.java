@@ -4,6 +4,7 @@ package game.storage;
 import game.Container;
 import game.Door;
 import game.Furniture;
+import game.Game;
 import game.Item;
 import game.Key;
 import game.Player;
@@ -28,6 +29,7 @@ public class GameLoader {
 	private HashMap<String, Player> players;
 	private String XMLFilename;
 	private Document gameDoc;
+	private Game currentGame;
 
 	public GameLoader(String filename){
 		this.XMLFilename = filename;
@@ -46,7 +48,6 @@ public class GameLoader {
 		this.rooms = loadRoomsInitial();
 		//Now we have items and rooms constructed in basic form and able to be referenced,
 		//we assign them all their associations by reading from the same XML doc.
-		loadWholeGame(gameDoc);
 	}
 
 
@@ -135,26 +136,26 @@ public class GameLoader {
 
 
 	public void saveWholeGame(Document gameDoc){
-
-		Element
-
-		gameDoc.getRootElement() = null;
-
-
-
+		Element toSave = new Element("game");
+		Element gameItems = new Element("gameItems");
+		Element gameRooms = new Element("gameRooms");
+		Element gamePlayers = new Element("gamePlayers");
 		for(Map.Entry<String, Item> item : this.items.entrySet()){
-			item.getValue().toXML();
+			gameItems.addContent(item.getValue().toXML());
 		}
-
 		for(Map.Entry<String, Room> room : this.rooms.entrySet()){
-			room.getValue().toXML();
+			gameItems.addContent(room.getValue().toXML());
 		}
 		for(Map.Entry<String, Player> player : this.players.entrySet()){
-			player.getValue().toXML();
+			gameItems.addContent(player.getValue().toXML());
 		}
+		toSave.addContent(gameItems);
+		toSave.addContent(gameRooms);
+		toSave.addContent(gamePlayers);
+		gameDoc.setRootElement(toSave);
 	}
 
-	public void loadWholeGame(){
+	public void loadWholeGame(Game game){
 		Element itemsRoot = gameDoc.getRootElement().getChild("gameItems");
 		Element roomsRoot = gameDoc.getRootElement().getChild("gameRooms");
 		Element playersRoot = gameDoc.getRootElement().getChild("gamePlayers");
@@ -162,30 +163,35 @@ public class GameLoader {
 		for(Map.Entry<String, Item> item : this.items.entrySet()){
 			for(Element itemElement : itemsRoot.getChildren()){
 				if(item.getKey() == itemElement.getChildText("id"));
-				item.getValue().loadXML(this, itemElement);
+				item.getValue().loadXML(game, itemElement);
 			}
 		}
 
 		for(Map.Entry<String, Room> room : this.rooms.entrySet()){
 			for(Element roomElement : itemsRoot.getChildren()){
 				if(room.getKey() == roomElement.getChildText("id"));
-				room.getValue().loadXML(this, roomElement);
+				room.getValue().loadXML(game, roomElement);
 			}
 		}
 
 		for(Map.Entry<String, Player> player : this.players.entrySet()){
 			for(Element playerElement : playersRoot.getChildren()){
 				if(player.getKey() == playerElement.getChildText("name"));
-				player.getValue().loadXML(this, playerElement);
+				player.getValue().loadXML(game, playerElement);
 			}
 		}
+		currentGame.setItems(this.items);
+		currentGame.setRooms(this.rooms);
+		currentGame.setPlayers(this.players);
 	}
 
+	public void setCurrentGame(Game currentGame){
+		this.currentGame = currentGame;
+	}
 
-
-
-
-
+	public Game getCurrentGame(){
+		return currentGame;
+	}
 
 	public String getXMLFilename(){
 		return this.XMLFilename;
