@@ -44,13 +44,13 @@ public class GameLoader {
 		}catch (JDOMException jdomex) {
 			System.out.println(jdomex.getMessage());
 		}
+
 		this.items = loadItemsInitial();
 		this.rooms = loadRoomsInitial();
 		this.players = loadPlayersInitial();
-
-
 		//Now we have items and rooms constructed in basic form and able to be referenced,
 		//we assign them all their associations by reading from the same XML doc.
+		loadWholeGame();
 	}
 
 
@@ -159,7 +159,7 @@ public class GameLoader {
 		gameDoc.setRootElement(toSave);
 	}
 
-	public void loadWholeGame(Game game){
+	public void loadWholeGame(){
 		Element itemsRoot = gameDoc.getRootElement().getChild("gameItems");
 		Element roomsRoot = gameDoc.getRootElement().getChild("gameRooms");
 		Element playersRoot = gameDoc.getRootElement().getChild("gamePlayers");

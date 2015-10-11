@@ -24,8 +24,6 @@ public class Game {
     public Game(String filename){
     	this.XMLFilename = filename;
     	this.loader = new GameLoader(this, XMLFilename);
-    	loader.setCurrentGame(this);
-    	loader.loadWholeGame(this);
     }
 
     public void setItems(HashMap<String, Item> items){
