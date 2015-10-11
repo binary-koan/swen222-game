@@ -85,7 +85,7 @@
     <item>
       <name>Door</name>
       <spriteName>objects/door.png</spriteName>
-      <subClass>class game.Door</subClass>
+      <subClass>class gui.renderer.VisibleDoor</subClass>
     </item>
     <item>
      <name>wallLight1</name>

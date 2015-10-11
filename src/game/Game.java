@@ -5,59 +5,81 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
-import game.storage.GameData;
+import storage.GameLoader;
 
 public class Game {
-    private List<Player> players;
-    private GameData data;
+	private HashMap<String, Item> items;
+	private HashMap<String, Room> rooms;
+	private HashMap<String, Player> players;
+    private GameLoader loader;
     private String XMLFilename;
 
-    public Game(GameData data){
-    	this.XMLFilename = data.getXMLFilename();
-    	this.data = data;
-    	this.players = loadPlayersInitial();
+    public Game(String filename){
+    	this.XMLFilename = filename;
+    	this.loader = new GameLoader(this, XMLFilename);
     }
 
-    public Player getPlayer(String playerName) {
-        return null;
+    public void setItems(HashMap<String, Item> items){
+		this.items = items;
+	}
+
+	public HashMap<String, Item> getItems(){
+		return items;
+	}
+
+	public Item getItem(String id){
+		for(Map.Entry<String, Item> item : items.entrySet()){
+			if(item.getKey().equals(id)){
+				return item.getValue();
+			}
+		}
+		return null;
+	}
+
+    public void setRooms(HashMap<String, Room> rooms){
+    	this.rooms = rooms;
     }
 
-    public List<Player> getPlayers() {
+    public HashMap<String , Room> getRooms(){
+		return rooms;
+	}
+
+	public Room getRoom(String id){
+		for(Map.Entry<String, Room> room : rooms.entrySet()){
+			if(room.getKey().equals(id)){
+				return room.getValue();
+			}
+		}
+		return null;
+	}
+
+	public void setPlayers(HashMap<String, Player> players){
+    	this.players = players;
+    }
+
+    public HashMap<String, Player> getPlayers() {
         return players;
     }
 
-    public GameData getData(){
-    	return data;
+    public Player getPlayer(String playerName) {
+        for(Map.Entry<String, Player> player : players.entrySet()){
+        	if(player.getKey().equals(playerName)){
+        		return player.getValue();
+        	}
+        }
+        return null;
     }
 
-    public List<Player> loadPlayersInitial(){
-    	SAXBuilder builder = new SAXBuilder();
-		File xmlFile = new File(this.XMLFilename);
-		List<Player> players = new ArrayList<Player>();
-		try {
-			Document document = builder.build(xmlFile);
-			Element rootNode = document.getRootElement();
-			//Create all the items from the document, put them in the Map items
-			Element playersRoot = rootNode.getChild("gamePlayers");
-			for(Element e : playersRoot.getChildren()){
-				Player currentPlayer = game.storage.FromXML.readPlayer(e, data);
-				players.add(currentPlayer);
-			}
-			return players;
-		}catch (IOException io) {
-			System.out.println(io.getMessage());
-		}catch (JDOMException jdomex) {
-			System.out.println(jdomex.getMessage());
-		}
-		return null;
+    public GameLoader getData(){
+    	return loader;
     }
-
 
 }
 

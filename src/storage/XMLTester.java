@@ -1,4 +1,4 @@
-package game.storage;
+package storage;
 
 //Author: Scott Holdaway
 
@@ -37,7 +37,7 @@ public class XMLTester {
 //        testItems.put(item.getName(), item);
 //        getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Point3D(140, 60, 20)));
 //
-//        item = new Door("Door", "", "objects/door.png");
+//        item = new VisibleDoor("VisibleDoor", "", "objects/door.png");
 //        testItems.put(item.getName(), item);
 //        getItems().add(new Room.ItemInstance(item, Direction.WEST, new Point3D(140, 0, 80)));
 //
@@ -51,8 +51,8 @@ public class XMLTester {
 //        Player player2 = new Player("Player2", "characters/o2.png");
 //        player2.setRoom(testRoom1);
 //
-//        player1.setFacingDirection(Direction.NORTH);
-//        player2.setFacingDirection(Direction.SOUTH);
+//        player1.turn(Direction.NORTH);
+//        player2.turn(Direction.SOUTH);
 //
 //
 //        testRooms.put(testRoom1.getName(), testRoom1);
@@ -99,22 +99,23 @@ public class XMLTester {
 //		toTester2.writeRoot();
 
 
-        GameData data = new GameData("resources/mainGame.xml");
-        Game game = new Game(data);
 
-        Room room = game.getData().getRoom("rx0y4");
+        Game game = new Game("resources/mainGame.xml");
+        GameLoader data = new GameLoader(game, "resources/mainGame.xml");
+
+        Room room = game.getRoom("rx0y4");
         room.getName();
-        for(Map.Entry<String, Item> i : data.getItems().entrySet()){
+        for(Map.Entry<String, Item> i : game.getItems().entrySet()){
         	System.out.println(i.getValue().getName());
         }
-        for(Map.Entry<String, Room> r : data.getRooms().entrySet()){
+        for(Map.Entry<String, Room> r : game.getRooms().entrySet()){
         	System.out.println(r.getValue().getName());
         }
         for(Map.Entry<Direction, Room> r : room.roomConnections.entrySet()){
         	System.out.println(r.getValue().getName());
         }
         Room room2 = room.getConnection(Direction.NORTH);
-        Container i = (Container) data.getItem("containerrx0y3");
+        Container i = (Container) game.getItem("containerrx0y3");
         for(Item j : i.getItems()){
         	System.out.println(j.getName());
         }
