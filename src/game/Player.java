@@ -20,11 +20,6 @@ import org.jdom2.output.XMLOutputter;
  * Represents a player's avatar in the game
  */
 public class Player implements Drawable, Serializable {
-    /**
-     * Exception thrown if the player is given an invalid movement command
-     */
-	public class InvalidMovementException extends Exception { }
-
 	private String name;
 	private String spriteName;
     private Room room;
@@ -71,6 +66,13 @@ public class Player implements Drawable, Serializable {
     }
 
     /**
+     * @return the item the player is holding
+     */
+    public Item getHeldItem() {
+        return heldItem;
+    }
+
+    /**
      * @return a point near the center of the wall the player is viewing their room from
      */
     @Override
@@ -108,20 +110,36 @@ public class Player implements Drawable, Serializable {
      * Move to the adjacent room in the given direction
      *
      * @param movementDirection direction to move in
-     * @throws InvalidMovementException if there is no path in the given direction
+     * @return true if the move succeeded, false otherwise
      */
-	public void move(Direction movementDirection) throws InvalidMovementException {
+	public boolean move(Direction movementDirection) {
 		Room newRoom = room.getConnection(movementDirection);
 
 		if (newRoom == null) {
-			throw new InvalidMovementException();
+			return false;
 		}
 		else {
 			room.removePlayer(this);
 			newRoom.addPlayer(this);
 			room = newRoom;
+            return true;
 		}
 	}
+
+    /**
+     * Set the item the player is holding
+     *
+     * @return true if the item was picked up, false otherwise (eg. if the player was already holding an item)
+     */
+    public boolean pickUp(Item item) {
+        if (item == null || heldItem != null) {
+            return false;
+        }
+        else {
+            heldItem = item;
+            return true;
+        }
+    }
 
     // Serialization
 
