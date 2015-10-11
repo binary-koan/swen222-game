@@ -86,18 +86,12 @@ public class GameLoader {
 		case "class game.Furniture":
 			currentItem = new Furniture(id, name, description, spriteName);
 			return currentItem;
-<<<<<<< HEAD
-		case "class game.Door":
-			currentItem = new Door(id, name, description, spriteName);
-			return currentItem;
 		case "class game.Monster":
 			currentItem = new Monster(id, name, description, spriteName);
 			return currentItem;
 		case "class game.Weapon":
 			currentItem = new Weapon(id, name, description, spriteName);
 			return currentItem;
-=======
->>>>>>> 3ee3fbdb1e1dc97b88b7d1689669c27e382da198
 		}
 		return new Furniture(id, name, description, spriteName);
 	}
