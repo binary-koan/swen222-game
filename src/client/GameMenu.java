@@ -1,15 +1,5 @@
 package client;
 
-import game.Furniture;
-import game.Container;
-import game.Direction;
-import game.Door;
-import game.Drawable;
-import game.Item;
-import game.Key;
-import game.Player;
-import game.Room;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -20,7 +10,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -38,11 +27,8 @@ import javax.swing.InputMap;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-
-import client.renderer.ResourceLoader;
 
 
 public class GameMenu {

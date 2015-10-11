@@ -4,12 +4,10 @@ import game.Furniture;
 import game.Direction;
 import game.Door;
 import game.Drawable;
-import game.Game;
 import game.Item;
 import game.Container;
 import game.Player;
 import game.Room;
-import game.storage.GameData;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -22,16 +20,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.text.ParseException;
 
 import javax.swing.*;
 import javax.swing.plaf.synth.SynthLookAndFeel;
 
 import org.eclipse.jdt.annotation.NonNull;
-
-import client.renderer.ResourceLoader;
 
 
 public class ApplicationWindow extends JFrame implements KeyListener {

@@ -1,4 +1,4 @@
-package client.renderer;
+package client;
 
 import game.Direction;
 import org.eclipse.jdt.annotation.NonNull;

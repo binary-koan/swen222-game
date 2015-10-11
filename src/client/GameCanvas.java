@@ -1,9 +1,7 @@
 package client;
 
-import client.renderer.ActionMenu;
-import client.renderer.ResourceLoader;
-import client.renderer.RoomRenderer;
-import client.renderer.Tooltip;
+import client.popups.ActionMenu;
+import client.popups.InfoTooltip;
 import game.*;
 import game.Room.ItemInstance;
 
@@ -28,7 +26,7 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
 
     private @Nullable Player player;
 
-    private Tooltip tooltip;
+    private InfoTooltip tooltip;
     private ActionMenu actionMenu;
     private Drawable activeObject;
 
@@ -36,7 +34,7 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         this.loader = loader;
         this.parent = parent;
 
-        tooltip = new Tooltip(loader);
+        tooltip = new InfoTooltip(loader);
         tooltip.setVisible(false);
         add(tooltip);
 

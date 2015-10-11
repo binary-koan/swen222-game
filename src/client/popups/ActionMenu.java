@@ -1,4 +1,4 @@
-package client.renderer;
+package client.popups;
 
 import client.GameCanvas;
 import game.Item;
@@ -7,7 +7,6 @@ import game.Room;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 public class ActionMenu extends JPopupMenu implements ActionListener {
     private Room.ItemInstance itemInstance;
