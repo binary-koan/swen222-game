@@ -3,7 +3,6 @@ package client.popups;
 import client.ResourceLoader;
 import game.Item;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -27,28 +26,13 @@ public class InfoTooltip extends JPanel {
      * @param loader used to load mouse click icons
      */
 	public InfoTooltip(@NonNull ResourceLoader loader) {
-		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		setLayout(new GridBagLayout());
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        nameLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
-
-        descriptionLabel.setVisible(false);
-        descriptionLabel.setVerticalAlignment(JLabel.TOP);
-        descriptionLabel.setPreferredSize(new Dimension(200, 75));
-        descriptionLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
-
-		primaryActionLabel.setIcon(new ImageIcon(loader.getImage("ui/mouse-leftclick.png")));
-        primaryActionLabel.setIconTextGap(8);
-
-		secondaryActionLabel.setIcon(new ImageIcon(loader.getImage("ui/mouse-rightclick.png")));
-        secondaryActionLabel.setIconTextGap(8);
-
-		add(nameLabel);
-        add(descriptionLabel);
-        add(Box.createVerticalStrut(10));
-        add(Box.createVerticalGlue());
-		add(primaryActionLabel);
-		add(secondaryActionLabel);
+        setupNameLabel();
+        setupDescriptionLabel();
+        setupPrimaryActionLabel(loader);
+        setupSecondaryActionLabel(loader);
 	}
 
     /**
@@ -89,7 +73,7 @@ public class InfoTooltip extends JPanel {
     public void showDescription(@NonNull String description) {
         descriptionLabel.setVisible(true);
         // Using HTML in the label makes it word wrap and allows for markup in descriptions
-        descriptionLabel.setText("<html>" + description + "</html>");
+        descriptionLabel.setText("<html><div style='width:150px'>" + description + "</div></html>");
     }
 
     /**
@@ -108,5 +92,52 @@ public class InfoTooltip extends JPanel {
      */
     public Item.Action getSecondaryAction() {
         return secondaryAction;
+    }
+
+    /**
+     * Setup and add the name label to the control
+     */
+    private void setupNameLabel() {
+        nameLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
+        nameLabel.setBorder(new EmptyBorder(0, 0, 10, 0));
+        addLabel(nameLabel);
+    }
+
+    /**
+     * Setup and add the description label to the control
+     */
+    private void setupDescriptionLabel() {
+        descriptionLabel.setVisible(false);
+        descriptionLabel.setBorder(new EmptyBorder(0, 0, 10, 0));
+        descriptionLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
+        addLabel(descriptionLabel);
+    }
+
+    /**
+     * Setup and add the primary action label to the control
+     */
+    private void setupPrimaryActionLabel(@NonNull ResourceLoader loader) {
+        primaryActionLabel.setIcon(new ImageIcon(loader.getImage("ui/mouse-leftclick.png")));
+        primaryActionLabel.setIconTextGap(8);
+        addLabel(primaryActionLabel);
+    }
+
+    /**
+     * Setup and add the secondary action label to the control
+     */
+    private void setupSecondaryActionLabel(@NonNull ResourceLoader loader) {
+        secondaryActionLabel.setIcon(new ImageIcon(loader.getImage("ui/mouse-rightclick.png")));
+        secondaryActionLabel.setIconTextGap(8);
+        addLabel(secondaryActionLabel);
+    }
+
+    /**
+     * Add a label to the control, ensuring that it stretches to fit
+     */
+    private void addLabel(JLabel label) {
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridy = getComponentCount();
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        add(label, constraints);
     }
 }

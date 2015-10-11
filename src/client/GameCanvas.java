@@ -97,8 +97,10 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
 
         // Handle actions related to rendering, such as examining an object or showing a popup
         if (action == Item.Action.EXAMINE) {
+            updateTooltip(drawable);
             tooltip.showDescription(item.getDescription());
-            positionAboveObject(drawable, tooltip);
+            repositionTooltipAbove(drawable);
+            tooltip.setVisible(true);
         }
         else if (action == Item.Action.SHOW_MENU) {
             tooltip.setVisible(false);
@@ -129,6 +131,64 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
 
     /** {@inheritDoc} */
     @Override
+    public Dimension getPreferredSize() {
+    	return new Dimension(Room.ROOM_SIZE * 3, Room.CEILING_HEIGHT * 3);
+    }
+
+    /**
+     * Draw a tooltip over the hovered object, if one is hovered
+     *
+     * @param e mouse movement event
+     */
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        // Make sure that the view is in a state where the tooltip should be updated
+        if (roomImage == null || (actionMenu != null && actionMenu.isVisible()) ||
+                tooltip.contains(e.getX() - tooltip.getX(), e.getY() - tooltip.getY())) {
+            return;
+        }
+
+        Point scenePosition = calculateScenePosition(e);
+        Drawable drawable = roomImage.getObjectAt(scenePosition);
+
+        if (drawable == null) {
+        	activeObject = null;
+        	tooltip.setVisible(false);
+        }
+        else if (!drawable.equals(activeObject)) {
+            updateTooltip(drawable);
+            repositionTooltipAbove(drawable);
+            tooltip.setVisible(true);
+        }
+    }
+
+    /**
+     * Perform the primary (left-click) or secondary (right-click) action of the active object
+     *
+     * @param e mouse click event
+     */
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if (roomImage == null || (actionMenu != null && actionMenu.isVisible())) {
+            return;
+        }
+
+        Point scenePosition = calculateScenePosition(e);
+        Drawable drawable = roomImage.getObjectAt(scenePosition);
+        activeObject = drawable;
+
+        if (drawable != null) {
+            Item.Action action = (e.getButton() == MouseEvent.BUTTON1) ?
+                    tooltip.getPrimaryAction() : tooltip.getSecondaryAction();
+
+            if (drawable instanceof ItemInstance) {
+                performAction(((ItemInstance)drawable).getItem(), action);
+            }
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
     protected void paintComponent(Graphics g) {
         g.clearRect(0, 0, getWidth(), getHeight());
 
@@ -148,60 +208,6 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
             // Draw a HUD showing the player's location and direction
             g.setColor(Color.BLACK);
             g.drawString("In " + player.getRoom().getName() + " facing " + player.getFacingDirection().opposite(), 10, 20);
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Dimension getPreferredSize() {
-    	return new Dimension(Room.ROOM_SIZE * 3, Room.CEILING_HEIGHT * 3);
-    }
-
-    /**
-     * Draw a tooltip over the hovered object, if one is hovered
-     *
-     * @param e mouse movement event
-     */
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        if (actionMenu != null && actionMenu.isVisible()) {
-            return;
-        }
-
-        Point scenePosition = calculateScenePosition(e);
-        Drawable drawable = roomImage.getObjectAt(scenePosition);
-
-        if (drawable == null) {
-        	activeObject = null;
-        	tooltip.setVisible(false);
-        }
-        else if (!drawable.equals(activeObject)) {
-            updateTooltip(drawable);
-        }
-    }
-
-    /**
-     * Perform the primary (left-click) or secondary (right-click) action of the active object
-     *
-     * @param e mouse click event
-     */
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        if (actionMenu != null && actionMenu.isVisible()) {
-            return;
-        }
-
-        Point scenePosition = calculateScenePosition(e);
-        Drawable drawable = roomImage.getObjectAt(scenePosition);
-        activeObject = drawable;
-
-        if (drawable != null) {
-            Item.Action action = (e.getButton() == MouseEvent.BUTTON1) ?
-                    tooltip.getPrimaryAction() : tooltip.getSecondaryAction();
-
-            if (drawable instanceof ItemInstance) {
-                performAction(((ItemInstance)drawable).getItem(), action);
-            }
         }
     }
 
@@ -227,10 +233,6 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
                 tooltip.showObject(item.getName(), null, null);
             }
         }
-
-        repositionTooltipAbove(drawable);
-        tooltip.setVisible(true);
-        repaint();
     }
 
     /**
@@ -247,6 +249,11 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
      * point of the object. Use the center of the screen if the position of the component cannot be determined
      */
     private Point positionAboveObject(Drawable drawable, JComponent component) {
+        if (roomImage == null || roomImagePosition == null) {
+            // This got called at completely the wrong time
+            return new Point(0, 0);
+        }
+
         Rectangle renderBounds = roomImage.getBounds(drawable);
         Dimension size = component.getPreferredSize();
 
@@ -266,6 +273,10 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
      * positioned
      */
     private Point calculateScenePosition(MouseEvent e) {
+        if (roomImagePosition == null) {
+            return new Point(0, 0);
+        }
+
 		return new Point(
     			(int)((e.getX() - roomImagePosition.x) / (roomImageScale * RoomRenderer.RENDER_SCALE)),
     			(int)((e.getY() - roomImagePosition.y) / (roomImageScale * RoomRenderer.RENDER_SCALE))
