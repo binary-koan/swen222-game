@@ -150,10 +150,10 @@ public class ApplicationWindow extends JFrame implements KeyListener, ActionRece
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
-                player.setFacingDirection(player.getFacingDirection().previous());
+                player.turn(player.getFacingDirection().previous());
                 break;
             case KeyEvent.VK_RIGHT:
-                player.setFacingDirection(player.getFacingDirection().next());
+                player.turn(player.getFacingDirection().next());
         }
         canvas.update();
     }
@@ -170,7 +170,7 @@ public class ApplicationWindow extends JFrame implements KeyListener, ActionRece
 //		GameData gameData = new GameData("resources/mainGame.xml");
 //		Game game = new Game (gameData);
 //		final Player player2 = new Player("Player 2", "characters/alien2.png");
-//    	player2.setFacingDirection(Direction.NORTH);
+//    	player2.turn(Direction.NORTH);
 //    	player2.setRoom(game.getData().getRoom("rx0y4"));
 //
 //        final Player player = new Player("Player 1", "characters/alien1.png") {
@@ -179,7 +179,7 @@ public class ApplicationWindow extends JFrame implements KeyListener, ActionRece
 //                return game.getData().getRoom("rx0y4");
 //            }
 //        };
-//        player.setFacingDirection(Direction.NORTH);
+//        player.turn(Direction.NORTH);
 
 
 
@@ -189,7 +189,7 @@ public class ApplicationWindow extends JFrame implements KeyListener, ActionRece
 
 
 		final Player player2 = new Player("Player 2", "characters/alien2.png");
-    	player2.setFacingDirection(Direction.NORTH);
+    	player2.turn(Direction.NORTH);
 
 		final ResourceLoader loader = new ResourceLoader("resources");
         final Room room = new Room("sadasd", "Some name") {
@@ -221,7 +221,7 @@ public class ApplicationWindow extends JFrame implements KeyListener, ActionRece
                 return room;
             }
         };
-        player.setFacingDirection(Direction.NORTH);
+        player.turn(Direction.NORTH);
 
         //comment out above
 

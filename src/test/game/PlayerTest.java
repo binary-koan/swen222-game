@@ -22,7 +22,7 @@ public class PlayerTest {
             player.move(Direction.SOUTH);
             assertEquals(room, player.getRoom());
         }
-        catch (InvalidMovementException e) {
+        catch (Player.InvalidMovementException e) {
             fail("Player could not move: " + e.getMessage());
         }
     }
@@ -36,6 +36,6 @@ public class PlayerTest {
             player.move(Direction.NORTH);
             fail("Player moved to a nonexistent room");
         }
-        catch (InvalidMovementException e) { }
+        catch (Player.InvalidMovementException e) { }
     }
 }

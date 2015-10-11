@@ -15,16 +15,17 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 public class Player implements Drawable, Serializable{
+	public class InvalidMovementException extends Exception { }
+
 	private String name;
 	private String spriteName;
     private Room room;
     private Direction facingDirection;
-    private ArrayList<Item> inventory;
+    private Item heldItem;
 
-    public Player(String name, String spriteName){
+    public Player(String name, String spriteName, Room room) {
     	this.name = name;
     	this.spriteName = spriteName;
-    	//inventory = new ArrayList<Item>();
     }
 
     public String getName(){
@@ -35,37 +36,26 @@ public class Player implements Drawable, Serializable{
         return room;
     }
 
-    public void setRoom(Room room){
-    	this.room = room;
-    }
-
     public Direction getFacingDirection() {
         return facingDirection;
     }
 
-    public void setFacingDirection(Direction facingDirection) {
+    public void turn(Direction facingDirection) {
         this.facingDirection = facingDirection;
     }
+	
+	public void move(Direction movementDirection) throws InvalidMovementException {
+		Room newRoom = room.getConnection(movementDirection);
 
-//    public Weapon getWeapon(){
-//    	return this.weapon;
-//    }
-//
-//    public void pickUpWeapon(Weapon weapon){
-//    	this.weapon = weapon;
-//    }
-
-//    public ArrayList<Item> getInventory(){
-//    	return inventory;
-//    }
-
-    public void addInventoryItem(Item item){
-    	this.inventory.add(item);
-    }
-
-//    public void removeInventoryItem(Item item){
-//    	this.inventory.remove(item);
-//    }
+		if (newRoom == null) {
+			throw new InvalidMovementException();
+		}
+		else {
+			room.removePlayer(this);
+			newRoom.addPlayer(this);
+			room = newRoom;
+		}
+	}
 
     @Override
     public Point3D getPosition() {
@@ -94,10 +84,7 @@ public class Player implements Drawable, Serializable{
 		player.addContent("spriteName").setText(this.name);
 		player.addContent("room").setText(this.room.getID());
 		player.addContent("facingDirection").setText(this.facingDirection.toString());
-		player.addContent("inventory");
-		for(Item item : this.inventory){
-			player.getChild("inventory").addContent("item").setText(item.getID());
-		}
+		player.addContent("heldItem").setText(heldItem.getID());
 		return player;
 	}
 
@@ -107,10 +94,7 @@ public class Player implements Drawable, Serializable{
 		this.spriteName = objectElement.getChildText("spriteName");
 		this.room = game.getRoom(objectElement.getChildText("room"));
 		this.facingDirection = Direction.fromString(objectElement.getChildText("facingDirectiom"));
-		this.inventory.removeAll(this.inventory);
-		for(Element item : objectElement.getChild("inventory").getChildren()){
-			this.inventory.add(game.getItem(item.getText()));
-		}
+		this.heldItem = game.getItem(objectElement.getChildText("heldItem"));
 	}
 
 }
