@@ -2,6 +2,7 @@ package client;
 
 import game.Direction;
 import gui.ApplicationWindow;
+import gui.ResourceLoader;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -82,43 +83,43 @@ public class GameMenu {
 
 		});
 	}
-	
+
 	private class GameWindow extends JPanel {
-		
+
 		public GameWindow() {
 			setLayout(new BorderLayout());
 			JTextField text = new JTextField();
 			text.setBorder(BorderFactory.createLineBorder(Color.blue));
 			add(text, BorderLayout.CENTER);
-			
+
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBorder(BorderFactory.createLineBorder(Color.blue));
 			buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
 			//buttonPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
-			
-			
+
+
 			JButton connect = new JButton("Connect");
 			JButton newServer = new JButton("New Server");
-			
+
 			buttonPane.add(Box.createHorizontalGlue());
 			buttonPane.add(connect);
 			buttonPane.add(Box.createRigidArea(new Dimension(10, 0)));
 			buttonPane.add(newServer);
 			buttonPane.add(Box.createRigidArea(new Dimension(10, 0)));
-			
+
 			add(buttonPane, BorderLayout.PAGE_END);
 		}
 	}
-	
+
 	private class CharacterView extends JPanel {
-		
+
 		 private final ResourceLoader loader;
 		 private int nextAlien;
-		
+
 		public CharacterView() {
 			this.loader = new ResourceLoader("resources");
 			nextAlien = 1;
-			
+
 			setLayout(new BorderLayout());
 			JPanel characterImage = new JPanel() {
 				@Override
@@ -128,7 +129,7 @@ public class GameMenu {
 				}
 			};
 			characterImage.setBorder(BorderFactory.createLineBorder(Color.blue));
-			
+
 			JPanel buttonPane = new JPanel();
 			JButton buttonLeft = new JButton();
 			JButton buttonRight = new JButton();
@@ -137,22 +138,22 @@ public class GameMenu {
 			buttonRight.setIcon(i);
 			buttonPane.add(buttonLeft);
 			buttonPane.add(buttonRight);
-				
-			
+
+
 			JPanel characterName = new JPanel();
 			characterName.add(new JTextField());
 			characterName.setBorder(BorderFactory.createLineBorder(Color.blue));
-			
+
 			add(characterImage, BorderLayout.NORTH);
 			add(buttonPane, BorderLayout.CENTER);
 			add(characterName, BorderLayout.SOUTH);
-			
-			
-			
-			
-			
+
+
+
+
+
 		}
 	}
 
-	
+
 }

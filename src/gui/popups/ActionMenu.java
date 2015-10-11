@@ -1,7 +1,7 @@
 package gui.popups;
 
-import game.ActionReceiver;
-import game.Item;
+import game.*;
+import game.Action;
 import org.eclipse.jdt.annotation.NonNull;
 
 import javax.swing.*;
@@ -25,7 +25,7 @@ public class ActionMenu extends JPopupMenu implements ActionListener {
         this.receiver = receiver;
         this.item = item;
 
-        for (Item.Action action : item.getAllowedActions()) {
+        for (game.Action action : item.getAllowedActions()) {
             addMenuItem(action.toString());
         }
     }
@@ -34,7 +34,7 @@ public class ActionMenu extends JPopupMenu implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         // Figure out which action was triggered and send it off to the receiver
-        for (Item.Action action : item.getAllowedActions()) {
+        for (Action action : item.getAllowedActions()) {
             if (e.getActionCommand().equals(action.toString())) {
                 receiver.performAction(item, action);
                 return;

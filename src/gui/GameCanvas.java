@@ -1,5 +1,6 @@
 package gui;
 
+import game.Action;
 import gui.popups.ActionMenu;
 import gui.popups.ContentsMenu;
 import gui.popups.InfoTooltip;
@@ -7,6 +8,7 @@ import game.*;
 import game.Container;
 import game.Room.ItemInstance;
 
+import gui.renderer.Door;
 import gui.renderer.RoomRenderer;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -85,7 +87,7 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
 
     /** {@inheritDoc} */
     @Override
-    public void performAction(Item item, Item.Action action) {
+    public void performAction(Item item, Action action) {
         if (player == null) {
             throw new RuntimeException("Attempting to perform an action with no player present");
         }
@@ -101,20 +103,20 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         }
 
         // Handle actions related to rendering, such as examining an object or showing a popup
-        if (action == Item.Action.EXAMINE) {
+        if (action == Action.EXAMINE) {
             updateTooltip(drawable);
             tooltip.showDescription(item.getDescription());
             repositionTooltipAbove(drawable);
             tooltip.setVisible(true);
         }
-        else if (action == Item.Action.SHOW_MENU) {
+        else if (action == Action.SHOW_MENU) {
             tooltip.setVisible(false);
 
             actionMenu = new ActionMenu(this, item);
             Point position = positionAboveObject(drawable, actionMenu);
             actionMenu.show(this, position.x, position.y);
         }
-        else if (action == Item.Action.SEARCH) {
+        else if (action == Action.SEARCH) {
             if (item instanceof Container) {
                 actionMenu = new ContentsMenu(loader, this, (Container)item, "Click to pick up");
                 Point position = positionAboveObject(drawable, actionMenu);
@@ -129,7 +131,7 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
 
     /** {@inheritDoc} */
     @Override
-    public void performAction(Container container, Item item, Item.Action action) {
+    public void performAction(Container container, Item item, Action action) {
         // Not enough information to know if the action can be done or not - let the application window decide
         parent.performAction(container, item, action);
     }
@@ -183,11 +185,14 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         activeObject = drawable;
 
         if (drawable != null) {
-            Item.Action action = (e.getButton() == MouseEvent.BUTTON1) ?
+            Action action = (e.getButton() == MouseEvent.BUTTON1) ?
                     tooltip.getPrimaryAction() : tooltip.getSecondaryAction();
 
             if (drawable instanceof ItemInstance) {
                 performAction(((ItemInstance)drawable).getItem(), action);
+            }
+            else if (drawable instanceof Door) {
+                handleDoorAction((Door)drawable, action);
             }
         }
     }
@@ -216,6 +221,19 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         }
     }
 
+    private void handleDoorAction(Door door, Action action) {
+        if (action == Action.EXAMINE) {
+            updateTooltip(door);
+            tooltip.showDescription("A door leading to " + door.getTargetRoom().getName());
+            repositionTooltipAbove(door);
+            tooltip.setVisible(true);
+        }
+        else if (action == Action.GO_THROUGH && player != null) {
+            System.out.println(player.move(door.getFacingDirection()));
+            update();
+        }
+    }
+
     /**
      * Display a tooltip above the given drawable object with information about the object
      */
@@ -224,9 +242,9 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
 
         if (drawable instanceof ItemInstance) {
             Item item = ((ItemInstance) drawable).getItem();
-            List<Item.Action> actions = item.getAllowedActions();
+            List<Action> actions = item.getAllowedActions();
             if (actions.size() > 2) {
-                tooltip.showObject(item.getName(), item.getAllowedActions().get(0), Item.Action.SHOW_MENU);
+                tooltip.showObject(item.getName(), item.getAllowedActions().get(0), Action.SHOW_MENU);
             }
             else if (actions.size() > 1) {
                 tooltip.showObject(item.getName(), item.getAllowedActions().get(0), item.getAllowedActions().get(1));
@@ -240,6 +258,9 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         }
         else if (drawable instanceof Player) {
             tooltip.showObject(((Player)drawable).getName(), null, null);
+        }
+        else if (drawable instanceof Door) {
+            tooltip.showObject("Door", Action.GO_THROUGH, Action.EXAMINE);
         }
     }
 
