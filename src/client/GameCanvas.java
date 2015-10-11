@@ -85,6 +85,10 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
     /** {@inheritDoc} */
     @Override
     public void performAction(Item item, Item.Action action) {
+        if (player == null) {
+            throw new RuntimeException("Attempting to perform an action with no player present");
+        }
+
         // Attempt to find the item in the room's list of item instances
         //TODO move to room class
         ItemInstance drawable = null;
@@ -232,6 +236,9 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
             else {
                 tooltip.showObject(item.getName(), null, null);
             }
+        }
+        else if (drawable instanceof Player) {
+            tooltip.showObject(((Player)drawable).getName(), null, null);
         }
     }
 

@@ -53,6 +53,7 @@ public class InfoTooltip extends JPanel {
             primaryActionLabel.setVisible(false);
         }
         else {
+            primaryActionLabel.setVisible(true);
             primaryActionLabel.setText(primary.toString());
         }
 
