@@ -99,22 +99,22 @@ public class XMLTester {
 //		toTester2.writeRoot();
 
 
-        GameData data = new GameData("resources/mainGame.xml");
+        GameLoader data = new GameLoader("resources/mainGame.xml");
         Game game = new Game(data);
 
-        Room room = game.getData().getRoom("rx0y4");
+        Room room = game.getRoom("rx0y4");
         room.getName();
-        for(Map.Entry<String, Item> i : data.getItems().entrySet()){
+        for(Map.Entry<String, Item> i : game.getItems().entrySet()){
         	System.out.println(i.getValue().getName());
         }
-        for(Map.Entry<String, Room> r : data.getRooms().entrySet()){
+        for(Map.Entry<String, Room> r : game.getRooms().entrySet()){
         	System.out.println(r.getValue().getName());
         }
         for(Map.Entry<Direction, Room> r : room.roomConnections.entrySet()){
         	System.out.println(r.getValue().getName());
         }
         Room room2 = room.getConnection(Direction.NORTH);
-        Container i = (Container) data.getItem("containerrx0y3");
+        Container i = (Container) game.getItem("containerrx0y3");
         for(Item j : i.getItems()){
         	System.out.println(j.getName());
         }

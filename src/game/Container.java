@@ -2,7 +2,6 @@ package game;
 
 import game.Drawable.Point3D;
 import game.Room.ItemInstance;
-import game.storage.GameData;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -47,48 +46,23 @@ public class Container extends Item implements Pickable {
     }
 
 	@Override
-	public void toXML(Document gameDoc) {
-			Element rootNode = gameDoc.getRootElement();
-			for(Element container : rootNode.getChild("gameRooms").getChildren()){
-				if(container.getChildText("id").equals(this.getID())){
-					container.getChild("containerItems").removeContent();
-					for(Item i : this.containerItems){
-						container.getChild("containerItems").addContent("item").setText(i.getID());
-					}
-					container.getChild("hasOpened").setText(Boolean.toString(this.hasOpened));
-				}
-			}
-			XMLOutputter xmlOutput = new XMLOutputter();
-			xmlOutput.setFormat(Format.getPrettyFormat());
-			try {
-				xmlOutput.output(gameDoc, new FileWriter("/u/students/holdawscot/saveFile1.xml"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+	public Element toXML() {
+		Element container = super.toXML();
+   		container.addContent("containerItems");
+   		for(Item item : this.containerItems){
+   			container.getChild("containerItems").addContent("item").setText(item.getID());
+   		}
+   		container.addContent("hasOpened").setText(Boolean.toString(this.hasOpened));
+   		return container;
 	}
 
 	@Override
-	public Object loadXML(GameData gameData) {
-		SAXBuilder builder = new SAXBuilder();
-		File xmlFile = new File("resources/mainGame.xml");
-		try{
-			Document document = builder.build(xmlFile);
-			Element rootNode = document.getRootElement();
-			for(Element gameItem : rootNode.getChild("gameItems").getChildren()){
-				if(gameItem.getChildText("id").equals(this.getID())){
-					this.containerItems.removeAll(containerItems);
-					for(Element chestItem : gameItem.getChild("chestItems").getChildren()){
-						this.getItems().add(gameData.getItem(chestItem.getText()));
-					}
-					this.hasOpened = Boolean.getBoolean(gameItem.getChildText("hasOpened"));
-				}
-			}
-			return null;
-		}catch (IOException io) {
-			System.out.println(io.getMessage());
-		}catch (JDOMException jdomex) {
-			System.out.println(jdomex.getMessage());
+	public void loadXML(Game game, Element objectElement) {
+		super.loadXML(game, objectElement);
+		this.containerItems.removeAll(containerItems);
+		for(Element containerItem : objectElement.getChild("containerItems").getChildren()){
+			this.containerItems.add(game.getItem(containerItem.getText()));
 		}
-		return null;
+		this.hasOpened = Boolean.getBoolean(objectElement.getChildText("hasOpened"));
 	}
 }

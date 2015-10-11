@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.jdom2.Document;
@@ -20,14 +21,15 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
-public class GameData {
+public class GameLoader {
 
-	private HashMap<String, Room> rooms;
 	private HashMap<String, Item> items;
+	private HashMap<String, Room> rooms;
+	private HashMap<String, Player> players;
 	private String XMLFilename;
 	private Document gameDoc;
 
-	public GameData(String filename){
+	public GameLoader(String filename){
 		this.XMLFilename = filename;
 		SAXBuilder builder = new SAXBuilder();
 		File xmlFile = new File(this.XMLFilename);
@@ -40,10 +42,6 @@ public class GameData {
 			System.out.println(jdomex.getMessage());
 		}
 
-
-
-
-
 		this.items = loadItemsInitial();
 		this.rooms = loadRoomsInitial();
 		//Now we have items and rooms constructed in basic form and able to be referenced,
@@ -51,31 +49,7 @@ public class GameData {
 		loadWholeGame(gameDoc);
 	}
 
-	public HashMap<String , Room> getRooms(){
-		return rooms;
-	}
 
-	public Room getRoom(String id){
-		for(Map.Entry<String, Room> r : rooms.entrySet()){
-			if(r.getKey().equals(id)){
-				return r.getValue();
-			}
-		}
-		return null;
-	}
-
-	public HashMap<String, Item> getItems(){
-		return items;
-	}
-
-	public Item getItem(String id){
-		for(Map.Entry<String, Item> i : items.entrySet()){
-			if(i.getKey().equals(id)){
-				return i.getValue();
-			}
-		}
-		return null;
-	}
 
 	public HashMap<String, Item> loadItemsInitial() {
 		HashMap<String, Item> items = new HashMap<String, Item>();
@@ -133,23 +107,49 @@ public class GameData {
 	}
 
 
+	public HashMap<String, Player> loadPlayersInitial() {
+		HashMap<String, Player> players = new HashMap<String, Player>();
+
+		Element rootNode = gameDoc.getRootElement();
+		// Create all the items from the document, put them in the Map items
+		Element playersRoot = rootNode.getChild("gamePlayers");
+		for (Element e : playersRoot.getChildren()) {
+			Player currentPlayer = game.storage.FromXML.readPlayer(e, data);
+			players.add(currentPlayer);
+		}
+		return players;
+	}
+
+	private Player readPlayerInitial(Element e){
+		Player currentPlayer = new Player(e.getChildText("name"), e.getChildText("spriteName"));
+		return currentPlayer;
+	}
+
+
+
+
+
+
+
+
+
 
 	public void saveWholeGame(Document gameDoc){
 		for(Map.Entry<String, Item> item : this.items.entrySet()){
-			item.getValue().toXML(null);
+			item.getValue().toXML();
 		}
 
 		for(Map.Entry<String, Room> room : this.rooms.entrySet()){
-			room.getValue().toXML(null);
+			room.getValue().toXML();
 		}
 	}
 
 	public void loadWholeGame(Document gameDoc){
 		for(Map.Entry<String, Item> item : this.items.entrySet()){
-			item.getValue().loadXML(this);
+			item.getValue().loadXML(this, null);
 		}
 		for(Map.Entry<String, Room> room : this.rooms.entrySet()){
-			room.getValue().loadXML(this);
+			room.getValue().loadXML(this, null);
 		}
 	}
 

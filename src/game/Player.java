@@ -1,6 +1,5 @@
 package game;
 
-import game.storage.GameData;
 import game.storage.Serializable;
 
 import java.io.File;
@@ -16,13 +15,11 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 public class Player implements Drawable, Serializable{
-	private String id;
 	private String name;
 	private String spriteName;
     private Room room;
     private Direction facingDirection;
     private ArrayList<Item> inventory;
-    private Weapon weapon = null;
 
     public Player(String name, String spriteName){
     	this.name = name;
@@ -32,10 +29,6 @@ public class Player implements Drawable, Serializable{
 
     public String getName(){
     	return name;
-    }
-
-    public String getID(){
-    	return id;
     }
 
     public Room getRoom() {
@@ -54,13 +47,13 @@ public class Player implements Drawable, Serializable{
         this.facingDirection = facingDirection;
     }
 
-    public Weapon getWeapon(){
-    	return this.weapon;
-    }
-
-    public void pickUpWeapon(Weapon weapon){
-    	this.weapon = weapon;
-    }
+//    public Weapon getWeapon(){
+//    	return this.weapon;
+//    }
+//
+//    public void pickUpWeapon(Weapon weapon){
+//    	this.weapon = weapon;
+//    }
 
 //    public ArrayList<Item> getInventory(){
 //    	return inventory;
@@ -95,61 +88,29 @@ public class Player implements Drawable, Serializable{
     }
 
 	@Override
-	public void toXML(Document gameDoc) {
-		SAXBuilder builder = new SAXBuilder();
-		File xmlFile = new File("/u/students/holdawscot/saveFile1.xml");
-		try{
-			Document document = builder.build(xmlFile);
-			Element rootNode = document.getRootElement();
-			for(Element p : rootNode.getChild("gamePlayers").getChildren()){
-				if(p.getChildText("name").equals(this.getName())){
-					p.getChild("room").setText(this.getRoom().getID());
-					p.getChild("facingDirection").setText(this.getFacingDirection().toString());
-					p.getChild("weapon").setText(this.weapon.getID());
-					p.getChild("playerInventory").removeContent();
-					for(Item i : this.inventory){
-						p.getChild("playerInventory").addContent(new Element("item").setText(i.getID()));
-					}
-				}
-			}
-			XMLOutputter xmlOutput = new XMLOutputter();
-			xmlOutput.setFormat(Format.getPrettyFormat());
-			xmlOutput.output(document, new FileWriter("/u/students/holdawscot/saveFile1.xml"));
-		}catch (IOException io) {
-			System.out.println(io.getMessage());
-		}catch (JDOMException jdomex) {
-			System.out.println(jdomex.getMessage());
+	public Element toXML() {
+		Element player = new Element("player");
+		player.addContent("name").setText(this.name);
+		player.addContent("spriteName").setText(this.name);
+		player.addContent("room").setText(this.room.getID());
+		player.addContent("facingDirection").setText(this.facingDirection.toString());
+		player.addContent("inventory");
+		for(Item item : this.inventory){
+			player.getChild("inventory").addContent("item").setText(item.getID());
 		}
+		return player;
 	}
 
 	@Override
-	public Player loadXML(GameData gameData) {
-		// TODO Auto-generated method stub
-		SAXBuilder builder = new SAXBuilder();
-		File xmlFile = new File("/u/students/holdawscot/saveFile1.xml");
-		try{
-			Document document = builder.build(xmlFile);
-			Element rootNode = document.getRootElement();
-			for(Element p : rootNode.getChild("gamePlayers").getChildren()){
-				if(p.getChildText("name").equals(this.getName())){
-					this.setRoom(gameData.getRoom(p.getChildText("room")));
-					this.setFacingDirection(Direction.fromString(p.getChildText("facingDirection")));
-					//if(p.getWeapon() != null){
-						//this.setWeapon(gameData.getItem(p.getChildText("weapon")));
-					//}
-					this.inventory.removeAll(inventory);
-					for(Element i : p.getChild("playerInventory").getChildren()){
-						this.addInventoryItem(gameData.getItem(i.getText()));
-					}
-				}
-			}
-			return null;
-		}catch (IOException io) {
-			System.out.println(io.getMessage());
-		}catch (JDOMException jdomex) {
-			System.out.println(jdomex.getMessage());
+	public void loadXML(Game game, Element objectElement) {
+		this.name = objectElement.getChildText("name");
+		this.spriteName = objectElement.getChildText("spriteName");
+		this.room = game.getRoom(objectElement.getChildText("room"));
+		this.facingDirection = Direction.fromString(objectElement.getChildText("facingDirectiom"));
+		this.inventory.removeAll(this.inventory);
+		for(Element item : objectElement.getChild("inventory").getChildren()){
+			this.inventory.add(game.getItem(item.getText()));
 		}
-		return null;
 	}
 
 }
