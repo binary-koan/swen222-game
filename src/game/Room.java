@@ -70,7 +70,8 @@ public class Room implements Serializable{
     }
 
 	public boolean hasWall(Direction position) {
-		return this.wallConnections.get(position);
+		Boolean result = wallConnections.get(position);
+		return result == null ? false : result;
 	}
 
     public Room getConnection(Direction position) {

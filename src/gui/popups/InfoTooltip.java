@@ -1,7 +1,7 @@
 package gui.popups;
 
+import game.Action;
 import gui.ResourceLoader;
-import game.Item;
 import org.eclipse.jdt.annotation.NonNull;
 
 import javax.swing.*;
@@ -12,8 +12,8 @@ import java.awt.*;
  * A tooltip showing information about an item or player
  */
 public class InfoTooltip extends JPanel {
-    private Item.Action primaryAction;
-    private Item.Action secondaryAction;
+    private game.Action primaryAction;
+    private Action secondaryAction;
 
 	private JLabel nameLabel = new JLabel("(no name)");
     private JLabel descriptionLabel = new JLabel();
@@ -42,7 +42,7 @@ public class InfoTooltip extends JPanel {
      * @param primary action to be taken when left-clicking the object
      * @param secondary action to be taken when right-clicking the object
      */
-	public void showObject(@NonNull String name, Item.Action primary, Item.Action secondary) {
+	public void showObject(@NonNull String name, Action primary, Action secondary) {
         primaryAction = primary;
         secondaryAction = secondary;
 
@@ -82,7 +82,7 @@ public class InfoTooltip extends JPanel {
      *
      * @return the action being displayed
      */
-    public Item.Action getPrimaryAction() {
+    public Action getPrimaryAction() {
         return primaryAction;
     }
 
@@ -91,7 +91,7 @@ public class InfoTooltip extends JPanel {
      *
      * @return the action being displayed
      */
-    public Item.Action getSecondaryAction() {
+    public Action getSecondaryAction() {
         return secondaryAction;
     }
 

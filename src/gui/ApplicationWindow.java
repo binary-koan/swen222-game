@@ -18,6 +18,7 @@ import java.text.ParseException;
 import javax.swing.*;
 import javax.swing.plaf.synth.SynthLookAndFeel;
 
+import game.Action;
 import org.eclipse.jdt.annotation.NonNull;
 
 
@@ -118,12 +119,12 @@ public class ApplicationWindow extends JFrame implements KeyListener, ActionRece
 	}
 
     @Override
-    public void performAction(Item item, Item.Action action) {
+    public void performAction(Item item, Action action) {
         //TODO
     }
 
     @Override
-    public void performAction(Container container, Item item, Item.Action action) {
+    public void performAction(Container container, Item item, Action action) {
         //TODO
     }
 

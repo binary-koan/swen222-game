@@ -79,14 +79,14 @@ public class Player implements Drawable, Serializable {
     public Point3D getPosition() {
         switch (this.facingDirection) {
             case NORTH:
-                return new Point3D(160, 0, 10);
+                return new Point3D(160, 0, 40);
             case SOUTH:
-                return new Point3D(160, 0, 310);
+                return new Point3D(160, 0, 280);
             case EAST:
-                return new Point3D(310, 0, 160);
+                return new Point3D(280, 0, 160);
             case WEST:
             default:
-                return new Point3D(10, 0, 160);
+                return new Point3D(40, 0, 160);
         }
     }
 
