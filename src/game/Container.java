@@ -50,11 +50,9 @@ public class Container extends Item implements Pickable {
 	public void loadXML(Game game, Element objectElement) {
 		super.loadXML(game, objectElement);
 		this.containerItems.removeAll(containerItems);
-		//if(objectElement.getChild("containerItems").getChildren() != null){
 			for(Element containerItem : objectElement.getChild("containerItems").getChildren()){
 				this.containerItems.add(game.getItem(containerItem.getText()));
 			}
-		//}
 		this.hasOpened = Boolean.getBoolean(objectElement.getChildText("hasOpened"));
 	}
 }

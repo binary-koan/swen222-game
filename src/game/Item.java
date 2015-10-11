@@ -68,8 +68,12 @@ public abstract class Item implements Serializable {
         return result;
     }
 
-
-
+    /**
+     * Author: Scott Holdaway
+     * Creates an XML element of the item by reading through all the fields
+	 * of the item. Subclasses will call this method and add their specific
+	 * data to it.
+     */
     public Element toXML() {
     	Element itemElement = new Element("item");
     	itemElement.addContent(new Element("id").setText(this.getID()));
@@ -83,11 +87,15 @@ public abstract class Item implements Serializable {
     	return itemElement;
     }
 
+    /**
+     * Author: Scott Holdaway
+     * Sets all the fields in this item based on an XML element of this item.
+     * Subclasses will call this method and add their specific data to it.
+     */
     public void loadXML(Game game, Element objectElement){
     	this.name = objectElement.getChildText("name");
     	this.description = objectElement.getChildText("description");
     	this.spriteName = objectElement.getChildText("spriteName");
-
     	if(objectElement.getChildText("color") != null){
     		this.color = Color.fromString(objectElement.getChildText("color"));
     	}

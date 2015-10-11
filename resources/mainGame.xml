@@ -355,6 +355,7 @@
       </roomPlayers>
       <roomConnections>
 	<entry>SOUTH-rx2y4</entry>
+	<entry>WEST-rx1y3</entry>
       </roomConnections>
       <wallConnections>
 	<entry>NORTH-true</entry>
@@ -517,7 +518,7 @@
       <id>containerrx0y4</id>
       <name>Container</name>
       <description>A purple container.</description>
-      <spriteName>objects/crate.png</spriteName>
+      <spriteName>objects/chest-blue.png</spriteName>
       <subClass>class game.Container</subClass>
       <containerItems>
 	<item>fusionPistol</item>

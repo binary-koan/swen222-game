@@ -160,23 +160,37 @@ public class Player implements Drawable, Serializable {
 
     // Serialization
 
+    /**
+     * Author: Scott Holdaway
+     * Creates an XML element of the player by reading through all the fields
+	 * of the player.
+     */
 	@Override
 	public Element toXML() {
 		Element player = new Element("player");
 		player.addContent(new Element("name").setText(this.name));
-		player.addContent(new Element("spriteName").setText(this.name));
+		player.addContent(new Element("spriteName").setText(this.spriteName));
 		player.addContent(new Element("room").setText(this.room.getID()));
 		player.addContent(new Element("facingDirection").setText(this.facingDirection.toString()));
-		player.addContent(new Element("heldItem").setText(heldItem.getID()));
+		player.addContent(new Element("heldItem"));
+		if(this.heldItem != null){
+			player.getChild("heldItem").setText(heldItem.getID());
+		}
 		return player;
 	}
 
+	/**
+	 * Author: Scott Holdaway.
+	 * Sets all the fields in this player based on and XML element of this player.
+	 */
 	@Override
 	public void loadXML(Game game, Element objectElement) {
 		this.name = objectElement.getChildText("name");
 		this.spriteName = objectElement.getChildText("spriteName");
 		this.room = game.getRoom(objectElement.getChildText("room"));
 		this.facingDirection = Direction.fromString(objectElement.getChildText("facingDirection"));
-		this.heldItem = game.getItem(objectElement.getChildText("heldItem"));
+		if(game.getItem(objectElement.getChildText("heldItem")) != null){
+			this.heldItem = game.getItem(objectElement.getChildText("heldItem"));
+		}
 	}
 }
