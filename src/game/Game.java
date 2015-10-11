@@ -18,39 +18,18 @@ public class Game {
 	private HashMap<String, Item> items;
 	private HashMap<String, Room> rooms;
 	private HashMap<String, Player> players;
-    private GameLoader data;
+    private GameLoader loader;
     private String XMLFilename;
 
-    public Game(GameLoader data){
-    	this.XMLFilename = data.getXMLFilename();
-    	this.data = data;
+    public Game(GameLoader loader){
+    	this.XMLFilename = loader.getXMLFilename();
+    	this.loader = loader;
+    	loader.setCurrentGame(this);
+    	loader.loadWholeGame(this);
     }
 
-
-    public HashMap<String, Player> getPlayers() {
-        return players;
-    }
-
-    public Player getPlayer(String playerName) {
-        for(Map.Entry<String, Player> player : players.entrySet()){
-        	if(player.getKey().equals(playerName)){
-        		return player.getValue();
-        	}
-        }
-        return null;
-    }
-
-    public HashMap<String , Room> getRooms(){
-		return rooms;
-	}
-
-	public Room getRoom(String id){
-		for(Map.Entry<String, Room> room : rooms.entrySet()){
-			if(room.getKey().equals(id)){
-				return room.getValue();
-			}
-		}
-		return null;
+    public void setItems(HashMap<String, Item> items){
+		this.items = items;
 	}
 
 	public HashMap<String, Item> getItems(){
@@ -66,10 +45,43 @@ public class Game {
 		return null;
 	}
 
-    public GameLoader getData(){
-    	return data;
+    public void setRooms(HashMap<String, Room> rooms){
+    	this.rooms = rooms;
     }
 
+    public HashMap<String , Room> getRooms(){
+		return rooms;
+	}
+
+	public Room getRoom(String id){
+		for(Map.Entry<String, Room> room : rooms.entrySet()){
+			if(room.getKey().equals(id)){
+				return room.getValue();
+			}
+		}
+		return null;
+	}
+
+	public void setPlayers(HashMap<String, Player> players){
+    	this.players = players;
+    }
+
+    public HashMap<String, Player> getPlayers() {
+        return players;
+    }
+
+    public Player getPlayer(String playerName) {
+        for(Map.Entry<String, Player> player : players.entrySet()){
+        	if(player.getKey().equals(playerName)){
+        		return player.getValue();
+        	}
+        }
+        return null;
+    }
+
+    public GameLoader getData(){
+    	return loader;
+    }
 
 }
 
