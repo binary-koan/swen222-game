@@ -187,10 +187,6 @@ public class ApplicationWindow extends JFrame implements KeyListener, ActionRece
 
         //commentoutbelow
 
-
-		final Player player2 = new Player("Player 2", "characters/alien2.png");
-    	player2.turn(Direction.NORTH);
-
 		final ResourceLoader loader = new ResourceLoader("resources");
         final Room room = new Room("sadasd", "Some name") {
             @Override
@@ -209,18 +205,12 @@ public class ApplicationWindow extends JFrame implements KeyListener, ActionRece
 
                  item = new Door("ssssss", "Door", "You can get to [insert room here] through here.", "objects/door.png");
                  getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.Point3D(320, -10, 160)));
-
-                 getPlayers().add(player2);
             }
         };
-        player2.setRoom(room);
+        final Player player2 = new Player("Player 2", "characters/alien2.png", room);
+        player2.turn(Direction.NORTH);
 
-        final Player player = new Player("Player 1", "characters/alien1.png") {
-            @Override
-            public Room getRoom() {
-                return room;
-            }
-        };
+        final Player player = new Player("Player 1", "characters/alien1.png", room);
         player.turn(Direction.NORTH);
 
         //comment out above

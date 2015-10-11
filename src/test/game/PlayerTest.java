@@ -13,7 +13,7 @@ public class PlayerTest {
     @Test
     public void testMovement() {
         Room room = MockRoom.createWithConnection(Direction.NORTH);
-        Player player = MockPlayer.createInRoom(room);
+        Player player = MockPlayer.create(room);
 
         try {
             player.move(Direction.NORTH);
@@ -30,7 +30,7 @@ public class PlayerTest {
     @Test
     public void testInvalidMovement() {
         Room room = MockRoom.create();
-        Player player = MockPlayer.createInRoom(room);
+        Player player = MockPlayer.create(room);
 
         try {
             player.move(Direction.NORTH);

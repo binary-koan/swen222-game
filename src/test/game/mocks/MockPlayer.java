@@ -6,15 +6,9 @@ import game.Room;
 public class MockPlayer {
     private static int playerCount = 0;
 
-    public static Player create() {
+    public static Player create(Room room) {
         playerCount++;
-        return new Player("Player " + playerCount, "");
-    }
-
-    public static Player createInRoom(Room room) {
-        Player player = create();
-        player.setRoom(room);
-        return player;
+        return new Player("Player " + playerCount, "", room);
     }
 
     private MockPlayer() { }

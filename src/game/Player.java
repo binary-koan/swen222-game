@@ -26,6 +26,8 @@ public class Player implements Drawable, Serializable{
     public Player(String name, String spriteName, Room room) {
     	this.name = name;
     	this.spriteName = spriteName;
+        this.room = room;
+        room.addPlayer(this);
     }
 
     public String getName(){
@@ -43,7 +45,7 @@ public class Player implements Drawable, Serializable{
     public void turn(Direction facingDirection) {
         this.facingDirection = facingDirection;
     }
-	
+
 	public void move(Direction movementDirection) throws InvalidMovementException {
 		Room newRoom = room.getConnection(movementDirection);
 
