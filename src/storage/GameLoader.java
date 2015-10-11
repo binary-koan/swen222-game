@@ -7,8 +7,10 @@ import game.Furniture;
 import game.Game;
 import game.Item;
 import game.Key;
+import game.Monster;
 import game.Player;
 import game.Room;
+import game.Weapon;
 
 import java.io.File;
 import java.io.IOException;
@@ -88,6 +90,12 @@ public class GameLoader {
 			return currentItem;
 		case "class game.Door":
 			currentItem = new Door(id, name, description, spriteName);
+			return currentItem;
+		case "class game.Monster":
+			currentItem = new Monster(id, name, description, spriteName);
+			return currentItem;
+		case "class game.Weapon":
+			currentItem = new Weapon(id, name, description, spriteName);
 			return currentItem;
 		}
 		return new Furniture(id, name, description, spriteName);

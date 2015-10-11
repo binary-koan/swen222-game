@@ -10,12 +10,11 @@ public class Weapon extends Item implements Pickable {
 
 	@Override
 	public Element toXML() {
-		// TODO Auto-generated method stub
-		return null;
+		return super.toXML();
 	}
 
 	@Override
 	public void loadXML(Game game, Element objectElement) {
-		// TODO Auto-generated method stub
+		super.loadXML(game, objectElement);
 	}
 }

@@ -115,10 +115,10 @@ public class Room implements Serializable{
    			room.getChild("roomItems").addContent("itemInstance");
    			room.getChild("roomItems").getChild("itemsInstance").addContent("item").setText(i.getItem().getID());
    			room.getChild("roomItems").getChild("itemsInstance").addContent("facingDirection").setText(i.getFacingDirection().toString());
-   			room.getChild("roomItems").getChild("itemsInstance").addContent("boundingBox");
-   			room.getChild("roomItems").getChild("itemsInstance").getChild("boundingBox").addContent("x").setText("x"+Integer.toString(i.getPosition().x));
-   			room.getChild("roomItems").getChild("itemsInstance").getChild("boundingBox").addContent("y").setText("y"+Integer.toString(i.getPosition().y));
-   			room.getChild("roomItems").getChild("itemsInstance").getChild("boundingBox").addContent("z").setText("z"+Integer.toString(i.getPosition().z));
+   			room.getChild("roomItems").getChild("itemsInstance").addContent("point");
+   			room.getChild("roomItems").getChild("itemsInstance").getChild("point").addContent("x").setText("x"+Integer.toString(i.getPosition().x));
+   			room.getChild("roomItems").getChild("itemsInstance").getChild("point").addContent("y").setText("y"+Integer.toString(i.getPosition().y));
+   			room.getChild("roomItems").getChild("itemsInstance").getChild("point").addContent("z").setText("z"+Integer.toString(i.getPosition().z));
    		}
    		room.addContent("roomPlayers");
    		for(Player roomPlayer : this.players){
@@ -141,13 +141,18 @@ public class Room implements Serializable{
 		for(Element roomItem : objectElement.getChild("roomItems").getChildren()){
 			Item ir = game.getItem(roomItem.getChildText("item"));
 			Direction dr = Direction.fromString(roomItem.getChildText("facingDirection"));
-			int xr = Integer.parseInt(roomItem.getChild("boundingBox").getChildText("x").substring(1));
-			int yr = Integer.parseInt(roomItem.getChild("boundingBox").getChildText("y").substring(1));
-			int zr = Integer.parseInt(roomItem.getChild("boundingBox").getChildText("z").substring(1));
+			int xr = Integer.parseInt(roomItem.getChild("point").getChildText("x").substring(1));
+			int yr = Integer.parseInt(roomItem.getChild("point").getChildText("y").substring(1));
+			int zr = Integer.parseInt(roomItem.getChild("point").getChildText("z").substring(1));
 			Point3D pr = new Point3D(xr, yr, zr);
 			ItemInstance itemI = new ItemInstance (ir, dr, pr);
 			this.addRoomItemInstance(itemI);
 		}
+		this.players.removeAll(players);
+		for(Element player : objectElement.getChild("players").getChildren()){
+			this.players.add(game.getPlayer(player.getChildText("name")));
+		}
+
 		this.roomConnections.clear();
 		for(Element roomConnection : objectElement.getChild("roomConnections").getChildren()){
 			String[] splitResult = roomConnection.getText().split("-", 2);
