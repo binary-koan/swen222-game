@@ -14,6 +14,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -48,8 +49,8 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension scale = new Dimension();
-		scale.setSize(screenSize.getWidth() * 0.6, screenSize.getHeight() * 0.7);
-		this.canvas.setPreferredSize(scale);
+		scale.setSize(screenSize.getWidth() * 0.5, screenSize.getHeight() * 0.6);
+		setPreferredSize(scale);
 
 		setLayout(new BorderLayout());
 
@@ -107,18 +108,20 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 
 	private JPanel setupLowerBar() {
 		JPanel area = new JPanel();
-		area.setLayout(new BorderLayout());
+		area.setLayout(new GridLayout(1,2));
 
+		JPanel leftBox = new JPanel();
 		JPanel inventory = new JPanel();
 
 
-		inventory.setLayout(new FlowLayout());
+		inventory.setLayout(new GridLayout(1,3, 4, 0));
 		inventory.add(new ImagePanel("key"));
 		inventory.add(new ImagePanel("fireplace"));
+		inventory.add(new ImagePanel("Weapon"));
 
 
-
-		area.add(inventory, BorderLayout.EAST);
+		area.add(leftBox);
+		area.add(inventory);
 		return area;
 	}
 
@@ -126,7 +129,7 @@ public class ApplicationWindow extends JFrame implements KeyListener {
         //TODO
     }
 
-    private class ImagePanel extends JPanel {
+    private class ImagePanel extends JPanel{
 		private BufferedImage image;
 
 		public ImagePanel(String item) {
@@ -201,7 +204,7 @@ public class ApplicationWindow extends JFrame implements KeyListener {
             	 Item item = new Furniture("sdas", "Bucket", "Looks like this could be used to hold liquid of some sort ...", "objects/bucket.png");
                  getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.Point3D(160, 0, 160)));
 
-                 item = new Container("bggg", "Crate", "There might be something inside!", "objects/crate.png");
+                 item = new Container("bggg", "Crate", "There might be something inside!", "objects/chest-blue.png");
                  getItems().add(new Room.ItemInstance(item, Direction.EAST, new Drawable.Point3D(80, 0, 240)));
 
                  item = new Door("ssssss", "Door", "You can get to [insert room here] through here.", "objects/door.png");
