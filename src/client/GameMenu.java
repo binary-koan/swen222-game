@@ -31,6 +31,8 @@ import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -128,7 +130,12 @@ public class GameMenu {
 			
 			JPanel buttonPane = new JPanel();
 			JButton buttonLeft = new JButton();
-			buttonLeft.setIcon();
+			JButton buttonRight = new JButton();
+			ImageIcon i = new ImageIcon(loader.getImage("ui/arrow.png"));
+			buttonLeft.setIcon(i);
+			buttonRight.setIcon(i);
+			buttonPane.add(buttonLeft);
+			buttonPane.add(buttonRight);
 				
 			
 			JPanel characterName = new JPanel();
