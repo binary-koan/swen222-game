@@ -100,25 +100,64 @@ public class XMLTester {
 
 
 
-        Game game = new Game("resources/mainGame.xml");
-        GameLoader data = new GameLoader(game, "resources/mainGame.xml");
-
-        Room room = game.getRoom("rx0y4");
-        room.getName();
+        Game game = new Game("resources/mainGame.xml", "resources/continueGame.xml");
+//        Room room = game.getRoom("rx0y4");
+//        room.getName();
+        System.out.println("=============Items==============");
         for(Map.Entry<String, Item> i : game.getItems().entrySet()){
+        	System.out.println("=============NewItem==============");
+        	System.out.println(i.getValue().getID());
         	System.out.println(i.getValue().getName());
+        	System.out.println(i.getValue().getDescription());
+        	System.out.println(i.getValue().getSpriteName());
+        	System.out.println("===========ContainerInventory================");
+        	if(i.getValue() instanceof Container){
+        		for(Item j : ((Container) i.getValue()).getItems()){
+        			System.out.println(j.getID());
+        		}
+        	}
         }
+        System.out.println("===========================");
+        System.out.println("===========================");
+        System.out.println("===========================");
+        System.out.println("============Rooms===============");
+
         for(Map.Entry<String, Room> r : game.getRooms().entrySet()){
+        	System.out.println("===========NewRoom================");
+        	System.out.println(r.getValue().getID());
         	System.out.println(r.getValue().getName());
+        	System.out.println("==========Players=================");
+        	for(Player p : r.getValue().players){
+        		System.out.println(p.getName());
+        	}
+        	System.out.println("==========Items=================");
+        	for(ItemInstance i : r.getValue().items){
+        		System.out.println(i.getItem().getName());
+
+        	}
+        	System.out.println("==========RoomConnections=================");
+        	for(Map.Entry<Direction, Room> d : r.getValue().roomConnections.entrySet()){
+        		System.out.println(d.getKey().toString());
+        		System.out.println(d.getValue().getName());
+        	}
+        	System.out.println("=========WallConnections==================");
+        	for(Map.Entry<Direction, Boolean> d : r.getValue().wallConnections.entrySet()){
+        		System.out.println(d.getKey().toString());
+        		System.out.println(d.getValue().toString());
+        	}
+        	System.out.println("===========================");
+
+
         }
-        for(Map.Entry<Direction, Room> r : room.roomConnections.entrySet()){
-        	System.out.println(r.getValue().getName());
+        System.out.println("===========================");
+        System.out.println("===========================");
+        System.out.println("=========Players==================");
+
+        for(Map.Entry<String, Player> pl : game.getPlayers().entrySet()){
+        	System.out.println("===========NewPlayer================");
+        	System.out.println(pl.getValue().getName());
         }
-        Room room2 = room.getConnection(Direction.NORTH);
-        Container i = (Container) game.getItem("containerrx0y3");
-        for(Item j : i.getItems()){
-        	System.out.println(j.getName());
-        }
+        System.out.println("==========End=================");
 
 	}
 }

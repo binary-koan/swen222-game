@@ -54,10 +54,10 @@ public class Room implements Serializable{
 
     private String id;
 	private String name;
-    private List<ItemInstance> items = new ArrayList<ItemInstance>();
-    private List<Player> players = new ArrayList<Player>();
+    public List<ItemInstance> items = new ArrayList<ItemInstance>();
+    public List<Player> players = new ArrayList<Player>();
     public Map<Direction, Room> roomConnections = new HashMap<Direction, Room>();
-    private Map<Direction, Boolean> wallConnections = new HashMap<Direction, Boolean>();
+    public Map<Direction, Boolean> wallConnections = new HashMap<Direction, Boolean>();
 
     public Room(String id, String name) {
     	this.id = id;
@@ -108,29 +108,30 @@ public class Room implements Serializable{
     @Override
    	public Element toXML() {
    		Element room = new Element("room");
-   		room.addContent("id").setText(this.id);
-   		room.addContent("name").setText(this.name);
-   		room.addContent("roomItems");
+   		room.addContent(new Element("id").setText(this.id));
+   		room.addContent(new Element("name").setText(this.name));
+   		room.addContent(new Element("roomItems"));
    		for(ItemInstance i : this.items){
-   			room.getChild("roomItems").addContent("itemInstance");
-   			room.getChild("roomItems").getChild("itemsInstance").addContent("item").setText(i.getItem().getID());
-   			room.getChild("roomItems").getChild("itemsInstance").addContent("facingDirection").setText(i.getFacingDirection().toString());
-   			room.getChild("roomItems").getChild("itemsInstance").addContent("point");
-   			room.getChild("roomItems").getChild("itemsInstance").getChild("point").addContent("x").setText("x"+Integer.toString(i.getPosition().x));
-   			room.getChild("roomItems").getChild("itemsInstance").getChild("point").addContent("y").setText("y"+Integer.toString(i.getPosition().y));
-   			room.getChild("roomItems").getChild("itemsInstance").getChild("point").addContent("z").setText("z"+Integer.toString(i.getPosition().z));
+   			Element itemInstance = new Element("itemInstance");
+   			itemInstance.addContent(new Element("item").setText(i.getItem().getID()));
+   			itemInstance.addContent(new Element("facingDirection").setText(i.getFacingDirection().toString()));
+   			itemInstance.addContent(new Element("point"));
+   			itemInstance.getChild("point").addContent(new Element("x").setText("x"+Integer.toString(i.getPosition().x)));
+   			itemInstance.getChild("point").addContent(new Element("y").setText("y"+Integer.toString(i.getPosition().y)));
+   			itemInstance.getChild("point").addContent(new Element("z").setText("z"+Integer.toString(i.getPosition().z)));
+   			room.getChild("roomItems").addContent(itemInstance);
    		}
-   		room.addContent("roomPlayers");
+   		room.addContent(new Element("roomPlayers"));
    		for(Player roomPlayer : this.players){
-   			room.getChild("roomPlayers").addContent("player").setText(roomPlayer.getName());
+   			room.getChild("roomPlayers").addContent(new Element("player").setText(roomPlayer.getName()));
    		}
-   		room.addContent("roomConnections");
+   		room.addContent(new Element("roomConnections"));
    		for(Map.Entry<Direction, Room> roomConnection : this.roomConnections.entrySet()){
-   			room.getChild("roomConnections").addContent("entry").setText((roomConnection.getKey().toString()+"-"+roomConnection.getValue().getID()));
+   			room.getChild("roomConnections").addContent(new Element("entry").setText((roomConnection.getKey().toString()+"-"+roomConnection.getValue().getID())));
    		}
-   		room.addContent("wallConnections");
+   		room.addContent(new Element("wallConnections"));
    		for(Map.Entry<Direction, Boolean> wallConnection : this.wallConnections.entrySet()){
-   			room.getChild("wallConnections").addContent("entry").setText(wallConnection.getKey().toString()+"-"+wallConnection.toString());
+   			room.getChild("wallConnections").addContent(new Element("entry").setText(wallConnection.getKey().toString()+"-"+wallConnection.toString()));
    		}
    		return room;
    	}
@@ -149,7 +150,7 @@ public class Room implements Serializable{
 			items.add(itemI);
 		}
 		this.players.removeAll(players);
-		for(Element player : objectElement.getChild("players").getChildren()){
+		for(Element player : objectElement.getChild("roomPlayers").getChildren()){
 			this.players.add(game.getPlayer(player.getChildText("name")));
 		}
 

@@ -163,11 +163,11 @@ public class Player implements Drawable, Serializable {
 	@Override
 	public Element toXML() {
 		Element player = new Element("player");
-		player.addContent("name").setText(this.name);
-		player.addContent("spriteName").setText(this.name);
-		player.addContent("room").setText(this.room.getID());
-		player.addContent("facingDirection").setText(this.facingDirection.toString());
-		player.addContent("heldItem").setText(heldItem.getID());
+		player.addContent(new Element("name").setText(this.name));
+		player.addContent(new Element("spriteName").setText(this.name));
+		player.addContent(new Element("room").setText(this.room.getID()));
+		player.addContent(new Element("facingDirection").setText(this.facingDirection.toString()));
+		player.addContent(new Element("heldItem").setText(heldItem.getID()));
 		return player;
 	}
 
@@ -176,7 +176,7 @@ public class Player implements Drawable, Serializable {
 		this.name = objectElement.getChildText("name");
 		this.spriteName = objectElement.getChildText("spriteName");
 		this.room = game.getRoom(objectElement.getChildText("room"));
-		this.facingDirection = Direction.fromString(objectElement.getChildText("facingDirectiom"));
+		this.facingDirection = Direction.fromString(objectElement.getChildText("facingDirection"));
 		this.heldItem = game.getItem(objectElement.getChildText("heldItem"));
 	}
 }

@@ -19,11 +19,11 @@ public class Game {
 	private HashMap<String, Room> rooms;
 	private HashMap<String, Player> players;
     private GameLoader loader;
-    private String XMLFilename;
 
-    public Game(String filename){
-    	this.XMLFilename = filename;
-    	this.loader = new GameLoader(this, XMLFilename);
+    public Game(String filenameBase, String filenameGame){
+    	this.loader = new GameLoader(this, filenameBase);
+    	this.loader.setXMLFilename(filenameGame);
+    	this.loader.saveWholeGame();
     }
 
     public void setItems(HashMap<String, Item> items){

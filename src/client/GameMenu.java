@@ -1,6 +1,7 @@
 package client;
 
 import game.Direction;
+import gui.ApplicationWindow;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

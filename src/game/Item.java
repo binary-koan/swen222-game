@@ -93,13 +93,13 @@ public abstract class Item implements Serializable {
 
     public Element toXML() {
     	Element itemElement = new Element("item");
-    	itemElement.addContent("id").setText(this.getID());
-    	itemElement.addContent("name").setText(this.getName());
-    	itemElement.addContent("description").setText(this.getDescription());
-    	itemElement.addContent("spriteName").setText(this.getSpriteName());
-    	itemElement.addContent("subclass").setText(this.getClass().toString());
+    	itemElement.addContent(new Element("id").setText(this.getID()));
+    	itemElement.addContent(new Element("name").setText(this.getName()));
+    	itemElement.addContent(new Element("description").setText(this.getDescription()));
+    	itemElement.addContent(new Element("spriteName").setText(this.getSpriteName()));
+    	itemElement.addContent(new Element("subclass").setText(this.getClass().toString()));
     	if(this.color != null){
-    		itemElement.addContent("color").setText(this.color.toString());
+    		itemElement.addContent(new Element("color").setText(this.color.toString()));
     	}
     	return itemElement;
     }
