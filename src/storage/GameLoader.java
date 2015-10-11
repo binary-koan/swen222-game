@@ -2,7 +2,7 @@ package storage;
 //Author: Scott Holdaway
 
 import game.Container;
-import game.Door;
+import gui.renderer.VisibleDoor;
 import game.Furniture;
 import game.Game;
 import game.Item;
@@ -14,9 +14,7 @@ import game.Weapon;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.jdom2.Document;
@@ -88,6 +86,7 @@ public class GameLoader {
 		case "class game.Furniture":
 			currentItem = new Furniture(id, name, description, spriteName);
 			return currentItem;
+<<<<<<< HEAD
 		case "class game.Door":
 			currentItem = new Door(id, name, description, spriteName);
 			return currentItem;
@@ -97,6 +96,8 @@ public class GameLoader {
 		case "class game.Weapon":
 			currentItem = new Weapon(id, name, description, spriteName);
 			return currentItem;
+=======
+>>>>>>> 3ee3fbdb1e1dc97b88b7d1689669c27e382da198
 		}
 		return new Furniture(id, name, description, spriteName);
 	}

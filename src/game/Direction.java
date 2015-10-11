@@ -93,4 +93,8 @@ public enum Direction {
     	}
     	return NORTH;
     }
+
+    public static Direction random() {
+        return Direction.values()[(int)(Math.random() * Direction.values().length)];
+    }
 }

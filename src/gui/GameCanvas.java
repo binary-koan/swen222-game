@@ -7,6 +7,7 @@ import game.*;
 import game.Container;
 import game.Room.ItemInstance;
 
+import gui.renderer.RoomRenderer;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
