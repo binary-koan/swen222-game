@@ -15,6 +15,8 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -69,7 +71,8 @@ public class GameMenu {
 		
 		public ImagePanel() {
 			try {
-				image = ImageIO.read(new File("resources/backgrounds/haunted_house_contruction.jpg"));
+				Path path = Paths.get("resources/backgrounds/haunted_house_contruction.jpg");
+				image = ImageIO.read(new File(path.toAbsolutePath().toString()));
 			} catch (IOException ex) {
 				ex.printStackTrace();
 			}
