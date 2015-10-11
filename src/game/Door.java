@@ -1,7 +1,5 @@
 package game;
 
-import game.storage.GameData;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -28,29 +26,15 @@ public class Door extends Item {
 	}
 
 	@Override
-	public void toXML(Document gameDoc) {
-		// TODO Auto-generated method stub
-
+	public Element toXML() {
+		Element door = super.toXML();
+		door.addContent("targetRoom").setText(this.targetRoom.getID());
+		return door;
 	}
 
 	@Override
-	public Object loadXML(GameData gameData) {
-		SAXBuilder builder = new SAXBuilder();
-		File xmlFile = new File("resources/mainGame.xml");
-		try{
-			Document document = builder.build(xmlFile);
-			Element rootNode = document.getRootElement();
-			for(Element gameRoom : rootNode.getChild("gameItems").getChildren()){
-				if(gameRoom.getChildText("id").equals(this.getID())){
-					//this.targetRoom = gameData.getRoom(gameRoom.getChild("targetRoom").getText());
-				}
-			}
-			return null;
-		}catch (IOException io) {
-			System.out.println(io.getMessage());
-		}catch (JDOMException jdomex) {
-			System.out.println(jdomex.getMessage());
-		}
-		return null;
+	public void loadXML(Game game, Element objectElement) {
+		super.loadXML(game, objectElement);
+		this.targetRoom = game.getRoom(objectElement.getChildText("targetRoom"));
 	}
 }

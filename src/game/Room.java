@@ -1,7 +1,6 @@
 package game;
 
 import game.Drawable.Point3D;
-import game.storage.GameData;
 import game.storage.Serializable;
 
 import java.io.File;
@@ -12,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
@@ -60,7 +58,6 @@ public class Room implements Serializable{
     private List<Player> players = new ArrayList<Player>();
     public Map<Direction, Room> roomConnections = new HashMap<Direction, Room>();
     private Map<Direction, Boolean> wallConnections = new HashMap<Direction, Boolean>();
-    private List<Door> doors = new ArrayList<Door>();
 
     public Room(String id, String name) {
     	this.id = id;
@@ -108,85 +105,62 @@ public class Room implements Serializable{
     	items.remove(item);
     }
 
-	@Override
-	public void toXML(Document gameDoc) {
-		SAXBuilder builder = new SAXBuilder();
-		File xmlFile = new File("/u/students/holdawscot/saveFile1.xml");
-		try{
-			Document document = builder.build(xmlFile);
-			Element rootNode = document.getRootElement();
-			for(Element room : rootNode.getChild("gameRooms").getChildren()){
-				if(room.getChildText("id").equals(this.getID())){
-					room.getChild("roomItems").removeContent();
-					for(ItemInstance i : this.items){
-						room.getChild("roomItems").addContent("itemInstance");
-						room.getChild("roomItems").getChild("itemsInstance").addContent("item").setText(i.getItem().getID());
-						room.getChild("roomItems").getChild("itemsInstance").addContent("facingDirection").setText(i.getFacingDirection().toString());
-						room.getChild("roomItems").getChild("itemsInstance").addContent("boundingBox");
-						room.getChild("roomItems").getChild("itemsInstance").getChild("boundingBox").addContent("x").setText("x"+Integer.toString(i.getPosition().x));
-						room.getChild("roomItems").getChild("itemsInstance").getChild("boundingBox").addContent("y").setText("y"+Integer.toString(i.getPosition().y));
-						room.getChild("roomItems").getChild("itemsInstance").getChild("boundingBox").addContent("z").setText("z"+Integer.toString(i.getPosition().z));
-					}
-					room.getChild("roomConnections").removeContent();
-					for(Map.Entry<Direction, Room> roomConnection : this.roomConnections.entrySet()){
-						room.getChild("roomConnections").addContent("entry").setText((roomConnection.getKey().toString()+"-"+roomConnection.getValue().getID()));
-					}
-					room.getChild("wallConnections").removeContent();
-					for(Map.Entry<Direction, Boolean> wallConnection : this.wallConnections.entrySet()){
-						room.getChild("wallConnections").addContent("entry").setText(wallConnection.getKey().toString()+"-"+wallConnection.toString());
-					}
-				}
-			}
-			XMLOutputter xmlOutput = new XMLOutputter();
-			xmlOutput.setFormat(Format.getPrettyFormat());
-			xmlOutput.output(document, new FileWriter("/u/students/holdawscot/saveFile1.xml"));
-		}catch (IOException io) {
-			System.out.println(io.getMessage());
-		}catch (JDOMException jdomex) {
-			System.out.println(jdomex.getMessage());
-		}
-	}
+    @Override
+   	public Element toXML() {
+   		Element room = new Element("room");
+   		room.addContent("id").setText(this.id);
+   		room.addContent("name").setText(this.name);
+   		room.addContent("roomItems");
+   		for(ItemInstance i : this.items){
+   			room.getChild("roomItems").addContent("itemInstance");
+   			room.getChild("roomItems").getChild("itemsInstance").addContent("item").setText(i.getItem().getID());
+   			room.getChild("roomItems").getChild("itemsInstance").addContent("facingDirection").setText(i.getFacingDirection().toString());
+   			room.getChild("roomItems").getChild("itemsInstance").addContent("boundingBox");
+   			room.getChild("roomItems").getChild("itemsInstance").getChild("boundingBox").addContent("x").setText("x"+Integer.toString(i.getPosition().x));
+   			room.getChild("roomItems").getChild("itemsInstance").getChild("boundingBox").addContent("y").setText("y"+Integer.toString(i.getPosition().y));
+   			room.getChild("roomItems").getChild("itemsInstance").getChild("boundingBox").addContent("z").setText("z"+Integer.toString(i.getPosition().z));
+   		}
+   		room.addContent("roomPlayers");
+   		for(Player roomPlayer : this.players){
+   			room.getChild("roomPlayers").addContent("player").setText(roomPlayer.getName());
+   		}
+   		room.addContent("roomConnections");
+   		for(Map.Entry<Direction, Room> roomConnection : this.roomConnections.entrySet()){
+   			room.getChild("roomConnections").addContent("entry").setText((roomConnection.getKey().toString()+"-"+roomConnection.getValue().getID()));
+   		}
+   		room.addContent("wallConnections");
+   		for(Map.Entry<Direction, Boolean> wallConnection : this.wallConnections.entrySet()){
+   			room.getChild("wallConnections").addContent("entry").setText(wallConnection.getKey().toString()+"-"+wallConnection.toString());
+   		}
+   		return room;
+   	}
 
-	@Override
-	public Object loadXML(GameData gameData) {
-		SAXBuilder builder = new SAXBuilder();
-		File xmlFile = new File("resources/mainGame.xml");
-		try{
-			Document document = builder.build(xmlFile);
-			Element rootNode = document.getRootElement();
-			for(Element gameRoom : rootNode.getChild("gameRooms").getChildren()){
-				if(gameRoom.getChildText("id").equals(this.getID())){
-					this.items.removeAll(items);
-					for(Element roomItem : gameRoom.getChild("roomItems").getChildren()){
-						Item ir = gameData.getItem(roomItem.getChildText("item"));
-						Direction dr = Direction.fromString(roomItem.getChildText("facingDirection"));
-						int xr = Integer.parseInt(roomItem.getChild("boundingBox").getChildText("x").substring(1));
-						int yr = Integer.parseInt(roomItem.getChild("boundingBox").getChildText("y").substring(1));
-						int zr = Integer.parseInt(roomItem.getChild("boundingBox").getChildText("z").substring(1));
-						Point3D pr = new Point3D(xr, yr, zr);
-						ItemInstance itemI = new ItemInstance (ir, dr, pr);
-						this.addRoomItemInstance(itemI);
-					}
-					for(Element roomConnection : gameRoom.getChild("roomConnections").getChildren()){
-						String[] splitResult = roomConnection.getText().split("-", 2);
-						String dir = splitResult[0];
-						String room = splitResult[1];
-						this.roomConnections.put(Direction.fromString(dir), gameData.getRoom(room));
-					}
-					for(Element wallConnection : gameRoom.getChild("wallConnections").getChildren()){
-						String[] splitResult = wallConnection.getText().split("-", 2);
-						String dir = splitResult[0];
-						Boolean wall = Boolean.valueOf(splitResult[1]);
-						this.wallConnections.put(Direction.fromString(dir), wall);
-					}
-				}
-			}
-			return null;
-		}catch (IOException io) {
-			System.out.println(io.getMessage());
-		}catch (JDOMException jdomex) {
-			System.out.println(jdomex.getMessage());
+    @Override
+	public void loadXML(Game game, Element objectElement) {
+		this.items.removeAll(items);
+		for(Element roomItem : objectElement.getChild("roomItems").getChildren()){
+			Item ir = game.getItem(roomItem.getChildText("item"));
+			Direction dr = Direction.fromString(roomItem.getChildText("facingDirection"));
+			int xr = Integer.parseInt(roomItem.getChild("boundingBox").getChildText("x").substring(1));
+			int yr = Integer.parseInt(roomItem.getChild("boundingBox").getChildText("y").substring(1));
+			int zr = Integer.parseInt(roomItem.getChild("boundingBox").getChildText("z").substring(1));
+			Point3D pr = new Point3D(xr, yr, zr);
+			ItemInstance itemI = new ItemInstance (ir, dr, pr);
+			this.addRoomItemInstance(itemI);
 		}
-		return null;
+		this.roomConnections.clear();
+		for(Element roomConnection : objectElement.getChild("roomConnections").getChildren()){
+			String[] splitResult = roomConnection.getText().split("-", 2);
+			String dir = splitResult[0];
+			String room = splitResult[1];
+			this.roomConnections.put(Direction.fromString(dir), game.getRoom(room));
+		}
+		this.wallConnections.clear();
+		for(Element wallConnection : objectElement.getChild("wallConnections").getChildren()){
+			String[] splitResult = wallConnection.getText().split("-", 2);
+			String dir = splitResult[0];
+			Boolean wall = Boolean.valueOf(splitResult[1]);
+			this.wallConnections.put(Direction.fromString(dir), wall);
+		}
 	}
 }
