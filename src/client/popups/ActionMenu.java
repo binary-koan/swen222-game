@@ -1,23 +1,33 @@
 package client.popups;
 
 import client.GameCanvas;
+import game.ActionReceiver;
 import game.Item;
-import game.Room;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ActionMenu extends JPopupMenu implements ActionListener {
-    private Room.ItemInstance itemInstance;
-    private GameCanvas canvas;
+    private Item item;
+    private ActionReceiver receiver;
 
-    public ActionMenu(GameCanvas canvas, Room.ItemInstance itemInstance) {
-        this.canvas = canvas;
-        this.itemInstance = itemInstance;
+    public ActionMenu(ActionReceiver receiver, Item item) {
+        this.receiver = receiver;
+        this.item = item;
 
-        for (Item.Action action : itemInstance.getItem().getAllowedActions()) {
+        for (Item.Action action : item.getAllowedActions()) {
             addMenuItem(action.toString());
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        for (Item.Action action : item.getAllowedActions()) {
+            if (e.getActionCommand().equals(action.toString())) {
+                receiver.performAction(item, action);
+                return;
+            }
         }
     }
 
@@ -25,16 +35,7 @@ public class ActionMenu extends JPopupMenu implements ActionListener {
         JMenuItem menuItem = new JMenuItem(text);
         menuItem.setName("actionMenuItem");
         menuItem.setActionCommand(text);
+        menuItem.addActionListener(this);
         add(menuItem);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        for (Item.Action action : itemInstance.getItem().getAllowedActions()) {
-            if (e.getActionCommand().equals(action.toString())) {
-                canvas.performAction(itemInstance, action);
-                return;
-            }
-        }
     }
 }

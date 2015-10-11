@@ -9,7 +9,7 @@ import org.jdom2.Element;
 
 public abstract class Item implements Serializable {
 	public enum Action {
-		EXAMINE("Examine"), PICK_UP("Pick up"), SEARCH("Search"), SHOW_MENU("Other ...");
+		EXAMINE("Examine"), PICK_UP("Pick up"), SEARCH("Search"), SHOW_MENU("Other ..."), TAKE("Take");
 
 		private final String text;
 

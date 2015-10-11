@@ -57,13 +57,13 @@ public class GameLoader {
 		// Create all the items from the document, put them in the Map items
 		Element itemsRoot = rootNode.getChild("gameItems");
 		for (Element e : itemsRoot.getChildren()) {
-			Item currentItem = readItemInitial(e);
+			Item currentItem = constructItemInitial(e);
 			items.put(currentItem.getID(), currentItem);
 		}
 		return items;
 	}
 
-	private Item readItemInitial(Element e){
+	private Item constructItemInitial(Element e){
 		//Working on a more robust, less error prone method.
 		String currentClass = e.getChildText("subClass");
 		Item currentItem;
@@ -94,13 +94,13 @@ public class GameLoader {
 		// Create all the items from the document, put them in the Map items
 		Element roomsRoot = rootNode.getChild("gameRooms");
 		for (Element e : roomsRoot.getChildren()) {
-			Room currentRoom = readRoomInitial(e);
+			Room currentRoom = constructRoomInitial(e);
 			rooms.put(currentRoom.getID(), currentRoom);
 		}
 		return rooms;
 	}
 
-	private Room readRoomInitial(Element e){
+	private Room constructRoomInitial(Element e){
 		Room currentRoom = new Room(e.getChildText("id"), e.getChildText("name"));
 		System.out.println(e.getChildText("id"));
 		return currentRoom;
@@ -114,13 +114,13 @@ public class GameLoader {
 		// Create all the items from the document, put them in the Map items
 		Element playersRoot = rootNode.getChild("gamePlayers");
 		for (Element e : playersRoot.getChildren()) {
-			Player currentPlayer = game.storage.FromXML.readPlayer(e, data);
-			players.add(currentPlayer);
+			Player currentPlayer = constructPlayerInitial(e);
+			players.put(currentPlayer.getName(), currentPlayer);
 		}
 		return players;
 	}
 
-	private Player readPlayerInitial(Element e){
+	private Player constructPlayerInitial(Element e){
 		Player currentPlayer = new Player(e.getChildText("name"), e.getChildText("spriteName"));
 		return currentPlayer;
 	}
@@ -135,6 +135,13 @@ public class GameLoader {
 
 
 	public void saveWholeGame(Document gameDoc){
+
+		Element
+
+		gameDoc.getRootElement() = null;
+
+
+
 		for(Map.Entry<String, Item> item : this.items.entrySet()){
 			item.getValue().toXML();
 		}
@@ -142,14 +149,35 @@ public class GameLoader {
 		for(Map.Entry<String, Room> room : this.rooms.entrySet()){
 			room.getValue().toXML();
 		}
+		for(Map.Entry<String, Player> player : this.players.entrySet()){
+			player.getValue().toXML();
+		}
 	}
 
-	public void loadWholeGame(Document gameDoc){
+	public void loadWholeGame(){
+		Element itemsRoot = gameDoc.getRootElement().getChild("gameItems");
+		Element roomsRoot = gameDoc.getRootElement().getChild("gameRooms");
+		Element playersRoot = gameDoc.getRootElement().getChild("gamePlayers");
+
 		for(Map.Entry<String, Item> item : this.items.entrySet()){
-			item.getValue().loadXML(this, null);
+			for(Element itemElement : itemsRoot.getChildren()){
+				if(item.getKey() == itemElement.getChildText("id"));
+				item.getValue().loadXML(this, itemElement);
+			}
 		}
+
 		for(Map.Entry<String, Room> room : this.rooms.entrySet()){
-			room.getValue().loadXML(this, null);
+			for(Element roomElement : itemsRoot.getChildren()){
+				if(room.getKey() == roomElement.getChildText("id"));
+				room.getValue().loadXML(this, roomElement);
+			}
+		}
+
+		for(Map.Entry<String, Player> player : this.players.entrySet()){
+			for(Element playerElement : playersRoot.getChildren()){
+				if(player.getKey() == playerElement.getChildText("name"));
+				player.getValue().loadXML(this, playerElement);
+			}
 		}
 	}
 

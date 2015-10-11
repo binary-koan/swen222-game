@@ -15,8 +15,11 @@ import java.util.List;
  * Given a player, this class renders the room that the player is in
  */
 public class RoomRenderer {
-    private static final int RENDER_SCALE = 5;
+    /** The scale the room will be rendered at off-screen */
+    public static final int RENDER_SCALE = 5;
 
+    // A static map of comparators which can compare objects (based on their distance "back" in the scene) from any
+    // direction
     private static final Map<Direction, Comparator<Drawable>> sceneItemComparators = new HashMap<>();
     static {
         sceneItemComparators.put(Direction.NORTH, new Comparator<Drawable>() {
@@ -52,11 +55,13 @@ public class RoomRenderer {
         public final Drawable drawable;
         public final Image sprite;
         public final Rectangle screenBoundingBox;
+        public final boolean interactable;
 
-        public SceneItem(Drawable drawable, Image sprite, Rectangle screenBoundingBox) {
+        public SceneItem(Drawable drawable, Image sprite, Rectangle screenBoundingBox, boolean interactable) {
             this.drawable = drawable;
             this.sprite = sprite;
             this.screenBoundingBox = screenBoundingBox;
+            this.interactable = interactable;
         }
     }
 
@@ -86,7 +91,7 @@ public class RoomRenderer {
      */
     public void updateRoom() {
         currentSceneItems.clear();
-        loadRoom(player.getRoom(), 1.0);
+        loadRoom(player.getRoom(), 1.0, true);
         addWalls(player.getRoom(), 1.0);
     }
 
@@ -165,8 +170,15 @@ public class RoomRenderer {
 
     /**
      * Get the position and size on screen of a particular object
+     *
+     * @param object object to calculate dimensions from
+     * @return a rectangle representing the position and size of the object
      */
     public @Nullable Rectangle getBounds(Drawable object) {
+        if (object == null) {
+            return null;
+        }
+
     	for (SceneItem item : currentSceneItems) {
     		if (item.drawable.equals(object)) {
     			return item.screenBoundingBox;
@@ -181,7 +193,7 @@ public class RoomRenderer {
      * @param room the room to add
      * @param scale the scale to use when calculating the size and position of items
      */
-    private void loadRoom(@NonNull Room room, double scale) {
+    private void loadRoom(@NonNull Room room, double scale, boolean isCurrent) {
         Direction direction = player.getFacingDirection();
 
         List<Drawable> roomObjects = new ArrayList<>();
@@ -209,7 +221,7 @@ public class RoomRenderer {
             scaleBoundingBox(screenBounds, z, scale, room);
             System.out.println(screenBounds.x + "," + screenBounds.y + "," + screenBounds.width + "," + screenBounds.height);
 
-            currentSceneItems.add(new SceneItem(drawable, sprite, screenBounds));
+            currentSceneItems.add(new SceneItem(drawable, sprite, screenBounds, isCurrent));
         }
     }
 
@@ -239,7 +251,7 @@ public class RoomRenderer {
             if (scale > 0.25) {
                 Room next = room.getConnection(position.opposite());
                 if (next != null) {
-                    loadRoom(next, scale / 2);
+                    loadRoom(next, scale / 2, false);
                 }
             }
         }
