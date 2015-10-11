@@ -148,10 +148,10 @@ public class GameLoader {
 			gameItems.addContent(item.getValue().toXML());
 		}
 		for(Map.Entry<String, Room> room : this.rooms.entrySet()){
-			gameItems.addContent(room.getValue().toXML());
+			gameRooms.addContent(room.getValue().toXML());
 		}
 		for(Map.Entry<String, Player> player : this.players.entrySet()){
-			gameItems.addContent(player.getValue().toXML());
+			gamePlayers.addContent(player.getValue().toXML());
 		}
 		toSave.addContent(gameItems);
 		toSave.addContent(gameRooms);
@@ -178,11 +178,17 @@ public class GameLoader {
 			}
 		}
 
-		for(Map.Entry<String, Player> player : this.players.entrySet()){
-			for(Element playerElement : playersRoot.getChildren()){
+		for(Element playerElement : playersRoot.getChildren()){
+			for(Map.Entry<String, Player> player : this.players.entrySet()){
 				if(player.getKey() == playerElement.getChildText("name"));
 				player.getValue().loadXML(game, playerElement);
 			}
+			//The player is not found in the old collections so is new to the game.
+			//We create him, set his associations with newPlayer.loadXML(), then
+			//add him to the collection.
+			Player newPlayer = constructPlayerInitial(playerElement);
+			newPlayer.loadXML(game, playerElement);
+			game.getPlayers().put(newPlayer.getName(), newPlayer);
 		}
 		game.setItems(this.items);
 		game.setRooms(this.rooms);
