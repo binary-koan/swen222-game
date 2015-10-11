@@ -256,7 +256,7 @@
       <name>Door</name>
       <description>You can get to x through here.</description>
       <spriteName>objects/door.png</spriteName>
-      <subClass>class game.Door</subClass>
+      <subClass>class gui.renderer.VisibleDoor</subClass>
       <targetRoom></targetRoom>
     </item>
   </gameItems>

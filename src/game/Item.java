@@ -1,13 +1,15 @@
 package game;
 
-import game.storage.Serializable;
+import storage.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jdom2.Element;
+
 public abstract class Item implements Serializable {
 	public enum Action {
-		EXAMINE("Examine"), PICK_UP("Pick up"), SEARCH("Search"), SHOW_MENU("Other ...");
+		EXAMINE("Examine"), PICK_UP("Pick up"), SEARCH("Search"), SHOW_MENU("Other ..."), TAKE("Take");
 
 		private final String text;
 
@@ -30,6 +32,22 @@ public abstract class Item implements Serializable {
 
 	public enum Color{
 		BLUE, GREEN, YELLOW, RED;
+
+		public static Color fromString(String color){
+			if(color.equals("BLUE")){
+	    		return BLUE;
+	    	}
+	    	else if(color.equals("GREEN")){
+	    		return GREEN;
+	    	}
+	    	else if(color.equals("YELLOW")){
+	    		return YELLOW;
+	    	}
+	    	else if(color.equals("RED")){
+	    		return RED;
+	    	}
+	    	return BLUE;
+		}
 	}
 
 	public Color getColor(){
@@ -69,6 +87,31 @@ public abstract class Item implements Serializable {
         List<Action> result = new ArrayList<>();
         result.add(Action.EXAMINE);
         return result;
+    }
+
+
+
+    public Element toXML() {
+    	Element itemElement = new Element("item");
+    	itemElement.addContent("id").setText(this.getID());
+    	itemElement.addContent("name").setText(this.getName());
+    	itemElement.addContent("description").setText(this.getDescription());
+    	itemElement.addContent("spriteName").setText(this.getSpriteName());
+    	itemElement.addContent("subclass").setText(this.getClass().toString());
+    	if(this.color != null){
+    		itemElement.addContent("color").setText(this.color.toString());
+    	}
+    	return itemElement;
+    }
+
+    public void loadXML(Game game, Element objectElement){
+    	this.name = objectElement.getChildText("name");
+    	this.description = objectElement.getChildText("description");
+    	this.spriteName = objectElement.getChildText("spriteName");
+
+    	if(objectElement.getChildText("color") != null){
+    		this.color = Color.fromString(objectElement.getChildText("color"));
+    	}
     }
 }
 
