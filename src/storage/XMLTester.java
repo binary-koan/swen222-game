@@ -1,4 +1,4 @@
-package game.storage;
+package storage;
 
 //Author: Scott Holdaway
 
@@ -99,8 +99,9 @@ public class XMLTester {
 //		toTester2.writeRoot();
 
 
-        GameLoader data = new GameLoader("resources/mainGame.xml");
-        Game game = new Game(data);
+
+        Game game = new Game("resources/mainGame.xml");
+        GameLoader data = new GameLoader(game, "resources/mainGame.xml");
 
         Room room = game.getRoom("rx0y4");
         room.getName();

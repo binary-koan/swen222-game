@@ -1,7 +1,7 @@
 package game;
 
 import game.Drawable.Point3D;
-import game.storage.Serializable;
+import storage.Serializable;
 
 import java.io.File;
 import java.io.FileWriter;

@@ -12,7 +12,7 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
-import game.storage.GameLoader;
+import storage.GameLoader;
 
 public class Game {
 	private HashMap<String, Item> items;
@@ -21,11 +21,9 @@ public class Game {
     private GameLoader loader;
     private String XMLFilename;
 
-    public Game(GameLoader loader){
-    	this.XMLFilename = loader.getXMLFilename();
-    	this.loader = loader;
-    	loader.setCurrentGame(this);
-    	loader.loadWholeGame(this);
+    public Game(String filename){
+    	this.XMLFilename = filename;
+    	this.loader = new GameLoader(this, XMLFilename);
     }
 
     public void setItems(HashMap<String, Item> items){
