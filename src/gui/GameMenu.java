@@ -136,7 +136,7 @@ public class GameMenu {
 //								item = new Key("Key", "", "objects/key-blue.png");
 //								getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.Point3D(140, 60, 20)));
 //
-//								item = new Door("Door", "", "objects/door.png");
+//								item = new VisibleDoor("VisibleDoor", "", "objects/door.png");
 //								getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.Point3D(140, 0, 80)));
 //
 //								getPlayers().add(player2);

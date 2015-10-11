@@ -203,8 +203,9 @@ public class ApplicationWindow extends JFrame implements KeyListener, ActionRece
 
 				 container.getItems().add(new Furniture("some id", "Bucket 2", "Some other buckety thing", "objects/bucket.png"));
 
-                 item = new Door("ssssss", "Door", "You can get to [insert room here] through here.", "objects/door.png");
-                 getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.Point3D(320, -10, 160)));
+//                 item = new VisibleDoor("ssssss", "VisibleDoor", "You can get to [insert room here] through here.", "objects/door.png");
+//                 getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.Point3D(320, -10, 160)));
+				roomConnections.put(Direction.NORTH, new Room("other", "room"));
             }
         };
         final Player player2 = new Player("Player 2", "characters/alien2.png", room);

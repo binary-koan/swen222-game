@@ -37,7 +37,7 @@ public class XMLTester {
 //        testItems.put(item.getName(), item);
 //        getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Point3D(140, 60, 20)));
 //
-//        item = new Door("Door", "", "objects/door.png");
+//        item = new VisibleDoor("VisibleDoor", "", "objects/door.png");
 //        testItems.put(item.getName(), item);
 //        getItems().add(new Room.ItemInstance(item, Direction.WEST, new Point3D(140, 0, 80)));
 //

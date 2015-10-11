@@ -1,7 +1,8 @@
-package gui;
+package gui.renderer;
 
 import game.*;
 
+import gui.ResourceLoader;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -24,27 +25,39 @@ public class RoomRenderer {
         sceneItemComparators.put(Direction.NORTH, new Comparator<Drawable>() {
             @Override
             public int compare(Drawable o1, Drawable o2) {
-                return Integer.compare(o1.getPosition().z, o2.getPosition().z);
+                return checkForPlayers(Integer.compare(o1.getPosition().z, o2.getPosition().z), o1, o2);
             }
         });
         sceneItemComparators.put(Direction.WEST, new Comparator<Drawable>() {
             @Override
             public int compare(Drawable o1, Drawable o2) {
-                return -Integer.compare(o1.getPosition().x, o2.getPosition().x);
+                return checkForPlayers(-Integer.compare(o1.getPosition().x, o2.getPosition().x), o1, o2);
             }
         });
         sceneItemComparators.put(Direction.EAST, new Comparator<Drawable>() {
             @Override
             public int compare(Drawable o1, Drawable o2) {
-                return Integer.compare(o1.getPosition().x, o2.getPosition().x);
+                return checkForPlayers(Integer.compare(o1.getPosition().x, o2.getPosition().x), o1, o2);
             }
         });
         sceneItemComparators.put(Direction.SOUTH, new Comparator<Drawable>() {
             @Override
             public int compare(Drawable o1, Drawable o2) {
-                return -Integer.compare(o1.getPosition().z, o2.getPosition().z);
+                return checkForPlayers(-Integer.compare(o1.getPosition().z, o2.getPosition().z), o1, o2);
             }
         });
+    }
+
+    private static int checkForPlayers(int compareResult, Drawable o1, Drawable o2) {
+        if (compareResult == 0) {
+            if (o1 instanceof Player) {
+                return 1;
+            }
+            else if (o2 instanceof Player) {
+                return -1;
+            }
+        }
+        return compareResult;
     }
 
     /**
@@ -71,6 +84,7 @@ public class RoomRenderer {
     private @Nullable Image backgroundCenter;
     private @Nullable Image backgroundRight;
     private @NonNull List<SceneItem> currentSceneItems = new ArrayList<>();
+    private @NonNull Map<Direction, Door> invisibleDoors = new HashMap<>();
 
     /**
      * Construct a new RoomRenderer
@@ -90,8 +104,10 @@ public class RoomRenderer {
      */
     public void updateRoom() {
         currentSceneItems.clear();
-        loadRoom(player.getRoom(), 1.0, true);
-        addWalls(player.getRoom(), 1.0);
+
+        Room room = player.getRoom();
+        loadRoom(room, 1.0, true);
+        addWalls(room, 1.0);
     }
 
     /**
@@ -104,6 +120,10 @@ public class RoomRenderer {
         Graphics2D graphics = result.createGraphics();
         drawBackground(graphics);
         for (SceneItem item : currentSceneItems) {
+            if (item.sprite == null) {
+                continue;
+            }
+
             Rectangle bounds = item.screenBoundingBox;
             graphics.drawImage(
                     item.sprite,
@@ -160,7 +180,7 @@ public class RoomRenderer {
     	ListIterator<SceneItem> iterator = currentSceneItems.listIterator(currentSceneItems.size());
     	while (iterator.hasPrevious()) {
     		SceneItem item = iterator.previous();
-    		if (item.screenBoundingBox.contains(point)) {
+    		if (item.screenBoundingBox != null && item.screenBoundingBox.contains(point)) {
     			return item.drawable;
     		}
     	}
@@ -197,13 +217,9 @@ public class RoomRenderer {
 
         List<Drawable> roomObjects = new ArrayList<>();
         roomObjects.addAll(room.getItems());
-        if (room.getPlayers() != null) {
-            for (Player p : room.getPlayers()) {
-                if (p.getRoom().equals(room) && !p.equals(player)) {
-                    roomObjects.add(p);
-                }
-            }
-        }
+
+        addRoomPlayers(room, roomObjects);
+        addDoors(room, roomObjects);
 
         Collections.sort(roomObjects, sceneItemComparators.get(direction));
 
@@ -216,11 +232,35 @@ public class RoomRenderer {
                 continue;
             }
 
-            BufferedImage sprite = loader.getSprite(drawable.getSpriteName(), drawable.getFacingDirection().viewFrom(direction));
-            Rectangle screenBounds = calculateBoundingBox(position, sprite, direction);
+            if (drawable.getSpriteName() == null) {
+                currentSceneItems.add(new SceneItem(drawable, null, null, isCurrent));
+            }
+            else {
+                BufferedImage sprite = loader.getSprite(drawable.getSpriteName(), drawable.getFacingDirection().viewFrom(direction));
+                Rectangle screenBounds = calculateBoundingBox(position, sprite, direction);
+                scaleBoundingBox(screenBounds, z, scale, room);
 
-            scaleBoundingBox(screenBounds, z, scale, room);
-            currentSceneItems.add(new SceneItem(drawable, sprite, screenBounds, isCurrent));
+                currentSceneItems.add(new SceneItem(drawable, sprite, screenBounds, isCurrent));
+            }
+        }
+    }
+
+    private void addRoomPlayers(@NonNull Room room, List<Drawable> roomObjects) {
+        if (room.getPlayers() != null) {
+            for (Player p : room.getPlayers()) {
+                if (p.getRoom().equals(room) && !p.equals(player)) {
+                    roomObjects.add(p);
+                }
+            }
+        }
+    }
+
+    private void addDoors(@NonNull Room room, List<Drawable> roomObjects) {
+        for (Direction direction : Direction.values()) {
+            Room connection = room.getConnection(direction);
+            if (connection != null && room.hasWall(direction)) {
+                roomObjects.add(new VisibleDoor(connection, direction));
+            }
         }
     }
 
