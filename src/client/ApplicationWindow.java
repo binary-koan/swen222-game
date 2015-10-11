@@ -1,13 +1,6 @@
 package client;
 
-import game.Furniture;
-import game.Direction;
-import game.Door;
-import game.Drawable;
-import game.Item;
-import game.Container;
-import game.Player;
-import game.Room;
+import game.*;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -29,7 +22,7 @@ import javax.swing.plaf.synth.SynthLookAndFeel;
 import org.eclipse.jdt.annotation.NonNull;
 
 
-public class ApplicationWindow extends JFrame implements KeyListener {
+public class ApplicationWindow extends JFrame implements KeyListener, ActionReceiver {
 
 	/**
 	 *
@@ -125,7 +118,13 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 		return area;
 	}
 
-    public void handleAction(Item item, Item.Action action) {
+    @Override
+    public void performAction(Item item, Item.Action action) {
+        //TODO
+    }
+
+    @Override
+    public void performAction(Container container, Item item, Item.Action action) {
         //TODO
     }
 
@@ -204,8 +203,10 @@ public class ApplicationWindow extends JFrame implements KeyListener {
             	 Item item = new Furniture("sdas", "Bucket", "Looks like this could be used to hold liquid of some sort ...", "objects/bucket.png");
                  getItems().add(new Room.ItemInstance(item, Direction.NORTH, new Drawable.Point3D(160, 0, 160)));
 
-                 item = new Container("bggg", "Crate", "There might be something inside!", "objects/chest-blue.png");
-                 getItems().add(new Room.ItemInstance(item, Direction.EAST, new Drawable.Point3D(80, 0, 240)));
+                 Container container = new Container("bggg", "Crate", "There might be something inside!", "objects/chest-blue.png");
+                 getItems().add(new Room.ItemInstance(container, Direction.EAST, new Drawable.Point3D(80, 0, 240)));
+
+				 container.getItems().add(new Furniture("some id", "Bucket 2", "Some other buckety thing", "objects/bucket.png"));
 
                  item = new Door("ssssss", "Door", "You can get to [insert room here] through here.", "objects/door.png");
                  getItems().add(new Room.ItemInstance(item, Direction.WEST, new Drawable.Point3D(320, -10, 160)));

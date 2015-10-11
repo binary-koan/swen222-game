@@ -1,8 +1,10 @@
 package client;
 
 import client.popups.ActionMenu;
+import client.popups.ContentsMenu;
 import client.popups.InfoTooltip;
 import game.*;
+import game.Container;
 import game.Room.ItemInstance;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -20,7 +22,7 @@ import java.util.List;
  * popups caused by user interaction
  */
 @SuppressWarnings("serial")
-public class GameCanvas extends JPanel implements MouseListener, MouseMotionListener {
+public class GameCanvas extends JPanel implements MouseListener, MouseMotionListener, ActionReceiver {
     private @NonNull ApplicationWindow parent;
     private @NonNull ResourceLoader loader;
 
@@ -31,7 +33,7 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
     private @Nullable Player player;
 
     private @NonNull InfoTooltip tooltip;
-    private @Nullable ActionMenu actionMenu;
+    private @Nullable JPopupMenu actionMenu;
     private @Nullable Drawable activeObject;
 
     /**
@@ -80,14 +82,18 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         }
     }
 
-    /**
-     * Handle a specific action being sent to an item
-     *
-     * @param drawable the instance of the item being activated
-     * @param action the action taken
-     */
-    public void performAction(ItemInstance drawable, Item.Action action) {
-        Item item = drawable.getItem();
+    /** {@inheritDoc} */
+    @Override
+    public void performAction(Item item, Item.Action action) {
+        // Attempt to find the item in the room's list of item instances
+        //TODO move to room class
+        ItemInstance drawable = null;
+        for (ItemInstance instance: player.getRoom().getItems()) {
+            if (instance.getItem().equals(item)) {
+                drawable = instance;
+                break;
+            }
+        }
 
         // Handle actions related to rendering, such as examining an object or showing a popup
         if (action == Item.Action.EXAMINE) {
@@ -97,14 +103,28 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         else if (action == Item.Action.SHOW_MENU) {
             tooltip.setVisible(false);
 
-            actionMenu = new ActionMenu(this, drawable);
+            actionMenu = new ActionMenu(this, item);
             Point position = positionAboveObject(drawable, actionMenu);
             actionMenu.show(this, position.x, position.y);
         }
+        else if (action == Item.Action.SEARCH) {
+            if (item instanceof Container) {
+                actionMenu = new ContentsMenu(loader, this, (Container)item, "Click to pick up");
+                Point position = positionAboveObject(drawable, actionMenu);
+                actionMenu.show(this, position.x, position.y);
+            }
+        }
         else if (action != null) {
             // Pass all other actions up to the application window
-            parent.handleAction(item, action);
+            parent.performAction(item, action);
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void performAction(Container container, Item item, Item.Action action) {
+        // Not enough information to know if the action can be done or not - let the application window decide
+        parent.performAction(container, item, action);
     }
 
     /** {@inheritDoc} */
@@ -180,7 +200,7 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
                     tooltip.getPrimaryAction() : tooltip.getSecondaryAction();
 
             if (drawable instanceof ItemInstance) {
-                performAction((ItemInstance)drawable, action);
+                performAction(((ItemInstance)drawable).getItem(), action);
             }
         }
     }
@@ -224,18 +244,21 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
 
     /**
      * Return a Point representing where the component should be positioned in order to line up with the top-center
-     * point of the object
+     * point of the object. Use the center of the screen if the position of the component cannot be determined
      */
     private Point positionAboveObject(Drawable drawable, JComponent component) {
         Rectangle renderBounds = roomImage.getBounds(drawable);
+        Dimension size = component.getPreferredSize();
+
         if (renderBounds != null) {
-            Dimension size = component.getPreferredSize();
             int x = (int) ((renderBounds.x + renderBounds.width / 2) * roomImageScale * 5);
             int y = (int) ((renderBounds.y - 5) * roomImageScale * 5);
 
             return new Point(x + roomImagePosition.x - size.width / 2, y + roomImagePosition.y - size.height);
         }
-        return new Point(0, 0);
+        else {
+            return new Point(getWidth() / 2 - size.width / 2, getHeight() / 2 - size.height / 2);
+        }
     }
 
     /**
