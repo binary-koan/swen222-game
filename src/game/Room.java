@@ -110,11 +110,7 @@ public class Room implements Serializable{
 
 	@Override
 	public void toXML(Document gameDoc) {
-		SAXBuilder builder = new SAXBuilder();
-		File xmlFile = new File("/u/students/holdawscot/saveFile1.xml");
-		try{
-			Document document = builder.build(xmlFile);
-			Element rootNode = document.getRootElement();
+			Element rootNode = gameDoc.getRootElement();
 			for(Element room : rootNode.getChild("gameRooms").getChildren()){
 				if(room.getChildText("id").equals(this.getID())){
 					room.getChild("roomItems").removeContent();
@@ -139,12 +135,11 @@ public class Room implements Serializable{
 			}
 			XMLOutputter xmlOutput = new XMLOutputter();
 			xmlOutput.setFormat(Format.getPrettyFormat());
-			xmlOutput.output(document, new FileWriter("/u/students/holdawscot/saveFile1.xml"));
-		}catch (IOException io) {
-			System.out.println(io.getMessage());
-		}catch (JDOMException jdomex) {
-			System.out.println(jdomex.getMessage());
-		}
+			try {
+				xmlOutput.output(gameDoc, new FileWriter("/u/students/holdawscot/saveFile1.xml"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 	}
 
 	@Override

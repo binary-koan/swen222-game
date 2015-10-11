@@ -48,11 +48,7 @@ public class Container extends Item implements Pickable {
 
 	@Override
 	public void toXML(Document gameDoc) {
-		SAXBuilder builder = new SAXBuilder();
-		File xmlFile = new File("/u/students/holdawscot/saveFile1.xml");
-		try{
-			Document document = builder.build(xmlFile);
-			Element rootNode = document.getRootElement();
+			Element rootNode = gameDoc.getRootElement();
 			for(Element container : rootNode.getChild("gameRooms").getChildren()){
 				if(container.getChildText("id").equals(this.getID())){
 					container.getChild("containerItems").removeContent();
@@ -64,13 +60,11 @@ public class Container extends Item implements Pickable {
 			}
 			XMLOutputter xmlOutput = new XMLOutputter();
 			xmlOutput.setFormat(Format.getPrettyFormat());
-			xmlOutput.output(document, new FileWriter("/u/students/holdawscot/saveFile1.xml"));
-		}catch (IOException io) {
-			System.out.println(io.getMessage());
-		}catch (JDOMException jdomex) {
-			System.out.println(jdomex.getMessage());
-		}
-
+			try {
+				xmlOutput.output(gameDoc, new FileWriter("/u/students/holdawscot/saveFile1.xml"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 	}
 
 	@Override
