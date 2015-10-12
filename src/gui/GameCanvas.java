@@ -252,7 +252,7 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
             tooltip.showDescription(((ItemInstance) action.target).getItem().getDescription());
         }
         else if (action.target instanceof Door) {
-            Room room = player.getRoom().getConnection(action.target.getFacingDirection());
+            Room room = player.getRoom().getConnection(((Door)action.target).getLinkDirection());
             tooltip.showDescription("This leads to: " + room.getName());
         }
 

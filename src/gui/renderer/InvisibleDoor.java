@@ -3,8 +3,8 @@ package gui.renderer;
 import game.Direction;
 
 public class InvisibleDoor extends Door {
-    public InvisibleDoor(Direction facingDirection) {
-        super(facingDirection);
+    public InvisibleDoor(Direction linkDirection) {
+        super(linkDirection);
     }
 
     @Override

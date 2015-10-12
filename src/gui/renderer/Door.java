@@ -1,17 +1,20 @@
 package gui.renderer;
 
 import game.*;
-import org.jdom2.Element;
 
 public abstract class Door implements Drawable {
-	private Direction facingDirection;
+	private Direction linkDirection;
 
-	public Door(Direction facingDirection) {
-		this.facingDirection = facingDirection;
+	public Door(Direction linkDirection) {
+		this.linkDirection = linkDirection;
+	}
+
+	public Direction getLinkDirection() {
+		return linkDirection;
 	}
 
 	@Override
 	public Direction getFacingDirection() {
-		return facingDirection;
+		return linkDirection.opposite();
 	}
 }

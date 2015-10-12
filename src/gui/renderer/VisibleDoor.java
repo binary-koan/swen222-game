@@ -4,8 +4,8 @@ import game.Direction;
 import game.Room;
 
 public class VisibleDoor extends Door {
-	public VisibleDoor(Direction facingDirection) {
-		super(facingDirection);
+	public VisibleDoor(Direction linkDirection) {
+		super(linkDirection);
     }
 
     @Override
