@@ -10,38 +10,38 @@
       <roomItems>
 	<itemInstance>
 	  <item>craterx0y10</item>
-	  <facingDirection>SOUTH</facingDirection>
+	  <facingDirection>NORTH</facingDirection>
 	  <point>
-	    <x>x40</x>
+	    <x>x60</x>
 	    <y>y0</y>
-	    <z>z300</z>
+	    <z>z39</z>
 	  </point>
 	</itemInstance>
 	<itemInstance>
 	  <item>craterx0y11</item>
-	  <facingDirection>SOUTH</facingDirection>
+	  <facingDirection>NORTH</facingDirection>
 	  <point>
-	    <x>x120</x>
+	    <x>x180</x>
 	    <y>y0</y>
-	    <z>z300</z>
+	    <z>z39</z>
 	  </point>
 	</itemInstance>
 	<itemInstance>
 	  <item>craterx0y12</item>
-	  <facingDirection>SOUTH</facingDirection>
+	  <facingDirection>NORTH</facingDirection>
 	  <point>
-	    <x>x240</x>
+	    <x>x270</x>
 	    <y>y0</y>
-	    <z>z300</z>
+	    <z>z39</z>
 	  </point>
 	</itemInstance>
 	<itemInstance>
 	  <item>blueKey</item>
 	  <facingDirection>NORTH</facingDirection>
 	  <point>
-	    <x>x20</x>
-	    <y>y0</y>
-	    <z>z160</z>
+	    <x>x0</x>
+	    <y>y-10</y>
+	    <z>z290</z>
 	  </point>
 	</itemInstance>
       </roomItems>
@@ -67,16 +67,16 @@
 	  <item>containerrx0y2</item>
 	  <facingDirection>SOUTH</facingDirection>
 	  <point>
-	    <x>x280</x>
+	    <x>x300</x>
 	    <y>y0</y>
 	    <z>z280</z>
 	  </point>
 	</itemInstance>
 	<itemInstance>
 	  <item>redLightrx2y2</item>
-	  <facingDirection>EAST</facingDirection>
+	  <facingDirection>WEST</facingDirection>
 	  <point>
-	    <x>x10</x>
+	    <x>x0</x>
 	    <y>y96</y>
 	    <z>z160</z>
 	  </point>
@@ -197,7 +197,7 @@
       <roomPlayers>
       </roomPlayers>
       <roomConnections>
-	<entry>SOUTH-rx1y1</entry>
+	<entry>NORTH-rx1y1</entry>
       </roomConnections>
       <wallConnections>
 	<entry>NORTH-true</entry>
@@ -278,10 +278,19 @@
       <roomItems>
 	<itemInstance>
 	  <item>blueLightrx2y1</item>
-	  <facingDirection>WEST</facingDirection>
+	  <facingDirection>EAST</facingDirection>
 	  <point>
 	    <x>x320</x>
 	    <y>y92</y>
+	    <z>z160</z>
+	  </point>
+	</itemInstance>
+	<itemInstance>
+	  <item>table</item>
+	  <facingDirection>NORTH</facingDirection>
+	  <point>
+	    <x>x160</x>
+	    <y>y0</y>
 	    <z>z160</z>
 	  </point>
 	</itemInstance>
@@ -302,7 +311,7 @@
     
     <room>
       <id>rx2y2</id>
-      <name>Corridor - Port</name>
+      <name>Corridor - Starboard</name>
       <roomItems>
 	<itemInstance>
 	  <item>containerrx2y2</item>
@@ -310,7 +319,7 @@
 	  <point>
 	    <x>x160</x>
 	    <y>y0</y>
-	    <z>z0</z>
+	    <z>z281</z>
 	  </point>
 	</itemInstance>
 	<itemInstance>
@@ -326,6 +335,7 @@
       <roomPlayers>
       </roomPlayers>
       <roomConnections>
+	<entry>NORTH-rx2y1</entry>
 	<entry>WEST-rx1y2</entry>
       </roomConnections>
       <wallConnections>
@@ -573,6 +583,14 @@
       <subClass>class game.Furniture</subClass>
     </item>
     
+    <item>
+      <id>table</id>
+      <name>Table</name>
+      <description>A large dining table. Looks like Zorophlag mahogany. Nice.</description>
+      <spriteName>objects/big-table.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+
     
     <item>
       <id>containerrx2y2</id>

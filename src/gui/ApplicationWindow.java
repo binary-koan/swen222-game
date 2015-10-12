@@ -24,6 +24,7 @@ import gui.actions.ActionHandler;
 public class ApplicationWindow extends JFrame implements KeyListener {
 	private static final long serialVersionUID = 6273791834646480175L;
 
+	private Game game;
     private Player player;
 	private ActionHandler actionHandler;
 	private ResourceLoader loader;
@@ -31,6 +32,7 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 
 	public ApplicationWindow(Game game, Player player, ActionHandler actionHandler) {
 		super("Game");
+		this.game = game;
         this.player = player;
         this.loader = new ResourceLoader("resources");
         this.canvas = new GameCanvas(loader, actionHandler);
@@ -77,6 +79,7 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 	     exitMenuItem.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent event) {
+	            	game.getData().saveWholeGame();
 	                System.exit(0);
 	            }
 	        });
@@ -154,11 +157,13 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 
 	public static void main(String[] args) {
 		Game game = new Game("resources/mainGame.xml", "resources/continueGame.xml");
-		final Player player2 = new Player("Player 2", "characters/alien2.png", game.getRoom("rx0y1"));
-    	player2.turn(Direction.NORTH);
-        game.addPlayer(player2);
+		//final Player player2 = new Player("Player 2", "characters/alien2.png", game.getRoom("rx0y1"));
+		//final Player player2 = game.getPlayer("Player 2");
+    	//player2.turn(Direction.NORTH);
+        //game.addPlayer(player2);
 
         final Player player = new Player("Player 1", "characters/alien1.png", game.getRoom("rx0y1"));
+    	//final Player player = game.getPlayer("Player 1");
         player.turn(Direction.NORTH);
         game.addPlayer(player);
 

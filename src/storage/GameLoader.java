@@ -236,7 +236,6 @@ public class GameLoader {
 			Boolean isInMap = false;
 			for(Map.Entry<String, Player> player : this.game.getPlayers().entrySet()){
 				if(player.getKey().equals(playerElement.getChildText("name"))){
-					System.out.println("++++++++++++++++++++++++++++INMAP++++++++++++++++++++++++++++++++++++");
 					isInMap = true;
 					player.getValue().loadXML(game, playerElement);
 				}

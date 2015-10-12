@@ -72,7 +72,7 @@ public abstract class Item implements Serializable {
     	itemElement.addContent(new Element("name").setText(this.getName()));
     	itemElement.addContent(new Element("description").setText(this.getDescription()));
     	itemElement.addContent(new Element("spriteName").setText(this.getSpriteName()));
-    	itemElement.addContent(new Element("subclass").setText(this.getClass().toString()));
+    	itemElement.addContent(new Element("subClass").setText(this.getClass().toString()));
     	if(this.color != null){
     		itemElement.addContent(new Element("color").setText(this.color.toString()));
     	}

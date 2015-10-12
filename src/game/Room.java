@@ -149,7 +149,7 @@ public class Room implements Serializable{
    		//Add the wall connections.
    		room.addContent(new Element("wallConnections"));
    		for(Map.Entry<Direction, Boolean> wallConnection : this.wallConnections.entrySet()){
-   			room.getChild("wallConnections").addContent(new Element("entry").setText(wallConnection.getKey().toString()+"-"+wallConnection.toString()));
+   			room.getChild("wallConnections").addContent(new Element("entry").setText(wallConnection.getKey().toString()+"-"+wallConnection.getValue().toString()));
    		}
    		return room;
    	}
