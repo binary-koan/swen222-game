@@ -236,10 +236,17 @@
         <entry>NORTH-rx0y3</entry>
       </roomConnections>
       <wallConnections>
+<<<<<<< HEAD
         <entry>EAST-true</entry>
         <entry>NORTH-false</entry>
         <entry>SOUTH-true</entry>
         <entry>WEST-true</entry>
+=======
+        <entry>NORTH-NORTH=false</entry>
+        <entry>EAST-EAST=true</entry>
+        <entry>SOUTH-SOUTH=true</entry>
+        <entry>WEST-WEST=true</entry>
+>>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
     <room>
@@ -248,7 +255,9 @@
       <roomItems />
       <roomPlayers />
       <roomConnections>
+        <entry>NORTH-rx1y2</entry>
         <entry>EAST-rx2y3</entry>
+<<<<<<< HEAD
         <entry>NORTH-rx1y2</entry>
         <entry>WEST-rx0y3</entry>
       </roomConnections>
@@ -257,6 +266,15 @@
         <entry>NORTH-false</entry>
         <entry>SOUTH-true</entry>
         <entry>WEST-true</entry>
+=======
+        <entry>WEST-rx0y3</entry>
+      </roomConnections>
+      <wallConnections>
+        <entry>NORTH-NORTH=false</entry>
+        <entry>EAST-EAST=true</entry>
+        <entry>SOUTH-SOUTH=true</entry>
+        <entry>WEST-WEST=true</entry>
+>>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
     <room>
@@ -288,10 +306,17 @@
         <entry>WEST-rx1y2</entry>
       </roomConnections>
       <wallConnections>
+<<<<<<< HEAD
         <entry>EAST-true</entry>
         <entry>NORTH-true</entry>
         <entry>SOUTH-true</entry>
         <entry>WEST-false</entry>
+=======
+        <entry>NORTH-NORTH=true</entry>
+        <entry>EAST-EAST=true</entry>
+        <entry>SOUTH-SOUTH=true</entry>
+        <entry>WEST-WEST=false</entry>
+>>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
     <room>
@@ -323,10 +348,17 @@
         <entry>SOUTH-rx0y4</entry>
       </roomConnections>
       <wallConnections>
+<<<<<<< HEAD
         <entry>EAST-true</entry>
         <entry>NORTH-true</entry>
         <entry>SOUTH-false</entry>
         <entry>WEST-true</entry>
+=======
+        <entry>NORTH-NORTH=true</entry>
+        <entry>EAST-EAST=true</entry>
+        <entry>SOUTH-SOUTH=false</entry>
+        <entry>WEST-WEST=true</entry>
+>>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
     <room>
@@ -335,16 +367,24 @@
       <roomItems />
       <roomPlayers />
       <roomConnections>
+        <entry>NORTH-rx1y1</entry>
         <entry>EAST-rx2y2</entry>
         <entry>NORTH-rx1y1</entry>
         <entry>SOUTH-rx1y3</entry>
         <entry>WEST-rx0y2</entry>
       </roomConnections>
       <wallConnections>
+<<<<<<< HEAD
         <entry>EAST-false</entry>
         <entry>NORTH-false</entry>
         <entry>SOUTH-false</entry>
         <entry>WEST-false</entry>
+=======
+        <entry>NORTH-NORTH=false</entry>
+        <entry>EAST-EAST=false</entry>
+        <entry>SOUTH-SOUTH=false</entry>
+        <entry>WEST-WEST=false</entry>
+>>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
     <room>
@@ -375,10 +415,17 @@
         <entry>SOUTH-rx2y2</entry>
       </roomConnections>
       <wallConnections>
+<<<<<<< HEAD
         <entry>EAST-true</entry>
         <entry>NORTH-true</entry>
         <entry>SOUTH-true</entry>
         <entry>WEST-true</entry>
+=======
+        <entry>NORTH-NORTH=true</entry>
+        <entry>EAST-EAST=true</entry>
+        <entry>SOUTH-SOUTH=true</entry>
+        <entry>WEST-WEST=true</entry>
+>>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
     <room>
@@ -409,10 +456,17 @@
         <entry>NORTH-rx2y3</entry>
       </roomConnections>
       <wallConnections>
+<<<<<<< HEAD
         <entry>EAST-true</entry>
         <entry>NORTH-false</entry>
         <entry>SOUTH-true</entry>
         <entry>WEST-true</entry>
+=======
+        <entry>NORTH-NORTH=false</entry>
+        <entry>EAST-EAST=true</entry>
+        <entry>SOUTH-SOUTH=true</entry>
+        <entry>WEST-WEST=true</entry>
+>>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
     <room>
@@ -435,10 +489,17 @@
         <entry>WEST-rx1y3</entry>
       </roomConnections>
       <wallConnections>
+<<<<<<< HEAD
         <entry>EAST-true</entry>
         <entry>NORTH-true</entry>
         <entry>SOUTH-false</entry>
         <entry>WEST-true</entry>
+=======
+        <entry>NORTH-NORTH=true</entry>
+        <entry>EAST-EAST=true</entry>
+        <entry>SOUTH-SOUTH=false</entry>
+        <entry>WEST-WEST=true</entry>
+>>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
     <room>
@@ -469,10 +530,17 @@
         <entry>EAST-rx1y2</entry>
       </roomConnections>
       <wallConnections>
+<<<<<<< HEAD
         <entry>EAST-false</entry>
         <entry>NORTH-true</entry>
         <entry>SOUTH-true</entry>
         <entry>WEST-true</entry>
+=======
+        <entry>NORTH-NORTH=true</entry>
+        <entry>EAST-EAST=false</entry>
+        <entry>SOUTH-SOUTH=true</entry>
+        <entry>WEST-WEST=true</entry>
+>>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
     <room>
@@ -486,10 +554,17 @@
         <entry>WEST-rx0y1</entry>
       </roomConnections>
       <wallConnections>
+<<<<<<< HEAD
         <entry>EAST-true</entry>
         <entry>NORTH-true</entry>
         <entry>SOUTH-false</entry>
         <entry>WEST-true</entry>
+=======
+        <entry>NORTH-NORTH=true</entry>
+        <entry>EAST-EAST=true</entry>
+        <entry>SOUTH-SOUTH=false</entry>
+        <entry>WEST-WEST=true</entry>
+>>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
     <room>
@@ -538,10 +613,17 @@
         <entry>EAST-rx1y1</entry>
       </roomConnections>
       <wallConnections>
+<<<<<<< HEAD
         <entry>EAST-true</entry>
         <entry>NORTH-true</entry>
         <entry>SOUTH-true</entry>
         <entry>WEST-true</entry>
+=======
+        <entry>NORTH-NORTH=true</entry>
+        <entry>EAST-EAST=true</entry>
+        <entry>SOUTH-SOUTH=true</entry>
+        <entry>WEST-WEST=true</entry>
+>>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
     <room>
@@ -563,10 +645,17 @@
         <entry>NORTH-rx1y1</entry>
       </roomConnections>
       <wallConnections>
+<<<<<<< HEAD
         <entry>EAST-true</entry>
         <entry>NORTH-true</entry>
         <entry>SOUTH-true</entry>
         <entry>WEST-true</entry>
+=======
+        <entry>NORTH-NORTH=true</entry>
+        <entry>EAST-EAST=true</entry>
+        <entry>SOUTH-SOUTH=true</entry>
+        <entry>WEST-WEST=true</entry>
+>>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
   </gameRooms>

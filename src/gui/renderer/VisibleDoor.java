@@ -4,28 +4,24 @@ import game.Direction;
 import game.Room;
 
 public class VisibleDoor extends Door {
-    private Direction facingDirection;
-
-	public VisibleDoor(Room targetRoom, Direction facingDirection) {
-		super(targetRoom);
-
-        this.facingDirection = facingDirection;
+	public VisibleDoor(Direction linkDirection) {
+		super(linkDirection);
     }
 
     @Override
-    public Direction getFacingDirection() {
-        return facingDirection;
+    public String getName() {
+        return "Door";
     }
 
     @Override
     public Point3D getPosition() {
-        if (facingDirection == Direction.NORTH) {
+        if (getFacingDirection() == Direction.NORTH) {
             return new Point3D(160, -10, 0);
         }
-        else if (facingDirection == Direction.SOUTH) {
+        else if (getFacingDirection() == Direction.SOUTH) {
             return new Point3D(160, -10, 320);
         }
-        else if (facingDirection == Direction.EAST) {
+        else if (getFacingDirection() == Direction.EAST) {
             return new Point3D(0, -10, 160);
         }
         else {

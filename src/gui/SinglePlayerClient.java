@@ -90,6 +90,6 @@ public class SinglePlayerClient implements ActionHandler {
      * Perform a "Move" action
      */
     private void move(GameActions.GoThrough action) {
-        action.player.move(action.door.getFacingDirection());
+        action.player.move(action.door.getLinkDirection());
     }
 }

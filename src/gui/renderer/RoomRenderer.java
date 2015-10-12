@@ -3,8 +3,6 @@ package gui.renderer;
 import game.*;
 
 import gui.ResourceLoader;
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -80,14 +78,13 @@ public class RoomRenderer {
         }
     }
 
-    private @NonNull ResourceLoader loader;
-    private @NonNull Player player;
+    private ResourceLoader loader;
+    private Player player;
 
-    private @Nullable Image backgroundLeft;
-    private @Nullable Image backgroundCenter;
-    private @Nullable Image backgroundRight;
-    private @NonNull List<SceneItem> currentSceneItems = new ArrayList<>();
-    private @NonNull Map<Direction, Door> invisibleDoors = new HashMap<>();
+    private Image backgroundLeft;
+    private Image backgroundCenter;
+    private Image backgroundRight;
+    private List<SceneItem> currentSceneItems = new ArrayList<>();
 
     /**
      * Construct a new RoomRenderer
@@ -95,7 +92,7 @@ public class RoomRenderer {
      * @param loader a resource loader which will be used to find sprites to draw
      * @param player the player that will be used to find the room this object will render
      */
-    public RoomRenderer(@NonNull ResourceLoader loader, @NonNull Player player) {
+    public RoomRenderer(ResourceLoader loader, Player player) {
         this.loader = loader;
         this.player = player;
 
@@ -111,6 +108,7 @@ public class RoomRenderer {
         Room room = player.getRoom();
         loadRoom(room, 1.0, true);
         addWalls(room, 1.0);
+        addInvisibleDoors(room);
     }
 
     /**
@@ -118,7 +116,7 @@ public class RoomRenderer {
      *
      * @return the image that was created
      */
-    public @NonNull BufferedImage getCurrentImage() {
+    public BufferedImage getCurrentImage() {
         BufferedImage result = new BufferedImage(Room.ROOM_SIZE * RENDER_SCALE, Room.CEILING_HEIGHT * RENDER_SCALE, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D graphics = result.createGraphics();
         drawBackground(graphics);
@@ -179,14 +177,16 @@ public class RoomRenderer {
      * @param point point to check
      * @return the object at that point, or null if no object is found
      */
-    public @Nullable Drawable getObjectAt(Point point) {
-    	ListIterator<SceneItem> iterator = currentSceneItems.listIterator(currentSceneItems.size());
+    public Drawable getObjectAt(Point point) {
+        // Check all scene items in reverse (front to back) order
+        ListIterator<SceneItem> iterator = currentSceneItems.listIterator(currentSceneItems.size());
     	while (iterator.hasPrevious()) {
     		SceneItem item = iterator.previous();
-    		if (item.screenBoundingBox != null && item.screenBoundingBox.contains(point)) {
+    		if (item.interactable && item.screenBoundingBox != null && item.screenBoundingBox.contains(point)) {
     			return item.drawable;
     		}
     	}
+
     	return null;
     }
 
@@ -196,7 +196,7 @@ public class RoomRenderer {
      * @param object object to calculate dimensions from
      * @return a rectangle representing the position and size of the object
      */
-    public @Nullable Rectangle getBounds(Drawable object) {
+    public Rectangle getBounds(Drawable object) {
         if (object == null) {
             return null;
         }
@@ -215,7 +215,7 @@ public class RoomRenderer {
      * @param room the room to add
      * @param scale the scale to use when calculating the size and position of items
      */
-    private void loadRoom(@NonNull Room room, double scale, boolean isCurrent) {
+    private void loadRoom(Room room, double scale, boolean isCurrent) {
         Direction direction = player.getFacingDirection();
 
         List<Drawable> roomObjects = new ArrayList<>();
@@ -241,14 +241,14 @@ public class RoomRenderer {
             else {
                 BufferedImage sprite = loader.getSprite(drawable.getSpriteName(), drawable.getFacingDirection().viewFrom(direction));
                 Rectangle screenBounds = calculateBoundingBox(position, sprite, direction);
-                scaleBoundingBox(screenBounds, z, scale, room);
+                scaleBoundingBox(screenBounds, z, scale);
 
                 currentSceneItems.add(new SceneItem(drawable, sprite, screenBounds, isCurrent));
             }
         }
     }
 
-    private void addRoomPlayers(@NonNull Room room, List<Drawable> roomObjects) {
+    private void addRoomPlayers(Room room, List<Drawable> roomObjects) {
         if (room.getPlayers() != null) {
             for (Player p : room.getPlayers()) {
                 if (p.getRoom().equals(room) && !p.equals(player)) {
@@ -258,12 +258,43 @@ public class RoomRenderer {
         }
     }
 
-    private void addDoors(@NonNull Room room, List<Drawable> roomObjects) {
+    private void addDoors(Room room, List<Drawable> roomObjects) {
         for (Direction direction : Direction.values()) {
             Room connection = room.getConnection(direction);
-            if (connection != null && room.hasWall(direction)) {
-                roomObjects.add(new VisibleDoor(connection, direction));
+            if (connection != null) {
+                if (room.hasWall(direction)) {
+                    roomObjects.add(new VisibleDoor(direction));
+                }
             }
+        }
+    }
+
+    /**
+     * Adds "wall-doors", invisible objects which act as doors to adjacent rooms. For example, if the player is facing
+     * down a corridor, an invisible door will be created which links to the next room along
+     */
+    private void addInvisibleDoors(Room room) {
+        Direction direction = player.getFacingDirection();
+
+        if (room.getConnection(direction.next()) != null && !room.hasWall(direction.next())) {
+            currentSceneItems.add(new SceneItem(
+                    new InvisibleDoor(direction.next()), null,
+                    new Rectangle(0, 0, Room.ROOM_SIZE / 4, Room.CEILING_HEIGHT), true
+            ));
+        }
+
+        if (room.getConnection(direction.opposite()) != null && !room.hasWall(direction.opposite())) {
+            currentSceneItems.add(new SceneItem(
+                    new InvisibleDoor(direction.opposite()), null,
+                    new Rectangle(Room.ROOM_SIZE / 4, 0, Room.ROOM_SIZE / 4 * 2, Room.CEILING_HEIGHT), true
+            ));
+        }
+
+        if (room.getConnection(direction.previous()) != null && !room.hasWall(direction.previous())) {
+            currentSceneItems.add(new SceneItem(
+                    new InvisibleDoor(direction.previous()), null,
+                    new Rectangle(Room.ROOM_SIZE / 4 * 3, 0, Room.ROOM_SIZE / 4, Room.CEILING_HEIGHT), true
+            ));
         }
     }
 
@@ -274,7 +305,7 @@ public class RoomRenderer {
      * @param room room to check for walls or neighbour
      * @param scale scale currently being used to draw the room
      */
-    private void addWalls(@NonNull Room room, double scale) {
+    private void addWalls(Room room, double scale) {
         Direction position = player.getFacingDirection();
 
         if (room.hasWall(position.previous())) {
@@ -364,9 +395,8 @@ public class RoomRenderer {
      * @param boundingBox the rectangle to scale (will be modified)
      * @param z the distance back the object is in the room (perpendicular direction to `boundingBox.x`)
      * @param scale the base scale multiplier
-     * @param room the room that contains the object described by the rectangle
      */
-    private void scaleBoundingBox(@NonNull Rectangle boundingBox, int z, double scale, @NonNull Room room) {
+    private void scaleBoundingBox(Rectangle boundingBox, int z, double scale) {
         double distanceBack = (float)z / Room.ROOM_SIZE;
         double scaleForObject = scale * (1 + distanceBack) / 2;
 

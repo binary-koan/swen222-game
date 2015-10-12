@@ -1,36 +1,20 @@
 package gui.renderer;
 
 import game.*;
-import org.jdom2.Element;
 
-public class Door implements Drawable {
-	private Room targetRoom;
+public abstract class Door implements Drawable {
+	private Direction linkDirection;
 
-	public Door(Room targetRoom) {
-		this.targetRoom = targetRoom;
+	public Door(Direction linkDirection) {
+		this.linkDirection = linkDirection;
 	}
 
-	public Room getTargetRoom() {
-		return targetRoom;
-	}
-
-	@Override
-	public String getName() {
-		return "Door";
+	public Direction getLinkDirection() {
+		return linkDirection;
 	}
 
 	@Override
 	public Direction getFacingDirection() {
-		return null;
-	}
-
-	@Override
-	public Point3D getPosition() {
-		return new Point3D(0, 0, 0);
-	}
-
-	@Override
-	public String getSpriteName() {
-		return null;
+		return linkDirection.opposite();
 	}
 }

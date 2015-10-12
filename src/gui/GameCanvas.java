@@ -252,7 +252,8 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
             tooltip.showDescription(((ItemInstance) action.target).getItem().getDescription());
         }
         else if (action.target instanceof Door) {
-            tooltip.showDescription("A door leading to " + ((Door) action.target).getTargetRoom().getName());
+            Room room = player.getRoom().getConnection(((Door)action.target).getLinkDirection());
+            tooltip.showDescription("This leads to: " + room.getName());
         }
 
         repositionTooltipAbove(action.target);
@@ -322,8 +323,22 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         if (renderBounds != null) {
             int x = (int) ((renderBounds.x + renderBounds.width / 2) * roomImageScale * 5);
             int y = (int) ((renderBounds.y - 5) * roomImageScale * 5);
+            Point result = new Point(x + roomImagePosition.x - size.width / 2, y + roomImagePosition.y - size.height);
 
-            return new Point(x + roomImagePosition.x - size.width / 2, y + roomImagePosition.y - size.height);
+            // Check the object is on screen
+            if (result.x < 0) {
+                result.x = 0;
+            }
+            else if (result.x + size.width > getWidth()) {
+                result.x = getWidth() - size.width;
+            }
+            if (result.y < 0) {
+                result.y = 0;
+            }
+            else if (result.y + size.height > getHeight()) {
+                result.y = getHeight() - size.height;
+            }
+            return result;
         }
         else {
             return new Point(getWidth() / 2 - size.width / 2, getHeight() / 2 - size.height / 2);
