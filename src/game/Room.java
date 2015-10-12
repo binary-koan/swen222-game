@@ -32,7 +32,12 @@ public class Room implements Serializable{
             this.position = position;
         }
 
-		@Override
+        @Override
+        public String getName() {
+            return item.getName();
+        }
+
+        @Override
 		public Direction getFacingDirection() {
 			return facingDirection;
 		}
@@ -62,7 +67,6 @@ public class Room implements Serializable{
     public Room(String id, String name) {
     	this.id = id;
     	this.name = name;
-
     }
 
     public String getID(){
@@ -74,9 +78,13 @@ public class Room implements Serializable{
 		return result == null ? false : result;
 	}
 
-    public Room getConnection(Direction position) {
-        return this.roomConnections.get(position);
+    public Room getConnection(Direction direction) {
+        return roomConnections.get(direction);
     }
+
+	public void setConnection(Direction direction, Room other) {
+		roomConnections.put(direction, other);
+	}
 
     public List<ItemInstance> getItems() {
         return items;

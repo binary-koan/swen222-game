@@ -1,31 +1,37 @@
 package gui.popups;
 
 import game.*;
-import game.Action;
+import gui.actions.ActionHandler;
 import org.eclipse.jdt.annotation.NonNull;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+
+import gui.actions.Action;
 
 /**
  * A popup menu showing all the actions which can be taken on a particular item
  */
 public class ActionMenu extends JPopupMenu implements ActionListener {
-    private @NonNull Item item;
-    private @NonNull ActionReceiver receiver;
+    private Player player;
+    private Drawable target;
+    private ActionHandler receiver;
+    private List<Action> actions;
 
     /**
      * Create a new action menu
      *
      * @param receiver object which will be notified when an action is selected
-     * @param item item to display actions of
      */
-    public ActionMenu(@NonNull ActionReceiver receiver, @NonNull Item item) {
+    public ActionMenu(ActionHandler receiver, Player player, Drawable target) {
         this.receiver = receiver;
-        this.item = item;
+        this.player = player;
+        this.target = target;
+        this.actions = receiver.getAllowedActions(target);
 
-        for (game.Action action : item.getAllowedActions()) {
+        for (Action action : actions) {
             addMenuItem(action.toString());
         }
     }
@@ -34,9 +40,14 @@ public class ActionMenu extends JPopupMenu implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         // Figure out which action was triggered and send it off to the receiver
-        for (Action action : item.getAllowedActions()) {
+        for (Action action : actions) {
             if (e.getActionCommand().equals(action.toString())) {
-                receiver.performAction(item, action);
+                try {
+                    receiver.requestAction(action, player, target);
+                }
+                catch (ActionHandler.InvalidActionException err) {
+                    JOptionPane.showMessageDialog(null, err.getMessage());
+                }
                 return;
             }
         }

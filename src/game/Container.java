@@ -2,6 +2,7 @@ package game;
 
 import java.util.*;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.jdom2.Element;
 
 public class Container extends Item implements Pickable {
@@ -26,14 +27,6 @@ public class Container extends Item implements Pickable {
 		hasOpened = true;
 	}
 
-    @Override
-    public List<Action> getAllowedActions() {
-        List<Action> list = super.getAllowedActions();
-        list.add(0, Action.SEARCH);
-        list.add(0, Action.PICK_UP); //TODO remove (this one is just for testing)
-        return list;
-    }
-
 	@Override
 	public Element toXML() {
 		Element container = super.toXML();
@@ -54,5 +47,11 @@ public class Container extends Item implements Pickable {
 				this.containerItems.add(game.getItem(containerItem.getText()));
 			}
 		this.hasOpened = Boolean.getBoolean(objectElement.getChildText("hasOpened"));
+	}
+
+	public void take(Item item, Player player) {
+		if (containerItems.contains(item) && player.pickUp(item)) {
+			containerItems.remove(item);
+		}
 	}
 }

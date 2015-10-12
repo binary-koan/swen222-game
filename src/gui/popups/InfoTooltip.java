@@ -1,6 +1,5 @@
 package gui.popups;
 
-import game.Action;
 import gui.ResourceLoader;
 import org.eclipse.jdt.annotation.NonNull;
 
@@ -8,11 +7,13 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+import gui.actions.Action;
+
 /**
  * A tooltip showing information about an item or player
  */
 public class InfoTooltip extends JPanel {
-    private game.Action primaryAction;
+    private Action primaryAction;
     private Action secondaryAction;
 
 	private JLabel nameLabel = new JLabel("(no name)");
@@ -54,7 +55,7 @@ public class InfoTooltip extends JPanel {
         }
         else {
             primaryActionLabel.setVisible(true);
-            primaryActionLabel.setText(primary.toString());
+            primaryActionLabel.setText(primary.getName());
         }
 
 		if (secondary == null) {
@@ -62,7 +63,7 @@ public class InfoTooltip extends JPanel {
 		}
 		else {
 			secondaryActionLabel.setVisible(true);
-			secondaryActionLabel.setText(secondary.toString());
+			secondaryActionLabel.setText(secondary.getName());
 		}
 	}
 

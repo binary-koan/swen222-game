@@ -14,8 +14,8 @@ public class MockRoom {
     public static Room createWithConnection(Direction connectionDirection) {
         Room room1 = create();
         Room room2 = create();
-        room1.roomConnections.put(connectionDirection, room2);
-        room2.roomConnections.put(connectionDirection.opposite(), room1);
+        room1.setConnection(connectionDirection, room2);
+        room2.setConnection(connectionDirection.opposite(), room1);
         return room1;
     }
 }

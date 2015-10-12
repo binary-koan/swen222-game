@@ -15,6 +15,11 @@ public class Door implements Drawable {
 	}
 
 	@Override
+	public String getName() {
+		return "Door";
+	}
+
+	@Override
 	public Direction getFacingDirection() {
 		return null;
 	}

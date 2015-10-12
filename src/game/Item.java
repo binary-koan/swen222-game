@@ -1,9 +1,7 @@
 package game;
 
+import org.eclipse.jdt.annotation.NonNull;
 import storage.Serializable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.jdom2.Element;
 
@@ -61,12 +59,6 @@ public abstract class Item implements Serializable {
 	public String getDescription() {
 		return description;
 	}
-
-    public List<Action> getAllowedActions() {
-        List<Action> result = new ArrayList<>();
-        result.add(Action.EXAMINE);
-        return result;
-    }
 
     /**
      * Author: Scott Holdaway

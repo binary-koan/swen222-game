@@ -47,6 +47,7 @@ public class Player implements Drawable, Serializable {
     /**
      * @return the name of the player
      */
+    @Override
     public String getName() {
     	return name;
     }

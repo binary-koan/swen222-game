@@ -1,7 +1,7 @@
 package game;
 
 public interface Drawable {
-    public class Point3D {
+    class Point3D {
         public final int x;
         public final int y;
         public final int z;
@@ -13,6 +13,7 @@ public interface Drawable {
         }
     }
 
+    String getName();
     Direction getFacingDirection();
     Point3D getPosition();
     String getSpriteName();

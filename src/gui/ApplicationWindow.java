@@ -18,26 +18,23 @@ import java.text.ParseException;
 import javax.swing.*;
 import javax.swing.plaf.synth.SynthLookAndFeel;
 
-import game.Action;
+import gui.actions.ActionHandler;
 import org.eclipse.jdt.annotation.NonNull;
 
 
-public class ApplicationWindow extends JFrame implements KeyListener, ActionReceiver {
-
-	/**
-	 *
-	 */
+public class ApplicationWindow extends JFrame implements KeyListener {
 	private static final long serialVersionUID = 6273791834646480175L;
 
     private Player player;
-	private @NonNull ResourceLoader loader;
+	private ActionHandler actionHandler;
+	private ResourceLoader loader;
 	private GameCanvas canvas;
 
-	public ApplicationWindow(Player player) {
+	public ApplicationWindow(Player player, ActionHandler actionHandler) {
 		super("Game");
         this.player = player;
         this.loader = new ResourceLoader("resources");
-        this.canvas = new GameCanvas(this, loader);
+        this.canvas = new GameCanvas(loader, actionHandler);
         canvas.setPlayer(player);
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -53,7 +50,7 @@ public class ApplicationWindow extends JFrame implements KeyListener, ActionRece
 		add(setupLowerBar(), BorderLayout.SOUTH);
 
         addKeyListener(this);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 
 	public GameCanvas getGameCanvas() {
@@ -117,16 +114,6 @@ public class ApplicationWindow extends JFrame implements KeyListener, ActionRece
 		area.add(inventory);
 		return area;
 	}
-
-    @Override
-    public void performAction(Item item, Action action) {
-        //TODO
-    }
-
-    @Override
-    public void performAction(Container container, Item item, Action action) {
-        //TODO
-    }
 
     private class ImagePanel extends JPanel{
 		private BufferedImage image;
@@ -224,7 +211,7 @@ public class ApplicationWindow extends JFrame implements KeyListener, ActionRece
 
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                ApplicationWindow aw = new ApplicationWindow(player);
+                ApplicationWindow aw = new ApplicationWindow(player, new SinglePlayerClient());
                 aw.pack();
                 aw.setVisible(true);
             }
