@@ -29,7 +29,7 @@ public class GameActions {
         public final Door door;
 
         public GoThrough(Player player, Door door) {
-            super(player, "Go through");
+            super(player, "Enter");
 
             this.door = door;
         }

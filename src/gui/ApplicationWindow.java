@@ -153,7 +153,7 @@ public class ApplicationWindow extends JFrame implements KeyListener {
     }
 
 	public static void main(String[] args) {
-		Game game = new Game("resources/mainGame.xml", "resources/continueGame.xml");
+		final Game game = new Game("resources/mainGame.xml", "resources/continueGame.xml");
 		final Player player2 = new Player("Player 2", "characters/alien2.png", game.getRoom("rx0y1"));
     	player2.turn(Direction.NORTH);
         game.addPlayer(player2);

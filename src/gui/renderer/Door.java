@@ -3,34 +3,15 @@ package gui.renderer;
 import game.*;
 import org.jdom2.Element;
 
-public class Door implements Drawable {
-	private Room targetRoom;
+public abstract class Door implements Drawable {
+	private Direction facingDirection;
 
-	public Door(Room targetRoom) {
-		this.targetRoom = targetRoom;
-	}
-
-	public Room getTargetRoom() {
-		return targetRoom;
-	}
-
-	@Override
-	public String getName() {
-		return "Door";
+	public Door(Direction facingDirection) {
+		this.facingDirection = facingDirection;
 	}
 
 	@Override
 	public Direction getFacingDirection() {
-		return null;
-	}
-
-	@Override
-	public Point3D getPosition() {
-		return new Point3D(0, 0, 0);
-	}
-
-	@Override
-	public String getSpriteName() {
-		return null;
+		return facingDirection;
 	}
 }
