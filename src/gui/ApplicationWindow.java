@@ -163,9 +163,12 @@ public class ApplicationWindow extends JFrame implements KeyListener {
         game.addPlayer(player2);
 
         final Player player = new Player("Player 1", "characters/alien1.png", game.getRoom("rx1y2"));
-    	//final Player player = game.getPlayer("Player 1");
         player.turn(Direction.NORTH);
         game.addPlayer(player);
+//        final Player player = game.getPlayer("Player 1");
+//    	final Player player3 = new Player("Player 3", "characters/alien2.png", game.getRoom("rx2y3"));
+//    	player3.turn(Direction.NORTH);
+//        game.addPlayer(player3);
 
 		SynthLookAndFeel lookAndFeel = new SynthLookAndFeel();
 		try {

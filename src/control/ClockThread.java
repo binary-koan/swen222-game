@@ -21,7 +21,7 @@ public class ClockThread extends Thread {
 	}
 	
 	public void run() {
-		while(1 == 1) {
+		while(true) {
 			// Loop forever			
 			try {
 				Thread.sleep(delay);
