@@ -15,8 +15,6 @@ import gui.actions.Action;
  * A popup menu showing all the actions which can be taken on a particular item
  */
 public class ActionMenu extends JPopupMenu implements ActionListener {
-    private Player player;
-    private Drawable target;
     private ActionHandler receiver;
     private List<Action> actions;
 
@@ -25,14 +23,12 @@ public class ActionMenu extends JPopupMenu implements ActionListener {
      *
      * @param receiver object which will be notified when an action is selected
      */
-    public ActionMenu(ActionHandler receiver, Player player, Drawable target) {
+    public ActionMenu(ActionHandler receiver, List<Action> actions) {
         this.receiver = receiver;
-        this.player = player;
-        this.target = target;
-        this.actions = receiver.getAllowedActions(target);
+        this.actions = actions;
 
         for (Action action : actions) {
-            addMenuItem(action.toString());
+            addMenuItem(action.name, action.toString());
         }
     }
 
@@ -42,12 +38,7 @@ public class ActionMenu extends JPopupMenu implements ActionListener {
         // Figure out which action was triggered and send it off to the receiver
         for (Action action : actions) {
             if (e.getActionCommand().equals(action.toString())) {
-                try {
-                    receiver.requestAction(action, player, target);
-                }
-                catch (ActionHandler.InvalidActionException err) {
-                    JOptionPane.showMessageDialog(null, err.getMessage());
-                }
+                receiver.requestAction(action);
                 return;
             }
         }
@@ -56,10 +47,10 @@ public class ActionMenu extends JPopupMenu implements ActionListener {
     /**
      * Add an item to this menu
      */
-    private void addMenuItem(String text) {
+    private void addMenuItem(String text, String actionCommand) {
         JMenuItem menuItem = new JMenuItem(text);
         menuItem.setName("actionMenuItem");
-        menuItem.setActionCommand(text);
+        menuItem.setActionCommand(actionCommand);
         menuItem.addActionListener(this);
         add(menuItem);
     }

@@ -1,13 +1,13 @@
 package gui.actions;
 
+import game.Player;
+
 public abstract class Action {
-    private String name;
+    public final Player player;
+    public final String name;
 
-    public Action(String name) {
+    public Action(Player player, String name) {
+        this.player = player;
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
     }
 }

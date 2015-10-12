@@ -55,7 +55,7 @@ public class InfoTooltip extends JPanel {
         }
         else {
             primaryActionLabel.setVisible(true);
-            primaryActionLabel.setText(primary.getName());
+            primaryActionLabel.setText(primary.name);
         }
 
 		if (secondary == null) {
@@ -63,7 +63,7 @@ public class InfoTooltip extends JPanel {
 		}
 		else {
 			secondaryActionLabel.setVisible(true);
-			secondaryActionLabel.setText(secondary.getName());
+			secondaryActionLabel.setText(secondary.name);
 		}
 	}
 

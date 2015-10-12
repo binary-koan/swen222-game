@@ -19,7 +19,6 @@ import javax.swing.*;
 import javax.swing.plaf.synth.SynthLookAndFeel;
 
 import gui.actions.ActionHandler;
-import org.eclipse.jdt.annotation.NonNull;
 
 
 public class ApplicationWindow extends JFrame implements KeyListener {
@@ -30,12 +29,12 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 	private ResourceLoader loader;
 	private GameCanvas canvas;
 
-	public ApplicationWindow(Player player, ActionHandler actionHandler) {
+	public ApplicationWindow(Game game, Player player, ActionHandler actionHandler) {
 		super("Game");
         this.player = player;
         this.loader = new ResourceLoader("resources");
         this.canvas = new GameCanvas(loader, actionHandler);
-        canvas.setPlayer(player);
+        canvas.setup(player, game);
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension scale = new Dimension();
@@ -143,7 +142,6 @@ public class ApplicationWindow extends JFrame implements KeyListener {
             case KeyEvent.VK_RIGHT:
                 player.turn(player.getFacingDirection().next());
         }
-        canvas.update();
     }
 
     @Override
@@ -211,7 +209,7 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                ApplicationWindow aw = new ApplicationWindow(player, new SinglePlayerClient());
+                ApplicationWindow aw = new ApplicationWindow(game, player, new SinglePlayerClient(player));
                 aw.pack();
                 aw.setVisible(true);
             }

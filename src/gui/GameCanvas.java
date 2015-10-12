@@ -1,5 +1,6 @@
 package gui;
 
+import game.Container;
 import gui.actions.*;
 import gui.popups.ActionMenu;
 import gui.popups.ContentsMenu;
@@ -26,61 +27,60 @@ import gui.actions.Action;
  * popups caused by user interaction
  */
 @SuppressWarnings("serial")
-public class GameCanvas extends JPanel implements MouseListener, MouseMotionListener {
+public class GameCanvas extends JPanel implements MouseListener, MouseMotionListener, StateChangeListener {
     private class CanvasActionHandler implements ActionHandler {
-        private ActionHandler parent;
 
+        private ActionHandler parent;
         public CanvasActionHandler(ActionHandler parent) {
             this.parent = parent;
         }
 
         @Override
-        public List<Action> getAllowedActions(@NonNull Drawable drawable) {
+        public List<Action> getAllowedActions(Drawable drawable) {
             List<Action> result = parent.getAllowedActions(drawable);
 
+            if (drawable instanceof ItemInstance && ((ItemInstance)drawable).getItem() instanceof Container) {
+                ItemInstance instance = (ItemInstance)drawable;
+                result.add(new GUIActions.Search(player, (Container)instance.getItem(), instance));
+            }
             if (drawable instanceof ItemInstance || drawable instanceof Door) {
-                result.add(new GUIAction(GUIAction.Type.EXAMINE));
+                result.add(new GUIActions.Examine(player, drawable));
             }
             if (result.size() > 2) {
-                result.add(1, new GUIAction(GUIAction.Type.SHOW_MENU));
+                result.add(1, new GUIActions.ShowMenu(player, result.subList(1, result.size()), drawable));
             }
 
             return result;
         }
 
         @Override
-        public void requestAction(@NonNull Action action, @NonNull Player player,
-                                  @Nullable Drawable target, @Nullable Object... parameters) throws InvalidActionException {
-            if (action instanceof GUIAction) {
-                GUIAction guiAction = (GUIAction)action;
-                switch (guiAction.getType()) {
-                    case SHOW_MENU:
-                        GameCanvas.this.showActionMenu(target);
-                        break;
-                    case EXAMINE:
-                        GameCanvas.this.showDescription(target);
-                        break;
-                    case SEARCH:
-                        GameCanvas.this.showSearchMenu(target);
-                        break;
-                }
+        public void requestAction(Action action) {
+            if (action instanceof GUIActions.Search) {
+                showSearchMenu((GUIActions.Search)action);
+            }
+            else if (action instanceof GUIActions.Examine) {
+                showDescription((GUIActions.Examine)action);
+            }
+            else if (action instanceof GUIActions.ShowMenu) {
+                showActionMenu((GUIActions.ShowMenu)action);
             }
             else {
-                parent.requestAction(action, player, target, parameters);
+                parent.requestAction(action);
             }
         }
+
     }
-
     private @NonNull ResourceLoader loader;
-    private @NonNull CanvasActionHandler actionHandler;
 
+    private @NonNull CanvasActionHandler actionHandler;
     private double roomImageScale;
+
     private @Nullable Point roomImagePosition;
     private @Nullable RoomRenderer roomImage;
-
     private @Nullable Player player;
 
     private @NonNull InfoTooltip tooltip;
+
     private @Nullable JPopupMenu actionMenu;
     private @Nullable Drawable activeObject;
 
@@ -107,7 +107,8 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
      *
      * @param player player whose viewpoint will be rendered from now on
      */
-    public void setPlayer(@Nullable Player player) {
+    public void setup(Player player, Game game) {
+        game.addStateChangeListener(this);
         this.player = player;
 
         if (player == null) {
@@ -118,49 +119,6 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
             repaint();
         }
     }
-
-    /**
-     * Repaint the canvas based on the current player
-     */
-    public void update() {
-        if (roomImage != null) {
-            roomImage.updateRoom();
-            repaint();
-        }
-    }
-
-//    /** {@inheritDoc} */
-//    @Override
-//    public void performAction(Item item, Action action) {
-//        if (player == null) {
-//            throw new RuntimeException("Attempting to perform an action with no player present");
-//        }
-//
-//        // Attempt to find the item in the room's list of item instances
-//        //TODO move to room class
-//        ItemInstance drawable = null;
-//        for (ItemInstance instance: player.getRoom().getItems()) {
-//            if (instance.getItem().equals(item)) {
-//                drawable = instance;
-//                break;
-//            }
-//        }
-//
-//        // Handle actions related to rendering, such as examining an object or showing a popup
-//        if (action == Action.EXAMINE) {
-//            showDescription(drawable);
-//        }
-//        else if (action == Action.SHOW_MENU) {
-//            showActionMenu(drawable);
-//        }
-//        else if (action == Action.SEARCH) {
-//            showSearchMenu(item, drawable);
-//        }
-//        else if (action != null) {
-//            // Pass all other actions up to the application window
-//            parent.performAction(item, action);
-//        }
-//    }
 
     /** {@inheritDoc} */
     @Override
@@ -213,13 +171,17 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         if (drawable != null) {
             Action action = (e.getButton() == MouseEvent.BUTTON1) ?
                     tooltip.getPrimaryAction() : tooltip.getSecondaryAction();
-            try {
-                actionHandler.requestAction(action, player, drawable);
-            }
-            catch (ActionHandler.InvalidActionException err) {
-                JOptionPane.showMessageDialog(null, err.getMessage());
-            }
+            actionHandler.requestAction(action);
         }
+    }
+
+    /**
+     * Called whenever the game state changes. We don't know exactly what changed, so redraw the whole scene
+     */
+    @Override
+    public void onStateChanged() {
+        System.out.println("Game state changed; updating canvas");
+        update();
     }
 
     /** {@inheritDoc} */
@@ -246,34 +208,42 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         }
     }
 
-    private void showDescription(Drawable drawable) {
-        updateTooltip(drawable);
-
-        if (drawable instanceof ItemInstance) {
-            tooltip.showDescription(((ItemInstance) drawable).getItem().getDescription());
+    /**
+     * Repaint the canvas based on the current player
+     */
+    private void update() {
+        if (roomImage != null) {
+            roomImage.updateRoom();
+            repaint();
         }
-        else if (drawable instanceof Door) {
-            tooltip.showDescription("A door leading to " + ((Door) drawable).getTargetRoom().getName());
+    }
+
+    private void showDescription(GUIActions.Examine action) {
+        updateTooltip(action.target);
+
+        if (action.target instanceof ItemInstance) {
+            tooltip.showDescription(((ItemInstance) action.target).getItem().getDescription());
+        }
+        else if (action.target instanceof Door) {
+            tooltip.showDescription("A door leading to " + ((Door) action.target).getTargetRoom().getName());
         }
 
-        repositionTooltipAbove(drawable);
+        repositionTooltipAbove(action.target);
         tooltip.setVisible(true);
     }
 
-    private void showActionMenu(Drawable drawable) {
+    private void showActionMenu(GUIActions.ShowMenu action) {
         tooltip.setVisible(false);
 
-        actionMenu = new ActionMenu(actionHandler, player, drawable);
-        Point position = positionAboveObject(drawable, actionMenu);
+        actionMenu = new ActionMenu(actionHandler, action.actions);
+        Point position = positionAboveObject(action.target, actionMenu);
         actionMenu.show(this, position.x, position.y);
     }
 
-    private void showSearchMenu(Drawable drawable) {
-        if (drawable instanceof ItemInstance) {
-            actionMenu = new ContentsMenu(loader, actionHandler, (ItemInstance)drawable, player, "Click to pick up");
-            Point position = positionAboveObject(drawable, actionMenu);
-            actionMenu.show(this, position.x, position.y);
-        }
+    private void showSearchMenu(GUIActions.Search action) {
+        actionMenu = new ContentsMenu(loader, actionHandler, action.containerInstance, player, "Click to pick up");
+        Point position = positionAboveObject(action.containerInstance, actionMenu);
+        actionMenu.show(this, position.x, position.y);
     }
 
     /**

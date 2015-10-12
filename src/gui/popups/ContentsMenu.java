@@ -4,7 +4,7 @@ import game.*;
 import game.Container;
 import gui.*;
 import gui.actions.ActionHandler;
-import gui.actions.GameAction;
+import gui.actions.GameActions;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -18,7 +18,8 @@ import java.awt.image.BufferedImage;
  */
 public class ContentsMenu extends JPopupMenu implements ActionListener {
     private Player player;
-    private Room.ItemInstance drawable;
+    private Room.ItemInstance containerInstance;
+    private Container container;
     private ActionHandler receiver;
 
     /**
@@ -26,17 +27,17 @@ public class ContentsMenu extends JPopupMenu implements ActionListener {
      *
      * @param loader used to retrieve the sprites of the items in the container
      * @param receiver object which will be notified when an action is selected
-     * @param drawable box to display items from
+     * @param containerInstance box to display items from
      * @param description text description of the action that can be taken with these items (eg. "Click to pick up")
      */
-    public ContentsMenu(ResourceLoader loader, ActionHandler receiver, Room.ItemInstance drawable,
+    public ContentsMenu(ResourceLoader loader, ActionHandler receiver, Room.ItemInstance containerInstance,
                         Player player, String description) {
         this.receiver = receiver;
-        this.drawable = drawable;
+        this.containerInstance = containerInstance;
         this.player = player;
 
-        if (drawable.getItem() instanceof Container) {
-            Container container = (Container)drawable.getItem();
+        if (containerInstance.getItem() instanceof Container) {
+            container = (Container)containerInstance.getItem();
 
             if (container.getItems().size() > 0) {
                 addLabel(container.getItems().size() + " item(s)");
@@ -56,14 +57,9 @@ public class ContentsMenu extends JPopupMenu implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         // Figure out which item was activated and send a TAKE action to the receiver
-        for (Item item : ((Container)drawable.getItem()).getItems()) {
+        for (Item item : ((Container) containerInstance.getItem()).getItems()) {
             if (e.getActionCommand().equals(item.getID())) {
-                try {
-                    receiver.requestAction(new GameAction(GameAction.Type.TAKE), player, drawable, item);
-                }
-                catch (ActionHandler.InvalidActionException err) {
-                    JOptionPane.showMessageDialog(null, err.getMessage());
-                }
+                receiver.requestAction(new GameActions.Take(player, container, item));
                 return;
             }
         }
