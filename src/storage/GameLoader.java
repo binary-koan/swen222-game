@@ -52,7 +52,10 @@ public class GameLoader {
 
 		game.setItems(loadItemsInitial());
 		game.setRooms(loadRoomsInitial());
-		game.setPlayers(loadPlayersInitial());
+
+		for (Player player : loadPlayersInitial().values()) {
+			game.addPlayer(player);
+		}
 		//Now we have items and rooms constructed in basic form and able to be referenced,
 		//we assign them all their associations by reading from the same XML doc.
 		loadWholeGame();

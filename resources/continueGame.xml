@@ -230,9 +230,9 @@
       </roomConnections>
       <wallConnections>
         <entry>EAST-EAST=true</entry>
-        <entry>NORTH-NORTH=false</entry>
         <entry>SOUTH-SOUTH=true</entry>
         <entry>WEST-WEST=true</entry>
+        <entry>NORTH-NORTH=false</entry>
       </wallConnections>
     </room>
     <room>
@@ -242,14 +242,14 @@
       <roomPlayers />
       <roomConnections>
         <entry>EAST-rx2y3</entry>
-        <entry>NORTH-rx1y2</entry>
         <entry>WEST-rx0y3</entry>
+        <entry>NORTH-rx1y2</entry>
       </roomConnections>
       <wallConnections>
         <entry>EAST-EAST=true</entry>
-        <entry>NORTH-NORTH=false</entry>
         <entry>SOUTH-SOUTH=true</entry>
         <entry>WEST-WEST=true</entry>
+        <entry>NORTH-NORTH=false</entry>
       </wallConnections>
     </room>
     <room>
@@ -281,9 +281,9 @@
       </roomConnections>
       <wallConnections>
         <entry>EAST-EAST=true</entry>
-        <entry>NORTH-NORTH=true</entry>
         <entry>SOUTH-SOUTH=true</entry>
         <entry>WEST-WEST=false</entry>
+        <entry>NORTH-NORTH=true</entry>
       </wallConnections>
     </room>
     <room>
@@ -316,9 +316,9 @@
       </roomConnections>
       <wallConnections>
         <entry>EAST-EAST=true</entry>
-        <entry>NORTH-NORTH=true</entry>
         <entry>SOUTH-SOUTH=false</entry>
         <entry>WEST-WEST=true</entry>
+        <entry>NORTH-NORTH=true</entry>
       </wallConnections>
     </room>
     <room>
@@ -328,15 +328,15 @@
       <roomPlayers />
       <roomConnections>
         <entry>EAST-rx2y2</entry>
-        <entry>NORTH-rx1y1</entry>
         <entry>SOUTH-rx1y3</entry>
         <entry>WEST-rx0y2</entry>
+        <entry>NORTH-rx1y1</entry>
       </roomConnections>
       <wallConnections>
         <entry>EAST-EAST=false</entry>
-        <entry>NORTH-NORTH=false</entry>
         <entry>SOUTH-SOUTH=false</entry>
         <entry>WEST-WEST=false</entry>
+        <entry>NORTH-NORTH=false</entry>
       </wallConnections>
     </room>
     <room>
@@ -359,9 +359,9 @@
       </roomConnections>
       <wallConnections>
         <entry>EAST-EAST=true</entry>
-        <entry>NORTH-NORTH=true</entry>
         <entry>SOUTH-SOUTH=true</entry>
         <entry>WEST-WEST=true</entry>
+        <entry>NORTH-NORTH=true</entry>
       </wallConnections>
     </room>
     <room>
@@ -393,9 +393,9 @@
       </roomConnections>
       <wallConnections>
         <entry>EAST-EAST=true</entry>
-        <entry>NORTH-NORTH=false</entry>
         <entry>SOUTH-SOUTH=true</entry>
         <entry>WEST-WEST=true</entry>
+        <entry>NORTH-NORTH=false</entry>
       </wallConnections>
     </room>
     <room>
@@ -419,9 +419,9 @@
       </roomConnections>
       <wallConnections>
         <entry>EAST-EAST=true</entry>
-        <entry>NORTH-NORTH=true</entry>
         <entry>SOUTH-SOUTH=false</entry>
         <entry>WEST-WEST=true</entry>
+        <entry>NORTH-NORTH=true</entry>
       </wallConnections>
     </room>
     <room>
@@ -453,9 +453,9 @@
       </roomConnections>
       <wallConnections>
         <entry>EAST-EAST=false</entry>
-        <entry>NORTH-NORTH=true</entry>
         <entry>SOUTH-SOUTH=true</entry>
         <entry>WEST-WEST=true</entry>
+        <entry>NORTH-NORTH=true</entry>
       </wallConnections>
     </room>
     <room>
@@ -464,15 +464,15 @@
       <roomItems />
       <roomPlayers />
       <roomConnections>
-        <entry>NORTH-rx1y0</entry>
         <entry>SOUTH-rx1y2</entry>
         <entry>WEST-rx0y1</entry>
+        <entry>NORTH-rx1y0</entry>
       </roomConnections>
       <wallConnections>
         <entry>EAST-EAST=true</entry>
-        <entry>NORTH-NORTH=true</entry>
         <entry>SOUTH-SOUTH=false</entry>
         <entry>WEST-WEST=true</entry>
+        <entry>NORTH-NORTH=true</entry>
       </wallConnections>
     </room>
     <room>
@@ -522,9 +522,9 @@
       </roomConnections>
       <wallConnections>
         <entry>EAST-EAST=true</entry>
-        <entry>NORTH-NORTH=true</entry>
         <entry>SOUTH-SOUTH=true</entry>
         <entry>WEST-WEST=true</entry>
+        <entry>NORTH-NORTH=true</entry>
       </wallConnections>
     </room>
     <room>
@@ -547,9 +547,9 @@
       </roomConnections>
       <wallConnections>
         <entry>EAST-EAST=true</entry>
-        <entry>NORTH-NORTH=true</entry>
         <entry>SOUTH-SOUTH=true</entry>
         <entry>WEST-WEST=true</entry>
+        <entry>NORTH-NORTH=true</entry>
       </wallConnections>
     </room>
   </gameRooms>

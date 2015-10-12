@@ -10,9 +10,9 @@ import storage.GameLoader;
 public class Game implements StateChangeListener {
 	private List<StateChangeListener> stateChangeListeners = new ArrayList<>();
 
-	private HashMap<String, Item> items;
-	private HashMap<String, Room> rooms;
-	private HashMap<String, Player> players;
+	private Map<String, Item> items;
+	private Map<String, Room> rooms;
+	private Map<String, Player> players = new HashMap<>();
     private GameLoader loader;
 
     public Game(String filenameBase, String filenameGame){
@@ -34,7 +34,7 @@ public class Game implements StateChangeListener {
 
     @Override
 	public void onStateChanged() {
-        // Propagate change up to our listeners
+        // This is called when individual objects change state, so propagate the change up to our listeners
 		for (StateChangeListener listener : stateChangeListeners) {
 			listener.onStateChanged();
 		}
@@ -44,7 +44,7 @@ public class Game implements StateChangeListener {
 		this.items = items;
 	}
 
-	public HashMap<String, Item> getItems(){
+	public Map<String, Item> getItems(){
 		return items;
 	}
 
@@ -61,7 +61,7 @@ public class Game implements StateChangeListener {
     	this.rooms = rooms;
     }
 
-    public HashMap<String , Room> getRooms(){
+    public Map<String , Room> getRooms(){
 		return rooms;
 	}
 
@@ -74,16 +74,14 @@ public class Game implements StateChangeListener {
 		return null;
 	}
 
-	public void setPlayers(HashMap<String, Player> players) {
-    	this.players = players;
+    public void addPlayer(Player player) {
+        this.players.put(player.getName(), player);
 
         // Listen for changes in individual player state, and use them to trigger a global state change
-        for (Player player : players.values()) {
-            player.addStateChangeListener(this);
-        }
+        player.addStateChangeListener(this);
     }
 
-    public HashMap<String, Player> getPlayers() {
+    public Map<String, Player> getPlayers() {
         return players;
     }
 

@@ -25,35 +25,36 @@ public class RoomRenderer {
         sceneItemComparators.put(Direction.NORTH, new Comparator<Drawable>() {
             @Override
             public int compare(Drawable o1, Drawable o2) {
-                return checkForPlayers(Integer.compare(o1.getPosition().z, o2.getPosition().z), o1, o2);
+                return sortByType(Integer.compare(o1.getPosition().z, o2.getPosition().z), o1, o2);
             }
         });
         sceneItemComparators.put(Direction.WEST, new Comparator<Drawable>() {
             @Override
             public int compare(Drawable o1, Drawable o2) {
-                return checkForPlayers(-Integer.compare(o1.getPosition().x, o2.getPosition().x), o1, o2);
+                return sortByType(-Integer.compare(o1.getPosition().x, o2.getPosition().x), o1, o2);
             }
         });
         sceneItemComparators.put(Direction.EAST, new Comparator<Drawable>() {
             @Override
             public int compare(Drawable o1, Drawable o2) {
-                return checkForPlayers(Integer.compare(o1.getPosition().x, o2.getPosition().x), o1, o2);
+                return sortByType(Integer.compare(o1.getPosition().x, o2.getPosition().x), o1, o2);
             }
         });
         sceneItemComparators.put(Direction.SOUTH, new Comparator<Drawable>() {
             @Override
             public int compare(Drawable o1, Drawable o2) {
-                return checkForPlayers(-Integer.compare(o1.getPosition().z, o2.getPosition().z), o1, o2);
+                return sortByType(-Integer.compare(o1.getPosition().z, o2.getPosition().z), o1, o2);
             }
         });
     }
 
-    private static int checkForPlayers(int compareResult, Drawable o1, Drawable o2) {
+    private static int sortByType(int compareResult, Drawable o1, Drawable o2) {
         if (compareResult == 0) {
-            if (o1 instanceof Player) {
+            // If there are collisions, always show players on top and doors on the bottom
+            if (o1 instanceof Player || o2 instanceof Door) {
                 return 1;
             }
-            else if (o2 instanceof Player) {
+            else if (o2 instanceof Player || o1 instanceof Door) {
                 return -1;
             }
         }
