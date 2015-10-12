@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -20,7 +21,9 @@ import org.jdom2.output.XMLOutputter;
  * Represents a player's avatar in the game
  */
 public class Player implements Drawable, Serializable {
-	private String name;
+    private List<StateChangeListener> stateChangeListeners = new ArrayList<>();
+
+    private String name;
 	private String spriteName;
     private Room room;
     private Direction facingDirection;
@@ -40,6 +43,10 @@ public class Player implements Drawable, Serializable {
         this.facingDirection = Direction.NORTH;
 
         room.addPlayer(this);
+    }
+
+    public void addStateChangeListener(StateChangeListener listener) {
+        stateChangeListeners.add(listener);
     }
 
     // Getters
@@ -105,6 +112,7 @@ public class Player implements Drawable, Serializable {
      */
     public void turn(Direction facingDirection) {
         this.facingDirection = facingDirection;
+        triggerStateChange();
     }
 
     /**
@@ -123,6 +131,7 @@ public class Player implements Drawable, Serializable {
 			room.removePlayer(this);
 			newRoom.addPlayer(this);
 			room = newRoom;
+            triggerStateChange();
             return true;
 		}
 	}
@@ -133,11 +142,13 @@ public class Player implements Drawable, Serializable {
      * @return true if the item was picked up, false otherwise (eg. if the player was already holding an item)
      */
     public boolean pickUp(Item item) {
+        //TODO remove item from room/container/etc
         if (item == null || heldItem != null) {
             return false;
         }
         else {
             heldItem = item;
+            triggerStateChange();
             return true;
         }
     }
@@ -155,6 +166,7 @@ public class Player implements Drawable, Serializable {
             Item item = heldItem;
             getRoom().addItem(item);
             heldItem = null;
+            triggerStateChange();
             return item;
         }
     }
@@ -194,4 +206,10 @@ public class Player implements Drawable, Serializable {
 			this.heldItem = game.getItem(objectElement.getChildText("heldItem"));
 		}
 	}
+
+    private void triggerStateChange() {
+        for (StateChangeListener listener : stateChangeListeners) {
+            listener.onStateChanged();
+        }
+    }
 }

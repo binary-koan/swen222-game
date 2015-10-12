@@ -1,20 +1,15 @@
 package game;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
-
 import storage.GameLoader;
 
-public class Game {
+public class Game implements StateChangeListener {
+	private List<StateChangeListener> stateChangeListeners = new ArrayList<>();
+
 	private HashMap<String, Item> items;
 	private HashMap<String, Room> rooms;
 	private HashMap<String, Player> players;
@@ -27,6 +22,23 @@ public class Game {
     	//so the base file is not overwritten.
     	this.loader.saveWholeGame();
     }
+
+    /**
+     * Add a state change listener, which will be notified whenever the game state changes
+     *
+     * @param listener listener to add
+     */
+	public void addStateChangeListener(StateChangeListener listener) {
+		stateChangeListeners.add(listener);
+	}
+
+    @Override
+	public void onStateChanged() {
+        // Propagate change up to our listeners
+		for (StateChangeListener listener : stateChangeListeners) {
+			listener.onStateChanged();
+		}
+	}
 
     public void setItems(HashMap<String, Item> items){
 		this.items = items;
@@ -62,8 +74,13 @@ public class Game {
 		return null;
 	}
 
-	public void setPlayers(HashMap<String, Player> players){
+	public void setPlayers(HashMap<String, Player> players) {
     	this.players = players;
+
+        // Listen for changes in individual player state, and use them to trigger a global state change
+        for (Player player : players.values()) {
+            player.addStateChangeListener(this);
+        }
     }
 
     public HashMap<String, Player> getPlayers() {
