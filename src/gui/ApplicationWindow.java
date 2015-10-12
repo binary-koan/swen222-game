@@ -173,7 +173,7 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                ApplicationWindow aw = new ApplicationWindow(game, player, new SinglePlayerClient(player));
+                ApplicationWindow aw = new ApplicationWindow(game, player, new SinglePlayerClient());
                 aw.pack();
                 aw.setVisible(true);
             }

@@ -13,6 +13,8 @@ import java.util.List;
 
 /**
  * Given a player, this class renders the room that the player is in
+ *
+ * @author Jono Mingard
  */
 public class RoomRenderer {
     /** The scale the room will be rendered at off-screen */

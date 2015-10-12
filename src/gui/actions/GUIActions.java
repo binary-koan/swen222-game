@@ -7,7 +7,15 @@ import game.Room;
 
 import java.util.List;
 
+/**
+ * Actions related to showing information in the GUI
+ *
+ * @author Jono Mingard
+ */
 public class GUIActions {
+    /**
+     * Action representing the player viewing the description or state of an object
+     */
     public static class Examine extends Action {
         public final Drawable target;
 
@@ -17,6 +25,9 @@ public class GUIActions {
         }
     }
 
+    /**
+     * Action representing the player viewing the contents of a container
+     */
     public static class Search extends Action {
         public final Container container;
         public final Room.ItemInstance containerInstance;
@@ -29,6 +40,10 @@ public class GUIActions {
         }
     }
 
+    /**
+     * Meta-action representing the player viewing a list of possible actions which can be taken on the target (eg. by
+     * showing a context menu listing the actions)
+     */
     public static class ShowMenu extends Action {
         public final List<Action> actions;
         public final Drawable target;

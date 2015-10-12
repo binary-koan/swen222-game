@@ -15,6 +15,8 @@ import java.awt.image.BufferedImage;
 
 /**
  * Popup menu displaying the contents of a particular container
+ *
+ * @author Jono Mingard
  */
 public class ContentsMenu extends JPopupMenu implements ActionListener {
     private Player player;

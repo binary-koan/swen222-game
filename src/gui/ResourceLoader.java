@@ -16,18 +16,20 @@ import java.util.Map;
 
 /**
  * Loads and caches resources such as images and sprites, to be displayed by the renderer
+ *
+ * @author Jono Mingard
  */
 public class ResourceLoader {
-    private @NonNull String root;
-    private @NonNull Map<String, BufferedImage> imageCache = new HashMap<>();
-    private @NonNull BufferedImage notFound = new BufferedImage(32, 32, BufferedImage.TYPE_4BYTE_ABGR);
+    private String root;
+    private Map<String, BufferedImage> imageCache = new HashMap<>();
+    private BufferedImage notFound = new BufferedImage(32, 32, BufferedImage.TYPE_4BYTE_ABGR);
 
     /**
      * Create a new ResourceLoader which will load all files relative to the given root directory
      *
      * @param root directory to load resources from
      */
-    public ResourceLoader(@NonNull String root) {
+    public ResourceLoader(String root) {
         this.root = root;
 
         Graphics2D graphics = notFound.createGraphics();
@@ -42,7 +44,7 @@ public class ResourceLoader {
      * @param filename path to the image file to load (relative to the root directory)
      * @return the loaded image
      */
-    public @NonNull BufferedImage getImage(@NonNull String filename) {
+    public BufferedImage getImage(String filename) {
         if (imageCache.containsKey(filename)) {
             return imageCache.get(filename);
         }
@@ -69,7 +71,7 @@ public class ResourceLoader {
      * @param viewingDirection direction the sprite is being viewed from
      * @return one frame of the loaded image
      */
-    public @NonNull BufferedImage getSprite(@NonNull String filename, Direction viewingDirection) {
+    public BufferedImage getSprite(String filename, Direction viewingDirection) {
         BufferedImage image = getImage(filename);
         if (image == notFound) {
             return image;

@@ -11,6 +11,8 @@ import gui.actions.Action;
 
 /**
  * A tooltip showing information about an item or player
+ *
+ * @author Jono Mingard
  */
 public class InfoTooltip extends JPanel {
     private Action primaryAction;
@@ -26,7 +28,7 @@ public class InfoTooltip extends JPanel {
      *
      * @param loader used to load mouse click icons
      */
-	public InfoTooltip(@NonNull ResourceLoader loader) {
+	public InfoTooltip(ResourceLoader loader) {
 		setLayout(new GridBagLayout());
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 
@@ -43,7 +45,7 @@ public class InfoTooltip extends JPanel {
      * @param primary action to be taken when left-clicking the object
      * @param secondary action to be taken when right-clicking the object
      */
-	public void showObject(@NonNull String name, Action primary, Action secondary) {
+	public void showObject(String name, Action primary, Action secondary) {
         primaryAction = primary;
         secondaryAction = secondary;
 
@@ -72,7 +74,7 @@ public class InfoTooltip extends JPanel {
      *
      * @param description text to display
      */
-    public void showDescription(@NonNull String description) {
+    public void showDescription(String description) {
         descriptionLabel.setVisible(true);
         // Using HTML in the label makes it word wrap and allows for markup in descriptions
         descriptionLabel.setText("<html><div style='width:150px'>" + description + "</div></html>");
@@ -118,7 +120,7 @@ public class InfoTooltip extends JPanel {
     /**
      * Setup and add the primary action label to the control
      */
-    private void setupPrimaryActionLabel(@NonNull ResourceLoader loader) {
+    private void setupPrimaryActionLabel(ResourceLoader loader) {
         primaryActionLabel.setIcon(new ImageIcon(loader.getImage("ui/mouse-leftclick.png")));
         primaryActionLabel.setIconTextGap(8);
         addLabel(primaryActionLabel);
@@ -127,7 +129,7 @@ public class InfoTooltip extends JPanel {
     /**
      * Setup and add the secondary action label to the control
      */
-    private void setupSecondaryActionLabel(@NonNull ResourceLoader loader) {
+    private void setupSecondaryActionLabel(ResourceLoader loader) {
         secondaryActionLabel.setIcon(new ImageIcon(loader.getImage("ui/mouse-rightclick.png")));
         secondaryActionLabel.setIconTextGap(8);
         addLabel(secondaryActionLabel);

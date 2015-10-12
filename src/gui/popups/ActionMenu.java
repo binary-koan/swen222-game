@@ -13,6 +13,8 @@ import gui.actions.Action;
 
 /**
  * A popup menu showing all the actions which can be taken on a particular item
+ *
+ * @author Jono Mingard
  */
 public class ActionMenu extends JPopupMenu implements ActionListener {
     private ActionHandler receiver;

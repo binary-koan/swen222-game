@@ -25,19 +25,37 @@ import gui.actions.Action;
 /**
  * A component which draws the room the current player is in, along with any tooltips or
  * popups caused by user interaction
+ *
+ * @author Jono Mingard
  */
 @SuppressWarnings("serial")
 public class GameCanvas extends JPanel implements MouseListener, MouseMotionListener, StateChangeListener {
+    /**
+     * An action handler which finds and performs any game action. It performs actions related to the GUI
+     * ({@link GUIActions}) on its own, and passes actions it does not understand to a "parent" handler
+     */
     private class CanvasActionHandler implements ActionHandler {
-
         private ActionHandler parent;
+
+        /**
+         * Create a new action handler
+         *
+         * @param parent handler to use for retrieving and performing additional actions (such as game state modifications)
+         */
         public CanvasActionHandler(ActionHandler parent) {
             this.parent = parent;
         }
 
+        /**
+         * Return the allowed actions from the parent handler, plus any extras related to the GUI
+         *
+         * @param player the player performing the action
+         * @param drawable the object to find actions for
+         * @return a list of allowed actions
+         */
         @Override
-        public List<Action> getAllowedActions(Drawable drawable) {
-            List<Action> result = parent.getAllowedActions(drawable);
+        public List<Action> getAllowedActions(Player player, Drawable drawable) {
+            List<Action> result = parent.getAllowedActions(player, drawable);
 
             if (drawable instanceof ItemInstance && ((ItemInstance)drawable).getItem() instanceof Container) {
                 ItemInstance instance = (ItemInstance)drawable;
@@ -53,6 +71,11 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
             return result;
         }
 
+        /**
+         * Perform actions related to the GUI, and pass anything else up to the parent handler
+         *
+         * @param action action to perform
+         */
         @Override
         public void requestAction(Action action) {
             if (action instanceof GUIActions.Search) {
@@ -68,28 +91,28 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
                 parent.requestAction(action);
             }
         }
-
     }
-    private @NonNull ResourceLoader loader;
 
-    private @NonNull CanvasActionHandler actionHandler;
+    private ResourceLoader loader;
+
+    private CanvasActionHandler actionHandler;
     private double roomImageScale;
 
-    private @Nullable Point roomImagePosition;
-    private @Nullable RoomRenderer roomImage;
-    private @Nullable Player player;
+    private Point roomImagePosition;
+    private RoomRenderer roomImage;
+    private Player player;
 
-    private @NonNull InfoTooltip tooltip;
-
-    private @Nullable JPopupMenu actionMenu;
-    private @Nullable Drawable activeObject;
+    private InfoTooltip tooltip;
+    private JPopupMenu actionMenu;
+    private Drawable activeObject;
 
     /**
      * Construct a new game canvas
      *
      * @param loader a ResourceLoader which will be used to locate and read images, sprites, etc.
+     * @param gameActionHandler an object to use as the parent of the GUI action handler
      */
-    public GameCanvas(@NonNull ResourceLoader loader, @NonNull ActionHandler gameActionHandler) {
+    public GameCanvas(ResourceLoader loader, ActionHandler gameActionHandler) {
         this.loader = loader;
         this.actionHandler = new CanvasActionHandler(gameActionHandler);
 
@@ -106,6 +129,7 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
      * Set the player attached to this canvas, and update the canvas to display that player's viewpoint
      *
      * @param player player whose viewpoint will be rendered from now on
+     * @param game the game the player is in; the renderer will be updated when the game state is changed
      */
     public void setup(Player player, Game game) {
         game.addStateChangeListener(this);
@@ -218,6 +242,9 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         }
     }
 
+    /**
+     * Show a tooltip with a description of the object from the given action
+     */
     private void showDescription(GUIActions.Examine action) {
         updateTooltip(action.target);
 
@@ -232,6 +259,9 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         tooltip.setVisible(true);
     }
 
+    /**
+     * Show a context menu listing the actions from the given action
+     */
     private void showActionMenu(GUIActions.ShowMenu action) {
         tooltip.setVisible(false);
 
@@ -240,6 +270,9 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         actionMenu.show(this, position.x, position.y);
     }
 
+    /**
+     * Show a menu listing the items inside the given container
+     */
     private void showSearchMenu(GUIActions.Search action) {
         actionMenu = new ContentsMenu(loader, actionHandler, action.containerInstance, player, "Click to pick up");
         Point position = positionAboveObject(action.containerInstance, actionMenu);
@@ -251,7 +284,7 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
      */
     private void updateTooltip(Drawable drawable) {
         activeObject = drawable;
-        List<Action> actions = actionHandler.getAllowedActions(drawable);
+        List<Action> actions = actionHandler.getAllowedActions(player, drawable);
 
         if (actions.size() > 1) {
             tooltip.showObject(drawable.getName(), actions.get(0), actions.get(1));
