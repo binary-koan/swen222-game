@@ -9,11 +9,46 @@
       <subClass>class game.Furniture</subClass>
     </item>
     <item>
+      <id>plasmouth</id>
+      <name>Plasmouth</name>
+      <description>The cursed Plasmouth!</description>
+      <spriteName>enemies/plasmouth.png</spriteName>
+      <subClass>class game.Monster</subClass>
+    </item>
+    <item>
       <id>lightSwitchrx0y3</id>
-      <name>Light switch</name>
-      <description>A simple light switch.</description>
+      <name>Light</name>
+      <description>A light for the engine room.</description>
       <spriteName>objects/light-switch-on.png</spriteName>
       <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>lightSwitchrx0y2</id>
+      <name>Port Light</name>
+      <description>Port illumination light.</description>
+      <spriteName>objects/light-switch-off.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>lightSwitchrx0y1</id>
+      <name>Light</name>
+      <description>A light for the storage room.</description>
+      <spriteName>objects/light-switch-on.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>waterCooler</id>
+      <name>Water cooler</name>
+      <description>Your species has evolved to the point where this water cooler will sustain them for a four year space journey.</description>
+      <spriteName>objects/water-cooler.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>rogueAI</id>
+      <name>JCN-9000</name>
+      <description>Stop the ship! "I'm sorry Davgorlzul, I'm afraid I can't do that."</description>
+      <spriteName>enemies/rogue-ai.png</spriteName>
+      <subClass>class game.Monster</subClass>
     </item>
     <item>
       <id>engineFunctional</id>
@@ -23,18 +58,18 @@
       <subClass>class game.Furniture</subClass>
     </item>
     <item>
-      <id>redLightrx2y2</id>
-      <name>Port Light</name>
-      <description>A simple light.</description>
-      <spriteName>decoration/red-light.png</spriteName>
-      <subClass>class game.Furniture</subClass>
-    </item>
-    <item>
       <id>empBomb</id>
       <name>EMP Bomb</name>
       <description>A dangerous looking electronic device.</description>
       <spriteName>objects/emp-bomb.png</spriteName>
       <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>snailmouse</id>
+      <name>Snailmouse</name>
+      <description>I have had it with these goddamn monsters on this goddamn spaceship!</description>
+      <spriteName>enemies/snailmouse.png</spriteName>
+      <subClass>class game.Monster</subClass>
     </item>
     <item>
       <id>containerx2y3</id>
@@ -50,9 +85,16 @@
     <item>
       <id>greenLightrx2y2</id>
       <name>Starboard light</name>
-      <description>A simple light.</description>
+      <description>Starboard illumination light.</description>
       <spriteName>decoration/green-light.png</spriteName>
       <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>lavaSnake</id>
+      <name>Lava Snake</name>
+      <description>How this even got here you have no idea.</description>
+      <spriteName>enemies/lava-snake.png</spriteName>
+      <subClass>class game.Monster</subClass>
     </item>
     <item>
       <id>craterx0y10</id>
@@ -90,13 +132,6 @@
       <subClass>class game.Furniture</subClass>
     </item>
     <item>
-      <id>blueLightrx2y1</id>
-      <name>Blue Light</name>
-      <description>A simple light.</description>
-      <spriteName>decoration/blue-light.png</spriteName>
-      <subClass>class game.Furniture</subClass>
-    </item>
-    <item>
       <id>yellowKey</id>
       <name>Key</name>
       <description>A yellow key.</description>
@@ -105,10 +140,10 @@
       <color>YELLOW</color>
     </item>
     <item>
-      <id>jewel0</id>
-      <name>Jewel</name>
-      <description>A shining alien jewel.</description>
-      <spriteName>decoration/green-light.png</spriteName>
+      <id>lightSwitchrx1y11</id>
+      <name>Light</name>
+      <description>A simple light.</description>
+      <spriteName>objects/light-switch-on.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
     <item>
@@ -117,13 +152,22 @@
       <description>A green key.</description>
       <spriteName>objects/key-green.png</spriteName>
       <subClass>class game.Key</subClass>
+      <color>GREEN</color>
     </item>
     <item>
       <id>blueKey</id>
-      <name>Blue key</name>
+      <name>Key</name>
       <description>A blue key.</description>
       <spriteName>objects/key-blue.png</spriteName>
       <subClass>class game.Key</subClass>
+      <color>BLUE</color>
+    </item>
+    <item>
+      <id>lightSwitchrx1y10</id>
+      <name>Light</name>
+      <description>A simple light.</description>
+      <spriteName>objects/light-switch-on.png</spriteName>
+      <subClass>class game.Furniture</subClass>
     </item>
     <item>
       <id>containerrx0y4</id>
@@ -149,6 +193,34 @@
       <hasOpened>false</hasOpened>
     </item>
     <item>
+      <id>bucketrx2y4</id>
+      <name>Bucket</name>
+      <description>A standard spaceship bucket. Functionally useless.</description>
+      <spriteName>objects/bucket-full.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>redLightrx0y2</id>
+      <name>Port Light</name>
+      <description>Port illumination light.</description>
+      <spriteName>decoration/red-light.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>bucketrx1y3</id>
+      <name>Bucket</name>
+      <description>A standard spaceship bucket. Functionally useless.</description>
+      <spriteName>objects/bucket.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>bucketrx0y2</id>
+      <name>Bucket</name>
+      <description>A standard spaceship bucket. Functionally useless.</description>
+      <spriteName>objects/bucket.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
       <id>containerrx0y3</id>
       <name>Container</name>
       <description>A yellow container.</description>
@@ -161,15 +233,6 @@
       <hasOpened>false</hasOpened>
     </item>
     <item>
-      <id>containerrx0y2</id>
-      <name>Bucket</name>
-      <description>A small container</description>
-      <spriteName>objects/bucket.png</spriteName>
-      <subClass>class game.Container</subClass>
-      <containerItems />
-      <hasOpened>false</hasOpened>
-    </item>
-    <item>
       <id>engineDamaged</id>
       <name>Engine</name>
       <description>Port engine of the spacecraft. It's on fire!</description>
@@ -177,10 +240,31 @@
       <subClass>class game.Furniture</subClass>
     </item>
     <item>
+      <id>fire2</id>
+      <name>Fire</name>
+      <description>In all civilized alien cultures you have encountered, fire on an engine is considered bad.</description>
+      <spriteName>decoration/red-light.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>fire0</id>
+      <name>Fire</name>
+      <description>In all civilized alien cultures you have encountered, fire on an engine is considered bad.</description>
+      <spriteName>decoration/red-light.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
       <id>fusionPistol</id>
       <name>Fusion Pistol</name>
       <description>A standard issue alien sidearm.</description>
       <spriteName>objects/fusion-pistol.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>fire1</id>
+      <name>Fire</name>
+      <description>In all civilized alien cultures you have encountered, fire on an engine is considered bad.</description>
+      <spriteName>decoration/red-light.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
     <item>
@@ -197,11 +281,60 @@
       <spriteName>objects/torch.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
+    <item>
+      <id>windowrx1y3</id>
+      <name>Window</name>
+      <description>The aft window.</description>
+      <spriteName>objects/window.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>windowrx2y1</id>
+      <name>Window</name>
+      <description>Oh lonely stars...</description>
+      <spriteName>objects/window.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>lightSwitchrx2y1</id>
+      <name>Light</name>
+      <description>A light for the living room.</description>
+      <spriteName>objects/light-switch-on.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>lightSwitchrx2y2</id>
+      <name>Starboard light</name>
+      <description>Starboard illumination light.</description>
+      <spriteName>objects/light-switch-off.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>lightSwitchrx2y3</id>
+      <name>Light</name>
+      <description>A light for the engine room.</description>
+      <spriteName>objects/light-switch-on.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>windowrx0y1</id>
+      <name>Window</name>
+      <description>Where is the spaceship even going?</description>
+      <spriteName>objects/window.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>windowrx1y0</id>
+      <name>Window</name>
+      <description>The bridge window.</description>
+      <spriteName>objects/window.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
   </gameItems>
   <gameRooms>
     <room>
       <id>rx0y4</id>
-      <name>Engine Room - Port-aft</name>
+      <name>Engine Room - Port - Aft</name>
       <roomItems>
         <itemInstance>
           <item>engineFunctional</item>
@@ -209,14 +342,14 @@
           <point>
             <x>x160</x>
             <y>y0</y>
-            <z>z10</z>
+            <z>z39</z>
           </point>
         </itemInstance>
         <itemInstance>
           <item>containerrx0y4</item>
-          <facingDirection>EAST</facingDirection>
+          <facingDirection>WEST</facingDirection>
           <point>
-            <x>x10</x>
+            <x>x39</x>
             <y>y0</y>
             <z>z160</z>
           </point>
@@ -225,9 +358,9 @@
           <item>empBomb</item>
           <facingDirection>NORTH</facingDirection>
           <point>
-            <x>x240</x>
+            <x>x210</x>
             <y>y0</y>
-            <z>z80</z>
+            <z>z90</z>
           </point>
         </itemInstance>
       </roomItems>
@@ -236,28 +369,38 @@
         <entry>NORTH-rx0y3</entry>
       </roomConnections>
       <wallConnections>
-<<<<<<< HEAD
         <entry>EAST-true</entry>
         <entry>NORTH-false</entry>
         <entry>SOUTH-true</entry>
         <entry>WEST-true</entry>
-=======
-        <entry>NORTH-NORTH=false</entry>
-        <entry>EAST-EAST=true</entry>
-        <entry>SOUTH-SOUTH=true</entry>
-        <entry>WEST-WEST=true</entry>
->>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
     <room>
       <id>rx1y3</id>
       <name>Corridor - Aft</name>
-      <roomItems />
+      <roomItems>
+        <itemInstance>
+          <item>bucketrx1y3</item>
+          <facingDirection>NORTH</facingDirection>
+          <point>
+            <x>x160</x>
+            <y>y0</y>
+            <z>z39</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>windowrx1y3</item>
+          <facingDirection>NORTH</facingDirection>
+          <point>
+            <x>x160</x>
+            <y>y96</y>
+            <z>z0</z>
+          </point>
+        </itemInstance>
+      </roomItems>
       <roomPlayers />
       <roomConnections>
-        <entry>NORTH-rx1y2</entry>
         <entry>EAST-rx2y3</entry>
-<<<<<<< HEAD
         <entry>NORTH-rx1y2</entry>
         <entry>WEST-rx0y3</entry>
       </roomConnections>
@@ -266,15 +409,6 @@
         <entry>NORTH-false</entry>
         <entry>SOUTH-true</entry>
         <entry>WEST-true</entry>
-=======
-        <entry>WEST-rx0y3</entry>
-      </roomConnections>
-      <wallConnections>
-        <entry>NORTH-NORTH=false</entry>
-        <entry>EAST-EAST=true</entry>
-        <entry>SOUTH-SOUTH=true</entry>
-        <entry>WEST-WEST=true</entry>
->>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
     <room>
@@ -283,11 +417,20 @@
       <roomItems>
         <itemInstance>
           <item>containerrx2y2</item>
-          <facingDirection>NORTH</facingDirection>
+          <facingDirection>SOUTH</facingDirection>
           <point>
             <x>x160</x>
             <y>y0</y>
-            <z>z281</z>
+            <z>z39</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>lightSwitchrx2y2</item>
+          <facingDirection>WEST</facingDirection>
+          <point>
+            <x>x320</x>
+            <y>y92</y>
+            <z>z160</z>
           </point>
         </itemInstance>
         <itemInstance>
@@ -306,39 +449,41 @@
         <entry>WEST-rx1y2</entry>
       </roomConnections>
       <wallConnections>
-<<<<<<< HEAD
         <entry>EAST-true</entry>
         <entry>NORTH-true</entry>
         <entry>SOUTH-true</entry>
         <entry>WEST-false</entry>
-=======
-        <entry>NORTH-NORTH=true</entry>
-        <entry>EAST-EAST=true</entry>
-        <entry>SOUTH-SOUTH=true</entry>
-        <entry>WEST-WEST=false</entry>
->>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
     <room>
       <id>rx0y3</id>
-      <name>Engine Room - Port-mid</name>
+      <name>Engine Room - Port - Mid</name>
       <roomItems>
         <itemInstance>
           <item>containerrx0y3</item>
-          <facingDirection>SOUTH</facingDirection>
+          <facingDirection>NORTH</facingDirection>
           <point>
-            <x>x320</x>
+            <x>x281</x>
             <y>y0</y>
-            <z>z320</z>
+            <z>z281</z>
           </point>
         </itemInstance>
         <itemInstance>
           <item>lightSwitchrx0y3</item>
-          <facingDirection>NORTH</facingDirection>
+          <facingDirection>EAST</facingDirection>
           <point>
             <x>x0</x>
             <y>y80</y>
-            <z>z240</z>
+            <z>z160</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>snailmouse</item>
+          <facingDirection>EAST</facingDirection>
+          <point>
+            <x>x160</x>
+            <y>y0</y>
+            <z>z160</z>
           </point>
         </itemInstance>
       </roomItems>
@@ -348,17 +493,10 @@
         <entry>SOUTH-rx0y4</entry>
       </roomConnections>
       <wallConnections>
-<<<<<<< HEAD
         <entry>EAST-true</entry>
         <entry>NORTH-true</entry>
         <entry>SOUTH-false</entry>
         <entry>WEST-true</entry>
-=======
-        <entry>NORTH-NORTH=true</entry>
-        <entry>EAST-EAST=true</entry>
-        <entry>SOUTH-SOUTH=false</entry>
-        <entry>WEST-WEST=true</entry>
->>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
     <room>
@@ -367,24 +505,16 @@
       <roomItems />
       <roomPlayers />
       <roomConnections>
-        <entry>NORTH-rx1y1</entry>
         <entry>EAST-rx2y2</entry>
         <entry>NORTH-rx1y1</entry>
         <entry>SOUTH-rx1y3</entry>
         <entry>WEST-rx0y2</entry>
       </roomConnections>
       <wallConnections>
-<<<<<<< HEAD
         <entry>EAST-false</entry>
         <entry>NORTH-false</entry>
         <entry>SOUTH-false</entry>
         <entry>WEST-false</entry>
-=======
-        <entry>NORTH-NORTH=false</entry>
-        <entry>EAST-EAST=false</entry>
-        <entry>SOUTH-SOUTH=false</entry>
-        <entry>WEST-WEST=false</entry>
->>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
     <room>
@@ -392,10 +522,19 @@
       <name>Living Room</name>
       <roomItems>
         <itemInstance>
-          <item>blueLightrx2y1</item>
-          <facingDirection>EAST</facingDirection>
+          <item>windowrx2y1</item>
+          <facingDirection>WEST</facingDirection>
           <point>
             <x>x320</x>
+            <y>y92</y>
+            <z>z160</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>lightSwitchrx2y1</item>
+          <facingDirection>EAST</facingDirection>
+          <point>
+            <x>x0</x>
             <y>y92</y>
             <z>z160</z>
           </point>
@@ -409,23 +548,25 @@
             <z>z160</z>
           </point>
         </itemInstance>
+        <itemInstance>
+          <item>waterCooler</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x160</x>
+            <y>y0</y>
+            <z>z281</z>
+          </point>
+        </itemInstance>
       </roomItems>
       <roomPlayers />
       <roomConnections>
         <entry>SOUTH-rx2y2</entry>
       </roomConnections>
       <wallConnections>
-<<<<<<< HEAD
         <entry>EAST-true</entry>
         <entry>NORTH-true</entry>
         <entry>SOUTH-true</entry>
         <entry>WEST-true</entry>
-=======
-        <entry>NORTH-NORTH=true</entry>
-        <entry>EAST-EAST=true</entry>
-        <entry>SOUTH-SOUTH=true</entry>
-        <entry>WEST-WEST=true</entry>
->>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
     <room>
@@ -433,10 +574,10 @@
       <name>Engine Room - Starboard-aft</name>
       <roomItems>
         <itemInstance>
-          <item>jewel0</item>
-          <facingDirection>NORTH</facingDirection>
+          <item>bucketrx2y4</item>
+          <facingDirection>WEST</facingDirection>
           <point>
-            <x>x0</x>
+            <x>x39</x>
             <y>y0</y>
             <z>z140</z>
           </point>
@@ -445,9 +586,36 @@
           <item>engineDamaged</item>
           <facingDirection>NORTH</facingDirection>
           <point>
-            <x>x180</x>
+            <x>x160</x>
             <y>y0</y>
-            <z>z0</z>
+            <z>z39</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>fire0</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x140</x>
+            <y>y30</y>
+            <z>z39</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>fire1</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x150</x>
+            <y>y30</y>
+            <z>z39</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>fire2</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x160</x>
+            <y>y30</y>
+            <z>z39</z>
           </point>
         </itemInstance>
       </roomItems>
@@ -456,17 +624,10 @@
         <entry>NORTH-rx2y3</entry>
       </roomConnections>
       <wallConnections>
-<<<<<<< HEAD
         <entry>EAST-true</entry>
         <entry>NORTH-false</entry>
         <entry>SOUTH-true</entry>
         <entry>WEST-true</entry>
-=======
-        <entry>NORTH-NORTH=false</entry>
-        <entry>EAST-EAST=true</entry>
-        <entry>SOUTH-SOUTH=true</entry>
-        <entry>WEST-WEST=true</entry>
->>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
     <room>
@@ -477,9 +638,27 @@
           <item>containerx2y3</item>
           <facingDirection>SOUTH</facingDirection>
           <point>
-            <x>x0</x>
+            <x>x39</x>
             <y>y0</y>
-            <z>z320</z>
+            <z>z281</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>lightSwitchrx2y3</item>
+          <facingDirection>WEST</facingDirection>
+          <point>
+            <x>x320</x>
+            <y>y96</y>
+            <z>z160</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>lavaSnake</item>
+          <facingDirection>WEST</facingDirection>
+          <point>
+            <x>x160</x>
+            <y>y0</y>
+            <z>z160</z>
           </point>
         </itemInstance>
       </roomItems>
@@ -489,17 +668,10 @@
         <entry>WEST-rx1y3</entry>
       </roomConnections>
       <wallConnections>
-<<<<<<< HEAD
         <entry>EAST-true</entry>
         <entry>NORTH-true</entry>
         <entry>SOUTH-false</entry>
         <entry>WEST-true</entry>
-=======
-        <entry>NORTH-NORTH=true</entry>
-        <entry>EAST-EAST=true</entry>
-        <entry>SOUTH-SOUTH=false</entry>
-        <entry>WEST-WEST=true</entry>
->>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
     <room>
@@ -507,16 +679,25 @@
       <name>Corridor - Port</name>
       <roomItems>
         <itemInstance>
-          <item>containerrx0y2</item>
+          <item>bucketrx0y2</item>
           <facingDirection>SOUTH</facingDirection>
           <point>
-            <x>x300</x>
+            <x>x39</x>
             <y>y0</y>
-            <z>z280</z>
+            <z>z39</z>
           </point>
         </itemInstance>
         <itemInstance>
-          <item>redLightrx2y2</item>
+          <item>lightSwitchrx0y2</item>
+          <facingDirection>EAST</facingDirection>
+          <point>
+            <x>x0</x>
+            <y>y96</y>
+            <z>z160</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>redLightrx0y2</item>
           <facingDirection>WEST</facingDirection>
           <point>
             <x>x0</x>
@@ -530,23 +711,44 @@
         <entry>EAST-rx1y2</entry>
       </roomConnections>
       <wallConnections>
-<<<<<<< HEAD
         <entry>EAST-false</entry>
         <entry>NORTH-true</entry>
         <entry>SOUTH-true</entry>
         <entry>WEST-true</entry>
-=======
-        <entry>NORTH-NORTH=true</entry>
-        <entry>EAST-EAST=false</entry>
-        <entry>SOUTH-SOUTH=true</entry>
-        <entry>WEST-WEST=true</entry>
->>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
     <room>
       <id>rx1y1</id>
       <name>Corridor - Fore</name>
-      <roomItems />
+      <roomItems>
+        <itemInstance>
+          <item>lightSwitchrx1y10</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x80</x>
+            <y>y96</y>
+            <z>z320</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>lightSwitchrx1y11</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x240</x>
+            <y>y96</y>
+            <z>z320</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>plasmouth</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x160</x>
+            <y>y0</y>
+            <z>z160</z>
+          </point>
+        </itemInstance>
+      </roomItems>
       <roomPlayers />
       <roomConnections>
         <entry>NORTH-rx1y0</entry>
@@ -554,17 +756,10 @@
         <entry>WEST-rx0y1</entry>
       </roomConnections>
       <wallConnections>
-<<<<<<< HEAD
         <entry>EAST-true</entry>
         <entry>NORTH-true</entry>
         <entry>SOUTH-false</entry>
         <entry>WEST-true</entry>
-=======
-        <entry>NORTH-NORTH=true</entry>
-        <entry>EAST-EAST=true</entry>
-        <entry>SOUTH-SOUTH=false</entry>
-        <entry>WEST-WEST=true</entry>
->>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
     <room>
@@ -573,7 +768,7 @@
       <roomItems>
         <itemInstance>
           <item>craterx0y10</item>
-          <facingDirection>NORTH</facingDirection>
+          <facingDirection>SOUTH</facingDirection>
           <point>
             <x>x60</x>
             <y>y0</y>
@@ -582,7 +777,7 @@
         </itemInstance>
         <itemInstance>
           <item>craterx0y11</item>
-          <facingDirection>NORTH</facingDirection>
+          <facingDirection>SOUTH</facingDirection>
           <point>
             <x>x180</x>
             <y>y0</y>
@@ -591,7 +786,7 @@
         </itemInstance>
         <itemInstance>
           <item>craterx0y12</item>
-          <facingDirection>NORTH</facingDirection>
+          <facingDirection>SOUTH</facingDirection>
           <point>
             <x>x270</x>
             <y>y0</y>
@@ -602,9 +797,27 @@
           <item>blueKey</item>
           <facingDirection>NORTH</facingDirection>
           <point>
-            <x>x0</x>
+            <x>x45</x>
             <y>y-10</y>
             <z>z290</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>lightSwitchrx0y1</item>
+          <facingDirection>WEST</facingDirection>
+          <point>
+            <x>x320</x>
+            <y>y96</y>
+            <z>z160</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>windowrx0y1</item>
+          <facingDirection>EAST</facingDirection>
+          <point>
+            <x>x0</x>
+            <y>y96</y>
+            <z>z160</z>
           </point>
         </itemInstance>
       </roomItems>
@@ -613,17 +826,10 @@
         <entry>EAST-rx1y1</entry>
       </roomConnections>
       <wallConnections>
-<<<<<<< HEAD
         <entry>EAST-true</entry>
         <entry>NORTH-true</entry>
         <entry>SOUTH-true</entry>
         <entry>WEST-true</entry>
-=======
-        <entry>NORTH-NORTH=true</entry>
-        <entry>EAST-EAST=true</entry>
-        <entry>SOUTH-SOUTH=true</entry>
-        <entry>WEST-WEST=true</entry>
->>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
     <room>
@@ -634,28 +840,39 @@
           <item>controlPanel</item>
           <facingDirection>SOUTH</facingDirection>
           <point>
-            <x>x180</x>
+            <x>x160</x>
             <y>y0</y>
-            <z>z300</z>
+            <z>z281</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>rogueAI</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x160</x>
+            <y>y0</y>
+            <z>z160</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>windowrx1y0</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x160</x>
+            <y>y96</y>
+            <z>z320</z>
           </point>
         </itemInstance>
       </roomItems>
       <roomPlayers />
       <roomConnections>
-        <entry>NORTH-rx1y1</entry>
+        <entry>SOUTH-rx1y1</entry>
       </roomConnections>
       <wallConnections>
-<<<<<<< HEAD
         <entry>EAST-true</entry>
         <entry>NORTH-true</entry>
         <entry>SOUTH-true</entry>
         <entry>WEST-true</entry>
-=======
-        <entry>NORTH-NORTH=true</entry>
-        <entry>EAST-EAST=true</entry>
-        <entry>SOUTH-SOUTH=true</entry>
-        <entry>WEST-WEST=true</entry>
->>>>>>> 5adc2a462f0bc13e7c512f619dc62120721059b7
       </wallConnections>
     </room>
   </gameRooms>
