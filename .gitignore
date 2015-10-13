@@ -70,3 +70,5 @@ local.properties
 # JavaDoc
 ######################
 docs/
+
+resources/continueGame.xml
