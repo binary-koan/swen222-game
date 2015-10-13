@@ -45,6 +45,7 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
 import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.synth.SynthLookAndFeel;
 
@@ -76,6 +77,7 @@ public class GameMenu {
 				frame.add(new CharacterView());
 				frame.setResizable(true);
 				frame.setVisible(true);
+				frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
 
@@ -173,7 +175,9 @@ public class GameMenu {
 			characterName.setBorder(BorderFactory.createLineBorder(Color.blue));
 			
 			add(characterImage, BorderLayout.NORTH);
+			add(Box.createRigidArea(new Dimension(5,0)));
 			add(buttonPane, BorderLayout.CENTER);
+			add(Box.createRigidArea(new Dimension(5,0)));
 			add(characterName, BorderLayout.SOUTH);
 			
 			
