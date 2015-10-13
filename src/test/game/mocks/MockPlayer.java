@@ -18,7 +18,7 @@ public class MockPlayer {
 
     public static Player createWithHeldItem(Item item) {
         Player player = create();
-        player.pickUp(item);
+        player.pickUp(item, null);
         return player;
     }
 }

@@ -5,7 +5,7 @@ import java.util.*;
 import org.eclipse.jdt.annotation.NonNull;
 import org.jdom2.Element;
 
-public class Container extends Item implements Pickable {
+public class Container extends Item {
 	private List<Item> containerItems;
 	private boolean hasOpened;
 
@@ -49,10 +49,8 @@ public class Container extends Item implements Pickable {
 		this.hasOpened = Boolean.getBoolean(objectElement.getChildText("hasOpened"));
 	}
 
-	public void take(Item item, Player player) {
-		if (containerItems.contains(item) && player.pickUp(item)) {
-			containerItems.remove(item);
-		}
+	public void removeItem(Item item) {
+		containerItems.remove(item);
 	}
 
 	public boolean containsItem(Item item) {
