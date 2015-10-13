@@ -243,7 +243,11 @@ public class RoomRenderer {
                 continue;
             }
 
-            boolean interactable = isCurrent && (!room.containsMonster() || drawable.equals(room.getMonster()));
+            boolean interactable = isCurrent;
+            if (room.containsMonster()) {
+                System.out.println(room.getMonster() + " <-> " + drawable);
+                interactable = drawable.equals(room.getMonster()) || drawable instanceof Door;
+            }
 
             if (drawable.getSpriteName() == null) {
                 currentSceneItems.add(new SceneItem(drawable, null, null, interactable));

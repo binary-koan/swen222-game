@@ -699,6 +699,7 @@
       <name>Snailmouse</name>
       <description>Oh no! What weapon could work against this ungodly fusion of- hang on...</description>
       <spriteName>enemies/snailmouse.png</spriteName>
+	  <soundEffect>audio/monster-snailmouse.wav</soundEffect>
       <subClass>class game.Monster</subClass>
     </item>
     
@@ -786,6 +787,7 @@
       <name>JCN-9000</name>
       <description>Stop the ship! "I'm sorry Davgorlzul, I'm afraid I can't do that."</description>
       <spriteName>enemies/rogue-ai.png</spriteName>
+	  <soundEffect>audio/monster-rogue-ai.wav</soundEffect>
       <subClass>class game.Monster</subClass>
     </item>
     
@@ -822,6 +824,7 @@
       <name>Plasmouth</name>
       <description>The cursed Plasmouth!</description>
       <spriteName>enemies/plasmouth.png</spriteName>
+	  <soundEffect>audio/monster-plasmouth.wav</soundEffect>
       <subClass>class game.Monster</subClass>
     </item>
     
@@ -975,6 +978,7 @@
       <name>Lava Snake</name>
       <description>I have had it with these goddamn monsters on this goddamn spaceship!</description>
       <spriteName>enemies/lava-snake.png</spriteName>
+	  <soundEffect>audio/monster-lava-snake.wav</soundEffect>
       <subClass>class game.Monster</subClass>
     </item>
     
