@@ -201,8 +201,12 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
      * Called whenever the game state changes. We don't know exactly what changed, so redraw the whole scene
      */
     @Override
-    public void onStateChanged() {
-        System.out.println("Game state changed; updating canvas");
+    public void onStateChanged(Player player, Type type, String message) {
+        if (type == Type.MOVE && player.getRoom().getMonster() != null) {
+            Monster monster = (Monster)player.getRoom().getMonster().getItem();
+            loader.playSoundEffect(monster.getSoundEffect());
+        }
+
         update();
     }
 

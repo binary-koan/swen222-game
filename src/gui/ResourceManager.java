@@ -103,6 +103,11 @@ public class ResourceManager implements LineListener {
         if (musicPlayer != null) {
             musicPlayer.stop();
             musicPlayer.close();
+            musicPlayer = null;
+        }
+
+        if (source == null) {
+            return;
         }
 
         try {
@@ -120,6 +125,10 @@ public class ResourceManager implements LineListener {
      * @param source audio file path, relative to the resource root
      */
     public void playSoundEffect(String source) {
+        if (source == null) {
+            return;
+        }
+
         try {
             Clip effect = getAudioClip(source);
             effect.addLineListener(this);

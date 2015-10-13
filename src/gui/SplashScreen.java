@@ -24,6 +24,11 @@ public class SplashScreen extends JFrame implements ActionListener {
             Image scaled = image.getScaledInstance(width, height, Image.SCALE_FAST);
             g.drawImage(scaled, offset.x, offset.y, width, height, null, null);
         }
+
+        @Override
+        public Dimension getPreferredSize() {
+            return new Dimension(image.getWidth() * 2, image.getHeight() * 2);
+        }
     }
 
     private ResourceManager loader = new ResourceManager("resources");
@@ -40,8 +45,8 @@ public class SplashScreen extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Clicked!");
-        loader.playSoundEffect("audio/monster-lava-snake.wav");
+        setVisible(false);
+        new GameMenu(loader);
     }
 
     public static void main(String[] args) {

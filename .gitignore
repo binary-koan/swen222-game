@@ -67,8 +67,7 @@ local.properties
 *.iml
 
 ######################
-# JavaDoc
+# Project-specific
 ######################
 docs/
-
 resources/continueGame.xml

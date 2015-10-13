@@ -81,9 +81,8 @@ public class RoomRenderer {
     private ResourceManager loader;
     private Player player;
 
-    private Image backgroundLeft;
-    private Image backgroundCenter;
-    private Image backgroundRight;
+    // Using a LinkedHashMap makes sure elements are stored in insertion order so it can be iterated like a list
+    private Map<Rectangle, Image> backgroundImages = new LinkedHashMap<>();
     private List<SceneItem> currentSceneItems = new ArrayList<>();
 
     /**
@@ -104,10 +103,11 @@ public class RoomRenderer {
      */
     public void updateRoom() {
         currentSceneItems.clear();
+        backgroundImages.clear();
 
         Room room = player.getRoom();
         loadRoom(room, 1.0, true);
-        addWalls(room);
+        addWalls(room, 1.0);
         addInvisibleDoors(room);
     }
 
@@ -128,11 +128,8 @@ public class RoomRenderer {
             Rectangle bounds = item.screenBoundingBox;
             graphics.drawImage(
                     item.sprite,
-                    bounds.x * RENDER_SCALE,
-                    bounds.y * RENDER_SCALE,
-                    bounds.width * RENDER_SCALE,
-                    bounds.height * RENDER_SCALE,
-                    null, null
+                    bounds.x * RENDER_SCALE, bounds.y * RENDER_SCALE,
+                    bounds.width * RENDER_SCALE, bounds.height * RENDER_SCALE, null
             );
         }
         return result;
@@ -143,30 +140,12 @@ public class RoomRenderer {
      * @param graphics surface to draw on
      */
     private void drawBackground(Graphics2D graphics) {
-        int x = 0;
-        if (backgroundLeft != null) {
+        for (Map.Entry<Rectangle, Image> entry : backgroundImages.entrySet()) {
+            Rectangle bounds = entry.getKey();
             graphics.drawImage(
-                    backgroundLeft, x, 0,
-                    Room.ROOM_SIZE * RENDER_SCALE / 4, Room.CEILING_HEIGHT * RENDER_SCALE,
-                    null, null
-            );
-        }
-
-        x += Room.ROOM_SIZE * RENDER_SCALE / 4;
-        if (backgroundCenter != null) {
-            graphics.drawImage(
-                    backgroundCenter, x, 0,
-                    Room.ROOM_SIZE * RENDER_SCALE / 4 * 2, Room.CEILING_HEIGHT * RENDER_SCALE,
-                    null, null
-            );
-        }
-
-        x += Room.ROOM_SIZE * RENDER_SCALE / 4 * 2;
-        if (backgroundRight != null) {
-            graphics.drawImage(
-                    backgroundRight, x, 0,
-                    Room.ROOM_SIZE * RENDER_SCALE / 4, Room.CEILING_HEIGHT * RENDER_SCALE,
-                    null, null
+                    entry.getValue(),
+                    bounds.x * RENDER_SCALE, bounds.y * RENDER_SCALE,
+                    bounds.width * RENDER_SCALE, bounds.height * RENDER_SCALE, null
             );
         }
     }
@@ -243,15 +222,21 @@ public class RoomRenderer {
                 continue;
             }
 
+            boolean interactable = isCurrent;
+            if (room.containsMonster()) {
+                System.out.println(room.getMonster() + " <-> " + drawable);
+                interactable = drawable.equals(room.getMonster()) || drawable instanceof Door;
+            }
+
             if (drawable.getSpriteName() == null) {
-                currentSceneItems.add(new SceneItem(drawable, null, null, isCurrent));
+                currentSceneItems.add(new SceneItem(drawable, null, null, interactable));
             }
             else {
                 BufferedImage sprite = loader.getSprite(drawable.getSpriteName(), drawable.getFacingDirection().viewFrom(direction));
                 Rectangle screenBounds = calculateBoundingBox(position, sprite, direction);
                 scaleBoundingBox(screenBounds, z, scale);
 
-                currentSceneItems.add(new SceneItem(drawable, sprite, screenBounds, isCurrent));
+                currentSceneItems.add(new SceneItem(drawable, sprite, screenBounds, interactable));
             }
         }
     }
@@ -312,28 +297,41 @@ public class RoomRenderer {
      *
      * @param room room to check for walls or neighbour
      */
-    private void addWalls(Room room) {
+    private void addWalls(Room room, double scale) {
         Direction position = player.getFacingDirection();
 
+        int baseWidth = Room.ROOM_SIZE / 4;
+        int height = Room.CEILING_HEIGHT;
+
+        Rectangle bounds = new Rectangle(0, 0, baseWidth, height);
+        scaleBoundingBox(bounds, Room.ROOM_SIZE, scale);
         if (room.hasWall(position.previous())) {
-            backgroundLeft = loader.getImage("backgrounds/room-wall-left.png");
+            backgroundImages.put(bounds, loader.getImage("backgrounds/room-wall-left.png"));
         }
         else {
-            backgroundLeft = loader.getImage("backgrounds/room-nowall-left.png");
+            backgroundImages.put(bounds, loader.getImage("backgrounds/room-nowall-left.png"));
         }
 
+        bounds = new Rectangle(baseWidth, 0, baseWidth * 2, height);
+        scaleBoundingBox(bounds, Room.ROOM_SIZE, scale);
         if (room.hasWall(position.opposite())) {
-            backgroundCenter = loader.getImage("backgrounds/room-wall-back.png");
+            backgroundImages.put(bounds, loader.getImage("backgrounds/room-wall-back.png"));
         }
         else {
-            backgroundCenter = loader.getImage("backgrounds/room-nowall-back.png");
+            backgroundImages.put(bounds, loader.getImage("backgrounds/room-nowall-back.png"));
         }
 
+        bounds = new Rectangle(baseWidth * 3, 0, baseWidth, height);
+        scaleBoundingBox(bounds, Room.ROOM_SIZE, scale);
         if (room.hasWall(position.next())) {
-            backgroundRight = loader.getImage("backgrounds/room-wall-right.png");
+            backgroundImages.put(bounds, loader.getImage("backgrounds/room-wall-right.png"));
         }
         else {
-            backgroundRight = loader.getImage("backgrounds/room-nowall-right.png");
+            backgroundImages.put(bounds, loader.getImage("backgrounds/room-nowall-right.png"));
+        }
+
+        if (!room.hasWall(position.opposite()) && room.getConnection(position.opposite()) != null) {
+            addWalls(room.getConnection(position.opposite()), scale / 2);
         }
     }
 

@@ -112,7 +112,7 @@ public class Player implements Drawable, Serializable {
      */
     public void turn(Direction facingDirection) {
         this.facingDirection = facingDirection;
-        triggerStateChange();
+        triggerStateChange(StateChangeListener.Type.TURN, null);
     }
 
     /**
@@ -131,7 +131,7 @@ public class Player implements Drawable, Serializable {
 			room.removePlayer(this);
 			newRoom.addPlayer(this);
 			room = newRoom;
-            triggerStateChange();
+            triggerStateChange(StateChangeListener.Type.MOVE, null);
             return true;
 		}
 	}
@@ -148,7 +148,7 @@ public class Player implements Drawable, Serializable {
         }
         else {
             heldItem = item;
-            triggerStateChange();
+            triggerStateChange(StateChangeListener.Type.PICK_UP, null);
             return true;
         }
     }
@@ -166,7 +166,7 @@ public class Player implements Drawable, Serializable {
             Item item = heldItem;
             getRoom().addItem(item);
             heldItem = null;
-            triggerStateChange();
+            triggerStateChange(StateChangeListener.Type.DROP, null);
             return item;
         }
     }
@@ -207,9 +207,9 @@ public class Player implements Drawable, Serializable {
 		}
 	}
 
-    private void triggerStateChange() {
+    private void triggerStateChange(StateChangeListener.Type type, String message) {
         for (StateChangeListener listener : stateChangeListeners) {
-            listener.onStateChanged();
+            listener.onStateChanged(this, type, message);
         }
     }
 
