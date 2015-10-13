@@ -107,7 +107,7 @@ public class RoomRenderer {
 
         Room room = player.getRoom();
         loadRoom(room, 1.0, true);
-        addWalls(room, 1.0);
+        addWalls(room);
         addInvisibleDoors(room);
     }
 
@@ -218,6 +218,14 @@ public class RoomRenderer {
     private void loadRoom(Room room, double scale, boolean isCurrent) {
         Direction direction = player.getFacingDirection();
 
+        // Recursively load adjacent rooms into the back of the scene
+        if (scale > 0.25) {
+            Room next = room.getConnection(direction.opposite());
+            if (next != null && !room.hasWall(direction.opposite())) {
+                loadRoom(next, scale / 2, false);
+            }
+        }
+
         List<Drawable> roomObjects = new ArrayList<>();
         roomObjects.addAll(room.getItems());
 
@@ -231,7 +239,7 @@ public class RoomRenderer {
             int z = calculateZIndex(position, direction);
 
             // Don't render items which are too close to the viewer
-            if (z > Room.ROOM_SIZE - 40) {
+            if (isCurrent && z > Room.ROOM_SIZE - 40) {
                 continue;
             }
 
@@ -276,9 +284,9 @@ public class RoomRenderer {
     private void addInvisibleDoors(Room room) {
         Direction direction = player.getFacingDirection();
 
-        if (room.getConnection(direction.next()) != null && !room.hasWall(direction.next())) {
+        if (room.getConnection(direction.previous()) != null && !room.hasWall(direction.previous())) {
             currentSceneItems.add(new SceneItem(
-                    new InvisibleDoor(direction.next()), null,
+                    new InvisibleDoor(direction.previous()), null,
                     new Rectangle(0, 0, Room.ROOM_SIZE / 4, Room.CEILING_HEIGHT), true
             ));
         }
@@ -290,9 +298,9 @@ public class RoomRenderer {
             ));
         }
 
-        if (room.getConnection(direction.previous()) != null && !room.hasWall(direction.previous())) {
+        if (room.getConnection(direction.next()) != null && !room.hasWall(direction.next())) {
             currentSceneItems.add(new SceneItem(
-                    new InvisibleDoor(direction.previous()), null,
+                    new InvisibleDoor(direction.next()), null,
                     new Rectangle(Room.ROOM_SIZE / 4 * 3, 0, Room.ROOM_SIZE / 4, Room.CEILING_HEIGHT), true
             ));
         }
@@ -303,9 +311,8 @@ public class RoomRenderer {
      * room in front instead
      *
      * @param room room to check for walls or neighbour
-     * @param scale scale currently being used to draw the room
      */
-    private void addWalls(Room room, double scale) {
+    private void addWalls(Room room) {
         Direction position = player.getFacingDirection();
 
         if (room.hasWall(position.previous())) {
@@ -320,13 +327,6 @@ public class RoomRenderer {
         }
         else {
             backgroundCenter = loader.getImage("backgrounds/room-nowall-back.png");
-
-            if (scale > 0.25) {
-                Room next = room.getConnection(position.opposite());
-                if (next != null) {
-                    loadRoom(next, scale / 2, false);
-                }
-            }
         }
 
         if (room.hasWall(position.next())) {

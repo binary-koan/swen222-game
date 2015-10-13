@@ -97,13 +97,13 @@ public class GameLoader {
 			currentItem = new Container(id, name, description, spriteName);
 			return currentItem;
 		case "class game.Key":
-			currentItem = new Key(id, name, description, spriteName);
+			currentItem = new Key(id, name, description, Key.Color.RED); //TODO
 			return currentItem;
 		case "class game.Furniture":
 			currentItem = new Furniture(id, name, description, spriteName);
 			return currentItem;
 		case "class game.Monster":
-			currentItem = new Monster(id, name, description, spriteName, weapon);
+			currentItem = new Monster(id, name, description, spriteName, null); //TODO
 			return currentItem;
 		case "class game.Weapon":
 			currentItem = new Weapon(id, name, description, spriteName);
