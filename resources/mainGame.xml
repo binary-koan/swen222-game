@@ -697,7 +697,7 @@
     <item>
       <id>snailmouse</id>
       <name>Snailmouse</name>
-      <description>I have had it with these goddamn monsters on this goddamn spaceship!</description>
+      <description>Oh no! What weapon could work against this ungodly fusion of- hang on...</description>
       <spriteName>enemies/snailmouse.png</spriteName>
       <subClass>class game.Monster</subClass>
     </item>
@@ -973,7 +973,7 @@
     <item>
       <id>lavaSnake</id>
       <name>Lava Snake</name>
-      <description>How this even got here you have no idea.</description>
+      <description>I have had it with these goddamn monsters on this goddamn spaceship!</description>
       <spriteName>enemies/lava-snake.png</spriteName>
       <subClass>class game.Monster</subClass>
     </item>
