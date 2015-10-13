@@ -33,10 +33,10 @@ public class Game implements StateChangeListener {
 	}
 
     @Override
-	public void onStateChanged() {
+	public void onStateChanged(Player player, Type type, String message) {
         // This is called when individual objects change state, so propagate the change up to our listeners
 		for (StateChangeListener listener : stateChangeListeners) {
-			listener.onStateChanged();
+			listener.onStateChanged(player, type, message);
 		}
 	}
 
