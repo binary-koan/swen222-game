@@ -198,15 +198,22 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
     }
 
     /**
-     * Called whenever the game state changes. We don't know exactly what changed, so redraw the whole scene
+     * Called whenever the game state changes
      */
     @Override
     public void onStateChanged(Player player, Type type, String message) {
+        // Hide the tooltip (stops item tooltips from hanging around after the item has been picked up etc.)
+        if (this.player.equals(player)) {
+            tooltip.setVisible(false);
+        }
+
+        // Play monster sounds if available
         if (type == Type.MOVE && player.getRoom().getMonster() != null) {
             Monster monster = (Monster)player.getRoom().getMonster().getItem();
             loader.playSoundEffect(monster.getSoundEffect());
         }
 
+        // Redraw the scene
         update();
     }
 
