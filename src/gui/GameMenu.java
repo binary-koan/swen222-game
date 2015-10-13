@@ -29,8 +29,7 @@ import javax.swing.WindowConstants;
 public class GameMenu {
 
 	private JFrame frame;
-	private int nextAlien;
-	private JTextField name;
+	
 	
 	public static void main(String[] args) {
 		new GameMenu(new ResourceManager("resources"));
@@ -49,7 +48,6 @@ public class GameMenu {
 //				catch (ParseException | UnsupportedLookAndFeelException e) {
 //					JOptionPane.showMessageDialog(null, "Could not load UI style: " + e.getMessage());
 //				}
-<<<<<<< HEAD
 				frame = new JFrame("Star Wars");
 //				frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.LINE_AXIS));
 //				frame.add(Box.createHorizontalGlue());
@@ -61,36 +59,9 @@ public class GameMenu {
 				scale.setSize(screenSize.getWidth() * 0.5, screenSize.getHeight() * 0.6);
 				frame.setPreferredSize(scale);
 				frame.setLayout(new GridLayout(0, 2));
-				frame.add(new GameWindow());
-				frame.add(new CharacterView());
-=======
-				final JFrame frame = new JFrame("Star Wars");
-				frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.LINE_AXIS));
-				frame.add(Box.createHorizontalGlue());
-				frame.add(new GameWindow(loader, new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						//TODO either connect to server or make properly single-player
-						//TODO use player settings from this menu
-						final Game game = new Game("resources/mainGame.xml", "resources/continueGame.xml");
-						final Player player2 = new Player("Player 2", "characters/alien2.png", game.getRoom("rx1y2"));
-						player2.turn(Direction.NORTH);
-						game.addPlayer(player2);
-
-						final Player player = new Player("Player 1", "characters/alien1.png", game.getRoom("rx1y2"));
-						player.turn(Direction.NORTH);
-						game.addPlayer(player);
-
-						ApplicationWindow window = new ApplicationWindow(loader, game, player, new SinglePlayerClient());
-						window.pack();
-						window.setVisible(true);
-
-						frame.setVisible(false);
-					}
-				}));
-				frame.add(Box.createRigidArea(new Dimension(10, 0)));
-				frame.add(new CharacterView(loader));
->>>>>>> origin/master
+				CharacterView c = new CharacterView(loader);
+				frame.add(new GameWindow(loader, c));
+				frame.add(c);
 				frame.setResizable(true);
 				frame.pack();
 				frame.setVisible(true);
@@ -105,8 +76,7 @@ public class GameMenu {
 	
 	private class GameWindow extends JPanel {
 		
-<<<<<<< HEAD
-		public GameWindow() {
+		public GameWindow(ResourceManager loader, CharacterView info) {
 			setLayout(new GridLayout(3, 2));
 			JTextField port = new JTextField();
 			JTextField url = new JTextField();
@@ -121,39 +91,19 @@ public class GameMenu {
 	            {
 	            	final Game game = new Game("resources/mainGame.xml", "resources/continueGame.xml");
 	            	final Player player2;
-	            	player2 = new Player(name.getText(), "characters/alien" +
-	            			 nextAlien + ".png", game.getRoom("rx1y2"));
+	            	player2 = new Player(info.playerName(), "characters/alien" +
+	            			 info.getCharacterImage() + ".png", game.getRoom("rx1y2"));
 	            	player2.turn(Direction.NORTH);
 	                game.addPlayer(player2);
 	                
-	                ApplicationWindow aw = new ApplicationWindow(game, player2, new SinglePlayerClient());
+	                ApplicationWindow aw = new ApplicationWindow(loader,game, player2, new SinglePlayerClient());
 	                aw.pack();
 	                frame.setVisible(false);
 	                aw.setVisible(true);
 	            }
 	        }); 
-=======
-		public GameWindow(final ResourceManager loader, ActionListener actionListener) {
-			setLayout(new BorderLayout());
-			JTextField text = new JTextField();
-			text.setBorder(BorderFactory.createLineBorder(Color.blue));
-			add(text, BorderLayout.CENTER);
-			
-			JPanel buttonPane = new JPanel();
-			buttonPane.setBorder(BorderFactory.createLineBorder(Color.blue));
-			buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
-			//buttonPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 
-			JButton connect = new JButton("Connect");
-			connect.addActionListener(actionListener);
-			JButton newServer = new JButton("New Server");
-			
-			buttonPane.add(Box.createHorizontalGlue());
-			buttonPane.add(connect);
-			buttonPane.add(Box.createRigidArea(new Dimension(10, 0)));
-			buttonPane.add(newServer);
-			buttonPane.add(Box.createRigidArea(new Dimension(10, 0)));
->>>>>>> origin/master
+	
 			
 			JButton server = new JButton("Server");
 			add(client);
@@ -162,14 +112,11 @@ public class GameMenu {
 	}
 	
 	private class CharacterView extends JPanel {
-<<<<<<< HEAD
+
+		private int nextAlien;
+		private JTextField name;
 		
-		 private final ResourceManager loader;
-=======
-		 private int nextAlien;
->>>>>>> origin/master
-		
-		public CharacterView(final ResourceManager loader) {
+		public CharacterView(ResourceManager loader) {
 			nextAlien = 1;
 			
 			setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -222,6 +169,7 @@ public class GameMenu {
 			
 			JPanel characterName = new JPanel();
 			name = new JTextField();
+			name.setPreferredSize(new Dimension(characterName.getWidth(), name.getHeight()));
 			characterName.add(name);
 			characterName.setBorder(BorderFactory.createLineBorder(Color.blue));
 			
@@ -232,9 +180,14 @@ public class GameMenu {
 			add(characterName, BorderLayout.SOUTH);
 			
 			
-			
-			
-			
+		}
+		
+		public int getCharacterImage() {
+			return nextAlien;
+		}
+		
+		public String playerName() {
+			return name.getText();
 		}
 	}
 
