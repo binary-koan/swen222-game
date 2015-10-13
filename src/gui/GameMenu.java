@@ -6,48 +6,19 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import javax.imageio.ImageIO;
-import javax.swing.AbstractAction;
-import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.KeyStroke;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
-import javax.swing.plaf.basic.BasicArrowButton;
-import javax.swing.plaf.synth.SynthLookAndFeel;
 
 
 public class GameMenu {
@@ -115,15 +86,15 @@ public class GameMenu {
 	
 	private class CharacterView extends JPanel {
 		
-		 private final ResourceLoader loader;
+		 private final ResourceManager loader;
 		 private int nextAlien;
 		
 		public CharacterView() {
-			this.loader = new ResourceLoader("resources");
+			this.loader = new ResourceManager("resources");
 			nextAlien = 1;
 			
 			setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-			JPanel characterImage = new JPanel() {
+			final JPanel characterImage = new JPanel() {
 				@Override
 				protected void paintComponent(Graphics g) {
 					super.paintComponent(g);
@@ -175,7 +146,7 @@ public class GameMenu {
 			characterName.setBorder(BorderFactory.createLineBorder(Color.blue));
 			
 			add(characterImage, BorderLayout.NORTH);
-			add(Box.createRigidArea(new Dimension(5,0)));
+			add(Box.createRigidArea(new Dimension(5, 0)));
 			add(buttonPane, BorderLayout.CENTER);
 			add(Box.createRigidArea(new Dimension(5,0)));
 			add(characterName, BorderLayout.SOUTH);

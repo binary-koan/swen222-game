@@ -2,7 +2,7 @@ package gui.renderer;
 
 import game.*;
 
-import gui.ResourceLoader;
+import gui.ResourceManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -78,7 +78,7 @@ public class RoomRenderer {
         }
     }
 
-    private ResourceLoader loader;
+    private ResourceManager loader;
     private Player player;
 
     private Image backgroundLeft;
@@ -92,7 +92,7 @@ public class RoomRenderer {
      * @param loader a resource loader which will be used to find sprites to draw
      * @param player the player that will be used to find the room this object will render
      */
-    public RoomRenderer(ResourceLoader loader, Player player) {
+    public RoomRenderer(ResourceManager loader, Player player) {
         this.loader = loader;
         this.player = player;
 

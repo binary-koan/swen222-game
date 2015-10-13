@@ -1,7 +1,6 @@
 package gui.popups;
 
-import gui.ResourceLoader;
-import org.eclipse.jdt.annotation.NonNull;
+import gui.ResourceManager;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -28,7 +27,7 @@ public class InfoTooltip extends JPanel {
      *
      * @param loader used to load mouse click icons
      */
-	public InfoTooltip(ResourceLoader loader) {
+	public InfoTooltip(ResourceManager loader) {
 		setLayout(new GridBagLayout());
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 
@@ -120,7 +119,7 @@ public class InfoTooltip extends JPanel {
     /**
      * Setup and add the primary action label to the control
      */
-    private void setupPrimaryActionLabel(ResourceLoader loader) {
+    private void setupPrimaryActionLabel(ResourceManager loader) {
         primaryActionLabel.setIcon(new ImageIcon(loader.getImage("ui/mouse-leftclick.png")));
         primaryActionLabel.setIconTextGap(8);
         addLabel(primaryActionLabel);
@@ -129,7 +128,7 @@ public class InfoTooltip extends JPanel {
     /**
      * Setup and add the secondary action label to the control
      */
-    private void setupSecondaryActionLabel(ResourceLoader loader) {
+    private void setupSecondaryActionLabel(ResourceManager loader) {
         secondaryActionLabel.setIcon(new ImageIcon(loader.getImage("ui/mouse-rightclick.png")));
         secondaryActionLabel.setIconTextGap(8);
         addLabel(secondaryActionLabel);

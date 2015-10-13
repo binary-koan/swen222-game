@@ -26,14 +26,14 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 
 	private Game game;
     private Player player;
-	private ResourceLoader loader;
+	private ResourceManager loader;
 	private GameCanvas canvas;
 
 	public ApplicationWindow(Game game, Player player, ActionHandler actionHandler) {
 		super("Game");
 		this.game = game;
         this.player = player;
-        this.loader = new ResourceLoader("resources");
+        this.loader = new ResourceManager("resources");
         this.canvas = new GameCanvas(loader, actionHandler);
         canvas.setup(player, game);
 

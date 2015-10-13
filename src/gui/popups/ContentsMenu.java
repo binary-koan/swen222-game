@@ -32,7 +32,7 @@ public class ContentsMenu extends JPopupMenu implements ActionListener {
      * @param containerInstance box to display items from
      * @param description text description of the action that can be taken with these items (eg. "Click to pick up")
      */
-    public ContentsMenu(ResourceLoader loader, ActionHandler receiver, Room.ItemInstance containerInstance,
+    public ContentsMenu(ResourceManager loader, ActionHandler receiver, Room.ItemInstance containerInstance,
                         Player player, String description) {
         this.receiver = receiver;
         this.containerInstance = containerInstance;
