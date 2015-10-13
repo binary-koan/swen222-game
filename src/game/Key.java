@@ -25,8 +25,10 @@ public class Key extends Item implements Pickable {
 
 	private Color color;
 
-	public Key(String id, String name, String description, String spriteName) {
-		super(id, name, description, spriteName);
+	public Key(String id, String name, String description, Color color) {
+		super(id, name, description, "objects/key-" + color.toString().toLowerCase() + ".png");
+
+		this.color = color;
 	}
 
 	public Color getColor(){

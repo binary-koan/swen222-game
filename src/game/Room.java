@@ -15,10 +15,10 @@ public class Room implements Serializable{
     public static int CEILING_HEIGHT = 192;
 
 	public class ItemInstance implements Drawable{
-        private Item item;
-        private Direction facingDirection;
-        private Point3D position;
 
+		private Item item;
+		private Direction facingDirection;
+		private Point3D position;
         public ItemInstance(Item item, Direction facingDirection, Point3D position) {
             this.item = item;
             this.facingDirection = facingDirection;
@@ -48,15 +48,15 @@ public class Room implements Serializable{
         public Item getItem() {
         	return item;
         }
-    }
 
+	}
     private String id;
 	private String name;
 	private Key.Color color;
-    private List<ItemInstance> items = new ArrayList<ItemInstance>();
-    private List<Player> players = new ArrayList<Player>();
-    private Map<Direction, Room> roomConnections = new HashMap<Direction, Room>();
-    private Map<Direction, Boolean> wallConnections = new HashMap<Direction, Boolean>();
+	private List<ItemInstance> items = new ArrayList<ItemInstance>();
+	private List<Player> players = new ArrayList<Player>();
+	private Map<Direction, Room> roomConnections = new HashMap<Direction, Room>();
+	private Map<Direction, Boolean> wallConnections = new HashMap<Direction, Boolean>();
 
     public Room(String id, String name, Key.Color color) {
     	this.id = id;
@@ -115,9 +115,13 @@ public class Room implements Serializable{
 		items.add(new ItemInstance(item, Direction.random(), position));
 	}
 
-	// Actions
+	// Logic
 
-	public boolean canEnter(Player player) {
+	public boolean containsItem(Item item) {
+		return false; //TODO
+	}
+
+	public boolean allowsEntry(Player player) {
 		if (color == null) {
 			return true;
 		}

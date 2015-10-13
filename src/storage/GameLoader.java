@@ -2,7 +2,6 @@ package storage;
 //Author: Scott Holdaway
 
 import game.Container;
-import gui.renderer.VisibleDoor;
 import game.Furniture;
 import game.Game;
 import game.Item;
@@ -104,7 +103,7 @@ public class GameLoader {
 			currentItem = new Furniture(id, name, description, spriteName);
 			return currentItem;
 		case "class game.Monster":
-			currentItem = new Monster(id, name, description, spriteName);
+			currentItem = new Monster(id, name, description, spriteName, weapon);
 			return currentItem;
 		case "class game.Weapon":
 			currentItem = new Weapon(id, name, description, spriteName);

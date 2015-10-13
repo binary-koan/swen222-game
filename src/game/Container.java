@@ -54,4 +54,12 @@ public class Container extends Item implements Pickable {
 			containerItems.remove(item);
 		}
 	}
+
+	public boolean containsItem(Item item) {
+		return false; //TODO
+	}
+
+	public void addItem(Item contents) {
+		//TODO
+	}
 }
