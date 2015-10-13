@@ -26,7 +26,6 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 
 	private Game game;
     private Player player;
-	private ActionHandler actionHandler;
 	private ResourceLoader loader;
 	private GameCanvas canvas;
 
@@ -140,10 +139,10 @@ public class ApplicationWindow extends JFrame implements KeyListener {
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
-                player.turn(player.getFacingDirection().previous());
+                player.turn(player.getFacingDirection().next());
                 break;
             case KeyEvent.VK_RIGHT:
-                player.turn(player.getFacingDirection().next());
+                player.turn(player.getFacingDirection().previous());
         }
     }
 

@@ -1,11 +1,20 @@
 package gui.renderer;
 
 import game.Direction;
-import game.Room;
+import game.Key;
 
 public class VisibleDoor extends Door {
-	public VisibleDoor(Direction linkDirection) {
+    private String spriteName;
+
+	public VisibleDoor(Direction linkDirection, Key.Color color) {
 		super(linkDirection);
+
+        if (color == null) {
+            spriteName = "objects/door.png";
+        }
+        else {
+            spriteName = "object/door-" + color.toString().toLowerCase() + ".png";
+        }
     }
 
     @Override
@@ -31,6 +40,6 @@ public class VisibleDoor extends Door {
 
 	@Override
 	public String getSpriteName() {
-		return "objects/door.png";
+		return spriteName;
 	}
 }

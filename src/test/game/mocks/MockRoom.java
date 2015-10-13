@@ -8,7 +8,7 @@ public class MockRoom {
 
     public static Room create() {
         roomCount++;
-        return new Room("testRoom" + roomCount, "Test Room " + roomCount);
+        return new Room("testRoom" + roomCount, "Test Room " + roomCount, null);
     }
 
     public static Room createWithConnection(Direction connectionDirection) {

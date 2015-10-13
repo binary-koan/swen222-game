@@ -7,35 +7,10 @@ import org.jdom2.Element;
 
 public abstract class Item implements Serializable {
 
-	public enum Color{
-		BLUE, GREEN, YELLOW, RED;
-
-		public static Color fromString(String color){
-			if(color.equals("BLUE")){
-	    		return BLUE;
-	    	}
-	    	else if(color.equals("GREEN")){
-	    		return GREEN;
-	    	}
-	    	else if(color.equals("YELLOW")){
-	    		return YELLOW;
-	    	}
-	    	else if(color.equals("RED")){
-	    		return RED;
-	    	}
-	    	return BLUE;
-		}
-	}
-
-	public Color getColor(){
-		return this.color;
-	}
-
 	private String id;
 	private String name;
 	private String description;
 	private String spriteName;
-	private Color color;
 
 	public Item(String id, String name, String description, String spriteName){
 		this.id = id;
@@ -73,9 +48,6 @@ public abstract class Item implements Serializable {
     	itemElement.addContent(new Element("description").setText(this.getDescription()));
     	itemElement.addContent(new Element("spriteName").setText(this.getSpriteName()));
     	itemElement.addContent(new Element("subClass").setText(this.getClass().toString()));
-    	if(this.color != null){
-    		itemElement.addContent(new Element("color").setText(this.color.toString()));
-    	}
     	return itemElement;
     }
 
@@ -88,9 +60,6 @@ public abstract class Item implements Serializable {
     	this.name = objectElement.getChildText("name");
     	this.description = objectElement.getChildText("description");
     	this.spriteName = objectElement.getChildText("spriteName");
-    	if(objectElement.getChildText("color") != null){
-    		this.color = Color.fromString(objectElement.getChildText("color"));
-    	}
     }
 }
 

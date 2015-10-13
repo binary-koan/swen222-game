@@ -138,7 +138,8 @@ public class GameLoader {
 	 * @return A new room.
 	 */
 	private Room constructRoomInitial(Element e){
-		Room currentRoom = new Room(e.getChildText("id"), e.getChildText("name"));
+		//TODO colour
+		Room currentRoom = new Room(e.getChildText("id"), e.getChildText("name"), null);
 		return currentRoom;
 	}
 
