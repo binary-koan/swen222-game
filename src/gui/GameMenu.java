@@ -23,6 +23,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 
@@ -96,10 +97,15 @@ public class GameMenu {
 	            	player2.turn(Direction.NORTH);
 	                game.addPlayer(player2);
 	                
-	                ApplicationWindow aw = new ApplicationWindow(loader,game, player2, new SinglePlayerClient());
-	                aw.pack();
-	                frame.setVisible(false);
-	                aw.setVisible(true);
+	                SwingUtilities.invokeLater(new Runnable() {
+	                    public void run() {
+	                        ApplicationWindow aw = new ApplicationWindow(
+	                                loader, game, player2, new SinglePlayerClient()
+	                        );
+	                        aw.pack();
+	                        aw.setVisible(true);
+	                    }
+	                });
 	            }
 	        }); 
 
