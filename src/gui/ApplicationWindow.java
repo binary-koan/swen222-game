@@ -26,16 +26,16 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 
 	private Game game;
     private Player player;
-	private ResourceManager loader;
 	private GameCanvas canvas;
 
-	public ApplicationWindow(Game game, Player player, ActionHandler actionHandler) {
+	public ApplicationWindow(ResourceManager loader, Game game, Player player, ActionHandler actionHandler) {
 		super("Game");
 		this.game = game;
         this.player = player;
-        this.loader = new ResourceManager("resources");
         this.canvas = new GameCanvas(loader, actionHandler);
         canvas.setup(player, game);
+
+		loader.setMusic("audio/music-main.wav");
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension scale = new Dimension();
@@ -51,10 +51,6 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 
         addKeyListener(this);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-	}
-
-	public GameCanvas getGameCanvas() {
-		return canvas;
 	}
 
 	private JMenuBar setupMenuBar() {
@@ -180,7 +176,9 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                ApplicationWindow aw = new ApplicationWindow(game, player, new SinglePlayerClient());
+                ApplicationWindow aw = new ApplicationWindow(
+                        new ResourceManager("resources"), game, player, new SinglePlayerClient()
+                );
                 aw.pack();
                 aw.setVisible(true);
             }

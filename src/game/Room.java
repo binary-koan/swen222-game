@@ -58,6 +58,8 @@ public class Room implements Serializable{
 	private Map<Direction, Room> roomConnections = new HashMap<Direction, Room>();
 	private Map<Direction, Boolean> wallConnections = new HashMap<Direction, Boolean>();
 
+	private ItemInstance monster = null;
+
     public Room(String id, String name, Key.Color color) {
     	this.id = id;
     	this.name = name;
@@ -112,14 +114,40 @@ public class Room implements Serializable{
 				50 + (int)(Math.random() * (Room.ROOM_SIZE - 100)), 0,
 				50 + (int)(Math.random() * (Room.ROOM_SIZE - 100))
 		);
-		items.add(new ItemInstance(item, Direction.random(), position));
+
+        ItemInstance instance = new ItemInstance(item, Direction.random(), position);
+		items.add(instance);
+
+		if (item instanceof Monster) {
+			monster = instance;
+		}
 	}
 
-	// Logic
+	public void removeItem(Item item) {
+		ItemInstance result = null;
+		for (ItemInstance instance : items) {
+			if (instance.getItem().equals(item)) {
+				result = instance;
+			}
+		}
+		items.remove(result);
+
+		if (item instanceof Monster) {
+			monster = null;
+		}
+	}
 
 	public boolean containsItem(Item item) {
 		return false; //TODO
 	}
+
+    public boolean containsMonster() {
+        return monster != null;
+    }
+
+    public ItemInstance getMonster() {
+        return monster;
+    }
 
 	public boolean allowsEntry(Player player) {
 		if (color == null) {
@@ -188,6 +216,10 @@ public class Room implements Serializable{
 			Point3D pr = new Point3D(xr, yr, zr);
 			ItemInstance itemI = new ItemInstance (ir, dr, pr);
 			items.add(itemI);
+
+			if (ir instanceof Monster) {
+				monster = itemI;
+			}
 		}
 		//Set the room's players.
 		this.players.removeAll(players);

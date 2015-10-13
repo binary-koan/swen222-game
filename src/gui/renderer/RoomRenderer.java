@@ -243,15 +243,17 @@ public class RoomRenderer {
                 continue;
             }
 
+            boolean interactable = isCurrent && (!room.containsMonster() || drawable.equals(room.getMonster()));
+
             if (drawable.getSpriteName() == null) {
-                currentSceneItems.add(new SceneItem(drawable, null, null, isCurrent));
+                currentSceneItems.add(new SceneItem(drawable, null, null, interactable));
             }
             else {
                 BufferedImage sprite = loader.getSprite(drawable.getSpriteName(), drawable.getFacingDirection().viewFrom(direction));
                 Rectangle screenBounds = calculateBoundingBox(position, sprite, direction);
                 scaleBoundingBox(screenBounds, z, scale);
 
-                currentSceneItems.add(new SceneItem(drawable, sprite, screenBounds, isCurrent));
+                currentSceneItems.add(new SceneItem(drawable, sprite, screenBounds, interactable));
             }
         }
     }
