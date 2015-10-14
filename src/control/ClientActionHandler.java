@@ -4,7 +4,6 @@ import com.sun.net.httpserver.HttpServer;
 import game.*;
 import gui.actions.Action;
 import gui.actions.ActionHandler;
-import gui.actions.GameActions;
 import gui.actions.GameActions.GameAction;
 
 import java.io.BufferedOutputStream;
@@ -20,12 +19,28 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import gui.actions.SinglePlayerClient;
 
-public class NetworkActionHandler implements ActionHandler {
+/**
+ * An action handler for the single player game client. This requests the initial XML from the server, sends local
+ * actions to the server and applies server-sent actions to the game
+ *
+ * @author Scott Holdaway, Jono Mingard
+ */
+public class ClientActionHandler implements ActionHandler, HttpHandler {
+    private static final int PORT = 9000;
+
+    /**
+     * An object which will be notified when the game is loaded from the server
+     */
     public interface LoadListener {
+        /**
+         * Called when the game is loaded from the server
+         *
+         * @param game the loaded game instance
+         * @param player the player that should be used locally
+         */
         void onGameLoaded(Game game, Player player);
     }
 
-	private final int PORT = 9000;
 	private String url;
 
     private List<LoadListener> loadListeners = new ArrayList<>();
@@ -34,9 +49,18 @@ public class NetworkActionHandler implements ActionHandler {
     private final String spriteName;
 	private Game game;
 
+    // Used to get allowed actions
     private SinglePlayerClient actionHandler = new SinglePlayerClient();
 
-    public NetworkActionHandler(String playerName, String spriteName, String serverUrl, int serverPort) {
+    /**
+     * Create a new client action handler
+     *
+     * @param playerName name of the player to request
+     * @param spriteName sprite that the player should use
+     * @param serverUrl server URL to connect to
+     * @param serverPort port to connect to on the server
+     */
+    public ClientActionHandler(String playerName, String spriteName, String serverUrl, int serverPort) {
         this.playerName = playerName;
         this.spriteName = spriteName;
         this.url = "http://" + serverUrl + ":" + serverPort;
@@ -45,6 +69,11 @@ public class NetworkActionHandler implements ActionHandler {
         requestGameXML();
     }
 
+    /**
+     * Add a load listener, which will be called when the game is loaded from the server
+     *
+     * @param listener load listener to add
+     */
     public void addLoadListener(LoadListener listener) {
         if (game == null) {
             loadListeners.add(listener);
@@ -54,12 +83,64 @@ public class NetworkActionHandler implements ActionHandler {
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public List<Action> getAllowedActions(Player player, Drawable drawable) {
+        return actionHandler.getAllowedActions(player, drawable);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void requestAction(Action action) {
+        if (action instanceof GameAction) {
+            try {
+                URLConnection connection = new URL(url + "/action?" + ((GameAction)action).serialize()).openConnection();
+                connection.setRequestProperty("Accept-Charset", "UTF-8");
+
+                InputStream response = connection.getInputStream();
+                response.close();
+            }
+            catch (IOException e) {
+                System.out.println("Failed to send action: " + e);
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Handle action requests coming from the game server to the local server
+     *
+     * @param exchange HTTP request to handle
+     * @throws IOException
+     */
+    @Override
+    public void handle(HttpExchange exchange) throws IOException {
+        String requestMethod = exchange.getRequestMethod();
+
+        System.out.println("Got request for " + exchange.getRequestURI());
+
+        if (requestMethod.equalsIgnoreCase("GET") && exchange.getRequestURI().getPath().equals("/action")) {
+            exchange.sendResponseHeaders(200, 0);
+            exchange.getResponseBody().close();
+
+            System.out.println("Reading action " + exchange.getRequestURI().getQuery());
+            readAction(exchange);
+        }
+        else {
+            exchange.sendResponseHeaders(404, 0);
+            exchange.getResponseBody().close();
+        }
+    }
+
+    /**
+     * Start a local server, which will receive actions from the actual server
+     */
     private void startLocalServer() {
         try {
             InetSocketAddress addr = new InetSocketAddress(PORT);
             HttpServer server = HttpServer.create(addr, 0);
 
-            server.createContext("/", new RequestHandler());
+            server.createContext("/", this);
             server.setExecutor(Executors.newCachedThreadPool());
             server.start();
         }
@@ -69,6 +150,9 @@ public class NetworkActionHandler implements ActionHandler {
         }
     }
 
+    /**
+     * Request the complete game XML from the game server
+     */
     private void requestGameXML() {
         try {
             // Initial connection - send the server the port our client server is listening on
@@ -88,7 +172,10 @@ public class NetworkActionHandler implements ActionHandler {
         }
     }
 
-	public void readAction(HttpExchange exchange) {
+    /**
+     * Read an action from the given HTTP request
+     */
+	private void readAction(HttpExchange exchange) {
 		String content = exchange.getRequestURI().getQuery();
 		GameAction g = GameAction.deserialize(content, game);
 		if (g != null) {
@@ -96,7 +183,10 @@ public class NetworkActionHandler implements ActionHandler {
         }
 	}
 
-	public void readXML(InputStream response) {
+    /**
+     * Read XML from the given response and create a game from it
+     */
+	private void readXML(InputStream response) {
 		int bytesRead;
 		int current = 0;
 		FileOutputStream fos = null;
@@ -142,47 +232,4 @@ public class NetworkActionHandler implements ActionHandler {
 			}
 		}
 	}
-
-    @Override
-    public List<Action> getAllowedActions(Player player, Drawable drawable) {
-        return actionHandler.getAllowedActions(player, drawable);
-    }
-
-    @Override
-    public void requestAction(Action action) {
-        if (action instanceof GameAction) {
-            try {
-                URLConnection connection = new URL(url + "/action?" + ((GameAction)action).serialize()).openConnection();
-                connection.setRequestProperty("Accept-Charset", "UTF-8");
-
-                InputStream response = connection.getInputStream();
-                response.close();
-            }
-            catch (IOException e) {
-                System.out.println("Failed to send action: " + e);
-                e.printStackTrace();
-            }
-        }
-    }
-
-    class RequestHandler implements HttpHandler {
-        @Override
-        public void handle(HttpExchange exchange) throws IOException {
-            String requestMethod = exchange.getRequestMethod();
-
-			System.out.println("Got request for " + exchange.getRequestURI());
-
-            if (requestMethod.equalsIgnoreCase("GET") && exchange.getRequestURI().getPath().equals("/action")) {
-                exchange.sendResponseHeaders(200, 0);
-                exchange.getResponseBody().close();
-
-				System.out.println("Reading action " + exchange.getRequestURI().getQuery());
-            	readAction(exchange);
-            }
-            else {
-                exchange.sendResponseHeaders(404, 0);
-                exchange.getResponseBody().close();
-            }
-        }
-    }
 }

@@ -1,6 +1,6 @@
 package gui;
 
-import control.NetworkActionHandler;
+import control.ClientActionHandler;
 import game.Direction;
 import game.Game;
 import game.Player;
@@ -12,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.swing.BoxLayout;
@@ -24,17 +23,24 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.WindowConstants;
-import javax.swing.plaf.synth.SynthLookAndFeel;
 
-
+/**
+ * Displays a Game type menu to get input from user for Game name and player name
+ * as well as character selection 
+ * @author Shanon Beary
+ *
+ */
 public class GameMenu {
 
 	private JFrame frame;
 	private int width;
 	private int height;
 
+	/**
+	 * Constructor for Game menu which creates and add items to the menu 
+	 * @param loader - To load files from resources 
+	 */
 	public GameMenu(final ResourceManager loader) {
 		EventQueue.invokeLater(new Runnable() {
 
@@ -70,6 +76,11 @@ public class GameMenu {
 		});
 	}
 
+	/**
+	 * Left Window pane to receive user input to start multiplayer or single game  
+	 * @author Shanon Beary
+	 *
+	 */
 	private class GameWindow extends JPanel {
 
 		public GameWindow(ResourceManager loader, CharacterView info) {
@@ -104,7 +115,7 @@ public class GameMenu {
 					}
 					else {
 						JOptionPane.showMessageDialog(null,"Please Enter Gamename and Player Name",
-								"WARNING",JOptionPane.PLAIN_MESSAGE);
+								"WARNING",JOptionPane.PLAIN_MESSAGE); //Warning message when game name and player name not entered
 					}
 				}
 			});
@@ -163,11 +174,11 @@ public class GameMenu {
 
 		private void startNetworkGame(String serverUrl, String serverPort, CharacterView info, final ResourceManager loader) {
 			String spriteName = "characters/alien" + info.getCharacterImage() + ".png";
-			NetworkActionHandler actionHandler = new NetworkActionHandler(
+			ClientActionHandler actionHandler = new ClientActionHandler(
 					info.playerName(), spriteName, serverUrl, Integer.parseInt(serverPort)
 			);
 
-			actionHandler.addLoadListener(new NetworkActionHandler.LoadListener() {
+			actionHandler.addLoadListener(new ClientActionHandler.LoadListener() {
 				@Override
 				public void onGameLoaded(Game game, Player player) {
                     System.out.println("Game loaded");
@@ -186,6 +197,12 @@ public class GameMenu {
 		}
 	}
 
+	/**
+	 * Shows characters for player to selection in the application window
+	 * As well player entering their character name 
+	 * @author Shanon Beary
+	 *
+	 */
 	private class CharacterView extends JPanel {
 
 		private int nextAlien;
