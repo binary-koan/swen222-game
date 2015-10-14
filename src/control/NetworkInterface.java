@@ -8,7 +8,7 @@ public interface NetworkInterface {
 	 * This is more or less the game state and client problem,
 	 * but the reason why i'm doing this is so that we at least
 	 *  have a agreed upon set of objects to pass back and forth.
-	 *  NOTE: Both Server AND Client Classes will implement this
+	 *  NOTE: Both Server AND TestClient Classes will implement this
 	 *  Interface, as it will transmit only the necessary data over
 	 *  the network!
 	 */
