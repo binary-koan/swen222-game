@@ -24,11 +24,11 @@ public class Monster extends Item {
 	public boolean fight(Player player) {
 		// Sanity check to make sure the player and monster are in the same room
 		Room.ItemInstance instance = player.getRoom().getMonster();
-		if (!equals(instance.getItem())) {
+		if (instance == null || !equals(instance.getItem())) {
 			return false;
 		}
 
-		if (player.getHeldItem().equals(deadlyWeapon)) {
+		if (player.getHeldItem() != null && player.getHeldItem().equals(deadlyWeapon)) {
 			player.getRoom().removeItem(this);
 			return true;
 		}

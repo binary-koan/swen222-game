@@ -24,7 +24,9 @@ public class MockItem {
         return new Weapon("testItem" + itemCount, "Weapon (Item " + itemCount + ")", "Test weapon", "");
     }
 
-    public static Monster createMonsterWithWeakness(Weapon weapon) {
-        return new Monster("testItem" + itemCount, "Weapon (Item " + itemCount + ")", "Test weapon", "", weapon);
+    public static Monster createMonsterWithWeakness(Room room, Weapon weapon) {
+        Monster monster = new Monster("testItem" + itemCount, "Weapon (Item " + itemCount + ")", "Test weapon", "", weapon);
+        room.addItem(monster);
+        return monster;
     }
 }
