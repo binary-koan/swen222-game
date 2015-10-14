@@ -10,6 +10,11 @@ import java.util.Map;
 
 import org.jdom2.Element;
 
+/**
+ * Room for players to access and wonder around 
+ * @author Shanon & Scott & Jono
+ *
+ */
 public class Room implements Serializable{
     public static int ROOM_SIZE = 320;
     public static int CEILING_HEIGHT = 192;
