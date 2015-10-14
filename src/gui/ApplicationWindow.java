@@ -94,7 +94,8 @@ public class ApplicationWindow extends JFrame implements KeyListener, StateChang
 	     exitMenuItem.addActionListener(new ActionListener() {
 			 @Override
 			 public void actionPerformed(ActionEvent event) {
-				 game.getData().saveWholeGame();
+				 
+				 game.saveGame();
 				 System.exit(0);
 			 }
 		 });
