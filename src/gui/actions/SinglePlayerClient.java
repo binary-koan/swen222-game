@@ -36,6 +36,9 @@ public class SinglePlayerClient implements ActionHandler {
             else if (item instanceof Monster) {
                 result.add(new GameActions.Attack(player, (Monster)item));
             }
+            else if (item instanceof ControlPanel) {
+                result.add(new GameActions.Interact(player, (ControlPanel)item));
+            }
         }
         else if (drawable instanceof Door) {
             result.add(new GameActions.GoThrough(player, (Door) drawable));

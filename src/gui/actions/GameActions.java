@@ -193,7 +193,10 @@ public class GameActions {
             return super.serialize(values);
         }
     }
-    
+
+    /**
+     * Represents the player dropping an item (optionally into a container)
+     */
     public static class Drop extends GameAction {
     	public final Container target;
     	
@@ -250,6 +253,41 @@ public class GameActions {
         public String serialize() {
             Map<String, String> values = new HashMap<>();
             values.put("monster", monster.getID());
+            return super.serialize(values);
+        }
+    }
+
+    /**
+     * Action representing the player interacting with the control panel to win the game
+     */
+    public static class Interact extends GameAction {
+        public static GameAction deserialize(Map<String, String> data, Game game) {
+            return new Attack(
+                    game.getPlayer(data.get("player")),
+                    (Monster)game.getItem(data.get("controlPanel"))
+            );
+        }
+
+        public final ControlPanel controlPanel;
+
+        public Interact(Player player, ControlPanel controlPanel) {
+            super(player, "Interact");
+
+            this.controlPanel = controlPanel;
+        }
+
+        @Override
+        public boolean apply() {
+            controlPanel.interact(player);
+
+            // Even if the player died, the action technically succeeded
+            return true;
+        }
+
+        @Override
+        public String serialize() {
+            Map<String, String> values = new HashMap<>();
+            values.put("controlPanel", controlPanel.getID());
             return super.serialize(values);
         }
     }
