@@ -18,7 +18,7 @@ public class MonsterTest {
         Player player = MockPlayer.createWithHeldItem(weapon);
 
         assertTrue(monster.fight(player));
-        assertTrue(player.isInGame());
+        assertTrue(player.isAlive());
     }
 
     @Test
@@ -28,7 +28,7 @@ public class MonsterTest {
         Player player = MockPlayer.createWithHeldItem(weapon);
 
         assertFalse(monster.fight(player));
-        assertFalse(player.isInGame());
+        assertFalse(player.isAlive());
     }
 
     @Test
@@ -38,6 +38,6 @@ public class MonsterTest {
         Player player = MockPlayer.create();
 
         assertFalse(monster.fight(player));
-        assertFalse(player.isInGame());
+        assertFalse(player.isAlive());
     }
 }

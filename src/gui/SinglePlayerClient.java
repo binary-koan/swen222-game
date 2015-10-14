@@ -33,11 +33,14 @@ public class SinglePlayerClient implements ActionHandler {
             Item item = ((Room.ItemInstance)drawable).getItem();
 
             if (item instanceof Pickable) {
-                result.add(new GameActions.PickUp(player, (Room.ItemInstance)drawable));
+                result.add(new GameActions.PickUp(player, item, null));
+            }
+            if (item instanceof Monster) {
+                result.add(new GameActions.Attack(player, (Monster)item));
             }
         }
         else if (drawable instanceof Door) {
-            result.add(new GameActions.GoThrough(player, (Door)drawable));
+            result.add(new GameActions.GoThrough(player, (Door) drawable));
         }
 
         return result;
@@ -51,45 +54,8 @@ public class SinglePlayerClient implements ActionHandler {
     @Override
     public void requestAction(Action action) {
         // For multiplayer, perform some network request here ...
-        if (action instanceof GameActions.Turn) {
-            turnPlayer((GameActions.Turn) action);
+        if (action instanceof GameActions.GameAction) {
+            ((GameActions.GameAction)action).apply();
         }
-        else if (action instanceof GameActions.PickUp) {
-            pickUp((GameActions.PickUp) action);
-        }
-        else if (action instanceof GameActions.Take) {
-            take((GameActions.Take) action);
-        }
-        else if (action instanceof GameActions.GoThrough) {
-            move((GameActions.GoThrough) action);
-        }
-    }
-
-    /**
-     * Perform a "Turn" action
-     */
-    private void turnPlayer(GameActions.Turn action) {
-        action.player.turn(action.direction);
-    }
-
-    /**
-     * Perform a "Pick up" action
-     */
-    private void pickUp(GameActions.PickUp action) {
-        action.player.pickUp(action.target.getItem());
-    }
-
-    /**
-     * Perform a "Take" action
-     */
-    private void take(GameActions.Take action) {
-        action.container.take(action.takenItem, action.player);
-    }
-
-    /**
-     * Perform a "Move" action
-     */
-    private void move(GameActions.GoThrough action) {
-        action.player.move(action.door.getLinkDirection());
     }
 }

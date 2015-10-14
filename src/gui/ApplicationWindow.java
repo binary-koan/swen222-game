@@ -19,6 +19,7 @@ import javax.swing.*;
 import javax.swing.plaf.synth.SynthLookAndFeel;
 
 import gui.actions.ActionHandler;
+import gui.actions.GameActions;
 
 
 public class ApplicationWindow extends JFrame implements KeyListener {
@@ -26,12 +27,14 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 
 	private Game game;
     private Player player;
+    private ActionHandler actionHandler;
 	private GameCanvas canvas;
 
 	public ApplicationWindow(ResourceManager loader, Game game, Player player, ActionHandler actionHandler) {
 		super("Game");
 		this.game = game;
         this.player = player;
+        this.actionHandler = actionHandler;
         this.canvas = new GameCanvas(loader, actionHandler);
         canvas.setup(player, game);
 
@@ -135,10 +138,11 @@ public class ApplicationWindow extends JFrame implements KeyListener {
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
-                player.turn(player.getFacingDirection().next());
+                actionHandler.requestAction(new GameActions.Turn(player, player.getFacingDirection().next()));
                 break;
             case KeyEvent.VK_RIGHT:
-                player.turn(player.getFacingDirection().previous());
+                actionHandler.requestAction(new GameActions.Turn(player, player.getFacingDirection().previous()));
+                break;
         }
     }
 

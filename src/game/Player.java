@@ -26,8 +26,9 @@ public class Player implements Drawable, Serializable {
     private String name;
 	private String spriteName;
     private Room room;
-    private Direction facingDirection;
-    private Item heldItem;
+    private Direction facingDirection = Direction.NORTH;
+    private Item heldItem = null;
+    private boolean isAlive = true;
 
     /**
      * Create a new player
@@ -40,7 +41,6 @@ public class Player implements Drawable, Serializable {
     	this.name = name;
     	this.spriteName = spriteName;
         this.room = room;
-        this.facingDirection = Direction.NORTH;
 
         room.addPlayer(this);
     }
@@ -110,9 +110,13 @@ public class Player implements Drawable, Serializable {
      *
      * @param facingDirection new direction the player should face
      */
-    public void turn(Direction facingDirection) {
-        this.facingDirection = facingDirection;
-        triggerStateChange(StateChangeListener.Type.TURN, null);
+    public boolean turn(Direction facingDirection) {
+        if (isAlive) {
+            this.facingDirection = facingDirection;
+            triggerStateChange(StateChangeListener.Type.TURN, null);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -122,18 +126,20 @@ public class Player implements Drawable, Serializable {
      * @return true if the move succeeded, false otherwise
      */
 	public boolean move(Direction movementDirection) {
-		Room newRoom = room.getConnection(movementDirection);
+        if (isAlive) {
+            Room newRoom = room.getConnection(movementDirection);
 
-		if (newRoom == null) {
-			return false;
-		}
-		else {
-			room.removePlayer(this);
-			newRoom.addPlayer(this);
-			room = newRoom;
-            triggerStateChange(StateChangeListener.Type.MOVE, null);
-            return true;
-		}
+            if (newRoom == null) {
+                return false;
+            } else {
+                room.removePlayer(this);
+                newRoom.addPlayer(this);
+                room = newRoom;
+                triggerStateChange(StateChangeListener.Type.MOVE, null);
+                return true;
+            }
+        }
+        return false;
 	}
 
     /**
@@ -141,16 +147,25 @@ public class Player implements Drawable, Serializable {
      *
      * @return true if the item was picked up, false otherwise (eg. if the player was already holding an item)
      */
-    public boolean pickUp(Item item) {
-        //TODO remove item from room/container/etc
-        if (item == null || heldItem != null) {
-            return false;
+    public boolean pickUp(Item item, Container container) {
+        if (isAlive) {
+            if (item == null || heldItem != null) {
+                return false;
+            }
+            else {
+                heldItem = item;
+                if (container == null) {
+                    room.removeItem(item);
+                }
+                else {
+                    container.removeItem(item);
+                }
+
+                triggerStateChange(StateChangeListener.Type.PICK_UP, null);
+                return true;
+            }
         }
-        else {
-            heldItem = item;
-            triggerStateChange(StateChangeListener.Type.PICK_UP, null);
-            return true;
-        }
+        return false;
     }
 
     /**
@@ -159,16 +174,18 @@ public class Player implements Drawable, Serializable {
      * @return the dropped item
      */
     public Item dropItem() {
-        if (heldItem == null) {
-            return null;
+        if (isAlive) {
+            if (heldItem == null) {
+                return null;
+            } else {
+                Item item = heldItem;
+                getRoom().addItem(item);
+                heldItem = null;
+                triggerStateChange(StateChangeListener.Type.DROP, null);
+                return item;
+            }
         }
-        else {
-            Item item = heldItem;
-            getRoom().addItem(item);
-            heldItem = null;
-            triggerStateChange(StateChangeListener.Type.DROP, null);
-            return item;
-        }
+        return null;
     }
 
     // Serialization
@@ -213,15 +230,12 @@ public class Player implements Drawable, Serializable {
         }
     }
 
-    public boolean pickUp(Item item, Container container) {
-        return false; //TODO
+    public boolean isAlive() {
+        return isAlive; //TODO probably just return room == null or something ...
     }
 
-    public boolean pickUp(Item item, Room room) {
-        return false; //TODO
-    }
-
-    public boolean isInGame() {
-        return false; //TODO probably just return room == null or something ...
+    public void kill(String message) {
+        isAlive = false;
+        triggerStateChange(StateChangeListener.Type.DIE, message);
     }
 }

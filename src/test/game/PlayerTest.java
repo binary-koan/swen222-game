@@ -34,7 +34,7 @@ public class PlayerTest {
         Room room1 = MockRoom.create(Key.Color.BLUE);
         Room room2 = MockRoom.createWithConnection(Direction.NORTH, room1);
         Player player = MockPlayer.create(room2);
-        player.pickUp(MockItem.createKey(Key.Color.BLUE));
+        player.pickUp(MockItem.createKey(Key.Color.BLUE), null);
 
         assertTrue(player.move(Direction.NORTH));
     }
@@ -53,7 +53,7 @@ public class PlayerTest {
         Item item = MockItem.createKey();
         Player player = MockPlayer.create();
 
-        assertTrue(player.pickUp(item));
+        assertTrue(player.pickUp(item, null));
         assertEquals(item, player.getHeldItem());
     }
 
@@ -63,7 +63,7 @@ public class PlayerTest {
         Room room = MockRoom.createWithItem(item);
         Player player = MockPlayer.create(room);
 
-        assertTrue(player.pickUp(item, room));
+        assertTrue(player.pickUp(item, null));
         assertFalse(room.containsItem(item));
     }
 
@@ -83,8 +83,8 @@ public class PlayerTest {
         Item item2 = MockItem.createKey();
         Player player = MockPlayer.create();
 
-        assertTrue(player.pickUp(item));
-        assertFalse(player.pickUp(item2));
+        assertTrue(player.pickUp(item, null));
+        assertFalse(player.pickUp(item2, null));
         assertEquals(item, player.getHeldItem());
     }
 
