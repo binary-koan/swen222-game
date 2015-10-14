@@ -936,7 +936,7 @@
       <id>plasmaCannon</id>
       <name>Plasma cannon</name>
       <description>A high velocity plasma launcher!</description>
-      <spriteName>objects/plasma-pistol</spriteName>
+      <spriteName>objects/plasma-cannon.png</spriteName>
       <subClass>class game.Weapon</subClass>
     </item>
 
