@@ -58,8 +58,8 @@ public class ContentsMenu extends JPopupMenu implements ActionListener {
     /** {@inheritDoc} */
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Figure out which item was activated and send a TAKE action to the receiver
-        for (Item item : ((Container) containerInstance.getItem()).getItems()) {
+        // Figure out which item was activated and send a "pick up" action to the receiver
+        for (Holdable item : ((Container) containerInstance.getItem()).getItems()) {
             if (e.getActionCommand().equals(item.getID())) {
                 receiver.requestAction(new GameActions.PickUp(player, item, container));
                 return;

@@ -5,8 +5,6 @@ import gui.actions.Action;
 import gui.actions.ActionHandler;
 import gui.actions.GameActions;
 import gui.renderer.Door;
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +30,10 @@ public class SinglePlayerClient implements ActionHandler {
         if (drawable instanceof Room.ItemInstance) {
             Item item = ((Room.ItemInstance)drawable).getItem();
 
-            if (item instanceof Pickable) {
-                result.add(new GameActions.PickUp(player, item, null));
+            if (item instanceof Holdable) {
+                result.add(new GameActions.PickUp(player, (Holdable)item, null));
             }
-            if (item instanceof Monster) {
+            else if (item instanceof Monster) {
                 result.add(new GameActions.Attack(player, (Monster)item));
             }
         }

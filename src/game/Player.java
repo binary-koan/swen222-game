@@ -2,20 +2,10 @@ package game;
 
 import storage.Serializable;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.jdom2.Document;
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
 
 /**
  * Represents a player's avatar in the game
@@ -27,7 +17,7 @@ public class Player implements Drawable, Serializable {
 	private String spriteName;
     private Room room;
     private Direction facingDirection = Direction.NORTH;
-    private Item heldItem = null;
+    private Holdable heldItem = null;
     private boolean isAlive = true;
 
     /**
@@ -103,7 +93,14 @@ public class Player implements Drawable, Serializable {
         return spriteName;
     }
 
-    // Actions
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void kill(String message) {
+        isAlive = false;
+        triggerStateChange(StateChangeListener.Type.DIE, message);
+    }
 
     /**
      * Set the player's facing direction
@@ -131,7 +128,8 @@ public class Player implements Drawable, Serializable {
 
             if (newRoom == null) {
                 return false;
-            } else {
+            }
+            else if (newRoom.allowsEntry(this)) {
                 room.removePlayer(this);
                 newRoom.addPlayer(this);
                 room = newRoom;
@@ -147,7 +145,7 @@ public class Player implements Drawable, Serializable {
      *
      * @return true if the item was picked up, false otherwise (eg. if the player was already holding an item)
      */
-    public boolean pickUp(Item item, Container container) {
+    public boolean pickUp(Holdable item, Container container) {
         if (isAlive) {
             if (item == null || heldItem != null) {
                 return false;
@@ -158,7 +156,7 @@ public class Player implements Drawable, Serializable {
                     room.removeItem(item);
                 }
                 else {
-                    container.removeItem(item);
+                    container.getItems().remove(item);
                 }
 
                 triggerStateChange(StateChangeListener.Type.PICK_UP, null);
@@ -173,12 +171,13 @@ public class Player implements Drawable, Serializable {
      *
      * @return the dropped item
      */
-    public Item dropItem() {
+    public Holdable dropItem() {
         if (isAlive) {
             if (heldItem == null) {
                 return null;
-            } else {
-                Item item = heldItem;
+            }
+            else {
+                Holdable item = heldItem;
                 getRoom().addItem(item);
                 heldItem = null;
                 triggerStateChange(StateChangeListener.Type.DROP, null);
@@ -220,7 +219,7 @@ public class Player implements Drawable, Serializable {
 		this.room = game.getRoom(objectElement.getChildText("room"));
 		this.facingDirection = Direction.fromString(objectElement.getChildText("facingDirection"));
 		if(game.getItem(objectElement.getChildText("heldItem")) != null){
-			this.heldItem = game.getItem(objectElement.getChildText("heldItem"));
+			this.heldItem = (Holdable)game.getItem(objectElement.getChildText("heldItem"));
 		}
 	}
 
@@ -228,14 +227,5 @@ public class Player implements Drawable, Serializable {
         for (StateChangeListener listener : stateChangeListeners) {
             listener.onStateChanged(this, type, message);
         }
-    }
-
-    public boolean isAlive() {
-        return isAlive; //TODO probably just return room == null or something ...
-    }
-
-    public void kill(String message) {
-        isAlive = false;
-        triggerStateChange(StateChangeListener.Type.DIE, message);
     }
 }

@@ -14,9 +14,9 @@ public class MockItem {
         return new Key("testItem" + itemCount, "Key (Item " + itemCount + ")", "Test key", color);
     }
 
-    public static Container createContainer(Item contents) {
+    public static Container createContainer(Holdable contents) {
         Container result = new Container("testItem" + itemCount, "Container (Item " + itemCount + ")", "Test container", "");
-        result.addItem(contents);
+        result.getItems().add(contents);
         return result;
     }
 

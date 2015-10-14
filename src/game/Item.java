@@ -1,6 +1,5 @@
 package game;
 
-import org.eclipse.jdt.annotation.NonNull;
 import storage.Serializable;
 
 import org.jdom2.Element;
@@ -19,13 +18,9 @@ public abstract class Item implements Serializable {
 		this.spriteName = spriteName;
 	}
 
-	public String getID(){
+	public String getID() {
     	return id;
     }
-
-	public String getSpriteName() {
-		return spriteName;
-	}
 
 	public String getName() {
 		return name;
@@ -35,12 +30,17 @@ public abstract class Item implements Serializable {
 		return description;
 	}
 
+	public String getSpriteName() {
+		return spriteName;
+	}
+
     /**
      * Author: Scott Holdaway
      * Creates an XML element of the item by reading through all the fields
 	 * of the item. Subclasses will call this method and add their specific
 	 * data to it.
      */
+	@Override
     public Element toXML() {
     	Element itemElement = new Element("item");
     	itemElement.addContent(new Element("id").setText(this.getID()));
@@ -56,10 +56,10 @@ public abstract class Item implements Serializable {
      * Sets all the fields in this item based on an XML element of this item.
      * Subclasses will call this method and add their specific data to it.
      */
+	@Override
     public void loadXML(Game game, Element objectElement){
     	this.name = objectElement.getChildText("name");
     	this.description = objectElement.getChildText("description");
     	this.spriteName = objectElement.getChildText("spriteName");
     }
 }
-

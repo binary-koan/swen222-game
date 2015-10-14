@@ -50,7 +50,7 @@ public class PlayerTest {
 
     @Test
     public void testPickUpItem_valid() {
-        Item item = MockItem.createKey();
+        Holdable item = MockItem.createKey();
         Player player = MockPlayer.create();
 
         assertTrue(player.pickUp(item, null));
@@ -59,7 +59,7 @@ public class PlayerTest {
 
     @Test
     public void testPickUpItem_removeFromRoom() {
-        Item item = MockItem.createKey();
+        Holdable item = MockItem.createKey();
         Room room = MockRoom.createWithItem(item);
         Player player = MockPlayer.create(room);
 
@@ -69,18 +69,18 @@ public class PlayerTest {
 
     @Test
     public void testPickUpItem_removeFromContainer() {
-        Item item = MockItem.createKey();
+        Holdable item = MockItem.createKey();
         Container container = MockItem.createContainer(item);
         Player player = MockPlayer.create();
 
         assertTrue(player.pickUp(item, container));
-        assertFalse(container.containsItem(item));
+        assertFalse(container.getItems().contains(item));
     }
 
     @Test
     public void testPickUpItem_alreadyHolding() {
-        Item item = MockItem.createKey();
-        Item item2 = MockItem.createKey();
+        Holdable item = MockItem.createKey();
+        Holdable item2 = MockItem.createKey();
         Player player = MockPlayer.create();
 
         assertTrue(player.pickUp(item, null));

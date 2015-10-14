@@ -2,21 +2,21 @@ package game;
 
 import org.jdom2.Element;
 
-public class Key extends Item implements Pickable {
+public class Key extends Holdable {
 	public enum Color {
 		BLUE, GREEN, YELLOW, RED;
 
 		public static Color fromString(String color){
-			if(color.equals("BLUE")){
+			if(color.toUpperCase().equals("BLUE")){
 				return BLUE;
 			}
-			else if(color.equals("GREEN")){
+			else if(color.toUpperCase().equals("GREEN")){
 				return GREEN;
 			}
-			else if(color.equals("YELLOW")){
+			else if(color.toUpperCase().equals("YELLOW")){
 				return YELLOW;
 			}
-			else if(color.equals("RED")){
+			else if(color.toUpperCase().equals("RED")){
 				return RED;
 			}
 			else if(color.equals("null")){

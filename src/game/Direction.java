@@ -3,6 +3,48 @@ package game;
 public enum Direction {
     NORTH, EAST, SOUTH, WEST;
 
+    public static Direction random() {
+        return Direction.values()[(int)(Math.random() * Direction.values().length)];
+    }
+
+    public static Direction fromString(String s) {
+        if(s.toUpperCase().equals("NORTH")){
+            return NORTH;
+        }
+        else if(s.toUpperCase().equals("SOUTH")){
+            return SOUTH;
+        }
+        else if(s.toUpperCase().equals("EAST")){
+            return EAST;
+        }
+        else if(s.toUpperCase().equals("WEST")){
+            return WEST;
+        }
+        return NORTH;
+    }
+
+    public Direction next() {
+        Direction[] values = Direction.values();
+
+        if (this == values[0]) {
+            return values[values.length - 1];
+        }
+        else {
+            return values[ordinal() - 1];
+        }
+    }
+
+    public Direction previous() {
+        Direction[] values = Direction.values();
+
+        if (this == values[values.length - 1]) {
+            return values[0];
+        }
+        else {
+            return values[ordinal() + 1];
+        }
+    }
+
     public Direction opposite() {
         switch (this) {
             case NORTH:
@@ -54,47 +96,5 @@ public enum Direction {
         else {
             return first.opposite();
         }
-    }
-
-    public Direction next() {
-        Direction[] values = Direction.values();
-
-        if (this == values[0]) {
-            return values[values.length - 1];
-        }
-        else {
-            return values[ordinal() - 1];
-        }
-    }
-
-    public Direction previous() {
-        Direction[] values = Direction.values();
-
-        if (this == values[values.length - 1]) {
-            return values[0];
-        }
-        else {
-            return values[ordinal() + 1];
-        }
-    }
-
-    public static Direction fromString(String s){
-    	if(s.equals("NORTH")){
-    		return NORTH;
-    	}
-    	else if(s.equals("SOUTH")){
-    		return SOUTH;
-    	}
-    	else if(s.equals("EAST")){
-    		return EAST;
-    	}
-    	else if(s.equals("WEST")){
-    		return WEST;
-    	}
-    	return NORTH;
-    }
-
-    public static Direction random() {
-        return Direction.values()[(int)(Math.random() * Direction.values().length)];
     }
 }

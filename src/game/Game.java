@@ -23,6 +23,49 @@ public class Game implements StateChangeListener {
     	this.loader.saveWholeGame();
     }
 
+	public GameLoader getData() {
+		return loader;
+	}
+
+	public Map<String, Item> getItems() {
+		return items;
+	}
+
+	public Item getItem(String id) {
+		return items.get(id);
+	}
+
+	public void setItems(HashMap<String, Item> items) {
+		this.items = items;
+	}
+
+	public Map<String, Room> getRooms() {
+		return rooms;
+	}
+
+	public Room getRoom(String id) {
+		return rooms.get(id);
+	}
+
+	public void setRooms(HashMap<String, Room> rooms) {
+		this.rooms = rooms;
+	}
+
+	public Map<String, Player> getPlayers() {
+		return players;
+	}
+
+	public Player getPlayer(String playerName) {
+		return players.get(playerName);
+	}
+
+	public void addPlayer(Player player) {
+		this.players.put(player.getName(), player);
+
+		// Listen for changes in individual player state, and use them to trigger a global state change
+		player.addStateChangeListener(this);
+	}
+
     /**
      * Add a state change listener, which will be notified whenever the game state changes
      *
@@ -39,64 +82,4 @@ public class Game implements StateChangeListener {
 			listener.onStateChanged(player, type, message);
 		}
 	}
-
-    public void setItems(HashMap<String, Item> items){
-		this.items = items;
-	}
-
-	public Map<String, Item> getItems(){
-		return items;
-	}
-
-	public Item getItem(String id){
-		for(Map.Entry<String, Item> item : items.entrySet()){
-			if(item.getKey().equals(id)){
-				return item.getValue();
-			}
-		}
-		return null;
-	}
-
-    public void setRooms(HashMap<String, Room> rooms){
-    	this.rooms = rooms;
-    }
-
-    public Map<String , Room> getRooms(){
-		return rooms;
-	}
-
-	public Room getRoom(String id){
-		for(Map.Entry<String, Room> room : rooms.entrySet()){
-			if(room.getKey().equals(id)){
-				return room.getValue();
-			}
-		}
-		return null;
-	}
-
-    public void addPlayer(Player player) {
-        this.players.put(player.getName(), player);
-
-        // Listen for changes in individual player state, and use them to trigger a global state change
-        player.addStateChangeListener(this);
-    }
-
-    public Map<String, Player> getPlayers() {
-        return players;
-    }
-
-    public Player getPlayer(String playerName) {
-        for(Map.Entry<String, Player> player : players.entrySet()){
-        	if(player.getKey().equals(playerName)){
-        		return player.getValue();
-        	}
-        }
-        return null;
-    }
-
-    public GameLoader getData(){
-    	return loader;
-    }
-
 }
-

@@ -48,8 +48,8 @@ public class Room implements Serializable{
         public Item getItem() {
         	return item;
         }
-
 	}
+
     private String id;
 	private String name;
 	private Key.Color color;
@@ -72,6 +72,14 @@ public class Room implements Serializable{
     	return id;
     }
 
+	public String getName(){
+		return name;
+	}
+
+	public Key.Color getColor() {
+		return color;
+	}
+
 	public boolean hasWall(Direction position) {
 		Boolean result = wallConnections.get(position);
 		return result == null ? false : result;
@@ -85,29 +93,30 @@ public class Room implements Serializable{
 		roomConnections.put(direction, other);
 	}
 
+	public List<Player> getPlayers() {
+		return players;
+	}
+
+	public void addPlayer(Player player){
+		players.add(player);
+	}
+
+	public void removePlayer(Player player){
+		players.remove(player);
+	}
+
     public List<ItemInstance> getItems() {
         return items;
     }
 
-    public String getName(){
-    	return name;
-    }
-
-	public Key.Color getColor() {
-		return color;
+	public boolean containsItem(Item item) {
+		for (ItemInstance instance : items) {
+			if (instance.getItem().equals(item)) {
+				return true;
+			}
+		}
+		return false;
 	}
-
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    public void addPlayer(Player player){
-    	players.add(player);
-    }
-
-    public void removePlayer(Player player){
-    	players.remove(player);
-    }
 
 	public void addItem(Item item) {
 		Point3D position = new Point3D(
@@ -135,10 +144,6 @@ public class Room implements Serializable{
 		if (item instanceof Monster) {
 			monster = null;
 		}
-	}
-
-	public boolean containsItem(Item item) {
-		return false; //TODO
 	}
 
     public boolean containsMonster() {

@@ -21,23 +21,6 @@ public class Monster extends Item {
 		return soundEffect;
 	}
 
-	@Override
-	public Element toXML() {
-		Element monster = super.toXML();
-		monster.addContent(new Element("deadlyWeapon").setText(this.deadlyWeapon.getID()));
-		monster.addContent(new Element("soundEffect").setText(this.soundEffect));
-		monster.addContent(new Element("killMessage").setText(this.killMessage));
-		return monster;
-	}
-
-	@Override
-	public void loadXML(Game game, Element objectElement) {
-		super.loadXML(game, objectElement);
-		this.deadlyWeapon = (Weapon) game.getItem(objectElement.getChildText("deadlyWeapon"));
-		this.soundEffect = objectElement.getChildText("soundEffect");
-		this.killMessage = objectElement.getChildText("killMessage");
-	}
-
 	public boolean fight(Player player) {
 		// Sanity check to make sure the player and monster are in the same room
 		Room.ItemInstance instance = player.getRoom().getMonster();
@@ -53,5 +36,22 @@ public class Monster extends Item {
 			player.kill(killMessage);
 			return false;
 		}
+	}
+
+	@Override
+	public Element toXML() {
+		Element monster = super.toXML();
+		monster.addContent(new Element("deadlyWeapon").setText(this.deadlyWeapon.getID()));
+		monster.addContent(new Element("soundEffect").setText(this.soundEffect));
+		monster.addContent(new Element("killMessage").setText(this.killMessage));
+		return monster;
+	}
+
+	@Override
+	public void loadXML(Game game, Element objectElement) {
+		super.loadXML(game, objectElement);
+		this.deadlyWeapon = (Weapon) game.getItem(objectElement.getChildText("deadlyWeapon"));
+		this.soundEffect = objectElement.getChildText("soundEffect");
+		this.killMessage = objectElement.getChildText("killMessage");
 	}
 }

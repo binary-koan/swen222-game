@@ -2,9 +2,8 @@ package game;
 
 import org.jdom2.Element;
 
-public class Weapon extends Item implements Pickable {
-
-	public Weapon(String id, String name, String description, String spriteName){
+public class Weapon extends Holdable {
+	public Weapon(String id, String name, String description, String spriteName) {
 		super(id, name, description,spriteName);
 	}
 

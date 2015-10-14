@@ -66,10 +66,10 @@ public class GameActions {
      * Action representing the player picking up an item from their current room
      */
     public static class PickUp extends GameAction {
-        public final Item target;
+        public final Holdable target;
         public final Container container;
 
-        public PickUp(Player player, Item target, Container container) {
+        public PickUp(Player player, Holdable target, Container container) {
             super(player, "Pick up");
 
             this.target = target;
