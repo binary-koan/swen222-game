@@ -133,7 +133,7 @@ public class Player implements Drawable, Serializable {
             if (newRoom == null) {
                 return false;
             }
-            else if (newRoom.allowsEntry(this)) {
+            else if (newRoom.allowsEntry(this, movementDirection)) {
                 room.removePlayer(this);
                 newRoom.addPlayer(this);
                 room = newRoom;

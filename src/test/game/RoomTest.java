@@ -17,7 +17,7 @@ public class RoomTest {
         Room room = MockRoom.create(null);
         Player player = MockPlayer.create();
 
-        assertTrue(room.allowsEntry(player));
+        assertTrue(room.allowsEntry(player, null));
     }
 
     @Test
@@ -25,7 +25,7 @@ public class RoomTest {
         Room room = MockRoom.create(Key.Color.RED);
         Player player = MockPlayer.createWithHeldItem(MockItem.createKey(Key.Color.RED));
 
-        assertTrue(room.allowsEntry(player));
+        assertTrue(room.allowsEntry(player, null));
     }
 
     @Test
@@ -33,7 +33,7 @@ public class RoomTest {
         Room room = MockRoom.create(Key.Color.RED);
         Player player = MockPlayer.createWithHeldItem(MockItem.createKey(Key.Color.BLUE));
 
-        assertFalse(room.allowsEntry(player));
+        assertFalse(room.allowsEntry(player, null));
     }
 
     @Test
@@ -41,6 +41,6 @@ public class RoomTest {
         Room room = MockRoom.create(Key.Color.RED);
         Player player = MockPlayer.create();
 
-        assertFalse(room.allowsEntry(player));
+        assertFalse(room.allowsEntry(player, null));
     }
 }

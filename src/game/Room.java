@@ -154,8 +154,8 @@ public class Room implements Serializable{
         return monster;
     }
 
-	public boolean allowsEntry(Player player) {
-		if (color == null) {
+	public boolean allowsEntry(Player player, Direction entryDirection) {
+		if (color == null || !hasWall(entryDirection)) {
 			return true;
 		}
 		else {
