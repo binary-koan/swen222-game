@@ -10,9 +10,11 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -159,6 +161,7 @@ public class GameMenu {
 	            	characterImage.repaint();
 	            }
 	        }); 
+			
 			JButton buttonRight = new JButton();
 			buttonRight.addActionListener(new ActionListener() {
 				 
@@ -172,9 +175,9 @@ public class GameMenu {
 	            	characterImage.repaint();
 	            }
 	        }); 
-			ImageIcon i = new ImageIcon(loader.getImage("ui/arrow.png"));
-			buttonLeft.setIcon(i);
-			buttonRight.setIcon(i);
+	
+			buttonLeft.setIcon(new ImageIcon(loader.getImage("ui/arrow-left.png")));
+			buttonRight.setIcon(new ImageIcon(loader.getImage("ui/arrow.png")));
 			buttonPane.add(buttonLeft);
 			buttonPane.add(buttonRight);
 				
@@ -190,8 +193,6 @@ public class GameMenu {
 			add(buttonPane, BorderLayout.CENTER);
 			add(Box.createRigidArea(new Dimension(5,0)));
 			add(characterName, BorderLayout.SOUTH);
-			
-			
 		}
 		
 		public int getCharacterImage() {
@@ -201,6 +202,7 @@ public class GameMenu {
 		public String playerName() {
 			return name.getText();
 		}
+	
 	}
 
 	
