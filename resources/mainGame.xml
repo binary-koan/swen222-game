@@ -420,6 +420,15 @@
 	    <z>z281</z>
 	  </point>
 	</itemInstance>
+	<itemInstance>
+	  <item>redKey</item>
+	  <facingDirection>EAST</facingDirection>
+	  <point>
+	    <x>x160</x>
+	    <y>y60</y>
+	    <z>z160</z>
+	  </point>
+	</itemInstance>
       </roomItems>
       <roomPlayers>
       </roomPlayers>
@@ -898,6 +907,15 @@
       <description>Your species has evolved to the point where this water cooler will sustain them for a four year space journey.</description>
       <spriteName>objects/water-cooler.png</spriteName>
       <subClass>class game.Furniture</subClass>
+    </item>
+
+
+    <item>
+      <id>redKey</id>
+      <name>Key</name>
+      <description>A red key.</description>
+      <spriteName>objects/key-red.png</spriteName>
+      <subClass>class game.Key</subClass>
     </item>
 
 
