@@ -38,6 +38,10 @@ public class Key extends Holdable {
 		return this.color;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @author holdawscot
+	 */
 	@Override
 	public Element toXML() {
 		Element itemElement = super.toXML();
@@ -47,6 +51,10 @@ public class Key extends Holdable {
 		return itemElement;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @author holdawscot
+	 */
 	@Override
 	public void loadXML(Game game, Element objectElement) {
 		super.loadXML(game, objectElement);

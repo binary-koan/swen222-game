@@ -21,7 +21,7 @@ public class XMLTester {
 
 
 
-		/*
+
         Game game = new Game("resources/mainGame.xml", "resources/continueGame.xml");
         Player playerTest = new Player("Player 1", "characters/alien1.png", game.getRoom("rx0y1"));
         System.out.println(playerTest.getName());
@@ -85,7 +85,7 @@ public class XMLTester {
         	System.out.println(pl.getValue().getName());
         }
         System.out.println("==========End=================");
-		 */
+
 
 	}
 }

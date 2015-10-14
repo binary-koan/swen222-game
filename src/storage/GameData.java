@@ -16,6 +16,13 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
+
+/**
+ * This class is responsible for saving and loading the game from XML,
+ * and setting data associations.
+ * @author holdawscot
+ *
+ */
 public class GameData {
 	private String XMLFilename;
 	private Document gameDoc;
