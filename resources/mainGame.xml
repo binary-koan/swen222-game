@@ -613,8 +613,8 @@
     <item>
       <id>craterx0y10</id>
       <name>Crate</name>
-      <description>A simple storage crate.</description>
-      <spriteName>objects/chest-blue.png</spriteName>
+      <description>A simple storage crate. It looks empty, and you don't have time to investigate further.</description>
+      <spriteName>objects/chest-empty.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
 
@@ -622,8 +622,8 @@
     <item>
       <id>craterx0y11</id>
       <name>Crate</name>
-      <description>A simple storage crate.</description>
-      <spriteName>objects/chest-blue.png</spriteName>
+      <description>A simple storage crate. It looks empty, and you don't have time to investigate further.</description>
+      <spriteName>objects/chest-empty.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
 
@@ -631,8 +631,8 @@
     <item>
       <id>craterx0y12</id>
       <name>Crate</name>
-      <description>A simple storage crate.</description>
-      <spriteName>objects/chest-blue.png</spriteName>
+      <description>A simple storage crate. It looks empty, and you don't have time to investigate further.</description>
+      <spriteName>objects/chest-empty.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
 
@@ -650,7 +650,7 @@
     <item>
       <id>windowrx0y1</id>
       <name>Window</name>
-      <description>Where is the spaceship even going?</description>
+      <description>You see your home planet getting closer alarmingly quickly.</description>
       <spriteName>objects/window.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
@@ -695,7 +695,7 @@
     <item>
       <id>containerrx0y3</id>
       <name>Container</name>
-      <description>A yellow container.</description>
+      <description>A yellow container. You sneer at the ease with which you can force the lock open.</description>
       <spriteName>objects/chest-yellow.png</spriteName>
       <subClass>class game.Container</subClass>
       <containerItems>
@@ -757,7 +757,7 @@
     <item>
       <id>containerrx0y4</id>
       <name>Container</name>
-      <description>A purple container.</description>
+      <description>A blue container. You sneer at the ease with which you can force the lock open.</description>
       <spriteName>objects/chest-blue.png</spriteName>
       <subClass>class game.Container</subClass>
       <containerItems>
@@ -922,7 +922,7 @@
     <item>
       <id>containerrx2y2</id>
       <name>Container</name>
-      <description>A red container.</description>
+      <description>A reddish orangeish container. You sneer at the ease with which you can force the lock open.</description>
       <spriteName>objects/chest-red.png</spriteName>
       <subClass>class game.Container</subClass>
       <containerItems>
@@ -980,7 +980,7 @@
     <item>
       <id>containerx2y3</id>
       <name>Container</name>
-      <description>A green container.</description>
+      <description>A green container. You sneer at the ease with which you can force the lock open.</description>
       <spriteName>objects/chest-green.png</spriteName>
       <subClass>class game.Container</subClass>
       <containerItems>
