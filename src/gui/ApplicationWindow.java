@@ -82,23 +82,23 @@ public class ApplicationWindow extends JFrame implements KeyListener, StateChang
 	     JMenuItem saveMenuItem = new JMenuItem("Save");
 	     saveMenuItem.setActionCommand("Save");
 	     saveMenuItem.addActionListener(new ActionListener() {
-			 @Override
-			 public void actionPerformed(ActionEvent event) {
-				 game.getData().saveWholeGame();
+             @Override
+             public void actionPerformed(ActionEvent event) {
+                 game.getData().saveWholeGame();
 
-			 }
-		 });
+             }
+         });
 
 	     JMenuItem exitMenuItem = new JMenuItem("Exit");
 	     exitMenuItem.setActionCommand("Exit");
 	     exitMenuItem.addActionListener(new ActionListener() {
-			 @Override
-			 public void actionPerformed(ActionEvent event) {
+             @Override
+             public void actionPerformed(ActionEvent event) {
 
-				 game.saveGame();
-				 System.exit(0);
-			 }
-		 });
+                 game.saveGame();
+                 System.exit(0);
+             }
+         });
 
 
 	     fileMenu.add(openMenuItem);
@@ -188,7 +188,9 @@ public class ApplicationWindow extends JFrame implements KeyListener, StateChang
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-            canvas.startDrop();
+            if (image != null) {
+                canvas.startDrop();
+            }
 		}
 
 		@Override
