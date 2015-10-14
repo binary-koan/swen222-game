@@ -1,15 +1,7 @@
 package storage;
 //Author: Scott Holdaway
 
-import game.Container;
-import game.Furniture;
-import game.Game;
-import game.Item;
-import game.Key;
-import game.Monster;
-import game.Player;
-import game.Room;
-import game.Weapon;
+import game.*;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -96,6 +88,9 @@ public class GameLoader {
 		case "class game.Container":
 			currentItem = new Container(id, name, description, spriteName);
 			return currentItem;
+		case "class game.Holdable":
+			currentItem = new Holdable(id, name, description, spriteName);
+			return currentItem;
 		case "class game.Key":
 			currentItem = new Key(id, name, description, Key.Color.RED); //TODO
 			return currentItem;
@@ -136,8 +131,7 @@ public class GameLoader {
 	 * @param e The element to be read.
 	 * @return A new room.
 	 */
-	private Room constructRoomInitial(Element e){
-		//TODO colour
+	private Room constructRoomInitial(Element e) {
 		Room currentRoom = new Room(e.getChildText("id"), e.getChildText("name"), null);
 		return currentRoom;
 	}

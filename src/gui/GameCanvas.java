@@ -207,7 +207,7 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
             tooltip.setVisible(false);
         }
 
-        // Play monster sounds if available
+        // Play monster sound if the player moves into a room containing one
         if (type == Type.MOVE && player.getRoom().getMonster() != null) {
             Monster monster = (Monster)player.getRoom().getMonster().getItem();
             loader.playSoundEffect(monster.getSoundEffect());
