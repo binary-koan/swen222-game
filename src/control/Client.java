@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.net.Socket;
 
 public class Client {
-
+	//penis
 	public final static int SOCKET_PORT = 13250; // you may change this
 	public final static String SERVER = "127.0.0.1"; // localhost
 	public final static String FILE_TO_RECEIVED = "/u/students/holdawscot/poorOldIreland.xml"; //
