@@ -1,50 +1,146 @@
 package control;
 
-import game.Game;
+import com.sun.net.httpserver.Headers;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
+
+import game.StateChangeListener;
+import gui.actions.GameActions;
+import gui.actions.GameActions.GameAction;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.InetSocketAddress;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.*;
-import java.io.*;
-import java.net.*;
+import java.util.concurrent.Executors;
 
-/**
- * A master connection receives events from a slave connection via a socket.
- * These events are registered with the board. The master connection is also
- * responsible for transmitting information to the slave about the current board
- * state.
- */
-public final class Server extends Thread {
+public class Server {
+    HttpServer server;
+    String filename;
 
-	private final Game game;
-	private final int broadcastClock;
-	private final int uid;
-	private final Socket socket;
+    public Server(HttpHandler handler) {
+        try {
+            InetSocketAddress addr = new InetSocketAddress(8080);
+            HttpServer server = HttpServer.create(addr, 0);
 
-	public Server(Socket socket, int uid, int broadcastClock, Game game) {
-		this.game = game;
-		this.broadcastClock = broadcastClock;
-		this.socket = socket;
-		this.uid = uid;
+            server.createContext("/", handler);
+            server.setExecutor(Executors.newCachedThreadPool());
+            server.start();
+            System.out.println("Server is listening on port 8080");
+        }
+        catch (IOException e) {
+            System.out.println("failed to create server ...");
+        }
+    }
+
+
+
+
+	public void sendAction(String url, GameAction action) throws IOException {
+
+		URLConnection connection = new URL(url + "?" + action.serialize())
+				.openConnection();
+		connection.setRequestProperty("Accept-Charset", charset);
+
+		InputStream response = connection.getInputStream();
+		response.close();
+
 	}
 
-	public void run() {
-		try {
-			DataInputStream input = new DataInputStream(socket.getInputStream());
-			DataOutputStream output = new DataOutputStream(
-					socket.getOutputStream());
-			// First, write the period to the stream
-			boolean exit = false;
-			while (!exit) {
-				try {
-					if (input.available() != 0) {
 
-						Thread.sleep(broadcastClock);
-					}
-				} catch (InterruptedException e) {
-				}
-			}
-			socket.close(); // release socket ... v.important!
-		} catch (IOException e) {
-			System.err.println("PLAYER " + uid + " DISCONNECTED");
 
-		}
-	}
+
+    public void readAction(HttpExchange exchange) throws IOException{
+
+    	String content = exchange.getRequestURI().getQuery();
+        GameAction g = GameAction.deserialize(content, client_game);
+        if (g.apply()) {
+            for (client in clients) {
+            	sendAction(client.url, action);
+            }
+        }
+
+    }
+
+    public void sendXML(OutputStream fileStream) throws IOException{
+
+    	File myFile = new File(filename);
+		byte[] mybytearray = new byte[(int) myFile.length()];
+		FileInputStream fileInputStream = new FileInputStream(myFile);
+		BufferedInputStream bufInputStream = new BufferedInputStream(fileInputStream);
+		bufInputStream.read(mybytearray, 0, mybytearray.length);
+		System.out.println("Sending " + "FILE_TO_SEND" + "("
+				+ mybytearray.length + " bytes)");
+		fileStream.write(mybytearray, 0, mybytearray.length);
+		fileStream.flush();
+		fileStream.close();
+    }
+
+
+
+
+
+    class MyHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            String requestMethod = exchange.getRequestMethod();
+            // GET <ip>:<port>/xml
+            if (requestMethod.equalsIgnoreCase("GET") && exchange.getRequestURI().getPath().equals("/action")) {
+            	readAction(exchange);
+            }
+
+            if(requestMethod.equalsIgnoreCase("GET") &&exchange.getRequestURI().getPath().equals("/xml")){
+            	OutputStream responseBody = exchange.getResponseBody();
+            	sendXML(responseBody);
+            }
+
+
+
+
+
+            	Headers responseHeaders = exchange.getResponseHeaders();
+                responseHeaders.set("Content-Type", "text/plain");
+                exchange.sendResponseHeaders(200, 0);
+
+
+
+
+
+            }
+
+
+//            if(requestMethod.equalsIgnoreCase("GET") && exchange.getRequestURI().getPath().equals("/action")){
+//
+//            	Client.this.readAction(exchange);
+////
+////            	// read string from that
+////            	GameAction action = GameActions.GameAction.deserialize(exchange.getRequestURI().getQuery(), server_game);
+////            	//error handling
+////            	//game
+////            	action.apply();
+////
+////            	String gameAction = action.serialize();
+////
+////
+////            	OutputStreamWriter responseBody = new OutputStreamWriter(exchange.getResponseBody());
+////            	responseBody.write(gameAction);
+//
+
+
+
+        }
+
+
+
+
+
+
 }
