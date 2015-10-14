@@ -28,13 +28,22 @@ import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.plaf.synth.SynthLookAndFeel;
 
-
+/**
+ * Displays a Game type menu to get input from user for Game name and player name
+ * as well as character selection 
+ * @author Shanon Beary
+ *
+ */
 public class GameMenu {
 
 	private JFrame frame;
 	private int width;
 	private int height;
 
+	/**
+	 * Constructor for Game menu which creates and add items to the menu 
+	 * @param loader - To load files from resources 
+	 */
 	public GameMenu(final ResourceManager loader) {
 		EventQueue.invokeLater(new Runnable() {
 
@@ -70,6 +79,11 @@ public class GameMenu {
 		});
 	}
 
+	/**
+	 * Left Window pane to receive user input to start multiplayer or single game  
+	 * @author Shanon Beary
+	 *
+	 */
 	private class GameWindow extends JPanel {
 
 		public GameWindow(ResourceManager loader, CharacterView info) {
@@ -104,7 +118,7 @@ public class GameMenu {
 					}
 					else {
 						JOptionPane.showMessageDialog(null,"Please Enter Gamename and Player Name",
-								"WARNING",JOptionPane.PLAIN_MESSAGE);
+								"WARNING",JOptionPane.PLAIN_MESSAGE); //Warning message when game name and player name not entered
 					}
 				}
 			});
@@ -186,6 +200,12 @@ public class GameMenu {
 		}
 	}
 
+	/**
+	 * Shows characters for player to selection in the application window
+	 * As well player entering their character name 
+	 * @author Shanon Beary
+	 *
+	 */
 	private class CharacterView extends JPanel {
 
 		private int nextAlien;
