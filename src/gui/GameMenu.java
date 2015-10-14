@@ -3,6 +3,7 @@ package gui;
 import game.Direction;
 import game.Game;
 import game.Player;
+import game.Room;
 import gui.actions.SinglePlayerClient;
 
 import java.awt.BorderLayout;
@@ -13,6 +14,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.Map.Entry;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -82,32 +85,62 @@ public class GameMenu {
 			setPreferredSize(new Dimension(width/2, height));
 			JTextField port = new JTextField();
 			JTextField url = new JTextField();
+			JTextField gameName = new JTextField();
 			add(new JLabel("Port"));
 			add(port);
 			add(new JLabel("URL"));
 			add(url);
+			add(new JLabel("Game Name"));
+			add(gameName);
+
 			JButton client = new JButton("Client");
 			client.addActionListener(new ActionListener() {
 
 	            public void actionPerformed(ActionEvent e)
 	            {
-	            	final Game game = new Game("resources/mainGame.xml", "resources/continueGame.xml");
-	            	final Player player2;
-	            	final Player player;
-	            	player2 = new Player(info.playerName(), "characters/alien" +
-	            			 info.getCharacterImage() + ".png", game.getRoom("rx1y2"));
-	            	player = new Player(info.playerName(), "characters/alien" +
-	            			 info.getCharacterImage() + ".png", game.getRoom("rx1y2"));
-	            	player2.turn(Direction.NORTH);
-	            	player.turn(Direction.NORTH);
-	                game.addPlayer(player2);
-	                game.addPlayer(player);
-	                game.getData().saveWholeGame();
+
+	            	final Game game;
+	            	Player runPlayer;
+
+	            	if (new File("resources/"+gameName.getText()+".xml").exists()){
+	            		game= new Game("resources/"+gameName.getText()+".xml", "resources/"+gameName.getText()+".xml");
+	            		if(game.getPlayer(info.playerName()) != null){
+	            			runPlayer = game.getPlayer(info.playerName());
+	            			for (Entry<String, Room> r : game.getRooms().entrySet()) {
+	            				r.getValue().getPlayers().clear();
+	            			}
+	            			game.addPlayer(runPlayer);
+	            		}
+	            		else{
+	            			runPlayer = new Player(info.playerName(), "characters/alien" +
+			            			 info.getCharacterImage() + ".png", game.getRoom("rx1y2"));
+	            			for (Entry<String, Room> r : game.getRooms().entrySet()) {
+	            				r.getValue().getPlayers().clear();
+	            			}
+	            			game.addPlayer(runPlayer);
+	            		}
+	            	} else {
+	            		game= new Game("resources/mainGame.xml", "resources/"+gameName.getText()+".xml");
+
+		            	final Player player;
+		            	player = new Player(info.playerName(), "characters/alien" +
+		            			 info.getCharacterImage() + ".png", game.getRoom("rx1y2"));
+
+		            	player.turn(Direction.NORTH);
+		                game.addPlayer(player);
+		                game.saveGame();
+		                runPlayer = player;
+	            	}
+
+
+
+
+
 
 	                SwingUtilities.invokeLater(new Runnable() {
 	                    public void run() {
 	                        ApplicationWindow aw = new ApplicationWindow(
-	                                loader, frame, game, player2, new SinglePlayerClient()
+	                                loader, frame, game, runPlayer, new SinglePlayerClient()
 	                        );
 	                        aw.pack();
 	                        aw.setVisible(true);
