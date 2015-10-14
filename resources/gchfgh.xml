@@ -196,6 +196,7 @@
       <subClass>class game.Container</subClass>
       <containerItems>
         <item>fusionPistol</item>
+        <item>yellowKey</item>
       </containerItems>
     </item>
     <item>
@@ -370,24 +371,15 @@
             <z>z160</z>
           </point>
         </itemInstance>
-        <itemInstance>
-          <item>empBomb</item>
-          <facingDirection>NORTH</facingDirection>
-          <point>
-            <x>x210</x>
-            <y>y0</y>
-            <z>z90</z>
-          </point>
-        </itemInstance>
       </roomItems>
       <roomPlayers />
       <roomConnections>
         <entry>NORTH-rx0y3</entry>
       </roomConnections>
       <wallConnections>
-        <entry>WEST-true</entry>
         <entry>SOUTH-true</entry>
         <entry>NORTH-false</entry>
+        <entry>WEST-true</entry>
         <entry>EAST-true</entry>
       </wallConnections>
     </room>
@@ -417,14 +409,14 @@
       </roomItems>
       <roomPlayers />
       <roomConnections>
-        <entry>WEST-rx0y3</entry>
         <entry>NORTH-rx1y2</entry>
+        <entry>WEST-rx0y3</entry>
         <entry>EAST-rx2y3</entry>
       </roomConnections>
       <wallConnections>
-        <entry>WEST-true</entry>
         <entry>SOUTH-true</entry>
         <entry>NORTH-false</entry>
+        <entry>WEST-true</entry>
         <entry>EAST-true</entry>
       </wallConnections>
     </room>
@@ -463,13 +455,13 @@
       </roomItems>
       <roomPlayers />
       <roomConnections>
-        <entry>WEST-rx1y2</entry>
         <entry>NORTH-rx2y1</entry>
+        <entry>WEST-rx1y2</entry>
       </roomConnections>
       <wallConnections>
-        <entry>WEST-false</entry>
         <entry>SOUTH-true</entry>
         <entry>NORTH-true</entry>
+        <entry>WEST-false</entry>
         <entry>EAST-true</entry>
       </wallConnections>
     </room>
@@ -512,9 +504,9 @@
         <entry>EAST-rx1y3</entry>
       </roomConnections>
       <wallConnections>
-        <entry>WEST-true</entry>
         <entry>SOUTH-false</entry>
         <entry>NORTH-true</entry>
+        <entry>WEST-true</entry>
         <entry>EAST-true</entry>
       </wallConnections>
     </room>
@@ -523,17 +515,19 @@
       <name>Corridor - Mid</name>
       <color>null</color>
       <roomItems />
-      <roomPlayers />
+      <roomPlayers>
+        <name>fghfghfghfgh</name>
+      </roomPlayers>
       <roomConnections>
-        <entry>WEST-rx0y2</entry>
         <entry>SOUTH-rx1y3</entry>
         <entry>NORTH-rx1y1</entry>
+        <entry>WEST-rx0y2</entry>
         <entry>EAST-rx2y2</entry>
       </roomConnections>
       <wallConnections>
-        <entry>WEST-false</entry>
         <entry>SOUTH-false</entry>
         <entry>NORTH-false</entry>
+        <entry>WEST-false</entry>
         <entry>EAST-false</entry>
       </wallConnections>
     </room>
@@ -579,12 +573,12 @@
           </point>
         </itemInstance>
         <itemInstance>
-          <item>yellowKey</item>
-          <facingDirection>SOUTH</facingDirection>
+          <item>redKey</item>
+          <facingDirection>EAST</facingDirection>
           <point>
-            <x>x142</x>
-            <y>y0</y>
-            <z>z218</z>
+            <x>x160</x>
+            <y>y60</y>
+            <z>z160</z>
           </point>
         </itemInstance>
       </roomItems>
@@ -593,9 +587,9 @@
         <entry>SOUTH-rx2y2</entry>
       </roomConnections>
       <wallConnections>
-        <entry>WEST-true</entry>
         <entry>SOUTH-true</entry>
         <entry>NORTH-true</entry>
+        <entry>WEST-true</entry>
         <entry>EAST-true</entry>
       </wallConnections>
     </room>
@@ -604,6 +598,15 @@
       <name>Engine Room - Starboard-aft</name>
       <color>null</color>
       <roomItems>
+        <itemInstance>
+          <item>fullBucketrx2y4</item>
+          <facingDirection>WEST</facingDirection>
+          <point>
+            <x>x39</x>
+            <y>y0</y>
+            <z>z140</z>
+          </point>
+        </itemInstance>
         <itemInstance>
           <item>engineDamaged</item>
           <facingDirection>NORTH</facingDirection>
@@ -640,26 +643,15 @@
             <z>z39</z>
           </point>
         </itemInstance>
-        <itemInstance>
-          <item>blueKey</item>
-          <facingDirection>SOUTH</facingDirection>
-          <point>
-            <x>x62</x>
-            <y>y0</y>
-            <z>z124</z>
-          </point>
-        </itemInstance>
       </roomItems>
-      <roomPlayers>
-        <name>Seeyiyay</name>
-      </roomPlayers>
+      <roomPlayers />
       <roomConnections>
         <entry>NORTH-rx2y3</entry>
       </roomConnections>
       <wallConnections>
-        <entry>WEST-true</entry>
         <entry>SOUTH-true</entry>
         <entry>NORTH-false</entry>
+        <entry>WEST-true</entry>
         <entry>EAST-true</entry>
       </wallConnections>
     </room>
@@ -698,13 +690,13 @@
       </roomItems>
       <roomPlayers />
       <roomConnections>
-        <entry>WEST-rx1y3</entry>
         <entry>SOUTH-rx2y4</entry>
+        <entry>WEST-rx1y3</entry>
       </roomConnections>
       <wallConnections>
-        <entry>WEST-true</entry>
         <entry>SOUTH-false</entry>
         <entry>NORTH-true</entry>
+        <entry>WEST-true</entry>
         <entry>EAST-true</entry>
       </wallConnections>
     </room>
@@ -746,9 +738,9 @@
         <entry>EAST-rx1y2</entry>
       </roomConnections>
       <wallConnections>
-        <entry>WEST-true</entry>
         <entry>SOUTH-true</entry>
         <entry>NORTH-true</entry>
+        <entry>WEST-true</entry>
         <entry>EAST-false</entry>
       </wallConnections>
     </room>
@@ -787,14 +779,14 @@
       </roomItems>
       <roomPlayers />
       <roomConnections>
-        <entry>WEST-rx0y1</entry>
         <entry>SOUTH-rx1y2</entry>
         <entry>NORTH-rx1y0</entry>
+        <entry>WEST-rx0y1</entry>
       </roomConnections>
       <wallConnections>
-        <entry>WEST-true</entry>
         <entry>SOUTH-false</entry>
         <entry>NORTH-true</entry>
+        <entry>WEST-true</entry>
         <entry>EAST-true</entry>
       </wallConnections>
     </room>
@@ -831,6 +823,15 @@
           </point>
         </itemInstance>
         <itemInstance>
+          <item>blueKey</item>
+          <facingDirection>NORTH</facingDirection>
+          <point>
+            <x>x45</x>
+            <y>y-10</y>
+            <z>z290</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
           <item>lightSwitchrx0y1</item>
           <facingDirection>WEST</facingDirection>
           <point>
@@ -848,24 +849,15 @@
             <z>z160</z>
           </point>
         </itemInstance>
-        <itemInstance>
-          <item>redKey</item>
-          <facingDirection>EAST</facingDirection>
-          <point>
-            <x>x266</x>
-            <y>y0</y>
-            <z>z220</z>
-          </point>
-        </itemInstance>
       </roomItems>
       <roomPlayers />
       <roomConnections>
         <entry>EAST-rx1y1</entry>
       </roomConnections>
       <wallConnections>
-        <entry>WEST-true</entry>
         <entry>SOUTH-true</entry>
         <entry>NORTH-true</entry>
+        <entry>WEST-true</entry>
         <entry>EAST-true</entry>
       </wallConnections>
     </room>
@@ -901,26 +893,35 @@
             <z>z320</z>
           </point>
         </itemInstance>
+        <itemInstance>
+          <item>empBomb</item>
+          <facingDirection>NORTH</facingDirection>
+          <point>
+            <x>x210</x>
+            <y>y0</y>
+            <z>z90</z>
+          </point>
+        </itemInstance>
       </roomItems>
       <roomPlayers />
       <roomConnections>
         <entry>SOUTH-rx1y1</entry>
       </roomConnections>
       <wallConnections>
-        <entry>WEST-true</entry>
         <entry>SOUTH-true</entry>
         <entry>NORTH-true</entry>
+        <entry>WEST-true</entry>
         <entry>EAST-true</entry>
       </wallConnections>
     </room>
   </gameRooms>
   <gamePlayers>
     <player>
-      <name>Seeyiyay</name>
+      <name>fghfghfghfgh</name>
       <spriteName>characters/alien1.png</spriteName>
-      <room>rx2y4</room>
-      <facingDirection>SOUTH</facingDirection>
-      <heldItem>fullBucketrx2y4</heldItem>
+      <room>rx1y2</room>
+      <facingDirection>NORTH</facingDirection>
+      <heldItem />
     </player>
   </gamePlayers>
 </game>

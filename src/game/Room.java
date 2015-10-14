@@ -156,7 +156,7 @@ public class Room implements Serializable{
     }
 
 	public boolean allowsEntry(Player player, Direction entryDirection) {
-		if (color == null || !hasWall(entryDirection)) {
+		if (color == null || !hasWall(entryDirection.opposite())) {
 			return true;
 		}
 		else {

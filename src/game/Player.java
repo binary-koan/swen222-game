@@ -199,6 +199,11 @@ public class Player implements Drawable, Serializable {
         return null;
     }
 
+    /**
+     * The main state change trigger for actions performed by the player.
+     * @param type StateChangeListener action, eg MOVE, DROP.
+     * @param message The message displayed to the screen.
+     */
     public void triggerStateChange(StateChangeListener.Type type, String message) {
         for (StateChangeListener listener : stateChangeListeners) {
             listener.onStateChanged(this, type, message);
