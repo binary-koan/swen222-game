@@ -45,7 +45,7 @@ public class ApplicationWindow extends JFrame implements KeyListener{
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension scale = new Dimension();
 		scale.setSize(screenSize.getWidth() * 0.5, screenSize.getHeight() * 0.6);
-		setPreferredSize(scale);
+		canvas.setPreferredSize(scale);
 
 		setLayout(new BorderLayout());
 
@@ -110,9 +110,8 @@ public class ApplicationWindow extends JFrame implements KeyListener{
 		JPanel inventory = new JPanel();
 		
 
-		inventory.setLayout(new GridLayout(1,1, 0, 0));
-		//inventory.setPreferredSize(new Dimension((int)(area.getWidth() * 0.2), (int)(canvas.getHeight() * 0.3)));
-		inventory.add(new ImagePanel("key", loader));
+		inventory.setLayout(new BorderLayout());
+		inventory.add(new ImagePanel("key", loader), BorderLayout.EAST);
 		
 
 
@@ -130,7 +129,7 @@ public class ApplicationWindow extends JFrame implements KeyListener{
 			game.addStateChangeListener(this);
 			
 			addMouseListener(this);
-			this.setPreferredSize(new Dimension(40, 40));
+			setPreferredSize(new Dimension(200, 100));
 			this.setBackground(Color.DARK_GRAY);
 
 		}
@@ -138,7 +137,7 @@ public class ApplicationWindow extends JFrame implements KeyListener{
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			if (image != null) {
-				g.drawImage(image, 5, 5, this.getWidth() - 5, this.getHeight() - 5, null);
+				g.drawImage(image, 10, 5, this.getWidth() /2, this.getHeight() - 5, null);
 			}
 			g.setColor(Color.DARK_GRAY);
 			g.drawRect(0, 0, this.getWidth(), this.getHeight());
