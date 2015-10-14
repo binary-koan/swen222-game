@@ -24,17 +24,6 @@ import gui.actions.ActionHandler;
 import gui.actions.GameActions;
 import gui.renderer.HUD;
 
-/**
- * Constructor for Game menu which creates and add items to the menu 
- * @param loader - To load files from resources 
- */
-/**
- * Displays a Game type menu to get input from user for Game name and player name
- * as well as character selection 
- * @author Shanon Beary
- *
- */
-
 
 /**
  * Window to display game canvas including an inventory for the game where each character 
@@ -193,6 +182,11 @@ public class ApplicationWindow extends JFrame implements KeyListener, StateChang
 		}
 	}
 
+	/**
+	 * Loading images onto inventory every time player picks up item
+	 * @author Shanon Beary
+	 *
+	 */
 	private class ImagePanel extends JPanel implements MouseListener {
 		private BufferedImage image;
 		private ResourceManager loader;
