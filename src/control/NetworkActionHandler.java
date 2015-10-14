@@ -45,6 +45,15 @@ public class NetworkActionHandler implements ActionHandler {
         requestGameXML();
     }
 
+    public void addLoadListener(LoadListener listener) {
+        if (game == null) {
+            loadListeners.add(listener);
+        }
+        else {
+            listener.onGameLoaded(game, game.getPlayer(playerName));
+        }
+    }
+
     private void startLocalServer() {
         try {
             InetSocketAddress addr = new InetSocketAddress(PORT);
@@ -100,18 +109,18 @@ public class NetworkActionHandler implements ActionHandler {
 			bytesRead = response.read(mybytearray, 0, mybytearray.length);
 			current = bytesRead;
 
-			while (bytesRead > -1){
-				bytesRead = response.read(mybytearray, current,
-						(mybytearray.length - current));
-				if (bytesRead >= 0)
-					current += bytesRead;
+			while (bytesRead > -1) {
+				bytesRead = response.read(mybytearray, current, (mybytearray.length - current));
+                if (bytesRead >= 0) {
+                    current += bytesRead;
+                }
 			}
 			bos.write(mybytearray, 0, current);
 			bos.flush();
 			System.out.println("File " + "resources/clientGame.xml" + " downloaded ("
 					+ current + " bytes read)");
 
-			game = new Game("resources/clientGame.xml", "resources/clientGame.xml");
+			game = new Game("resources/clientGame.xml", "resources/clientGame2.xml");
 			Player player = game.getPlayer(playerName);
             for (LoadListener listener : loadListeners) {
                 listener.onGameLoaded(game, player);

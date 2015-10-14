@@ -1,20 +1,18 @@
 package gui;
 
+import control.NetworkActionHandler;
 import game.Direction;
 import game.Game;
 import game.Player;
 import game.Room;
 import gui.actions.SinglePlayerClient;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Graphics;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.swing.BoxLayout;
@@ -36,12 +34,12 @@ public class GameMenu {
 	private JFrame frame;
 	private int width;
 	private int height;
-	
+
 	public GameMenu(final ResourceManager loader) {
 		EventQueue.invokeLater(new Runnable() {
 
-			
-		public void run() {
+
+			public void run() {
 //				SynthLookAndFeel lookAndFeel = new SynthLookAndFeel();
 //				try {
 //					lookAndFeel.load(ApplicationWindow.class.getResourceAsStream("style/synthStyle.xml"), ApplicationWindow.class);
@@ -87,69 +85,104 @@ public class GameMenu {
 			add(new JLabel("Game Name"));
 			add(gameName);
 
-			JButton client = new JButton("Client");
+			JButton client = new JButton("Start");
 			client.addActionListener(new ActionListener() {
 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	if (!gameName.getText().isEmpty() && !info.playerName().isEmpty() ) {
-	            	final Game game;
-	            	Player runPlayer;
+				public void actionPerformed(ActionEvent e)
+				{
+					if (info.playerName().isEmpty()) {
+						JOptionPane.showMessageDialog(null,"Please enter a player name!",
+								"WARNING",JOptionPane.PLAIN_MESSAGE);
+						return;
+					}
 
-	            	if (new File("resources/"+gameName.getText()+".xml").exists()){
-	            		game= new Game("resources/"+gameName.getText()+".xml", "resources/"+gameName.getText()+".xml");
-	            		if(game.getPlayer(info.playerName()) != null){
-	            			runPlayer = game.getPlayer(info.playerName());
-	            			for (Entry<String, Room> r : game.getRooms().entrySet()) {
-	            				r.getValue().getPlayers().clear();
-	            			}
-	            			game.addPlayer(runPlayer);
-	            	}
-	            		
-	            		else{
-	            			runPlayer = new Player(info.playerName(), "characters/alien" +
-			            			 info.getCharacterImage() + ".png", game.getRoom("rx1y2"));
-	            			for (Entry<String, Room> r : game.getRooms().entrySet()) {
-	            				r.getValue().getPlayers().clear();
-	            			}
-	            			game.addPlayer(runPlayer);
-	            		}
-	            	} else {
-	            		
-	            		game= new Game("resources/mainGame.xml", "resources/"+gameName.getText()+".xml");
+					if (!gameName.getText().isEmpty() && !info.playerName().isEmpty() ) {
+						startLocalGame(gameName.getText(), info, loader);
+					}
+					else if (!url.getText().isEmpty() && !port.getText().isEmpty()) {
+						startNetworkGame(url.getText(), port.getText(), info, loader);
+					}
+					else {
+						JOptionPane.showMessageDialog(null,"Please Enter Gamename and Player Name",
+								"WARNING",JOptionPane.PLAIN_MESSAGE);
+					}
+				}
+			});
 
-		            	final Player player;
-		            	player = new Player(info.playerName(), "characters/alien" +
-		            			 info.getCharacterImage() + ".png", game.getRoom("rx1y2"));
-
-		            	player.turn(Direction.NORTH);
-		                game.addPlayer(player);
-		                game.saveGame();
-		                runPlayer = player;
-	            		
-	            	}
-	            	
-	            	 SwingUtilities.invokeLater(new Runnable() {
-		                    public void run() {
-		                        ApplicationWindow aw = new ApplicationWindow(
-		                                loader, frame, game, runPlayer, new SinglePlayerClient()
-		                        );
-		                        aw.pack();
-		                        aw.setVisible(true);
-		                    }
-		                });
-	            	} else {
-	            		JOptionPane.showMessageDialog(null,"Please Enter Gamename and Player Name",
-	            				"WARNING",JOptionPane.PLAIN_MESSAGE);
-	            	}
-	            }
-	        });
-
-
-
-			JButton server = new JButton("Server");
 			add(client);
-			add(server);
+		}
+
+		private void startLocalGame(String gameName, CharacterView info, final ResourceManager loader) {
+			final Game game;
+			Player runPlayer;
+
+			if (new File("resources/"+gameName+".xml").exists()){
+                game = new Game("resources/"+gameName+".xml", "resources/"+gameName+".xml");
+
+                if(game.getPlayer(info.playerName()) != null){
+                    runPlayer = game.getPlayer(info.playerName());
+                    for (Entry<String, Room> r : game.getRooms().entrySet()) {
+                        r.getValue().getPlayers().clear();
+                    }
+                    game.addPlayer(runPlayer);
+                }
+                else {
+                    runPlayer = new Player(info.playerName(), "characters/alien" +
+							info.getCharacterImage() + ".png", game.getRoom("rx1y2"));
+                    for (Entry<String, Room> r : game.getRooms().entrySet()) {
+                        r.getValue().getPlayers().clear();
+                    }
+                    game.addPlayer(runPlayer);
+                }
+            }
+            else {
+                game= new Game("resources/mainGame.xml", "resources/"+gameName+".xml");
+
+                final Player player;
+                player = new Player(info.playerName(), "characters/alien" +
+                        info.getCharacterImage() + ".png", game.getRoom("rx1y2"));
+
+                player.turn(Direction.NORTH);
+                game.addPlayer(player);
+                game.saveGame();
+                runPlayer = player;
+
+            }
+
+			SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    ApplicationWindow aw = new ApplicationWindow(
+                            loader, frame, game, runPlayer, new SinglePlayerClient()
+                    );
+                    aw.pack();
+                    aw.setVisible(true);
+					getRootPane().setVisible(false);
+                }
+            });
+		}
+
+		private void startNetworkGame(String serverUrl, String serverPort, CharacterView info, final ResourceManager loader) {
+			String spriteName = "characters/alien" + info.getCharacterImage() + ".png";
+			NetworkActionHandler actionHandler = new NetworkActionHandler(
+					info.playerName(), spriteName, serverUrl, Integer.parseInt(serverPort)
+			);
+
+			actionHandler.addLoadListener(new NetworkActionHandler.LoadListener() {
+				@Override
+				public void onGameLoaded(Game game, Player player) {
+                    System.out.println("Game loaded");
+					SwingUtilities.invokeLater(new Runnable() {
+						public void run() {
+							ApplicationWindow aw = new ApplicationWindow(
+									loader, frame, game, player, actionHandler
+							);
+							aw.pack();
+							aw.setVisible(true);
+							getRootPane().setVisible(false);
+						}
+					});
+				}
+			});
 		}
 	}
 
@@ -173,7 +206,7 @@ public class GameMenu {
 
 				@Override
 				public Dimension getMaximumSize() {
-				    return new Dimension(width/2, 200);
+					return new Dimension(width/2, 200);
 				}
 
 			};
@@ -187,16 +220,16 @@ public class GameMenu {
 			buttonLeft.setPreferredSize(new Dimension(150, 80));
 			buttonLeft.addActionListener(new ActionListener() {
 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	if (nextAlien == 1) {
-	            		nextAlien = 5;
-	            	} else {
-	                nextAlien--;
-	            	}
-	            	characterImage.repaint();
-	            }
-	        });
+				public void actionPerformed(ActionEvent e)
+				{
+					if (nextAlien == 1) {
+						nextAlien = 5;
+					} else {
+						nextAlien--;
+					}
+					characterImage.repaint();
+				}
+			});
 
 			JButton buttonRight = new JButton();
 			buttonRight.setPreferredSize(new Dimension(150, 80));
@@ -213,10 +246,10 @@ public class GameMenu {
 				}
 			});
 			BufferedImage image =loader.getImage("ui/arrow-left.png");
-			image.getScaledInstance(buttonLeft.getWidth() - 20,	buttonLeft.getHeight() - 10, image.SCALE_DEFAULT);
+			image.getScaledInstance(buttonLeft.getWidth() - 20,	buttonLeft.getHeight() - 10, Image.SCALE_DEFAULT);
 			buttonLeft.setIcon(new ImageIcon(image));
 			image = loader.getImage("ui/arrow.png");
-			image.getScaledInstance(buttonLeft.getWidth() - 20, buttonLeft.getHeight() - 10, image.SCALE_DEFAULT);
+			image.getScaledInstance(buttonLeft.getWidth() - 20, buttonLeft.getHeight() - 10, Image.SCALE_DEFAULT);
 			buttonRight.setIcon(new ImageIcon(image));
 
 			buttonPane.add(buttonLeft, BorderLayout.WEST);
@@ -234,7 +267,7 @@ public class GameMenu {
 			add(characterImage, BorderLayout.NORTH);
 			//add(Box.createRigidArea(new Dimension(5, 0)));
 			add(buttonPane, BorderLayout.CENTER);
-		//	add(Box.createRigidArea(new Dimension(5,0)));
+			//	add(Box.createRigidArea(new Dimension(5,0)));
 			add(characterName, BorderLayout.SOUTH);
 		}
 
