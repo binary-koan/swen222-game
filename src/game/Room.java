@@ -169,6 +169,12 @@ public class Room implements Serializable{
    		Element room = new Element("room");
    		room.addContent(new Element("id").setText(this.id));
    		room.addContent(new Element("name").setText(this.name));
+   		if(this.color != null){
+   	   		room.addContent(new Element("color").setText(this.color.toString()));
+   		}
+   		else{
+   			room.addContent(new Element("color").setText("null"));
+   		}
    		room.addContent(new Element("roomItems"));
    		//Add the itemInstances in the room.
    		for(ItemInstance i : this.items){
@@ -206,6 +212,7 @@ public class Room implements Serializable{
     @Override
 	public void loadXML(Game game, Element objectElement) {
 		//Set the room's items.
+    	this.color = Key.Color.fromString(objectElement.getChildText("color"));
 		this.items.removeAll(items);
 		for(Element roomItem : objectElement.getChild("roomItems").getChildren()){
 			Item ir = game.getItem(roomItem.getChildText("item"));

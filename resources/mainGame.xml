@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mainGame>
-  
-  
+
+
   <gameRooms>
-    
+
     <room>
       <id>rx0y1</id>
       <name>Storage Room</name>
+      <color>RED</color>
       <roomItems>
 	<itemInstance>
 	  <item>craterx0y10</item>
@@ -75,11 +76,12 @@
 	<entry>WEST-true</entry>
       </wallConnections>
     </room>
-    
-    
+
+
     <room>
       <id>rx0y2</id>
       <name>Corridor - Port</name>
+      <color>null</color>
       <roomItems>
 	<itemInstance>
 	  <item>bucketrx0y2</item>
@@ -121,11 +123,12 @@
 	<entry>WEST-true</entry>
       </wallConnections>
     </room>
-    
-    
+
+
     <room>
       <id>rx0y3</id>
       <name>Engine Room - Port - Mid</name>
+      <color>null</color>
       <roomItems>
 	<itemInstance>
 	  <item>containerrx0y3</item>
@@ -168,11 +171,12 @@
 	<entry>WEST-true</entry>
       </wallConnections>
     </room>
-    
-    
+
+
     <room>
       <id>rx0y4</id>
       <name>Engine Room - Port - Aft</name>
+      <color>null</color>
       <roomItems>
 	<itemInstance>
 	  <item>engineFunctional</item>
@@ -214,11 +218,12 @@
 	<entry>WEST-true</entry>
       </wallConnections>
     </room>
-    
-    
+
+
     <room>
       <id>rx1y0</id>
       <name>Bridge</name>
+      <color>GREEN</color>
       <roomItems>
 	<itemInstance>
 	  <item>controlPanel</item>
@@ -260,11 +265,12 @@
 	<entry>WEST-true</entry>
       </wallConnections>
     </room>
-    
-    
+
+
     <room>
       <id>rx1y1</id>
       <name>Corridor - Fore</name>
+      <color>null</color>
       <roomItems>
 	<itemInstance>
 	  <item>lightSwitchrx1y10</item>
@@ -308,11 +314,12 @@
 	<entry>WEST-true</entry>
       </wallConnections>
     </room>
-    
-    
+
+
     <room>
       <id>rx1y2</id>
       <name>Corridor - Mid</name>
+      <color>null</color>
       <roomItems>
       </roomItems>
       <roomPlayers>
@@ -330,11 +337,12 @@
 	<entry>WEST-false</entry>
       </wallConnections>
     </room>
-    
-    
+
+
     <room>
       <id>rx1y3</id>
       <name>Corridor - Aft</name>
+      <color>null</color>
       <roomItems>
 	<itemInstance>
 	  <item>bucketrx1y3</item>
@@ -369,11 +377,12 @@
 	<entry>WEST-true</entry>
       </wallConnections>
     </room>
-    
-    
+
+
     <room>
       <id>rx2y1</id>
       <name>Living Room</name>
+      <color>YELLOW</color>
       <roomItems>
 	<itemInstance>
 	  <item>windowrx2y1</item>
@@ -424,11 +433,12 @@
 	<entry>WEST-true</entry>
       </wallConnections>
     </room>
-    
-    
+
+
     <room>
       <id>rx2y2</id>
       <name>Corridor - Starboard</name>
+      <color>null</color>
       <roomItems>
 	<itemInstance>
 	  <item>containerrx2y2</item>
@@ -471,11 +481,12 @@
 	<entry>WEST-false</entry>
       </wallConnections>
     </room>
-    
-    
+
+
     <room>
       <id>rx2y3</id>
       <name>Engine Room - Starboard-mid</name>
+      <color>BLUE</color>
       <roomItems>
 	<itemInstance>
 	  <item>containerx2y3</item>
@@ -518,14 +529,15 @@
 	<entry>WEST-true</entry>
       </wallConnections>
     </room>
-    
-    
+
+
     <room>
       <id>rx2y4</id>
       <name>Engine Room - Starboard-aft</name>
+      <color>null</color>
       <roomItems>
 	<itemInstance>
-	  <item>bucketrx2y4</item>
+	  <item>fullBucketrx2y4</item>
 	  <facingDirection>WEST</facingDirection>
 	  <point>
 	    <x>x39</x>
@@ -582,13 +594,13 @@
 	<entry>WEST-true</entry>
       </wallConnections>
     </room>
-    
+
   </gameRooms>
-  
-  
-  
+
+
+
   <gameItems>
-    
+
     <item>
       <id>craterx0y10</id>
       <name>Crate</name>
@@ -596,8 +608,8 @@
       <spriteName>objects/chest-blue.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>craterx0y11</id>
       <name>Crate</name>
@@ -605,8 +617,8 @@
       <spriteName>objects/chest-blue.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>craterx0y12</id>
       <name>Crate</name>
@@ -614,8 +626,8 @@
       <spriteName>objects/chest-blue.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>blueKey</id>
       <name>Key</name>
@@ -624,8 +636,8 @@
       <subClass>class game.Key</subClass>
       <color>BLUE</color>
     </item>
-    
-    
+
+
     <item>
       <id>windowrx0y1</id>
       <name>Window</name>
@@ -633,8 +645,8 @@
       <spriteName>objects/window.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>lightSwitchrx0y1</id>
       <name>Light</name>
@@ -642,8 +654,8 @@
       <spriteName>objects/light-switch-on.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>lightSwitchrx0y2</id>
       <name>Port Light</name>
@@ -651,8 +663,8 @@
       <spriteName>objects/light-switch-off.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>redLightrx0y2</id>
       <name>Port Light</name>
@@ -660,8 +672,8 @@
       <spriteName>decoration/red-light.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>bucketrx0y2</id>
       <name>Bucket</name>
@@ -669,8 +681,8 @@
       <spriteName>objects/bucket.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>containerrx0y3</id>
       <name>Container</name>
@@ -683,8 +695,8 @@
       </containerItems>
       <hasOpened>false</hasOpened>
     </item>
-    
-    
+
+
     <item>
       <id>lightSwitchrx0y3</id>
       <name>Light</name>
@@ -692,18 +704,20 @@
       <spriteName>objects/light-switch-on.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>snailmouse</id>
       <name>Snailmouse</name>
       <description>Oh no! What weapon could work against this ungodly fusion of- hang on...</description>
       <spriteName>enemies/snailmouse.png</spriteName>
-	  <soundEffect>audio/monster-snailmouse.wav</soundEffect>
+      <soundEffect>audio/monster-snailmouse.wav</soundEffect>
+      <killMessage>This tiny thing managed to kill you? Really?</killMessage>
+      <deadlyWeapon>fusionPistol</deadlyWeapon>
       <subClass>class game.Monster</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>torch0</id>
       <name>Torch</name>
@@ -711,8 +725,8 @@
       <spriteName>objects/torch.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>torch1</id>
       <name>Torch</name>
@@ -720,8 +734,8 @@
       <spriteName>objects/torch.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>engineFunctional</id>
       <name>Engine</name>
@@ -729,8 +743,8 @@
       <spriteName>objects/engine-working.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>containerrx0y4</id>
       <name>Container</name>
@@ -743,26 +757,26 @@
       </containerItems>
       <hasOpened>false</hasOpened>
     </item>
-    
-    
+
+
     <item>
       <id>empBomb</id>
       <name>EMP Bomb</name>
       <description>A dangerous looking electronic device.</description>
       <spriteName>objects/emp-bomb.png</spriteName>
-      <subClass>class game.Furniture</subClass>
+      <subClass>class game.Weapon</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>fusionPistol</id>
       <name>Fusion Pistol</name>
       <description>A standard issue alien sidearm.</description>
       <spriteName>objects/fusion-pistol.png</spriteName>
-      <subClass>class game.Furniture</subClass>
+      <subClass>class game.Weapon</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>yellowKey</id>
       <name>Key</name>
@@ -771,8 +785,8 @@
       <subClass>class game.Key</subClass>
       <color>YELLOW</color>
     </item>
-    
-    
+
+
     <item>
       <id>controlPanel</id>
       <name>Control Panel</name>
@@ -780,18 +794,20 @@
       <spriteName>objects/engine-working.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>rogueAI</id>
       <name>JCN-9000</name>
       <description>Stop the ship! "I'm sorry Davgorlzul, I'm afraid I can't do that."</description>
       <spriteName>enemies/rogue-ai.png</spriteName>
-	  <soundEffect>audio/monster-rogue-ai.wav</soundEffect>
+      <soundEffect>audio/monster-rogue-ai.wav</soundEffect>
+      <killMessage>JCN drains the air from the ship, suffocating you</killMessage>
+      <deadlyWeapon>empBomb</deadlyWeapon>
       <subClass>class game.Monster</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>windowrx1y0</id>
       <name>Window</name>
@@ -799,8 +815,8 @@
       <spriteName>objects/window.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>lightSwitchrx1y10</id>
       <name>Light</name>
@@ -808,8 +824,8 @@
       <spriteName>objects/light-switch-on.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>lightSwitchrx1y11</id>
       <name>Light</name>
@@ -817,18 +833,20 @@
       <spriteName>objects/light-switch-on.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>plasmouth</id>
       <name>Plasmouth</name>
       <description>The cursed Plasmouth!</description>
       <spriteName>enemies/plasmouth.png</spriteName>
-	  <soundEffect>audio/monster-plasmouth.wav</soundEffect>
+      <soundEffect>audio/monster-plasmouth.wav</soundEffect>
+      <killMessage>Burning plasma melts your brain!</killMessage>
+      <deadlyWeapon>plasmaCannon</deadlyWeapon>
       <subClass>class game.Monster</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>bucketrx1y3</id>
       <name>Bucket</name>
@@ -836,8 +854,8 @@
       <spriteName>objects/bucket.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>windowrx1y3</id>
       <name>Window</name>
@@ -845,8 +863,8 @@
       <spriteName>objects/window.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>windowrx2y1</id>
       <name>Window</name>
@@ -854,8 +872,8 @@
       <spriteName>objects/window.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>lightSwitchrx2y1</id>
       <name>Light</name>
@@ -863,8 +881,8 @@
       <spriteName>objects/light-switch-on.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>table</id>
       <name>Table</name>
@@ -873,7 +891,7 @@
       <subClass>class game.Furniture</subClass>
     </item>
 
-    
+
     <item>
       <id>waterCooler</id>
       <name>Water cooler</name>
@@ -881,8 +899,8 @@
       <spriteName>objects/water-cooler.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>containerrx2y2</id>
       <name>Container</name>
@@ -894,8 +912,8 @@
       </containerItems>
       <hasOpened>false</hasOpened>
     </item>
-    
-    
+
+
     <item>
       <id>lightSwitchrx2y2</id>
       <name>Starboard light</name>
@@ -903,8 +921,8 @@
       <spriteName>objects/light-switch-off.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>greenLightrx2y2</id>
       <name>Starboard light</name>
@@ -912,8 +930,8 @@
       <spriteName>decoration/green-light.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>plasmaCannon</id>
       <name>Plasma cannon</name>
@@ -921,8 +939,8 @@
       <spriteName>objects/fusion-pistol</spriteName>
       <subClass>class game.Weapon</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>torch0</id>
       <name>Torch</name>
@@ -930,8 +948,8 @@
       <spriteName>objects/torch.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>torch1</id>
       <name>Torch</name>
@@ -939,8 +957,8 @@
       <spriteName>objects/torch.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>containerx2y3</id>
       <name>Container</name>
@@ -952,8 +970,8 @@
       </containerItems>
       <hasOpened>false</hasOpened>
     </item>
-    
-    
+
+
     <item>
       <id>greenKey</id>
       <name>Key</name>
@@ -962,8 +980,8 @@
       <subClass>class game.Key</subClass>
       <color>GREEN</color>
     </item>
-    
-    
+
+
     <item>
       <id>lightSwitchrx2y3</id>
       <name>Light</name>
@@ -971,27 +989,29 @@
       <spriteName>objects/light-switch-on.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>lavaSnake</id>
       <name>Lava Snake</name>
       <description>I have had it with these goddamn monsters on this goddamn spaceship!</description>
       <spriteName>enemies/lava-snake.png</spriteName>
-	  <soundEffect>audio/monster-lava-snake.wav</soundEffect>
+      <soundEffect>audio/monster-lava-snake.wav</soundEffect>
+      <killMessage>A painful, fiery death.</killMessage>
+      <deadlyWeapon>fullBucketrx2y4</deadlyWeapon>
       <subClass>class game.Monster</subClass>
     </item>
-    
-    
+
+
     <item>
-      <id>bucketrx2y4</id>
+      <id>fullBucketrx2y4</id>
       <name>Bucket</name>
-      <description>A standard spaceship bucket. Functionally useless.</description>
+      <description>A standard spaceship bucket. But this is full of water!</description>
       <spriteName>objects/bucket-full.png</spriteName>
-      <subClass>class game.Furniture</subClass>
+      <subClass>class game.Weapon</subClass>
     </item>
-    
-    
+
+
     <item>
       <id>engineDamaged</id>
       <name>Engine</name>
@@ -999,7 +1019,7 @@
       <spriteName>objects/engine-working.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
+
     <item>
       <id>fire0</id>
       <name>Fire</name>
@@ -1007,7 +1027,7 @@
       <spriteName>decoration/red-light.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
+
     <item>
       <id>fire1</id>
       <name>Fire</name>
@@ -1015,7 +1035,7 @@
       <spriteName>decoration/red-light.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
+
     <item>
       <id>fire2</id>
       <name>Fire</name>
@@ -1023,12 +1043,12 @@
       <spriteName>decoration/red-light.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
-    
+
   </gameItems>
 
-  
-  
+
+
   <gamePlayers>
   </gamePlayers>
-  
+
 </mainGame>

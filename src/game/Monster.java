@@ -10,6 +10,11 @@ public class Monster extends Item {
 	public Monster(String id, String name, String description, String spriteName, Weapon deadlyWeapon) {
 		super(id, name, description, spriteName);
 		this.deadlyWeapon = deadlyWeapon;
+
+	}
+
+	public void setSoundEffect(String soundEffect){
+		this.soundEffect = soundEffect;
 	}
 
 	public String getSoundEffect() {
@@ -18,15 +23,19 @@ public class Monster extends Item {
 
 	@Override
 	public Element toXML() {
-		return super.toXML();
+		Element monster = super.toXML();
+		monster.addContent(new Element("deadlyWeapon").setText(this.deadlyWeapon.getID()));
+		monster.addContent(new Element("soundEffect").setText(this.soundEffect));
+		monster.addContent(new Element("killMessage").setText(this.killMessage));
+		return monster;
 	}
 
 	@Override
 	public void loadXML(Game game, Element objectElement) {
 		super.loadXML(game, objectElement);
-
-		soundEffect = objectElement.getChildText("soundEffect");
-		killMessage = objectElement.getChildText("killMessage");
+		this.deadlyWeapon = (Weapon) game.getItem(objectElement.getChildText("deadlyWeapon"));
+		this.soundEffect = objectElement.getChildText("soundEffect");
+		this.killMessage = objectElement.getChildText("killMessage");
 	}
 
 	public boolean fight(Player player) {

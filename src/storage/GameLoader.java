@@ -187,7 +187,10 @@ public class GameLoader {
 			gameRooms.addContent(room.getValue().toXML());
 		}
 		for(Map.Entry<String, Player> player : this.game.getPlayers().entrySet()){
-			gamePlayers.addContent(player.getValue().toXML());
+			//Dont save to XML is they're dead
+			if(player.getValue().isAlive() == true){
+				gamePlayers.addContent(player.getValue().toXML());
+			}
 		}
 		toSave.addContent(gameItems);
 		toSave.addContent(gameRooms);

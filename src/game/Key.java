@@ -19,6 +19,9 @@ public class Key extends Item implements Pickable {
 			else if(color.equals("RED")){
 				return RED;
 			}
+			else if(color.equals("null")){
+				return null;
+			}
 			return BLUE;
 		}
 	}
