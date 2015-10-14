@@ -25,7 +25,7 @@ import com.sun.net.httpserver.HttpHandler;
 
 public class Client {
 	public static void main(String[] args) {
-		new Client("130.195.6.48", 8000);
+		new Client("130.195.6.194", 8080);
 	}
 
 	private int port = 8080;
@@ -44,7 +44,7 @@ public class Client {
                     URLEncoder.encode(Integer.toString(port), charset));
             System.out.println(query);
 
-            URLConnection connection = new URL(url + "?" + query).openConnection();
+            URLConnection connection = new URL(url + "/xml?" + query).openConnection();
             connection.setRequestProperty("Accept-Charset", charset);
             InputStream response = connection.getInputStream();
             readXML(response);
@@ -72,24 +72,28 @@ public class Client {
 	}
 
 	public void readXML(InputStream response){
-
+		System.out.println("reading response");
 		int bytesRead;
 		int current = 0;
 		FileOutputStream fos = null;
 		BufferedOutputStream bos = null;
 		try {
 			// receive file
-			byte[] mybytearray = new byte[10000];
+			byte[] mybytearray = new byte[1000000];
+			System.out.println("one");
 			fos = new FileOutputStream("resources/continueGame.xml");
 			bos = new BufferedOutputStream(fos);
 			bytesRead = response.read(mybytearray, 0, mybytearray.length);
+			System.out.println("two");
 			current = bytesRead;
 
 			 while (bytesRead > -1){
 				bytesRead = response.read(mybytearray, current,
 						(mybytearray.length - current));
-				if (bytesRead >= 0)
+				if (bytesRead >= 0) {
 					current += bytesRead;
+				}
+				System.out.println(bytesRead + " bytes read");
 			}
 			bos.write(mybytearray, 0, current);
 			bos.flush();
