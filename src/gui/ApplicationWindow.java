@@ -22,6 +22,7 @@ import javax.swing.plaf.synth.SynthLookAndFeel;
 
 import gui.actions.ActionHandler;
 import gui.actions.GameActions;
+import gui.renderer.HUD;
 
 
 public class ApplicationWindow extends JFrame implements KeyListener, StateChangeListener {
@@ -34,6 +35,7 @@ public class ApplicationWindow extends JFrame implements KeyListener, StateChang
     private Player player;
     private ActionHandler actionHandler;
 	private GameCanvas canvas;
+    private HUD hud;
 	private ImagePanel inventory;
 
 	public ApplicationWindow(ResourceManager loader, JFrame gameMenu, Game game, Player player, ActionHandler actionHandler) {
@@ -57,11 +59,11 @@ public class ApplicationWindow extends JFrame implements KeyListener, StateChang
 
 		setLayout(new BorderLayout());
 
-		JPanel inventory = setupLowerBar(loader);
+		JPanel lowerBar = setupLowerBar(loader);
 		//Add items to the frame
 		add(setupMenuBar(), BorderLayout.NORTH);
 		add(canvas, BorderLayout.CENTER);
-		add(inventory, BorderLayout.SOUTH);
+		add(lowerBar, BorderLayout.SOUTH);
 
         addKeyListener(this);
      
@@ -112,16 +114,18 @@ public class ApplicationWindow extends JFrame implements KeyListener, StateChang
 
 	private JPanel setupLowerBar(ResourceManager loader)  {
 		JPanel area = new JPanel();
-		area.setLayout(new GridLayout(1,2));
+		area.setLayout(new BoxLayout(area, BoxLayout.LINE_AXIS));
 
-		JPanel leftBox = new JPanel();
+		hud = new HUD(loader);
+        hud.update(player);
+
+        inventory = new ImagePanel("key", loader);
 		JPanel inventoryPanel = new JPanel();
-		inventory = new ImagePanel("key", loader);
-
 		inventoryPanel.setLayout(new BorderLayout());
 		inventoryPanel.add(inventory, BorderLayout.EAST);
 
-		area.add(leftBox);
+		area.add(hud);
+        area.add(Box.createHorizontalGlue());
 		area.add(inventoryPanel);
 		return area;
 	}
@@ -132,7 +136,10 @@ public class ApplicationWindow extends JFrame implements KeyListener, StateChang
 			JOptionPane.showMessageDialog(getRootPane(), message);
 		}
 
-		if (type == StateChangeListener.Type.PICK_UP) {
+        if (type == StateChangeListener.Type.TURN || type == StateChangeListener.Type.MOVE) {
+            hud.update(player);
+        }
+		else if (type == StateChangeListener.Type.PICK_UP) {
 			inventory.setImage(loader.getSprite(player.getHeldItem().getSpriteName(), Direction.NORTH));
 			inventory.repaint();
 		}
