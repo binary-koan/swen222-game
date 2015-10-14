@@ -26,6 +26,8 @@ public class Server {
     HttpServer server;
     String filename;
 
+    List<String> clientUrls = new ArrayList<>();
+
     public Server(HttpHandler handler) {
         try {
             InetSocketAddress addr = new InetSocketAddress(8080);
@@ -48,7 +50,7 @@ public class Server {
 
 		URLConnection connection = new URL(url + "?" + action.serialize())
 				.openConnection();
-		connection.setRequestProperty("Accept-Charset", charset);
+		connection.setRequestProperty("Accept-Charset", "UTF-8");
 
 		InputStream response = connection.getInputStream();
 		response.close();
@@ -58,15 +60,14 @@ public class Server {
 
 
 
-    public void readAction(HttpExchange exchange) throws IOException{
-
-    	String content = exchange.getRequestURI().getQuery();
-        GameAction g = GameAction.deserialize(content, client_game);
-        if (g.apply()) {
-            for (client in clients) {
-            	sendAction(client.url, action);
-            }
-        }
+    public void readAction(HttpExchange exchange) throws IOException {
+//    	String content = exchange.getRequestURI().getQuery();
+//        GameAction g = GameAction.deserialize(content, server_game);
+//        if (g.apply()) {
+//            for (String clientUrl : clientUrls) {
+//            	sendAction(clientUrl, g);
+//            }
+//        }
 
     }
 
@@ -77,6 +78,8 @@ public class Server {
 		FileInputStream fileInputStream = new FileInputStream(myFile);
 		BufferedInputStream bufInputStream = new BufferedInputStream(fileInputStream);
 		bufInputStream.read(mybytearray, 0, mybytearray.length);
+		bufInputStream.close();
+
 		System.out.println("Sending " + "FILE_TO_SEND" + "("
 				+ mybytearray.length + " bytes)");
 		fileStream.write(mybytearray, 0, mybytearray.length);

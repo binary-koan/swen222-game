@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
@@ -23,19 +24,25 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 public class Client {
-	private SimpleServer server = new SimpleServer(new MyHandler());
+	public static void main(String[] args) {
+		new Client("130.195.6.48", 8000);
+	}
+
+	private int port = 8080;
+	private SimpleServer server = new SimpleServer(port, new MyHandler());
 	private String url;
 	private String charset;
 
-    public Client(String url) {
+    public Client(String serverUrl, int serverPort) {
         this.charset = "UTF-8";
-        this.url = url;
+        this.url = "http://" + serverUrl + ":" + serverPort;
 
         try {
             // Initial connection - send the server the client IP and port
             String query = String.format("ip=%s&port=%s",
-                    URLEncoder.encode("<my IP>", charset),
-                    URLEncoder.encode("<my port>", charset));
+                    URLEncoder.encode(InetAddress.getLocalHost().getHostAddress(), charset),
+                    URLEncoder.encode(Integer.toString(port), charset));
+            System.out.println(query);
 
             URLConnection connection = new URL(url + "?" + query).openConnection();
             connection.setRequestProperty("Accept-Charset", charset);
@@ -45,7 +52,7 @@ public class Client {
             //TODO read from input stream
         }
         catch (IOException e) {
-            //TODO
+            System.out.println("Exception: " + e.getMessage());
         }
     }
 
@@ -59,9 +66,9 @@ public class Client {
 	}
 
 	public void readAction(HttpExchange exchange) {
-		String content = exchange.getRequestURI().getQuery();
-		GameAction g = GameAction.deserialize(content, client_game);
-		g.apply();
+//		String content = exchange.getRequestURI().getQuery();
+//		GameAction g = GameAction.deserialize(content, client_game);
+//		g.apply();
 	}
 
 	public void readXML(InputStream response){
@@ -72,7 +79,7 @@ public class Client {
 		BufferedOutputStream bos = null;
 		try {
 			// receive file
-			byte[] mybytearray = new byte[FILE_SIZE];
+			byte[] mybytearray = new byte[10000];
 			fos = new FileOutputStream("resources/continueGame.xml");
 			bos = new BufferedOutputStream(fos);
 			bytesRead = response.read(mybytearray, 0, mybytearray.length);
@@ -88,11 +95,20 @@ public class Client {
 			bos.flush();
 			System.out.println("File " + "resources/continueGame.xml" + " downloaded ("
 					+ current + " bytes read)");
-		} finally {
-			if (fos != null)
-				fos.close();
-			if (bos != null)
-				bos.close();
+		}
+		catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+		finally {
+			try {
+				if (fos != null)
+					fos.close();
+				if (bos != null)
+					bos.close();
+			}
+			catch (IOException e) {
+				//TODO
+			}
 		}
 	}
 

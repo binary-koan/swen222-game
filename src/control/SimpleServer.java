@@ -23,15 +23,15 @@ import java.util.concurrent.Executors;
 public class SimpleServer {
     HttpServer server;
 
-    public SimpleServer(HttpHandler handler) {
+    public SimpleServer(int port, HttpHandler handler) {
         try {
-            InetSocketAddress addr = new InetSocketAddress(8080);
+            InetSocketAddress addr = new InetSocketAddress(port);
             HttpServer server = HttpServer.create(addr, 0);
 
             server.createContext("/", handler);
             server.setExecutor(Executors.newCachedThreadPool());
             server.start();
-            System.out.println("Server is listening on port 8080");
+            System.out.println("Server is listening on port " + port);
         }
         catch (IOException e) {
             System.out.println("failed to create server ...");
