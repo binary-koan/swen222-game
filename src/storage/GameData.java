@@ -37,6 +37,7 @@ public class GameData {
 		}
 		catch (IOException io) {
 			System.out.println(io.getMessage());
+			System.out.println("SWEN222: No such file");
 		}catch (JDOMException jdomex) {
 			System.out.println(jdomex.getMessage());
 		}
