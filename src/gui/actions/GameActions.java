@@ -5,7 +5,9 @@ import gui.renderer.Door;
 import gui.renderer.InvisibleDoor;
 import gui.renderer.VisibleDoor;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +37,7 @@ public class GameActions {
             for (Class cls : GameActions.class.getDeclaredClasses()) {
                 if (cls.getSimpleName().equals(subclassName)) {
                     try {
-                        return (GameAction)cls.getMethod("deserialize", Map.class, Game.class).invoke(data, game);
+                        return (GameAction)cls.getMethod("deserialize", Map.class, Game.class).invoke(data, values, game);
                     }
                     catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | ClassCastException e) {
                         System.out.println("Deserializing action failed: " + e.getMessage());
@@ -62,13 +64,19 @@ public class GameActions {
         public abstract String serialize();
 
         public String serialize(Map<String, String> extraValues) {
-            List<String> pairs = new ArrayList<>();
-            for (Map.Entry<String, String> entry : extraValues.entrySet()) {
-                pairs.add(entry.getKey() + "=" + entry.getValue());
-            }
+            try {
+                List<String> pairs = new ArrayList<>();
+                for (Map.Entry<String, String> entry : extraValues.entrySet()) {
+                    pairs.add(entry.getKey() + "=" + URLEncoder.encode(entry.getValue(), "UTF-8"));
+                }
 
-            pairs.add("player=" + player.getName());
-            return String.join("&", pairs);
+                pairs.add("player=" + URLEncoder.encode(player.getName(), "UTF-8"));
+                pairs.add("class=" + getClass().getSimpleName());
+                return String.join("&", pairs);
+            }
+            catch (UnsupportedEncodingException e) {
+                return "";
+            }
         }
     }
 
