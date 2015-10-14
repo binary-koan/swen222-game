@@ -22,10 +22,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.WindowConstants;
+import javax.swing.plaf.synth.SynthLookAndFeel;
 
 
 public class GameMenu {
@@ -42,24 +45,20 @@ public class GameMenu {
 	public GameMenu(final ResourceManager loader) {
 		EventQueue.invokeLater(new Runnable() {
 
-			@Override
-			public void run() {
+			
+		public void run() {
 //				SynthLookAndFeel lookAndFeel = new SynthLookAndFeel();
 //				try {
 //					lookAndFeel.load(ApplicationWindow.class.getResourceAsStream("style/synthStyle.xml"), ApplicationWindow.class);
 //					UIManager.setLookAndFeel(lookAndFeel);
 //				}
-//				catch (ParseException | UnsupportedLookAndFeelException e) {
+//				catch (ParseException e) {
 //					JOptionPane.showMessageDialog(null, "Could not load UI style: " + e.getMessage());
 //				}
+//				catch (UnsupportedLookAndFeelException e)
 				frame = new JFrame("Star Wars");
 				width = 700;
 				height = 500;
-//				frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.LINE_AXIS));
-//				frame.add(Box.createHorizontalGlue());
-//				frame.add(new GameWindow());
-//				frame.add(Box.createRigidArea(new Dimension(10, 0)));
-//				frame.add(new CharacterView());
 				frame.setLayout(new BorderLayout());
 				frame.setPreferredSize(new Dimension(width, height));
 				CharacterView c = new CharacterView(loader);
@@ -98,6 +97,8 @@ public class GameMenu {
 				 
 	            public void actionPerformed(ActionEvent e)
 	            {
+	            	
+	            	if (!gameName.getText().isEmpty() && !info.playerName().isEmpty() ) {
 	            	final Game game; 
 	            	Player runPlayer;
 	            	
@@ -109,7 +110,8 @@ public class GameMenu {
 	            				r.getValue().getPlayers().clear();
 	            			}
 	            			game.addPlayer(runPlayer);
-	            		}
+	            	}
+	            		
 	            		else{
 	            			runPlayer = new Player(info.playerName(), "characters/alien" +
 			            			 info.getCharacterImage() + ".png", game.getRoom("rx1y2"));
@@ -119,8 +121,9 @@ public class GameMenu {
 	            			game.addPlayer(runPlayer);
 	            		}
 	            	} else {
+	            		
 	            		game= new Game("resources/mainGame.xml", "resources/"+gameName.getText()+".xml");
-	  
+	            		
 		            	final Player player;
 		            	player = new Player(info.playerName(), "characters/alien" +
 		            			 info.getCharacterImage() + ".png", game.getRoom("rx1y2"));
@@ -129,21 +132,26 @@ public class GameMenu {
 		                game.addPlayer(player);
 		                game.saveGame();
 		                runPlayer = player;
+	            		
 	            	}
-		            	
-	         
+	            	
+	            	 SwingUtilities.invokeLater(new Runnable() {
+		                    public void run() {
+		                        ApplicationWindow aw = new ApplicationWindow(
+		                                loader, frame, game, runPlayer, new SinglePlayerClient()
+		                        );
+		                        aw.pack();
+		                        aw.setVisible(true);
+		                    }
+		                });
+	            	} else {
+	            		JOptionPane.showMessageDialog(null,"Please Enter Gamename and Player Name",
+	            				"WARNING",JOptionPane.PLAIN_MESSAGE);
+	            	}
 	            	
 	            
 	                
-	                SwingUtilities.invokeLater(new Runnable() {
-	                    public void run() {
-	                        ApplicationWindow aw = new ApplicationWindow(
-	                                loader, frame, game, runPlayer, new SinglePlayerClient()
-	                        );
-	                        aw.pack();
-	                        aw.setVisible(true);
-	                    }
-	                });
+	               
 	            }
 	        }); 
 
