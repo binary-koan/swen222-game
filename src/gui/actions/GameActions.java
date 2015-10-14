@@ -167,6 +167,25 @@ public class GameActions {
             return super.serialize(values);
         }
     }
+    
+    public static class Drop extends GameAction {
+
+    	public final Item target;
+    	
+		public Drop(Player player, Item target) {
+			super(player, "Drop Item");
+			this.target = target;
+		}
+
+		@Override
+		public boolean apply() {
+			if (player.dropItem() != null) {
+				return true;
+			}
+			return false;
+		}
+    	
+    }
 
     /**
      * Action representing the player attacking a monster

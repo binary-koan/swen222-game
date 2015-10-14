@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.text.ParseException;
 
@@ -22,7 +24,7 @@ import gui.actions.ActionHandler;
 import gui.actions.GameActions;
 
 
-public class ApplicationWindow extends JFrame implements KeyListener {
+public class ApplicationWindow extends JFrame implements KeyListener{
 	private static final long serialVersionUID = 6273791834646480175L;
 
 	private Game game;
@@ -47,12 +49,14 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 
 		setLayout(new BorderLayout());
 
+		JPanel inventory = setupLowerBar(loader);
 		//Add items to the frame
 		add(setupMenuBar(), BorderLayout.NORTH);
 		add(canvas, BorderLayout.CENTER);
-		add(setupLowerBar(loader), BorderLayout.SOUTH);
+		add(inventory, BorderLayout.SOUTH);
 
         addKeyListener(this);
+     
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 
@@ -117,7 +121,7 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 		return area;
 	}
 
-    private class ImagePanel extends JPanel implements StateChangeListener{
+    private class ImagePanel extends JPanel implements StateChangeListener, MouseListener{
 		private BufferedImage image;
 		private ResourceManager loader;
 		public ImagePanel(String item, ResourceManager loader) {
@@ -125,6 +129,7 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 			this.loader = loader;
 			game.addStateChangeListener(this);
 			
+			addMouseListener(this);
 			this.setPreferredSize(new Dimension(40, 40));
 			this.setBackground(Color.DARK_GRAY);
 
@@ -135,6 +140,9 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 			if (image != null) {
 				g.drawImage(image, 5, 5, this.getWidth() - 5, this.getHeight() - 5, null);
 			}
+			g.setColor(Color.DARK_GRAY);
+			g.drawRect(0, 0, this.getWidth(), this.getHeight());
+			
 			
 
 		}
@@ -149,6 +157,40 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 			repaint();
 			
 		}
+		
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			actionHandler.requestAction(new GameActions.Drop(player, player.getHeldItem()));	
+			image = null;
+			repaint();
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+	
 	}
 
     @Override
