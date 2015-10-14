@@ -27,12 +27,12 @@ public class ContentsMenu extends JPopupMenu implements ActionListener {
     /**
      * Create a new contents menu
      *
-     * @param loader used to retrieve the sprites of the items in the container
+     * @param resources used to retrieve the sprites of the items in the container
      * @param receiver object which will be notified when an action is selected
      * @param containerInstance box to display items from
      * @param description text description of the action that can be taken with these items (eg. "Click to pick up")
      */
-    public ContentsMenu(ResourceManager loader, ActionHandler receiver, Room.ItemInstance containerInstance,
+    public ContentsMenu(ResourceManager resources, ActionHandler receiver, Room.ItemInstance containerInstance,
                         Player player, String description) {
         this.receiver = receiver;
         this.containerInstance = containerInstance;
@@ -46,7 +46,7 @@ public class ContentsMenu extends JPopupMenu implements ActionListener {
                 addLabel(description);
 
                 for (Item item : container.getItems()) {
-                    addMenuItem(item.getID(), item.getName(), loader.getSprite(item.getSpriteName(), Direction.NORTH));
+                    addMenuItem(item.getID(), item.getName(), resources.getSprite(item.getSpriteName(), Direction.NORTH));
                 }
             }
             else {

@@ -22,6 +22,13 @@ public class GameActions {
      * for network transfer
      */
     public static abstract class GameAction extends Action {
+        /**
+         * Create an Action from a serialized string
+         *
+         * @param data a string created using {@link #serialize()}
+         * @param game the game to load the action onto (will be modified when the action is applied)
+         * @return the resulting action
+         */
         public static GameAction deserialize(String data, Game game) {
             Map<String, String> values = new HashMap<>();
 
@@ -57,11 +64,28 @@ public class GameActions {
             super(player, name);
         }
 
+        /**
+         * Applies the action to its associated game. Returns true if the action succeeded, or false if the action
+         * could not be performed
+         *
+         * @return whether the action was successful
+         */
         public abstract boolean apply();
 
+        /**
+         * Turns the action into text which can be used as a URL query string and deserialized into another game
+         *
+         * @return the serialized action
+         */
         public abstract String serialize();
 
-        public String serialize(Map<String, String> extraValues) {
+        /**
+         * Should be used in subclasses to serialize a set of values in the correct format
+         *
+         * @param extraValues values to add to the serialized data
+         * @return the complete serialized string
+         */
+        protected String serialize(Map<String, String> extraValues) {
             List<String> pairs = new ArrayList<>();
             for (Map.Entry<String, String> entry : extraValues.entrySet()) {
                 pairs.add(entry.getKey() + "=" + entry.getValue());

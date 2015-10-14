@@ -48,6 +48,10 @@ public class RoomRenderer {
         });
     }
 
+    /**
+     * Check the given compare result. If it is zero, sort the given drawables by their type (players on top and doors
+     * on bottom)
+     */
     private static int sortByType(int compareResult, Drawable o1, Drawable o2) {
         if (compareResult == 0) {
             // If there are collisions, always show players on top and doors on the bottom
@@ -244,6 +248,9 @@ public class RoomRenderer {
         }
     }
 
+    /**
+     * Add all players in the room to the given list of room objects
+     */
     private void addRoomPlayers(Room room, List<Drawable> roomObjects) {
         if (room.getPlayers() != null) {
             for (Player p : room.getPlayers()) {
@@ -254,6 +261,9 @@ public class RoomRenderer {
         }
     }
 
+    /**
+     * Add visible doors in the given room to the list of room objects
+     */
     private void addDoors(Room room, List<Drawable> roomObjects) {
         for (Direction direction : Direction.values()) {
             Room connection = room.getConnection(direction);

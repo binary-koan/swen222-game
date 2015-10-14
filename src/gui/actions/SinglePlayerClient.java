@@ -1,4 +1,4 @@
-package gui;
+package gui.actions;
 
 import game.*;
 import gui.actions.Action;

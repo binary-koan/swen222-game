@@ -25,16 +25,16 @@ public class InfoTooltip extends JPanel {
     /**
      * Create a blank info tooltip
      *
-     * @param loader used to load mouse click icons
+     * @param resources used to load mouse click icons
      */
-	public InfoTooltip(ResourceManager loader) {
+	public InfoTooltip(ResourceManager resources) {
 		setLayout(new GridBagLayout());
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 
         setupNameLabel();
         setupDescriptionLabel();
-        setupPrimaryActionLabel(loader);
-        setupSecondaryActionLabel(loader);
+        setupPrimaryActionLabel(resources);
+        setupSecondaryActionLabel(resources);
 	}
 
     /**
@@ -119,8 +119,8 @@ public class InfoTooltip extends JPanel {
     /**
      * Setup and add the primary action label to the control
      */
-    private void setupPrimaryActionLabel(ResourceManager loader) {
-        primaryActionLabel.setIcon(new ImageIcon(loader.getImage("ui/mouse-leftclick.png")));
+    private void setupPrimaryActionLabel(ResourceManager resources) {
+        primaryActionLabel.setIcon(new ImageIcon(resources.getImage("ui/mouse-leftclick.png")));
         primaryActionLabel.setIconTextGap(8);
         addLabel(primaryActionLabel);
     }
@@ -128,8 +128,8 @@ public class InfoTooltip extends JPanel {
     /**
      * Setup and add the secondary action label to the control
      */
-    private void setupSecondaryActionLabel(ResourceManager loader) {
-        secondaryActionLabel.setIcon(new ImageIcon(loader.getImage("ui/mouse-rightclick.png")));
+    private void setupSecondaryActionLabel(ResourceManager resources) {
+        secondaryActionLabel.setIcon(new ImageIcon(resources.getImage("ui/mouse-rightclick.png")));
         secondaryActionLabel.setIconTextGap(8);
         addLabel(secondaryActionLabel);
     }

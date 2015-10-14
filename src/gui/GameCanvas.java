@@ -154,6 +154,10 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         }
     }
 
+    /**
+     * Causes a drop cursor to appear on the canvas. When the canvas is next clicked, the player's currently held item
+     * will be dropped onto it
+     */
     public void startDrop() {
         setCursor(roomDropCursor);
         isDropping = true;

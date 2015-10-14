@@ -152,6 +152,12 @@ public class ResourceManager implements LineListener {
         return player;
     }
 
+    /**
+     * Called when the state changes of a sound effect this manager is playing. Used to free resources when the clip
+     * finishes
+     *
+     * @param event event from the clip
+     */
     @Override
     public void update(LineEvent event) {
         // Ensure sound effect files are closed when the effect finishes

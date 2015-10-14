@@ -4,9 +4,21 @@ import game.Direction;
 import game.Key;
 import game.Room;
 
+/**
+ * Represents a visible door (a door leading through a wall)
+ *
+ * @author Jono Mingard
+ */
 public class VisibleDoor extends Door {
     private String spriteName;
 
+    /**
+     * Create a new visible door
+     *
+     * @param room room the door is contained in
+     * @param linkDirection direction the door points
+     * @param color colour to draw the door (should be the colour of the room the door points to)
+     */
 	public VisibleDoor(Room room, Direction linkDirection, Key.Color color) {
 		super(room, linkDirection);
 

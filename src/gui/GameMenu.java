@@ -3,21 +3,17 @@ package gui;
 import game.Direction;
 import game.Game;
 import game.Player;
+import gui.actions.SinglePlayerClient;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -176,22 +172,22 @@ public class GameMenu {
 			JButton buttonRight = new JButton();
 			buttonRight.setPreferredSize(new Dimension(150, 80));
 			buttonRight.addActionListener(new ActionListener() {
-				 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	if (nextAlien == 5) {
-	            		nextAlien = 1;
-	            	} else {
-	                nextAlien++;
-	            	}
-	            	characterImage.repaint();
-	            }
-	        }); 
+
+				public void actionPerformed(ActionEvent e) {
+					if (nextAlien == 5) {
+						nextAlien = 1;
+					}
+					else {
+						nextAlien++;
+					}
+					characterImage.repaint();
+				}
+			});
 			BufferedImage image =loader.getImage("ui/arrow-left.png");
 			image.getScaledInstance(buttonLeft.getWidth() - 20,	buttonLeft.getHeight() - 10, image.SCALE_DEFAULT);
 			buttonLeft.setIcon(new ImageIcon(image));
 			image = loader.getImage("ui/arrow.png");
-			image.getScaledInstance(buttonLeft.getWidth() - 20,	buttonLeft.getHeight() - 10, image.SCALE_DEFAULT);
+			image.getScaledInstance(buttonLeft.getWidth() - 20, buttonLeft.getHeight() - 10, image.SCALE_DEFAULT);
 			buttonRight.setIcon(new ImageIcon(image));
 			
 			buttonPane.add(buttonLeft, BorderLayout.WEST);
@@ -201,7 +197,7 @@ public class GameMenu {
 			JPanel characterName = new JPanel();
 			characterName.setLayout(new BorderLayout());
 			name = new JTextField();
-			characterName.setMaximumSize(new Dimension(width/2, 40));
+			characterName.setMaximumSize(new Dimension(width / 2, 40));
 			name.setPreferredSize(new Dimension(150, 20));
 			characterName.add(new JLabel("Enter Character name:"), BorderLayout.CENTER);
 			characterName.add(name, BorderLayout.EAST);
