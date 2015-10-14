@@ -103,8 +103,11 @@ public class GameData {
 		case "class game.Weapon":
 			currentItem = new Weapon(id, name, description, spriteName);
 			return currentItem;
+		case "class game.ControlPanel":
+			currentItem = new ControlPanel(id, name, description, spriteName);
+			return currentItem;
 		}
-		System.out.println(e.getChildText("WRONG"));
+		System.out.println("WRONG");
 		return new Furniture(id, name, description, spriteName);
 	}
 

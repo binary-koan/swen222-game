@@ -791,8 +791,8 @@
       <id>controlPanel</id>
       <name>Control Panel</name>
       <description>The main control panel of the ship.</description>
-      <spriteName>objects/engine-working.png</spriteName>
-      <subClass>class game.Furniture</subClass>
+      <spriteName>objects/control-panel.png</spriteName>
+      <subClass>class game.ControlPanel</subClass>
     </item>
 
 
@@ -936,7 +936,7 @@
       <id>plasmaCannon</id>
       <name>Plasma cannon</name>
       <description>A high velocity plasma launcher!</description>
-      <spriteName>objects/fusion-pistol</spriteName>
+      <spriteName>objects/plasma-pistol</spriteName>
       <subClass>class game.Weapon</subClass>
     </item>
 
