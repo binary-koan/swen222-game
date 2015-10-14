@@ -24,7 +24,25 @@ import gui.actions.ActionHandler;
 import gui.actions.GameActions;
 import gui.renderer.HUD;
 
+/**
+ * Constructor for Game menu which creates and add items to the menu 
+ * @param loader - To load files from resources 
+ */
+/**
+ * Displays a Game type menu to get input from user for Game name and player name
+ * as well as character selection 
+ * @author Shanon Beary
+ *
+ */
 
+
+/**
+ * Window to display game canvas including an inventory for the game where each character 
+ * can only hold one item 
+ * Players can drop items from inventory in the application window
+ * @author Shanon Beary
+ *
+ */
 public class ApplicationWindow extends JFrame implements KeyListener, StateChangeListener {
 	private static final long serialVersionUID = 6273791834646480175L;
 
@@ -38,6 +56,15 @@ public class ApplicationWindow extends JFrame implements KeyListener, StateChang
     private HUD hud;
 	private ImagePanel inventory;
 
+	/**
+	 * Constructor for application window that can play music and adds 
+	 * game interaction
+	 * @param loader
+	 * @param gameMenu
+	 * @param game
+	 * @param player
+	 * @param actionHandler
+	 */
 	public ApplicationWindow(ResourceManager loader, JFrame gameMenu, Game game, Player player, ActionHandler actionHandler) {
 		super("Game");
 		this.loader = loader;
@@ -52,7 +79,7 @@ public class ApplicationWindow extends JFrame implements KeyListener, StateChang
 		canvas.setup(player, game);
 		loader.setMusic("audio/music-main.wav");
 
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); //gets screen size to fit all sizes
 		Dimension scale = new Dimension();
 		scale.setSize(screenSize.getWidth() * 0.5, screenSize.getHeight() * 0.6);
 		canvas.setPreferredSize(scale);
@@ -70,6 +97,11 @@ public class ApplicationWindow extends JFrame implements KeyListener, StateChang
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 
+	/**
+	 * Menu bar to save and exit game
+	 * 
+	 * @return JMenuBar
+	 */
 	private JMenuBar setupMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
 
@@ -113,6 +145,13 @@ public class ApplicationWindow extends JFrame implements KeyListener, StateChang
 
 	}
 
+	/**
+	 * JPanel to hold inventory - has mouse listeners to remove item from game
+	 * inventory and state change listener for adding item to inventory 
+	 * 
+	 * @param loader
+	 * @return
+	 */
 	private JPanel setupLowerBar(ResourceManager loader)  {
 		JPanel area = new JPanel();
 		area.setLayout(new BoxLayout(area, BoxLayout.LINE_AXIS));
