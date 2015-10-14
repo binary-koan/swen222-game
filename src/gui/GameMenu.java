@@ -37,10 +37,6 @@ public class GameMenu {
 	private int width;
 	private int height;
 	
-	
-	public static void main(String[] args) {
-		new GameMenu(new ResourceManager("resources"));
-	}
 
 	public GameMenu(final ResourceManager loader) {
 		EventQueue.invokeLater(new Runnable() {
