@@ -98,8 +98,19 @@ public class PlayerTest {
         Player player = MockPlayer.createWithHeldItem(MockItem.createKey());
         Item item = player.getHeldItem();
 
-        assertEquals(item, player.dropItem());
+        assertEquals(item, player.dropItem(null));
         assertTrue(player.getRoom().containsItem(item));
+        assertEquals(StateChangeListener.Type.DROP, MockPlayer.getLastEventType(player));
+    }
+
+    @Test
+    public void testDropItem_intoContainer() {
+        Player player = MockPlayer.createWithHeldItem(MockItem.createKey());
+        Holdable item = player.getHeldItem();
+        Container container = MockItem.createContainer(MockItem.createWeapon());
+
+        assertEquals(item, player.dropItem(container));
+        assertTrue(container.getItems().contains(item));
         assertEquals(StateChangeListener.Type.DROP, MockPlayer.getLastEventType(player));
     }
 
@@ -107,7 +118,7 @@ public class PlayerTest {
     public void testDropItem_notHoldingAnything() {
         Player player = MockPlayer.create();
 
-        assertNull(player.dropItem());
+        assertNull(player.dropItem(null));
         assertFalse(player.getRoom().containsItem(null));
         assertNull(MockPlayer.getLastEventType(player));
     }

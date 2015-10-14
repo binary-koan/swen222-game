@@ -65,7 +65,7 @@ public class Player implements Drawable, Serializable {
     /**
      * @return the item the player is holding
      */
-    public Item getHeldItem() {
+    public Holdable getHeldItem() {
         return heldItem;
     }
 
@@ -169,15 +169,23 @@ public class Player implements Drawable, Serializable {
      * Unsets the player's held item and adds it to the current room
      *
      * @return the dropped item
+     * @param target
      */
-    public Holdable dropItem() {
+    public Holdable dropItem(Container target) {
         if (isAlive) {
             if (heldItem == null) {
                 return null;
             }
             else {
                 Holdable item = heldItem;
-                getRoom().addItem(item);
+
+                if (target == null) {
+                    getRoom().addItem(item);
+                }
+                else {
+                    target.getItems().add(item);
+                }
+
                 heldItem = null;
                 triggerStateChange(StateChangeListener.Type.DROP, null);
                 return item;

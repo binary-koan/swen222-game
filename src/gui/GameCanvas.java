@@ -104,6 +104,10 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
     private JPopupMenu actionMenu;
     private Drawable activeObject;
 
+    private boolean isDropping;
+    private Cursor roomDropCursor;
+    private Cursor containerDropCursor;
+
     /**
      * Construct a new game canvas
      *
@@ -113,6 +117,14 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
     public GameCanvas(ResourceManager loader, ActionHandler gameActionHandler) {
         this.loader = loader;
         this.actionHandler = new CanvasActionHandler(gameActionHandler);
+
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        roomDropCursor = toolkit.createCustomCursor(
+                loader.getImage("ui/cursor-drop-room.png"), new Point(0, 0), "dropOnRoom"
+        );
+        containerDropCursor = toolkit.createCustomCursor(
+                loader.getImage("ui/cursor-drop-container.png"), new Point(0, 0), "dropOnContainer"
+        );
 
         tooltip = new InfoTooltip(loader);
         tooltip.setVisible(false);
@@ -142,6 +154,12 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         }
     }
 
+    public void startDrop() {
+        setCursor(roomDropCursor);
+        isDropping = true;
+        repaint();
+    }
+
     /** {@inheritDoc} */
     @Override
     public Dimension getPreferredSize() {
@@ -162,16 +180,28 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         }
 
         Point scenePosition = calculateScenePosition(e);
-        Drawable drawable = roomImage.getObjectAt(scenePosition);
+        activeObject = roomImage.getObjectAt(scenePosition);
 
-        if (drawable == null) {
-        	activeObject = null;
-        	tooltip.setVisible(false);
+        if (isDropping) {
+            tooltip.setVisible(false);
+
+            if (activeObject instanceof ItemInstance && ((ItemInstance)activeObject).getItem() instanceof Container) {
+                setCursor(containerDropCursor);
+            }
+            else {
+                setCursor(roomDropCursor);
+            }
         }
-        else if (!drawable.equals(activeObject)) {
-            updateTooltip(drawable);
-            repositionTooltipAbove(drawable);
-            tooltip.setVisible(true);
+        else {
+            if (activeObject == null) {
+                activeObject = null;
+                tooltip.setVisible(false);
+            }
+            else {
+                updateTooltip(activeObject);
+                repositionTooltipAbove(activeObject);
+                tooltip.setVisible(true);
+            }
         }
     }
 
@@ -187,13 +217,25 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         }
 
         Point scenePosition = calculateScenePosition(e);
-        Drawable drawable = roomImage.getObjectAt(scenePosition);
-        activeObject = drawable;
+        activeObject = roomImage.getObjectAt(scenePosition);
 
-        if (drawable != null) {
-            Action action = (e.getButton() == MouseEvent.BUTTON1) ?
-                    tooltip.getPrimaryAction() : tooltip.getSecondaryAction();
-            actionHandler.requestAction(action);
+        if (isDropping) {
+            if (activeObject instanceof ItemInstance && ((ItemInstance)activeObject).getItem() instanceof Container) {
+                Container container = (Container)((ItemInstance)activeObject).getItem();
+                actionHandler.requestAction(new GameActions.Drop(player, container));
+            }
+            else {
+                actionHandler.requestAction(new GameActions.Drop(player, null));
+            }
+            isDropping = false;
+            setCursor(Cursor.getDefaultCursor());
+        }
+        else {
+            if (activeObject != null) {
+                Action action = (e.getButton() == MouseEvent.BUTTON1) ?
+                        tooltip.getPrimaryAction() : tooltip.getSecondaryAction();
+                actionHandler.requestAction(action);
+            }
         }
     }
 
@@ -238,6 +280,11 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
             // Draw a HUD showing the player's location and direction
             g.setColor(Color.BLACK);
             g.drawString("In " + player.getRoom().getName() + " facing " + player.getFacingDirection().opposite(), 10, 20);
+        }
+
+        if (isDropping) {
+            g.setColor(Color.BLACK);
+            g.drawString("Click to drop", 10, 50);
         }
     }
 
@@ -293,7 +340,6 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
      * Display a tooltip above the given drawable object with information about the object
      */
     private void updateTooltip(Drawable drawable) {
-        activeObject = drawable;
         List<Action> actions = actionHandler.getAllowedActions(player, drawable);
 
         if (actions.size() > 1) {

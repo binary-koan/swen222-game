@@ -169,17 +169,16 @@ public class GameActions {
     }
     
     public static class Drop extends GameAction {
-
-    	public final Item target;
+    	public final Container target;
     	
-		public Drop(Player player, Item target) {
+		public Drop(Player player, Container target) {
 			super(player, "Drop Item");
 			this.target = target;
 		}
 
 		@Override
 		public boolean apply() {
-			if (player.dropItem() != null) {
+			if (player.dropItem(target) != null) {
 				return true;
 			}
 			return false;

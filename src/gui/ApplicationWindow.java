@@ -136,6 +136,10 @@ public class ApplicationWindow extends JFrame implements KeyListener, StateChang
 			inventory.setImage(loader.getSprite(player.getHeldItem().getSpriteName(), Direction.NORTH));
 			inventory.repaint();
 		}
+        else if (type == StateChangeListener.Type.DROP) {
+            inventory.setImage(null);
+            inventory.repaint();
+        }
 		else if (type == StateChangeListener.Type.DIE) {
 			setVisible(false);
 			gameMenu.setVisible(true);
@@ -176,9 +180,7 @@ public class ApplicationWindow extends JFrame implements KeyListener, StateChang
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			actionHandler.requestAction(new GameActions.Drop(player, player.getHeldItem()));	
-			image = null;
-			repaint();
+            canvas.startDrop();
 		}
 
 		@Override
