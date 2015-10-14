@@ -420,6 +420,15 @@
 	    <z>z281</z>
 	  </point>
 	</itemInstance>
+	<itemInstance>
+	  <item>redKey</item>
+	  <facingDirection>EAST</facingDirection>
+	  <point>
+	    <x>x160</x>
+	    <y>y60</y>
+	    <z>z160</z>
+	  </point>
+	</itemInstance>
       </roomItems>
       <roomPlayers>
       </roomPlayers>
@@ -791,8 +800,8 @@
       <id>controlPanel</id>
       <name>Control Panel</name>
       <description>The main control panel of the ship.</description>
-      <spriteName>objects/engine-working.png</spriteName>
-      <subClass>class game.Furniture</subClass>
+      <spriteName>objects/control-panel.png</spriteName>
+      <subClass>class game.ControlPanel</subClass>
     </item>
 
 
@@ -902,6 +911,15 @@
 
 
     <item>
+      <id>redKey</id>
+      <name>Key</name>
+      <description>A red key.</description>
+      <spriteName>objects/key-red.png</spriteName>
+      <subClass>class game.Key</subClass>
+    </item>
+
+
+    <item>
       <id>containerrx2y2</id>
       <name>Container</name>
       <description>A red container.</description>
@@ -936,7 +954,7 @@
       <id>plasmaCannon</id>
       <name>Plasma cannon</name>
       <description>A high velocity plasma launcher!</description>
-      <spriteName>objects/fusion-pistol</spriteName>
+      <spriteName>objects/plasma-cannon.png</spriteName>
       <subClass>class game.Weapon</subClass>
     </item>
 

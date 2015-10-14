@@ -32,6 +32,8 @@ import javax.swing.WindowConstants;
 public class GameMenu {
 
 	private JFrame frame;
+	private int width;
+	private int height;
 	
 	
 	public static void main(String[] args) {
@@ -52,23 +54,23 @@ public class GameMenu {
 //					JOptionPane.showMessageDialog(null, "Could not load UI style: " + e.getMessage());
 //				}
 				frame = new JFrame("Star Wars");
+				width = 700;
+				height = 500;
 //				frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.LINE_AXIS));
 //				frame.add(Box.createHorizontalGlue());
 //				frame.add(new GameWindow());
 //				frame.add(Box.createRigidArea(new Dimension(10, 0)));
 //				frame.add(new CharacterView());
-				Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-				Dimension scale = new Dimension();
-				scale.setSize(screenSize.getWidth() * 0.5, screenSize.getHeight() * 0.6);
-				frame.setPreferredSize(scale);
-				frame.setLayout(new GridLayout(0, 2));
+				frame.setLayout(new BorderLayout());
+				frame.setPreferredSize(new Dimension(width, height));
 				CharacterView c = new CharacterView(loader);
-				frame.add(new GameWindow(loader, c));
-				frame.add(c);
-				frame.setResizable(true);
+				frame.add(new GameWindow(loader, c), BorderLayout.WEST);
+				frame.add(c, BorderLayout.EAST);
+				frame.setResizable(false);
+				frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 				frame.pack();
 				frame.setVisible(true);
-				frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+				
 
 
 
@@ -81,6 +83,7 @@ public class GameMenu {
 		
 		public GameWindow(ResourceManager loader, CharacterView info) {
 			setLayout(new GridLayout(3, 2));
+			setPreferredSize(new Dimension(width/2, height));
 			JTextField port = new JTextField();
 			JTextField url = new JTextField();
 			add(new JLabel("Port"));
@@ -134,21 +137,29 @@ public class GameMenu {
 			nextAlien = 1;
 			
 			setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+			setPreferredSize(new Dimension(width/2, height));
 			final JPanel characterImage = new JPanel() {
 				@Override
 				protected void paintComponent(Graphics g) {
 					super.paintComponent(g);
 					g.drawImage(loader.getSprite("characters/alien" + nextAlien + ".png", Direction.NORTH),
-							100, 0, getWidth()/2, getHeight(), null);
+							80, 0, getWidth()/2, getHeight(), null);
 				}
 				
+				@Override
+				public Dimension getMaximumSize() {
+				    return new Dimension(width/2, 200);
+				}
 				
 			};
 			
-			characterImage.setBorder(BorderFactory.createLineBorder(Color.blue));
+		
 			
 			JPanel buttonPane = new JPanel();
+			buttonPane.setLayout(new BorderLayout());
+			buttonPane.setMaximumSize(new Dimension(width/2, 80));
 			JButton buttonLeft = new JButton();
+			buttonLeft.setPreferredSize(new Dimension(150, 80));
 			buttonLeft.addActionListener(new ActionListener() {
 				 
 	            public void actionPerformed(ActionEvent e)
@@ -163,6 +174,7 @@ public class GameMenu {
 	        }); 
 			
 			JButton buttonRight = new JButton();
+			buttonRight.setPreferredSize(new Dimension(150, 80));
 			buttonRight.addActionListener(new ActionListener() {
 				 
 	            public void actionPerformed(ActionEvent e)
@@ -175,23 +187,29 @@ public class GameMenu {
 	            	characterImage.repaint();
 	            }
 	        }); 
-	
-			buttonLeft.setIcon(new ImageIcon(loader.getImage("ui/arrow-left.png")));
-			buttonRight.setIcon(new ImageIcon(loader.getImage("ui/arrow.png")));
-			buttonPane.add(buttonLeft);
-			buttonPane.add(buttonRight);
+			BufferedImage image =loader.getImage("ui/arrow-left.png");
+			image.getScaledInstance(buttonLeft.getWidth() - 20,	buttonLeft.getHeight() - 10, image.SCALE_DEFAULT);
+			buttonLeft.setIcon(new ImageIcon(image));
+			image = loader.getImage("ui/arrow.png");
+			image.getScaledInstance(buttonLeft.getWidth() - 20,	buttonLeft.getHeight() - 10, image.SCALE_DEFAULT);
+			buttonRight.setIcon(new ImageIcon(image));
+			
+			buttonPane.add(buttonLeft, BorderLayout.WEST);
+			buttonPane.add(buttonRight, BorderLayout.EAST);
 				
 			
 			JPanel characterName = new JPanel();
+			characterName.setLayout(new BorderLayout());
 			name = new JTextField();
-			name.setPreferredSize(new Dimension(characterName.getWidth(), name.getHeight()));
-			characterName.add(name);
-			characterName.setBorder(BorderFactory.createLineBorder(Color.blue));
+			characterName.setMaximumSize(new Dimension(width/2, 40));
+			name.setPreferredSize(new Dimension(150, 20));
+			characterName.add(new JLabel("Enter Character name:"), BorderLayout.CENTER);
+			characterName.add(name, BorderLayout.EAST);
 			
 			add(characterImage, BorderLayout.NORTH);
-			add(Box.createRigidArea(new Dimension(5, 0)));
+			//add(Box.createRigidArea(new Dimension(5, 0)));
 			add(buttonPane, BorderLayout.CENTER);
-			add(Box.createRigidArea(new Dimension(5,0)));
+		//	add(Box.createRigidArea(new Dimension(5,0)));
 			add(characterName, BorderLayout.SOUTH);
 		}
 		
