@@ -1,91 +1,90 @@
 package control;
 
+import game.*;
+import gui.actions.Action;
+import gui.actions.ActionHandler;
+import gui.actions.GameActions;
 import gui.actions.GameActions.GameAction;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
-import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import gui.renderer.Door;
 
-public class Client {
+public class TestClient {
 	public static void main(String[] args) {
-		new Client("130.195.6.48", 8000);
+		new TestClient("localhost", 8080);
 	}
 
-	private int port = 8080;
+	private int port = 9000;
 	private SimpleServer server = new SimpleServer(port, new MyHandler());
 	private String url;
 	private String charset;
 
-    public Client(String serverUrl, int serverPort) {
+	private final String playerName = "myPlayer";
+	private Player player;
+	private Game game;
+
+    public TestClient(String serverUrl, int serverPort) {
         this.charset = "UTF-8";
         this.url = "http://" + serverUrl + ":" + serverPort;
 
         try {
-            // Initial connection - send the server the client IP and port
-            String query = String.format("ip=%s&port=%s",
-                    URLEncoder.encode(InetAddress.getLocalHost().getHostAddress(), charset),
-                    URLEncoder.encode(Integer.toString(port), charset));
-            System.out.println(query);
+            // Initial connection - send the server the port our client server is listening on
+			String query = String.format("playerName=%s&spriteName=%s&port=%s",
+					URLEncoder.encode(playerName, charset),
+					URLEncoder.encode("characters/alien4.png", charset),
+					URLEncoder.encode(Integer.toString(port), charset));
 
-            URLConnection connection = new URL(url + "?" + query).openConnection();
+            URLConnection connection = new URL(url + "/connect?" + query).openConnection();
             connection.setRequestProperty("Accept-Charset", charset);
             InputStream response = connection.getInputStream();
             readXML(response);
-
-            //TODO read from input stream
         }
-        catch (IOException e) {
+        catch (Exception e) {
             System.out.println("Exception: " + e.getMessage());
+			e.printStackTrace();
         }
     }
 
-	public void sendAction(String url, GameAction action) throws IOException {
-		URLConnection connection = new URL(url + "?" + action.serialize()).openConnection();
+	public void sendAction(GameAction action) throws IOException {
+		URLConnection connection = new URL(url + "/action?" + action.serialize()).openConnection();
 		connection.setRequestProperty("Accept-Charset", charset);
 
 		InputStream response = connection.getInputStream();
 		response.close();
-
 	}
 
 	public void readAction(HttpExchange exchange) {
-//		String content = exchange.getRequestURI().getQuery();
-//		GameAction g = GameAction.deserialize(content, client_game);
-//		g.apply();
+		String content = exchange.getRequestURI().getQuery();
+		GameAction g = GameAction.deserialize(content, game);
+		g.apply();
 	}
 
-	public void readXML(InputStream response){
-
+	public void readXML(InputStream response) {
 		int bytesRead;
 		int current = 0;
 		FileOutputStream fos = null;
 		BufferedOutputStream bos = null;
 		try {
 			// receive file
-			byte[] mybytearray = new byte[10000];
-			fos = new FileOutputStream("resources/continueGame.xml");
+			byte[] mybytearray = new byte[1000000];
+			fos = new FileOutputStream("resources/clientGame.xml");
 			bos = new BufferedOutputStream(fos);
 			bytesRead = response.read(mybytearray, 0, mybytearray.length);
 			current = bytesRead;
 
-			 while (bytesRead > -1){
+			while (bytesRead > -1){
 				bytesRead = response.read(mybytearray, current,
 						(mybytearray.length - current));
 				if (bytesRead >= 0)
@@ -93,8 +92,12 @@ public class Client {
 			}
 			bos.write(mybytearray, 0, current);
 			bos.flush();
-			System.out.println("File " + "resources/continueGame.xml" + " downloaded ("
+			System.out.println("File " + "resources/clientGame.xml" + " downloaded ("
 					+ current + " bytes read)");
+
+			game = new Game("resources/clientGame.xml", "resources/clientGame.xml");
+			player = game.getPlayer(playerName);
+			sendAction(new GameActions.Turn(player, Direction.SOUTH));
 		}
 		catch (IOException e) {
 			System.out.println(e.getMessage());
@@ -120,6 +123,8 @@ public class Client {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
             String requestMethod = exchange.getRequestMethod();
+
+			System.out.println("Got request for " + exchange.getRequestURI());
             // GET <ip>:<port>/xml
 
 
@@ -140,8 +145,8 @@ public class Client {
 
 
             if(requestMethod.equalsIgnoreCase("GET") && exchange.getRequestURI().getPath().equals("/action")){
-
-            	Client.this.readAction(exchange);
+				System.out.println("Reading action " + exchange.getRequestURI().getQuery());
+            	readAction(exchange);
 //
 //            	// read string from that
 //            	GameAction action = GameActions.GameAction.deserialize(exchange.getRequestURI().getQuery(), server_game);

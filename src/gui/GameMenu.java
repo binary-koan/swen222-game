@@ -85,7 +85,7 @@ public class GameMenu {
 			add(port);
 			add(new JLabel("URL"));
 			add(url);
-			JButton client = new JButton("Client");
+			JButton client = new JButton("TestClient");
 			client.addActionListener(new ActionListener() {
 				 
 	            public void actionPerformed(ActionEvent e)

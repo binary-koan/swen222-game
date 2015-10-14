@@ -25,7 +25,7 @@ public class GameActions {
         public static GameAction deserialize(String data, Game game) {
             Map<String, String> values = new HashMap<>();
 
-            String[] pairs = data.split(";");
+            String[] pairs = data.split("&");
             for (String pair : pairs) {
                 String[] keyValue = pair.split("=");
                 values.put(keyValue[0], keyValue[1]);
@@ -68,7 +68,7 @@ public class GameActions {
             }
 
             pairs.add("player=" + player.getName());
-            return String.join(";", pairs);
+            return String.join("&", pairs);
         }
     }
 
