@@ -7,6 +7,20 @@
 **Important: The executables should both be run from the directory they are saved in - attempting to run from another
 directory will mean that images and sound files are not found.**
 
+For single player, run the SplashScreen class. Click on the panel, and then enter a valid game to load from and save to,
+or if that game does not exist a game to save to. Entering a player name that exists in a previous game will start you
+from that player.
+
+If you enter an IP and port, it will attempt to connect to a server. Entering just a game name will run singleplayer.
+Note that clients can connect, but cannot perform actions. Full functionality is not yet up and running.
+
+Click run the game. Navigate with arrow keys, and interact with the mouse.
+Save the game by clicking save in the drop down menu.
+
+Objective:
+
+Stop the ship crashing into the planet! The rogue super computer, JCN-9000, has taken over, and you must stop him.
+
 ### Server
 
 Usage: `java -jar server.jar`
