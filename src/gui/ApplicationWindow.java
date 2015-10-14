@@ -224,39 +224,4 @@ public class ApplicationWindow extends JFrame implements KeyListener, StateChang
     @Override
     public void keyReleased(KeyEvent e) {
     }
-
-	public static void main(String[] args) {
-
-		final Game game = new Game("resources/mainGame.xml", "resources/continueGame.xml");
-		final Player player2 = new Player("Player 2", "characters/alien2.png", game.getRoom("rx1y2"));
-    	player2.turn(Direction.NORTH);
-        game.addPlayer(player2);
-
-        final Player player = new Player("Player 1", "characters/alien1.png", game.getRoom("rx1y2"));
-        player.turn(Direction.NORTH);
-        game.addPlayer(player);
-//        final Player player = game.getPlayer("Player 1");
-//    	final Player player3 = new Player("Player 3", "characters/alien2.png", game.getRoom("rx2y3"));
-//    	player3.turn(Direction.NORTH);
-//        game.addPlayer(player3);
-
-		SynthLookAndFeel lookAndFeel = new SynthLookAndFeel();
-		try {
-			lookAndFeel.load(ApplicationWindow.class.getResourceAsStream("style/synthStyle.xml"), ApplicationWindow.class);
-			UIManager.setLookAndFeel(lookAndFeel);
-		}
-		catch (ParseException | UnsupportedLookAndFeelException e) {
-			JOptionPane.showMessageDialog(null, "Could not load UI style: " + e.getMessage());
-		}
-
-		SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                ApplicationWindow aw = new ApplicationWindow(
-                        new ResourceManager("resources"), null, game, player, new SinglePlayerClient()
-                );
-                aw.pack();
-                aw.setVisible(true);
-            }
-        });
-	}
 }
