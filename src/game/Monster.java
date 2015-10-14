@@ -30,6 +30,7 @@ public class Monster extends Item {
 
 		if (player.getHeldItem() != null && player.getHeldItem().equals(deadlyWeapon)) {
 			player.getRoom().removeItem(this);
+			player.triggerStateChange(StateChangeListener.Type.KILL_MONSTER, null);
 			return true;
 		}
 		else {

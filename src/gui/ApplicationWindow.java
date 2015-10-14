@@ -218,10 +218,10 @@ public class ApplicationWindow extends JFrame implements KeyListener, StateChang
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
-                actionHandler.requestAction(new GameActions.Turn(player, player.getFacingDirection().next()));
+                actionHandler.requestAction(new GameActions.Turn(player, player.getFacingDirection().previous()));
                 break;
             case KeyEvent.VK_RIGHT:
-                actionHandler.requestAction(new GameActions.Turn(player, player.getFacingDirection().previous()));
+                actionHandler.requestAction(new GameActions.Turn(player, player.getFacingDirection().next()));
                 break;
         }
     }

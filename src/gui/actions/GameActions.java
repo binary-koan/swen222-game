@@ -214,7 +214,10 @@ public class GameActions {
 
         @Override
         public boolean apply() {
-            return monster.fight(player);
+            monster.fight(player);
+
+            // Even if the player died, the action technically succeeded
+            return true;
         }
 
         @Override

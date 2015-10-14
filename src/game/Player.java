@@ -194,6 +194,12 @@ public class Player implements Drawable, Serializable {
         return null;
     }
 
+    public void triggerStateChange(StateChangeListener.Type type, String message) {
+        for (StateChangeListener listener : stateChangeListeners) {
+            listener.onStateChanged(this, type, message);
+        }
+    }
+
     // Serialization
 
     /**
@@ -229,10 +235,4 @@ public class Player implements Drawable, Serializable {
 			this.heldItem = (Holdable)game.getItem(objectElement.getChildText("heldItem"));
 		}
 	}
-
-    private void triggerStateChange(StateChangeListener.Type type, String message) {
-        for (StateChangeListener listener : stateChangeListeners) {
-            listener.onStateChanged(this, type, message);
-        }
-    }
 }
