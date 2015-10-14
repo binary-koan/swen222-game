@@ -2,7 +2,6 @@ package control;
 
 import com.sun.net.httpserver.HttpServer;
 import game.*;
-import gui.SinglePlayerClient;
 import gui.actions.Action;
 import gui.actions.ActionHandler;
 import gui.actions.GameActions;
@@ -19,6 +18,7 @@ import java.util.concurrent.Executors;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import gui.actions.SinglePlayerClient;
 
 public class NetworkActionHandler implements ActionHandler {
     public interface LoadListener {

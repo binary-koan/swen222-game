@@ -110,9 +110,9 @@ public class RoomRenderer {
         backgroundImages.clear();
 
         Room room = player.getRoom();
+        addInvisibleDoors(room);
         loadRoom(room, 1.0, true);
         addWalls(room, 1.0);
-        addInvisibleDoors(room);
     }
 
     /**
@@ -168,6 +168,7 @@ public class RoomRenderer {
         ListIterator<SceneItem> iterator = currentSceneItems.listIterator(currentSceneItems.size());
     	while (iterator.hasPrevious()) {
     		SceneItem item = iterator.previous();
+
     		if (item.interactable && item.screenBoundingBox != null && item.screenBoundingBox.contains(point)) {
     			return item.drawable;
     		}
@@ -231,7 +232,6 @@ public class RoomRenderer {
 
             boolean interactable = isCurrent;
             if (room.containsMonster()) {
-                System.out.println(room.getMonster() + " <-> " + drawable);
                 interactable = drawable.equals(room.getMonster()) || drawable instanceof Door;
             }
 
