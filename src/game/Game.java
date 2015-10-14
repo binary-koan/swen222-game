@@ -1,4 +1,5 @@
 package game;
+//Author: Scott Holdaway
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,6 +8,12 @@ import java.util.Map;
 
 import storage.GameData;
 
+
+/**
+ * The game object. Its responsibilities are to keep track of all game objects and
+ * listen for state changes.
+ * @author holdawscot
+ */
 public class Game implements StateChangeListener {
 	private List<StateChangeListener> stateChangeListeners = new ArrayList<>();
 

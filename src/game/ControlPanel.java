@@ -14,11 +14,19 @@ public class ControlPanel extends Item {
 		//player.winGame();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @author holdawscot
+	 */
 	@Override
 	public Element toXML() {
 		return super.toXML();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @author holdawscot
+	 */
 	@Override
 	public void loadXML(Game game, Element objectElement) {
 		super.loadXML(game, objectElement);

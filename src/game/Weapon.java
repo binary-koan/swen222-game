@@ -7,11 +7,19 @@ public class Weapon extends Holdable {
 		super(id, name, description,spriteName);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @author holdawscot
+	 */
 	@Override
 	public Element toXML() {
 		return super.toXML();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @author holdawscot
+	 */
 	@Override
 	public void loadXML(Game game, Element objectElement) {
 		super.loadXML(game, objectElement);

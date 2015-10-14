@@ -34,12 +34,10 @@ public abstract class Item implements Serializable {
 		return spriteName;
 	}
 
-    /**
-     * Author: Scott Holdaway
-     * Creates an XML element of the item by reading through all the fields
-	 * of the item. Subclasses will call this method and add their specific
-	 * data to it.
-     */
+	/**
+	 * {@inheritDoc}
+	 * @author holdawscot
+	 */
 	@Override
     public Element toXML() {
     	Element itemElement = new Element("item");
@@ -51,11 +49,10 @@ public abstract class Item implements Serializable {
     	return itemElement;
     }
 
-    /**
-     * Author: Scott Holdaway
-     * Sets all the fields in this item based on an XML element of this item.
-     * Subclasses will call this method and add their specific data to it.
-     */
+	/**
+	 * {@inheritDoc}
+	 * @author holdawscot
+	 */
 	@Override
     public void loadXML(Game game, Element objectElement){
     	this.name = objectElement.getChildText("name");

@@ -16,6 +16,13 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
+
+/**
+ * This class is responsible for saving and loading the game from XML,
+ * and setting data associations.
+ * @author holdawscot
+ *
+ */
 public class GameData {
 	private String XMLFilename;
 	private Document gameDoc;
@@ -37,6 +44,7 @@ public class GameData {
 		}
 		catch (IOException io) {
 			System.out.println(io.getMessage());
+			System.out.println("SWEN222: No such file");
 		}catch (JDOMException jdomex) {
 			System.out.println(jdomex.getMessage());
 		}

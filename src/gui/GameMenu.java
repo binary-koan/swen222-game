@@ -37,7 +37,6 @@ public class GameMenu {
 	private int width;
 	private int height;
 	
-
 	public GameMenu(final ResourceManager loader) {
 		EventQueue.invokeLater(new Runnable() {
 
@@ -64,7 +63,7 @@ public class GameMenu {
 				frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 				frame.pack();
 				frame.setVisible(true);
-				
+
 
 
 
@@ -72,9 +71,9 @@ public class GameMenu {
 
 		});
 	}
-	
+
 	private class GameWindow extends JPanel {
-		
+
 		public GameWindow(ResourceManager loader, CharacterView info) {
 			setLayout(new GridLayout(4, 1));
 			setPreferredSize(new Dimension(width/2, height));
@@ -87,17 +86,16 @@ public class GameMenu {
 			add(url);
 			add(new JLabel("Game Name"));
 			add(gameName);
-			
+
 			JButton client = new JButton("Client");
 			client.addActionListener(new ActionListener() {
-				 
+
 	            public void actionPerformed(ActionEvent e)
 	            {
-	            	
 	            	if (!gameName.getText().isEmpty() && !info.playerName().isEmpty() ) {
-	            	final Game game; 
+	            	final Game game;
 	            	Player runPlayer;
-	            	
+
 	            	if (new File("resources/"+gameName.getText()+".xml").exists()){
 	            		game= new Game("resources/"+gameName.getText()+".xml", "resources/"+gameName.getText()+".xml");
 	            		if(game.getPlayer(info.playerName()) != null){
@@ -119,11 +117,11 @@ public class GameMenu {
 	            	} else {
 	            		
 	            		game= new Game("resources/mainGame.xml", "resources/"+gameName.getText()+".xml");
-	            		
+
 		            	final Player player;
 		            	player = new Player(info.playerName(), "characters/alien" +
 		            			 info.getCharacterImage() + ".png", game.getRoom("rx1y2"));
-		            
+
 		            	player.turn(Direction.NORTH);
 		                game.addPlayer(player);
 		                game.saveGame();
@@ -144,29 +142,25 @@ public class GameMenu {
 	            		JOptionPane.showMessageDialog(null,"Please Enter Gamename and Player Name",
 	            				"WARNING",JOptionPane.PLAIN_MESSAGE);
 	            	}
-	            	
-	            
-	                
-	               
 	            }
-	        }); 
+	        });
 
-	
-			
+
+
 			JButton server = new JButton("Server");
 			add(client);
 			add(server);
 		}
 	}
-	
+
 	private class CharacterView extends JPanel {
 
 		private int nextAlien;
 		private JTextField name;
-		
+
 		public CharacterView(ResourceManager loader) {
 			nextAlien = 1;
-			
+
 			setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 			setPreferredSize(new Dimension(width/2, height));
 			final JPanel characterImage = new JPanel() {
@@ -176,23 +170,23 @@ public class GameMenu {
 					g.drawImage(loader.getSprite("characters/alien" + nextAlien + ".png", Direction.NORTH),
 							80, 0, getWidth()/2, getHeight(), null);
 				}
-				
+
 				@Override
 				public Dimension getMaximumSize() {
 				    return new Dimension(width/2, 200);
 				}
-				
+
 			};
-			
-		
-			
+
+
+
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new BorderLayout());
 			buttonPane.setMaximumSize(new Dimension(width/2, 80));
 			JButton buttonLeft = new JButton();
 			buttonLeft.setPreferredSize(new Dimension(150, 80));
 			buttonLeft.addActionListener(new ActionListener() {
-				 
+
 	            public void actionPerformed(ActionEvent e)
 	            {
 	            	if (nextAlien == 1) {
@@ -202,8 +196,8 @@ public class GameMenu {
 	            	}
 	            	characterImage.repaint();
 	            }
-	        }); 
-			
+	        });
+
 			JButton buttonRight = new JButton();
 			buttonRight.setPreferredSize(new Dimension(150, 80));
 			buttonRight.addActionListener(new ActionListener() {
@@ -224,11 +218,11 @@ public class GameMenu {
 			image = loader.getImage("ui/arrow.png");
 			image.getScaledInstance(buttonLeft.getWidth() - 20, buttonLeft.getHeight() - 10, image.SCALE_DEFAULT);
 			buttonRight.setIcon(new ImageIcon(image));
-			
+
 			buttonPane.add(buttonLeft, BorderLayout.WEST);
 			buttonPane.add(buttonRight, BorderLayout.EAST);
-				
-			
+
+
 			JPanel characterName = new JPanel();
 			characterName.setLayout(new BorderLayout());
 			name = new JTextField();
@@ -236,23 +230,23 @@ public class GameMenu {
 			name.setPreferredSize(new Dimension(150, 20));
 			characterName.add(new JLabel("Enter Character name:"), BorderLayout.CENTER);
 			characterName.add(name, BorderLayout.EAST);
-			
+
 			add(characterImage, BorderLayout.NORTH);
 			//add(Box.createRigidArea(new Dimension(5, 0)));
 			add(buttonPane, BorderLayout.CENTER);
 		//	add(Box.createRigidArea(new Dimension(5,0)));
 			add(characterName, BorderLayout.SOUTH);
 		}
-		
+
 		public int getCharacterImage() {
 			return nextAlien;
 		}
-		
+
 		public String playerName() {
 			return name.getText();
 		}
-	
+
 	}
 
-	
+
 }

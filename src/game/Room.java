@@ -165,9 +165,8 @@ public class Room implements Serializable{
 	}
 
 	/**
-	 * Author: Scott Holdaway
-	 * Creates an XML element of the room by reading through all the fields
-	 * of the room.
+	 * {@inheritDoc}
+	 * @author holdawscot
 	 */
     @Override
    	public Element toXML() {
@@ -211,9 +210,9 @@ public class Room implements Serializable{
    	}
 
     /**
-     * Author: Scott Holdaway
-     * Sets all the fields in this room based on an XML element of this room.
-     */
+	 * {@inheritDoc}
+	 * @author holdawscot
+	 */
     @Override
 	public void loadXML(Game game, Element objectElement) {
 		//Set the room's items.

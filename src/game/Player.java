@@ -203,10 +203,9 @@ public class Player implements Drawable, Serializable {
     // Serialization
 
     /**
-     * Author: Scott Holdaway
-     * Creates an XML element of the player by reading through all the fields
-	 * of the player.
-     */
+	 * {@inheritDoc}
+	 * @author holdawscot
+	 */
 	@Override
 	public Element toXML() {
 		Element player = new Element("player");
@@ -222,8 +221,8 @@ public class Player implements Drawable, Serializable {
 	}
 
 	/**
-	 * Author: Scott Holdaway.
-	 * Sets all the fields in this player based on and XML element of this player.
+	 * {@inheritDoc}
+	 * @author holdawscot
 	 */
 	@Override
 	public void loadXML(Game game, Element objectElement) {

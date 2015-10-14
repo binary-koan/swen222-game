@@ -39,6 +39,10 @@ public class Monster extends Item {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @author holdawscot
+	 */
 	@Override
 	public Element toXML() {
 		Element monster = super.toXML();
@@ -48,6 +52,10 @@ public class Monster extends Item {
 		return monster;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @author holdawscot
+	 */
 	@Override
 	public void loadXML(Game game, Element objectElement) {
 		super.loadXML(game, objectElement);
