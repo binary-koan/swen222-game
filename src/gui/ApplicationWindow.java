@@ -24,22 +24,30 @@ import gui.actions.ActionHandler;
 import gui.actions.GameActions;
 
 
-public class ApplicationWindow extends JFrame implements KeyListener{
+public class ApplicationWindow extends JFrame implements KeyListener, StateChangeListener {
 	private static final long serialVersionUID = 6273791834646480175L;
+
+	private JFrame gameMenu;
+	private ResourceManager loader;
 
 	private Game game;
     private Player player;
     private ActionHandler actionHandler;
 	private GameCanvas canvas;
+	private ImagePanel inventory;
 
-	public ApplicationWindow(ResourceManager loader, Game game, Player player, ActionHandler actionHandler) {
+	public ApplicationWindow(ResourceManager loader, JFrame gameMenu, Game game, Player player, ActionHandler actionHandler) {
 		super("Game");
+		this.loader = loader;
+		this.gameMenu = gameMenu;
+
 		this.game = game;
         this.player = player;
         this.actionHandler = actionHandler;
         this.canvas = new GameCanvas(loader, actionHandler);
-        canvas.setup(player, game);
 
+		game.addStateChangeListener(this);
+		canvas.setup(player, game);
 		loader.setMusic("audio/music-main.wav");
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -72,22 +80,22 @@ public class ApplicationWindow extends JFrame implements KeyListener{
 	     JMenuItem saveMenuItem = new JMenuItem("Save");
 	     saveMenuItem.setActionCommand("Save");
 	     saveMenuItem.addActionListener(new ActionListener() {
-	            @Override
-	            public void actionPerformed(ActionEvent event) {
-	            	game.getData().saveWholeGame();
-	              
-	            }
-	        });
+			 @Override
+			 public void actionPerformed(ActionEvent event) {
+				 game.getData().saveWholeGame();
+
+			 }
+		 });
 	     
 	     JMenuItem exitMenuItem = new JMenuItem("Exit");
 	     exitMenuItem.setActionCommand("Exit");
 	     exitMenuItem.addActionListener(new ActionListener() {
-	            @Override
-	            public void actionPerformed(ActionEvent event) {
-	            	game.getData().saveWholeGame();
-	                System.exit(0);
-	            }
-	        });
+			 @Override
+			 public void actionPerformed(ActionEvent event) {
+				 game.getData().saveWholeGame();
+				 System.exit(0);
+			 }
+		 });
 
 
 	     fileMenu.add(openMenuItem);
@@ -107,26 +115,39 @@ public class ApplicationWindow extends JFrame implements KeyListener{
 		area.setLayout(new GridLayout(1,2));
 
 		JPanel leftBox = new JPanel();
-		JPanel inventory = new JPanel();
-		
+		JPanel inventoryPanel = new JPanel();
+		inventory = new ImagePanel("key", loader);
 
-		inventory.setLayout(new BorderLayout());
-		inventory.add(new ImagePanel("key", loader), BorderLayout.EAST);
-		
-
+		inventoryPanel.setLayout(new BorderLayout());
+		inventoryPanel.add(inventory, BorderLayout.EAST);
 
 		area.add(leftBox);
-		area.add(inventory);
+		area.add(inventoryPanel);
 		return area;
 	}
 
-    private class ImagePanel extends JPanel implements StateChangeListener, MouseListener{
+	@Override
+	public void onStateChanged(Player player, StateChangeListener.Type type, String message) {
+		if (message != null) {
+			JOptionPane.showMessageDialog(getRootPane(), message);
+		}
+
+		if (type == StateChangeListener.Type.PICK_UP) {
+			inventory.setImage(loader.getSprite(player.getHeldItem().getSpriteName(), Direction.NORTH));
+			inventory.repaint();
+		}
+		else if (type == StateChangeListener.Type.DIE) {
+			setVisible(false);
+			gameMenu.setVisible(true);
+		}
+	}
+
+	private class ImagePanel extends JPanel implements MouseListener {
 		private BufferedImage image;
 		private ResourceManager loader;
 		public ImagePanel(String item, ResourceManager loader) {
 			
 			this.loader = loader;
-			game.addStateChangeListener(this);
 			
 			addMouseListener(this);
 			setPreferredSize(new Dimension(200, 100));
@@ -144,17 +165,6 @@ public class ApplicationWindow extends JFrame implements KeyListener{
 			
 			
 
-		}
-
-		@Override
-		public void onStateChanged(Player player, Type type, String message) {
-			if (type == Type.PICK_UP) {
-				this.image = loader.getSprite(player.getHeldItem().getSpriteName(), Direction.NORTH);
-			}
-
-			
-			repaint();
-			
 		}
 		
 
@@ -189,7 +199,10 @@ public class ApplicationWindow extends JFrame implements KeyListener{
 			
 		}
 
-	
+
+		public void setImage(BufferedImage image) {
+			this.image = image;
+		}
 	}
 
     @Override
@@ -239,14 +252,11 @@ public class ApplicationWindow extends JFrame implements KeyListener{
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 ApplicationWindow aw = new ApplicationWindow(
-                        new ResourceManager("resources"), game, player, new SinglePlayerClient()
+                        new ResourceManager("resources"), null, game, player, new SinglePlayerClient()
                 );
                 aw.pack();
                 aw.setVisible(true);
             }
         });
 	}
-
-	
-
 }

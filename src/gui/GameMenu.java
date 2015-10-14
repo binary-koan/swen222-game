@@ -108,7 +108,7 @@ public class GameMenu {
 	                SwingUtilities.invokeLater(new Runnable() {
 	                    public void run() {
 	                        ApplicationWindow aw = new ApplicationWindow(
-	                                loader, game, player2, new SinglePlayerClient()
+	                                loader, frame, game, player2, new SinglePlayerClient()
 	                        );
 	                        aw.pack();
 	                        aw.setVisible(true);
