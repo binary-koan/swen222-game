@@ -132,6 +132,9 @@ public class RoomRenderer {
                     bounds.width * RENDER_SCALE, bounds.height * RENDER_SCALE, null
             );
         }
+
+        graphics.drawImage(loader.getImage("backgrounds/overlay.png"), 0, 0, Room.ROOM_SIZE * RENDER_SCALE, Room.CEILING_HEIGHT * RENDER_SCALE, null);
+
         return result;
     }
 
