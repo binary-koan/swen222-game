@@ -369,9 +369,9 @@
         <entry>NORTH-rx0y3</entry>
       </roomConnections>
       <wallConnections>
-        <entry>EAST-true</entry>
-        <entry>SOUTH-true</entry>
         <entry>NORTH-false</entry>
+        <entry>SOUTH-true</entry>
+        <entry>EAST-true</entry>
         <entry>WEST-true</entry>
       </wallConnections>
     </room>
@@ -400,14 +400,14 @@
       </roomItems>
       <roomPlayers />
       <roomConnections>
-        <entry>EAST-rx2y3</entry>
         <entry>NORTH-rx1y2</entry>
+        <entry>EAST-rx2y3</entry>
         <entry>WEST-rx0y3</entry>
       </roomConnections>
       <wallConnections>
-        <entry>EAST-true</entry>
-        <entry>SOUTH-true</entry>
         <entry>NORTH-false</entry>
+        <entry>SOUTH-true</entry>
+        <entry>EAST-true</entry>
         <entry>WEST-true</entry>
       </wallConnections>
     </room>
@@ -449,9 +449,9 @@
         <entry>WEST-rx1y2</entry>
       </roomConnections>
       <wallConnections>
-        <entry>EAST-true</entry>
-        <entry>SOUTH-true</entry>
         <entry>NORTH-true</entry>
+        <entry>SOUTH-true</entry>
+        <entry>EAST-true</entry>
         <entry>WEST-false</entry>
       </wallConnections>
     </room>
@@ -489,13 +489,13 @@
       </roomItems>
       <roomPlayers />
       <roomConnections>
-        <entry>EAST-rx1y3</entry>
         <entry>SOUTH-rx0y4</entry>
+        <entry>EAST-rx1y3</entry>
       </roomConnections>
       <wallConnections>
-        <entry>EAST-true</entry>
-        <entry>SOUTH-false</entry>
         <entry>NORTH-true</entry>
+        <entry>SOUTH-false</entry>
+        <entry>EAST-true</entry>
         <entry>WEST-true</entry>
       </wallConnections>
     </room>
@@ -503,17 +503,20 @@
       <id>rx1y2</id>
       <name>Corridor - Mid</name>
       <roomItems />
-      <roomPlayers />
+      <roomPlayers>
+        <name />
+        <name />
+      </roomPlayers>
       <roomConnections>
-        <entry>EAST-rx2y2</entry>
-        <entry>SOUTH-rx1y3</entry>
         <entry>NORTH-rx1y1</entry>
+        <entry>SOUTH-rx1y3</entry>
+        <entry>EAST-rx2y2</entry>
         <entry>WEST-rx0y2</entry>
       </roomConnections>
       <wallConnections>
-        <entry>EAST-false</entry>
-        <entry>SOUTH-false</entry>
         <entry>NORTH-false</entry>
+        <entry>SOUTH-false</entry>
+        <entry>EAST-false</entry>
         <entry>WEST-false</entry>
       </wallConnections>
     </room>
@@ -563,9 +566,9 @@
         <entry>SOUTH-rx2y2</entry>
       </roomConnections>
       <wallConnections>
-        <entry>EAST-true</entry>
-        <entry>SOUTH-true</entry>
         <entry>NORTH-true</entry>
+        <entry>SOUTH-true</entry>
+        <entry>EAST-true</entry>
         <entry>WEST-true</entry>
       </wallConnections>
     </room>
@@ -624,9 +627,9 @@
         <entry>NORTH-rx2y3</entry>
       </roomConnections>
       <wallConnections>
-        <entry>EAST-true</entry>
-        <entry>SOUTH-true</entry>
         <entry>NORTH-false</entry>
+        <entry>SOUTH-true</entry>
+        <entry>EAST-true</entry>
         <entry>WEST-true</entry>
       </wallConnections>
     </room>
@@ -668,9 +671,9 @@
         <entry>WEST-rx1y3</entry>
       </roomConnections>
       <wallConnections>
-        <entry>EAST-true</entry>
-        <entry>SOUTH-false</entry>
         <entry>NORTH-true</entry>
+        <entry>SOUTH-false</entry>
+        <entry>EAST-true</entry>
         <entry>WEST-true</entry>
       </wallConnections>
     </room>
@@ -711,9 +714,9 @@
         <entry>EAST-rx1y2</entry>
       </roomConnections>
       <wallConnections>
-        <entry>EAST-false</entry>
-        <entry>SOUTH-true</entry>
         <entry>NORTH-true</entry>
+        <entry>SOUTH-true</entry>
+        <entry>EAST-false</entry>
         <entry>WEST-true</entry>
       </wallConnections>
     </room>
@@ -751,14 +754,14 @@
       </roomItems>
       <roomPlayers />
       <roomConnections>
-        <entry>SOUTH-rx1y2</entry>
         <entry>NORTH-rx1y0</entry>
+        <entry>SOUTH-rx1y2</entry>
         <entry>WEST-rx0y1</entry>
       </roomConnections>
       <wallConnections>
-        <entry>EAST-true</entry>
-        <entry>SOUTH-false</entry>
         <entry>NORTH-true</entry>
+        <entry>SOUTH-false</entry>
+        <entry>EAST-true</entry>
         <entry>WEST-true</entry>
       </wallConnections>
     </room>
@@ -826,9 +829,9 @@
         <entry>EAST-rx1y1</entry>
       </roomConnections>
       <wallConnections>
-        <entry>EAST-true</entry>
-        <entry>SOUTH-true</entry>
         <entry>NORTH-true</entry>
+        <entry>SOUTH-true</entry>
+        <entry>EAST-true</entry>
         <entry>WEST-true</entry>
       </wallConnections>
     </room>
@@ -869,12 +872,20 @@
         <entry>SOUTH-rx1y1</entry>
       </roomConnections>
       <wallConnections>
-        <entry>EAST-true</entry>
-        <entry>SOUTH-true</entry>
         <entry>NORTH-true</entry>
+        <entry>SOUTH-true</entry>
+        <entry>EAST-true</entry>
         <entry>WEST-true</entry>
       </wallConnections>
     </room>
   </gameRooms>
-  <gamePlayers />
+  <gamePlayers>
+    <player>
+      <name />
+      <spriteName>characters/alien3.png</spriteName>
+      <room>rx1y2</room>
+      <facingDirection>NORTH</facingDirection>
+      <heldItem />
+    </player>
+  </gamePlayers>
 </game>

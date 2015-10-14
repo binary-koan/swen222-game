@@ -50,7 +50,7 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 		//Add items to the frame
 		add(setupMenuBar(), BorderLayout.NORTH);
 		add(canvas, BorderLayout.CENTER);
-		add(setupLowerBar(), BorderLayout.SOUTH);
+		add(setupLowerBar(loader), BorderLayout.SOUTH);
 
         addKeyListener(this);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -96,7 +96,7 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 
 	}
 
-	private JPanel setupLowerBar() {
+	private JPanel setupLowerBar(ResourceManager loader) {
 		JPanel area = new JPanel();
 		area.setLayout(new GridLayout(1,2));
 
@@ -104,10 +104,10 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 		JPanel inventory = new JPanel();
 
 
-		inventory.setLayout(new GridLayout(1,3, 4, 0));
-		inventory.add(new ImagePanel("key"));
-		inventory.add(new ImagePanel("fireplace"));
-		inventory.add(new ImagePanel("Weapon"));
+		inventory.setLayout(new GridLayout(1,1, 0, 0));
+		inventory.setPreferredSize(new Dimension((int)(area.getWidth() * 0.2), (int)(canvas.getHeight() * 0.3)));
+		inventory.add(new ImagePanel("key", loader));
+		
 
 
 		area.add(leftBox);
@@ -118,9 +118,9 @@ public class ApplicationWindow extends JFrame implements KeyListener {
     private class ImagePanel extends JPanel{
 		private BufferedImage image;
 
-		public ImagePanel(String item) {
-			//image = loader.getImage(item);
-			//image = image.getSubimage(0, 0, image.getWidth(), image.getHeight());
+		public ImagePanel(String item, ResourceManager loader) {
+			image = loader.getSprite("objects/bucket.png", Direction.NORTH);
+			
 
 			this.setPreferredSize(new Dimension(40, 40));
 			this.setBackground(Color.DARK_GRAY);
@@ -129,7 +129,7 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
-			//g.drawImage(image, 5, 5, this.getWidth() - 5, this.getHeight() - 5, null);
+			g.drawImage(image, 5, 5, this.getWidth() - 5, this.getHeight() - 5, null);
 
 		}
 	}

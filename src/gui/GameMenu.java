@@ -92,10 +92,16 @@ public class GameMenu {
 	            {
 	            	final Game game = new Game("resources/mainGame.xml", "resources/continueGame.xml");
 	            	final Player player2;
+	            	final Player player;
 	            	player2 = new Player(info.playerName(), "characters/alien" +
 	            			 info.getCharacterImage() + ".png", game.getRoom("rx1y2"));
+	            	player = new Player(info.playerName(), "characters/alien" +
+	            			 info.getCharacterImage() + ".png", game.getRoom("rx1y2"));
 	            	player2.turn(Direction.NORTH);
+	            	player.turn(Direction.NORTH);
 	                game.addPlayer(player2);
+	                game.addPlayer(player);
+	                game.getData().saveWholeGame();
 	                
 	                SwingUtilities.invokeLater(new Runnable() {
 	                    public void run() {
