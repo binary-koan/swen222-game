@@ -1,6 +1,10 @@
 package gui.actions;
 
+import game.Game;
 import game.Player;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Represents an action a player can take in the world - this could be as simple as viewing the description of an

@@ -259,7 +259,7 @@ public class RoomRenderer {
             Room connection = room.getConnection(direction);
             if (connection != null) {
                 if (room.hasWall(direction)) {
-                    roomObjects.add(new VisibleDoor(direction, room.getColor()));
+                    roomObjects.add(new VisibleDoor(room, direction, room.getColor()));
                 }
             }
         }
@@ -274,21 +274,21 @@ public class RoomRenderer {
 
         if (room.getConnection(direction.previous()) != null && !room.hasWall(direction.previous())) {
             currentSceneItems.add(new SceneItem(
-                    new InvisibleDoor(direction.previous()), null,
+                    new InvisibleDoor(room, direction.previous()), null,
                     new Rectangle(0, 0, Room.ROOM_SIZE / 4, Room.CEILING_HEIGHT), true
             ));
         }
 
         if (room.getConnection(direction.opposite()) != null && !room.hasWall(direction.opposite())) {
             currentSceneItems.add(new SceneItem(
-                    new InvisibleDoor(direction.opposite()), null,
+                    new InvisibleDoor(room, direction.opposite()), null,
                     new Rectangle(Room.ROOM_SIZE / 4, 0, Room.ROOM_SIZE / 4 * 2, Room.CEILING_HEIGHT), true
             ));
         }
 
         if (room.getConnection(direction.next()) != null && !room.hasWall(direction.next())) {
             currentSceneItems.add(new SceneItem(
-                    new InvisibleDoor(direction.next()), null,
+                    new InvisibleDoor(room, direction.next()), null,
                     new Rectangle(Room.ROOM_SIZE / 4 * 3, 0, Room.ROOM_SIZE / 4, Room.CEILING_HEIGHT), true
             ));
         }

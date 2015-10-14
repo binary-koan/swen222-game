@@ -2,12 +2,13 @@ package gui.renderer;
 
 import game.Direction;
 import game.Key;
+import game.Room;
 
 public class VisibleDoor extends Door {
     private String spriteName;
 
-	public VisibleDoor(Direction linkDirection, Key.Color color) {
-		super(linkDirection);
+	public VisibleDoor(Room room, Direction linkDirection, Key.Color color) {
+		super(room, linkDirection);
 
         if (color == null) {
             spriteName = "objects/door.png";
