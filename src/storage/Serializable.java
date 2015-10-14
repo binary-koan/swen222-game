@@ -9,8 +9,8 @@ public interface Serializable {
 
 	/**
      *Author: Scott Holdaway
-     * Creates an XML element of the item by reading through all the fields
-	 * of the item. Subclasses will call this method and add their specific
+     * Creates an XML element of the object by reading through all the fields
+	 * of the object. Subclasses will call this method and add their specific
 	 * data to it.
 	 * @return The element to be added to xml.
 	 */
@@ -18,7 +18,7 @@ public interface Serializable {
 
 	/**
      * Author: Scott Holdaway
-     * Sets all the fields in this item based on an XML element of this item.
+     * Sets all the fields in this object based on an XML element of this object.
      * Subclasses will call this method and add their specific data to it.
 	 * @param game The game to check for data associations.
 	 * @param objectElement The element to read from.

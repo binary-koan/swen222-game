@@ -16,6 +16,10 @@ public class Container extends Item {
 		return containerItems;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @author holdawscot
+	 */
 	@Override
 	public Element toXML() {
 		Element container = super.toXML();
@@ -27,6 +31,10 @@ public class Container extends Item {
    		return container;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @author holdawscot
+	 */
 	@Override
 	public void loadXML(Game game, Element objectElement) {
 		super.loadXML(game, objectElement);
