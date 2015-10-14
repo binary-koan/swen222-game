@@ -69,6 +69,11 @@ public class Player implements Drawable, Serializable {
         return heldItem;
     }
 
+    public void winGame(){
+    	triggerStateChange(StateChangeListener.Type.WIN, "Not only did you save your planet, you stopped a rogueAI "
+    			+ "busting up your ship. Dave Bowman ain't got nothing on you");
+    }
+
     /**
      * @return a point near the center of the wall the player is viewing their room from
      */

@@ -66,7 +66,7 @@ public class ApplicationWindow extends JFrame implements KeyListener, StateChang
 		add(lowerBar, BorderLayout.SOUTH);
 
         addKeyListener(this);
-     
+
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 
@@ -88,13 +88,13 @@ public class ApplicationWindow extends JFrame implements KeyListener, StateChang
 
 			 }
 		 });
-	     
+
 	     JMenuItem exitMenuItem = new JMenuItem("Exit");
 	     exitMenuItem.setActionCommand("Exit");
 	     exitMenuItem.addActionListener(new ActionListener() {
 			 @Override
 			 public void actionPerformed(ActionEvent event) {
-				 
+
 				 game.saveGame();
 				 System.exit(0);
 			 }
@@ -148,7 +148,7 @@ public class ApplicationWindow extends JFrame implements KeyListener, StateChang
             inventory.setImage(null);
             inventory.repaint();
         }
-		else if (type == StateChangeListener.Type.DIE) {
+		else if (type == StateChangeListener.Type.DIE || type == StateChangeListener.Type.WIN) {
 			setVisible(false);
 			gameMenu.setVisible(true);
 		}
@@ -158,9 +158,9 @@ public class ApplicationWindow extends JFrame implements KeyListener, StateChang
 		private BufferedImage image;
 		private ResourceManager loader;
 		public ImagePanel(String item, ResourceManager loader) {
-			
+
 			this.loader = loader;
-			
+
 			addMouseListener(this);
 			setPreferredSize(new Dimension(200, 100));
 			this.setBackground(Color.DARK_GRAY);
@@ -174,16 +174,16 @@ public class ApplicationWindow extends JFrame implements KeyListener, StateChang
 			}
 			g.setColor(Color.DARK_GRAY);
 			g.drawRect(0, 0, this.getWidth(), this.getHeight());
-			
-			
+
+
 
 		}
-		
+
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
@@ -194,19 +194,19 @@ public class ApplicationWindow extends JFrame implements KeyListener, StateChang
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 
