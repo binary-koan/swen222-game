@@ -723,7 +723,7 @@
       <name>Torch</name>
       <description>An E-class 2187 pattern-A torch (second generation).</description>
       <spriteName>objects/torch.png</spriteName>
-      <subClass>class game.Furniture</subClass>
+      <subClass>class game.Holdable</subClass>
     </item>
 
 
@@ -732,7 +732,7 @@
       <name>Torch</name>
       <description>An E-class 2187 pattern-A torch (second generation).</description>
       <spriteName>objects/torch.png</spriteName>
-      <subClass>class game.Furniture</subClass>
+      <subClass>class game.Holdable</subClass>
     </item>
 
 
@@ -946,7 +946,7 @@
       <name>Torch</name>
       <description>An E-class 2187 pattern-A torch (second generation).</description>
       <spriteName>objects/torch.png</spriteName>
-      <subClass>class game.Furniture</subClass>
+      <subClass>class game.Holdable</subClass>
     </item>
 
 
@@ -955,7 +955,7 @@
       <name>Torch</name>
       <description>An E-class 2187 pattern-A torch (second generation).</description>
       <spriteName>objects/torch.png</spriteName>
-      <subClass>class game.Furniture</subClass>
+      <subClass>class game.Holdable</subClass>
     </item>
 
 

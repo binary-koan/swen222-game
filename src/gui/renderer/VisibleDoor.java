@@ -14,7 +14,7 @@ public class VisibleDoor extends Door {
             spriteName = "objects/door.png";
         }
         else {
-            spriteName = "object/door-" + color.toString().toLowerCase() + ".png";
+            spriteName = "objects/door-" + color.toString().toLowerCase() + ".png";
         }
     }
 

@@ -32,13 +32,8 @@ public class Container extends Item {
 		super.loadXML(game, objectElement);
 		this.containerItems.removeAll(containerItems);
 		for(Element containerItem : objectElement.getChild("containerItems").getChildren()) {
-            try {
-                System.out.println(containerItem.getText());
-                this.containerItems.add((Holdable) game.getItem(containerItem.getText()));
-            }
-            catch (ClassCastException e) {
-                System.out.println('s');
-            }
+            System.out.println(containerItem.getText());
+            this.containerItems.add((Holdable) game.getItem(containerItem.getText()));
 		}
 	}
 }

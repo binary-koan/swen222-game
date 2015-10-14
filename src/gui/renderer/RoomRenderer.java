@@ -259,7 +259,7 @@ public class RoomRenderer {
             Room connection = room.getConnection(direction);
             if (connection != null) {
                 if (room.hasWall(direction)) {
-                    roomObjects.add(new VisibleDoor(room, direction, room.getColor()));
+                    roomObjects.add(new VisibleDoor(room, direction, connection.getColor()));
                 }
             }
         }
