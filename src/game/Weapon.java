@@ -2,6 +2,11 @@ package game;
 
 import org.jdom2.Element;
 
+/**
+ * Weapon must be help by player to defeat AI's in the game
+ * @author Shanon & Scott
+ *
+ */
 public class Weapon extends Holdable {
 	public Weapon(String id, String name, String description, String spriteName) {
 		super(id, name, description,spriteName);
