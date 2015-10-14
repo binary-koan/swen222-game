@@ -62,16 +62,19 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 		JMenu fileMenu = new JMenu("File");
 		JMenu editMenu = new JMenu("Game");
 
-		JMenuItem newMenuItem = new JMenuItem("Penis");
-		newMenuItem.setMnemonic(KeyEvent.VK_N);
-		newMenuItem.setActionCommand("Penis");
-
 	     JMenuItem openMenuItem = new JMenuItem("Open");
 	     openMenuItem.setActionCommand("Open");
 
 	     JMenuItem saveMenuItem = new JMenuItem("Save");
 	     saveMenuItem.setActionCommand("Save");
-
+	     saveMenuItem.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent event) {
+	            	game.getData().saveWholeGame();
+	              
+	            }
+	        });
+	     
 	     JMenuItem exitMenuItem = new JMenuItem("Exit");
 	     exitMenuItem.setActionCommand("Exit");
 	     exitMenuItem.addActionListener(new ActionListener() {
@@ -83,7 +86,6 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 	        });
 
 
-	     fileMenu.add(newMenuItem);
 	     fileMenu.add(openMenuItem);
 	     fileMenu.add(saveMenuItem);
 	     fileMenu.addSeparator();
@@ -96,16 +98,16 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 
 	}
 
-	private JPanel setupLowerBar(ResourceManager loader) {
+	private JPanel setupLowerBar(ResourceManager loader)  {
 		JPanel area = new JPanel();
 		area.setLayout(new GridLayout(1,2));
 
 		JPanel leftBox = new JPanel();
 		JPanel inventory = new JPanel();
-
+		
 
 		inventory.setLayout(new GridLayout(1,1, 0, 0));
-		inventory.setPreferredSize(new Dimension((int)(area.getWidth() * 0.2), (int)(canvas.getHeight() * 0.3)));
+		//inventory.setPreferredSize(new Dimension((int)(area.getWidth() * 0.2), (int)(canvas.getHeight() * 0.3)));
 		inventory.add(new ImagePanel("key", loader));
 		
 
@@ -115,13 +117,14 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 		return area;
 	}
 
-    private class ImagePanel extends JPanel{
+    private class ImagePanel extends JPanel implements StateChangeListener{
 		private BufferedImage image;
-
+		private ResourceManager loader;
 		public ImagePanel(String item, ResourceManager loader) {
-			image = loader.getSprite("objects/bucket.png", Direction.NORTH);
 			
-
+			this.loader = loader;
+			game.addStateChangeListener(this);
+			
 			this.setPreferredSize(new Dimension(40, 40));
 			this.setBackground(Color.DARK_GRAY);
 
@@ -129,8 +132,22 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
-			g.drawImage(image, 5, 5, this.getWidth() - 5, this.getHeight() - 5, null);
+			if (image != null) {
+				g.drawImage(image, 5, 5, this.getWidth() - 5, this.getHeight() - 5, null);
+			}
+			
 
+		}
+
+		@Override
+		public void onStateChanged(Player player, Type type, String message) {
+			if (type == Type.PICK_UP) {
+				this.image = loader.getSprite(player.getHeldItem().getSpriteName(), Direction.NORTH);
+			}
+
+			
+			repaint();
+			
 		}
 	}
 
@@ -188,5 +205,7 @@ public class ApplicationWindow extends JFrame implements KeyListener {
             }
         });
 	}
+
+	
 
 }

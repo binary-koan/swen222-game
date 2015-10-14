@@ -12,7 +12,6 @@ import org.jdom2.Element;
  */
 public class Player implements Drawable, Serializable {
     private List<StateChangeListener> stateChangeListeners = new ArrayList<>();
-
     private String name;
 	private String spriteName;
     private Room room;
