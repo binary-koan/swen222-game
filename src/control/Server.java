@@ -7,8 +7,6 @@ import com.sun.net.httpserver.HttpServer;
 
 import game.Game;
 import game.Player;
-import game.StateChangeListener;
-import gui.actions.GameActions;
 import gui.actions.GameActions.GameAction;
 
 import java.io.*;
@@ -16,7 +14,18 @@ import java.net.*;
 import java.util.*;
 import java.util.concurrent.Executors;
 
+/**
+ * A game server. Creates a new game data file and allows clients to connect, handles action requests and sends actions
+ * back to all connected clients
+ *
+ * @author Scott Holdaway, Jono Mingard
+ */
 public class Server {
+    /**
+     * Run a server. Can be passed in arguments to set the game filename and port
+     *
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         String filename = "resources/serverGame.xml";
         int port = 8080;
@@ -33,92 +42,10 @@ public class Server {
         new Server(filename, port);
     }
 
-    private Game game;
-    private String gameFilename;
-
-    Map<String, String> clients = new HashMap<>();
-
-    public Server(String filename, int port) {
-        game = new Game("resources/mainGame.xml", filename);
-        gameFilename = filename;
-
-        try {
-            InetSocketAddress addr = new InetSocketAddress(port);
-            HttpServer server = HttpServer.create(addr, 0);
-
-            server.createContext("/", new MyHandler());
-            server.setExecutor(Executors.newCachedThreadPool());
-            server.start();
-            System.out.println("Server started. Use the following connection settings:");
-            System.out.println("   IP address: " + InetAddress.getLocalHost().getHostAddress());
-            System.out.println("   Port: " + port);
-        }
-        catch (IOException e) {
-            System.out.println("Server crashed!");
-            System.out.println(e.toString());
-        }
-    }
-
-	public void sendAction(String url, GameAction action) throws IOException {
-        System.out.println("Sending action to " + url);
-        try {
-            URLConnection connection = new URL(url + "/action?" + action.serialize())
-                    .openConnection();
-            connection.setRequestProperty("Accept-Charset", "UTF-8");
-
-            InputStream response = connection.getInputStream();
-            response.close();
-        }
-        catch (Exception e) {
-            System.out.println("Unable to send action: " + e);
-            e.printStackTrace();
-            throw e;
-        }
-	}
-
-    public void processAction(HttpExchange exchange) throws IOException {
-        try {
-            String content = exchange.getRequestURI().getQuery();
-            GameAction g = GameAction.deserialize(content, game);
-            if (g != null && g.apply()) {
-                for (String clientUrl : clients.values()) {
-                    sendAction(clientUrl, g);
-                }
-            }
-        }
-        catch (Exception e) {
-            System.out.println("Unable to process action: " + e);
-            e.printStackTrace();
-        }
-    }
-
-    public void sendXML(OutputStream fileStream) throws IOException {
-        try {
-            byte[] mybytearray = readFile(gameFilename);
-            System.out.println("Sending " + gameFilename + "(" + mybytearray.length + " bytes)");
-
-            fileStream.write(mybytearray, 0, mybytearray.length);
-            fileStream.flush();
-            fileStream.close();
-        }
-        catch (Exception e) {
-            System.out.println("Exception: " + e);
-            throw e;
-        }
-    }
-
-    private byte[] readFile(String filename) throws IOException {
-        File myFile = new File(filename);
-        byte[] mybytearray = new byte[(int) myFile.length()];
-        FileInputStream fileInputStream = new FileInputStream(myFile);
-        BufferedInputStream bufInputStream = new BufferedInputStream(fileInputStream);
-
-        bufInputStream.read(mybytearray, 0, mybytearray.length);
-        bufInputStream.close();
-        return mybytearray;
-    }
-
-    class MyHandler implements HttpHandler {
+    /**
+     * Handles requests made to the server
+     */
+    class RequestHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
             System.out.println("Handling request for " + exchange.getRequestURI());
@@ -204,5 +131,96 @@ public class Server {
                 System.out.println("Failed to send response: " + e);
             }
         }
+    }
+
+    private Game game;
+    private String gameFilename;
+
+    Map<String, String> clients = new HashMap<>();
+
+    /**
+     * Create a new server
+     *
+     * @param filename filename to save the server's copy of the game to
+     * @param port port to run the server on
+     */
+    public Server(String filename, int port) {
+        game = new Game("resources/mainGame.xml", filename);
+        gameFilename = filename;
+
+        try {
+            InetSocketAddress addr = new InetSocketAddress(port);
+            HttpServer server = HttpServer.create(addr, 0);
+
+            server.createContext("/", new RequestHandler());
+            server.setExecutor(Executors.newCachedThreadPool());
+            server.start();
+            System.out.println("Server started. Use the following connection settings:");
+            System.out.println("   IP address: " + InetAddress.getLocalHost().getHostAddress());
+            System.out.println("   Port: " + port);
+        }
+        catch (IOException e) {
+            System.out.println("Server crahed!");
+            System.out.println(e.toString());
+        }
+    }
+
+	private void sendAction(String url, GameAction action) throws IOException {
+        System.out.println("Sending action to " + url);
+        try {
+            URLConnection connection = new URL(url + "/action?" + action.serialize())
+                    .openConnection();
+            connection.setRequestProperty("Accept-Charset", "UTF-8");
+
+            InputStream response = connection.getInputStream();
+            response.close();
+        }
+        catch (Exception e) {
+            System.out.println("Unable to send action: " + e);
+            e.printStackTrace();
+            throw e;
+        }
+	}
+
+    private void processAction(HttpExchange exchange) throws IOException {
+        try {
+            String content = exchange.getRequestURI().getQuery();
+            GameAction g = GameAction.deserialize(content, game);
+            if (g != null && g.apply()) {
+                for (String clientUrl : clients.values()) {
+                    sendAction(clientUrl, g);
+                }
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Unable to process action: " + e);
+            e.printStackTrace();
+        }
+    }
+
+    private void sendXML(OutputStream fileStream) throws IOException {
+        try {
+            byte[] mybytearray = readFile(gameFilename);
+            System.out.println("Sending " + gameFilename + "(" + mybytearray.length + " bytes)");
+
+            fileStream.write(mybytearray, 0, mybytearray.length);
+            fileStream.flush();
+            fileStream.close();
+        }
+        catch (Exception e) {
+            System.out.println("Exception: " + e);
+            throw e;
+        }
+    }
+
+    private byte[] readFile(String filename) throws IOException {
+        File myFile = new File(filename);
+        byte[] mybytearray = new byte[(int) myFile.length()];
+        FileInputStream fileInputStream = new FileInputStream(myFile);
+        BufferedInputStream bufInputStream = new BufferedInputStream(fileInputStream);
+
+        bufInputStream.read(mybytearray, 0, mybytearray.length);
+        bufInputStream.close();
+        return mybytearray;
     }
 }

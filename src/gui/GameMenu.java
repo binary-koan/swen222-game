@@ -1,6 +1,6 @@
 package gui;
 
-import control.NetworkActionHandler;
+import control.ClientActionHandler;
 import game.Direction;
 import game.Game;
 import game.Player;
@@ -12,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.swing.BoxLayout;
@@ -24,9 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.WindowConstants;
-import javax.swing.plaf.synth.SynthLookAndFeel;
 
 /**
  * Displays a Game type menu to get input from user for Game name and player name
@@ -177,11 +174,11 @@ public class GameMenu {
 
 		private void startNetworkGame(String serverUrl, String serverPort, CharacterView info, final ResourceManager loader) {
 			String spriteName = "characters/alien" + info.getCharacterImage() + ".png";
-			NetworkActionHandler actionHandler = new NetworkActionHandler(
+			ClientActionHandler actionHandler = new ClientActionHandler(
 					info.playerName(), spriteName, serverUrl, Integer.parseInt(serverPort)
 			);
 
-			actionHandler.addLoadListener(new NetworkActionHandler.LoadListener() {
+			actionHandler.addLoadListener(new ClientActionHandler.LoadListener() {
 				@Override
 				public void onGameLoaded(Game game, Player player) {
                     System.out.println("Game loaded");
