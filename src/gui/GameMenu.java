@@ -81,7 +81,7 @@ public class GameMenu {
 	private class GameWindow extends JPanel {
 		
 		public GameWindow(ResourceManager loader, CharacterView info) {
-			setLayout(new GridLayout(3, 2));
+			setLayout(new GridLayout(4, 1));
 			setPreferredSize(new Dimension(width/2, height));
 			JTextField port = new JTextField();
 			JTextField url = new JTextField();
