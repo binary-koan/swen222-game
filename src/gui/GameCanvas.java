@@ -10,6 +10,8 @@ import game.Room.ItemInstance;
 
 import gui.renderer.Door;
 import gui.renderer.RoomRenderer;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 import javax.swing.*;
 
@@ -91,7 +93,7 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
         }
     }
 
-    private ResourceManager loader;
+    private ResourceLoader loader;
 
     private CanvasActionHandler actionHandler;
     private double roomImageScale;
@@ -107,10 +109,10 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
     /**
      * Construct a new game canvas
      *
-     * @param loader a ResourceManager which will be used to locate and read images, sprites, etc.
+     * @param loader a ResourceLoader which will be used to locate and read images, sprites, etc.
      * @param gameActionHandler an object to use as the parent of the GUI action handler
      */
-    public GameCanvas(ResourceManager loader, ActionHandler gameActionHandler) {
+    public GameCanvas(ResourceLoader loader, ActionHandler gameActionHandler) {
         this.loader = loader;
         this.actionHandler = new CanvasActionHandler(gameActionHandler);
 
@@ -233,7 +235,7 @@ public class GameCanvas extends JPanel implements MouseListener, MouseMotionList
     /**
      * Repaint the canvas based on the current player
      */
-    private void update() {
+    public void update() {
         if (roomImage != null) {
             roomImage.updateRoom();
             repaint();

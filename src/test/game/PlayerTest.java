@@ -1,6 +1,9 @@
 package test.game;
 
-import game.*;
+import game.Direction;
+import game.Item;
+import game.Player;
+import game.Room;
 import org.junit.Test;
 import test.game.mocks.MockItem;
 import test.game.mocks.MockPlayer;
@@ -23,27 +26,8 @@ public class PlayerTest {
 
     @Test
     public void testMovement_invalidRoom() {
-        Room room = MockRoom.create(null);
+        Room room = MockRoom.create();
         Player player = MockPlayer.create(room);
-
-        assertFalse(player.move(Direction.NORTH));
-    }
-
-    @Test
-    public void testMovement_key() {
-        Room room1 = MockRoom.create(Key.Color.BLUE);
-        Room room2 = MockRoom.createWithConnection(Direction.NORTH, room1);
-        Player player = MockPlayer.create(room2);
-        player.pickUp(MockItem.createKey(Key.Color.BLUE));
-
-        assertTrue(player.move(Direction.NORTH));
-    }
-
-    @Test
-    public void testMovement_noKey() {
-        Room room1 = MockRoom.create(Key.Color.BLUE);
-        Room room2 = MockRoom.createWithConnection(Direction.NORTH, room1);
-        Player player = MockPlayer.create(room2);
 
         assertFalse(player.move(Direction.NORTH));
     }
@@ -55,26 +39,6 @@ public class PlayerTest {
 
         assertTrue(player.pickUp(item));
         assertEquals(item, player.getHeldItem());
-    }
-
-    @Test
-    public void testPickUpItem_removeFromRoom() {
-        Item item = MockItem.createKey();
-        Room room = MockRoom.createWithItem(item);
-        Player player = MockPlayer.create(room);
-
-        assertTrue(player.pickUp(item, room));
-        assertFalse(room.containsItem(item));
-    }
-
-    @Test
-    public void testPickUpItem_removeFromContainer() {
-        Item item = MockItem.createKey();
-        Container container = MockItem.createContainer(item);
-        Player player = MockPlayer.create();
-
-        assertTrue(player.pickUp(item, container));
-        assertFalse(container.containsItem(item));
     }
 
     @Test
@@ -90,11 +54,10 @@ public class PlayerTest {
 
     @Test
     public void testDropItem_valid() {
-        Player player = MockPlayer.createWithHeldItem(MockItem.createKey());
+        Player player = MockPlayer.createWithHeldItem();
         Item item = player.getHeldItem();
 
         assertEquals(item, player.dropItem());
-        assertTrue(player.getRoom().containsItem(item));
     }
 
     @Test
@@ -102,6 +65,8 @@ public class PlayerTest {
         Player player = MockPlayer.create();
 
         assertNull(player.dropItem());
-        assertFalse(player.getRoom().containsItem(null));
+        for (Room.ItemInstance instance : player.getRoom().getItems()) {
+            assertNotNull(instance.getItem());
+        }
     }
 }

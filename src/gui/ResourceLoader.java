@@ -1,9 +1,9 @@
 package gui;
 
 import game.Direction;
+import org.eclipse.jdt.annotation.NonNull;
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -19,19 +19,17 @@ import java.util.Map;
  *
  * @author Jono Mingard
  */
-public class ResourceManager implements LineListener {
+public class ResourceLoader {
     private String root;
     private Map<String, BufferedImage> imageCache = new HashMap<>();
     private BufferedImage notFound = new BufferedImage(32, 32, BufferedImage.TYPE_4BYTE_ABGR);
 
-    private Clip musicPlayer;
-
     /**
-     * Create a new ResourceManager which will load all files relative to the given root directory
+     * Create a new ResourceLoader which will load all files relative to the given root directory
      *
      * @param root directory to load resources from
      */
-    public ResourceManager(String root) {
+    public ResourceLoader(String root) {
         this.root = root;
 
         Graphics2D graphics = notFound.createGraphics();
@@ -91,63 +89,6 @@ public class ResourceManager implements LineListener {
                 default:
                     return image.getSubimage(tileSize * 3, 0, tileSize, image.getHeight());
             }
-        }
-    }
-
-    /**
-     * Stop any existing music and start looping the given track continuously
-     *
-     * @param source audio file path, relative to the resource root
-     */
-    public void setMusic(String source) {
-        if (musicPlayer != null) {
-            musicPlayer.stop();
-            musicPlayer.close();
-        }
-
-        try {
-            musicPlayer = getAudioClip(source);
-            musicPlayer.loop(Clip.LOOP_CONTINUOUSLY);
-        }
-        catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Unable to play music: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Play a one-off sound effect over the current music
-     *
-     * @param source audio file path, relative to the resource root
-     */
-    public void playSoundEffect(String source) {
-        try {
-            Clip effect = getAudioClip(source);
-            effect.addLineListener(this);
-            effect.start();
-        }
-        catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Unable to play sound effect: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Create and return an audio clip corresponding to the given file
-     */
-    private Clip getAudioClip(String source) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        File audioFile = new File(root + "/" + source);
-        AudioInputStream input = AudioSystem.getAudioInputStream(audioFile);
-        DataLine.Info info = new DataLine.Info(Clip.class, input.getFormat());
-
-        Clip player = (Clip) AudioSystem.getLine(info);
-        player.open(input);
-        return player;
-    }
-
-    @Override
-    public void update(LineEvent event) {
-        // Ensure sound effect files are closed when the effect finishes
-        if (event.getType() == LineEvent.Type.STOP) {
-            event.getLine().close();
         }
     }
 }

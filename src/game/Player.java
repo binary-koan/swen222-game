@@ -212,16 +212,4 @@ public class Player implements Drawable, Serializable {
             listener.onStateChanged();
         }
     }
-
-    public boolean pickUp(Item item, Container container) {
-        return false; //TODO
-    }
-
-    public boolean pickUp(Item item, Room room) {
-        return false; //TODO
-    }
-
-    public boolean isInGame() {
-        return false; //TODO probably just return room == null or something ...
-    }
 }

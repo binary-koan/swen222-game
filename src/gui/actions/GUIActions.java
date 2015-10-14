@@ -5,7 +5,6 @@ import game.Drawable;
 import game.Player;
 import game.Room;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,7 +51,7 @@ public class GUIActions {
         public ShowMenu(Player player, List<Action> actions, Drawable target) {
             super(player, "Other ...");
 
-            this.actions = new ArrayList<>(actions);
+            this.actions = actions;
             this.target = target;
         }
     }

@@ -26,14 +26,15 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 
 	private Game game;
     private Player player;
-	private ResourceManager loader;
-	private GameCanvas canvas;
+	private ActionHandler actionHandler;
+	private ResourceLoader loader;
+	public GameCanvas canvas;
 
-	public ApplicationWindow(Game game, Player player, ActionHandler actionHandler) {
+	public ApplicationWindow(Game game, Player player) {//, ActionHandler actionHandler
 		super("Game");
 		this.game = game;
         this.player = player;
-        this.loader = new ResourceManager("resources");
+        this.loader = new ResourceLoader("resources");
         this.canvas = new GameCanvas(loader, actionHandler);
         canvas.setup(player, game);
 
@@ -139,10 +140,10 @@ public class ApplicationWindow extends JFrame implements KeyListener {
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
-                player.turn(player.getFacingDirection().next());
+                player.turn(player.getFacingDirection().previous());
                 break;
             case KeyEvent.VK_RIGHT:
-                player.turn(player.getFacingDirection().previous());
+                player.turn(player.getFacingDirection().next());
         }
     }
 
@@ -154,16 +155,16 @@ public class ApplicationWindow extends JFrame implements KeyListener {
     public void keyReleased(KeyEvent e) {
     }
 
-	public static void main(String[] args) {
+	public void run() {
 
-		final Game game = new Game("resources/mainGame.xml", "resources/continueGame.xml");
-		final Player player2 = new Player("Player 2", "characters/alien2.png", game.getRoom("rx1y2"));
-    	player2.turn(Direction.NORTH);
-        game.addPlayer(player2);
+		//final Game game = new Game("resources/mainGame.xml", "resources/continueGame.xml");
+		//final Player player2 = new Player("Player 2", "characters/alien2.png", game.getRoom("rx1y2"));
+    	//player2.turn(Direction.NORTH);
+        //game.addPlayer(player2);
 
-        final Player player = new Player("Player 1", "characters/alien1.png", game.getRoom("rx1y2"));
-        player.turn(Direction.NORTH);
-        game.addPlayer(player);
+        //final Player player = new Player("Player 1", "characters/alien1.png", game.getRoom("rx1y2"));
+        //player.turn(Direction.NORTH);
+        //game.addPlayer(player);
 //        final Player player = game.getPlayer("Player 1");
 //    	final Player player3 = new Player("Player 3", "characters/alien2.png", game.getRoom("rx2y3"));
 //    	player3.turn(Direction.NORTH);
@@ -180,7 +181,7 @@ public class ApplicationWindow extends JFrame implements KeyListener {
 
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                ApplicationWindow aw = new ApplicationWindow(game, player, new SinglePlayerClient());
+                ApplicationWindow aw = new ApplicationWindow(game, player);//, new SinglePlayerClient()
                 aw.pack();
                 aw.setVisible(true);
             }

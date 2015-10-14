@@ -2,6 +2,7 @@ package storage;
 //Author: Scott Holdaway
 
 import game.Container;
+import gui.renderer.VisibleDoor;
 import game.Furniture;
 import game.Game;
 import game.Item;
@@ -97,13 +98,13 @@ public class GameLoader {
 			currentItem = new Container(id, name, description, spriteName);
 			return currentItem;
 		case "class game.Key":
-			currentItem = new Key(id, name, description, Key.Color.RED); //TODO
+			currentItem = new Key(id, name, description, spriteName);
 			return currentItem;
 		case "class game.Furniture":
 			currentItem = new Furniture(id, name, description, spriteName);
 			return currentItem;
 		case "class game.Monster":
-			currentItem = new Monster(id, name, description, spriteName, null); //TODO
+			currentItem = new Monster(id, name, description, spriteName);
 			return currentItem;
 		case "class game.Weapon":
 			currentItem = new Weapon(id, name, description, spriteName);
@@ -137,8 +138,7 @@ public class GameLoader {
 	 * @return A new room.
 	 */
 	private Room constructRoomInitial(Element e){
-		//TODO colour
-		Room currentRoom = new Room(e.getChildText("id"), e.getChildText("name"), null);
+		Room currentRoom = new Room(e.getChildText("id"), e.getChildText("name"));
 		return currentRoom;
 	}
 

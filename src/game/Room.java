@@ -3,22 +3,29 @@ package game;
 import game.Drawable.Point3D;
 import storage.Serializable;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 public class Room implements Serializable{
     public static int ROOM_SIZE = 320;
     public static int CEILING_HEIGHT = 192;
 
 	public class ItemInstance implements Drawable{
+        private Item item;
+        private Direction facingDirection;
+        private Point3D position;
 
-		private Item item;
-		private Direction facingDirection;
-		private Point3D position;
         public ItemInstance(Item item, Direction facingDirection, Point3D position) {
             this.item = item;
             this.facingDirection = facingDirection;
@@ -48,23 +55,19 @@ public class Room implements Serializable{
         public Item getItem() {
         	return item;
         }
-
-	}
-    private String id;
-	private String name;
-	private Key.Color color;
-	private List<ItemInstance> items = new ArrayList<ItemInstance>();
-	private List<Player> players = new ArrayList<Player>();
-	private Map<Direction, Room> roomConnections = new HashMap<Direction, Room>();
-	private Map<Direction, Boolean> wallConnections = new HashMap<Direction, Boolean>();
-
-    public Room(String id, String name, Key.Color color) {
-    	this.id = id;
-    	this.name = name;
-		this.color = color;
     }
 
-	// Property access
+    private String id;
+	private String name;
+    private List<ItemInstance> items = new ArrayList<ItemInstance>();
+    private List<Player> players = new ArrayList<Player>();
+    private Map<Direction, Room> roomConnections = new HashMap<Direction, Room>();
+    private Map<Direction, Boolean> wallConnections = new HashMap<Direction, Boolean>();
+
+    public Room(String id, String name) {
+    	this.id = id;
+    	this.name = name;
+    }
 
     public String getID(){
     	return id;
@@ -91,10 +94,6 @@ public class Room implements Serializable{
     	return name;
     }
 
-	public Key.Color getColor() {
-		return color;
-	}
-
     public List<Player> getPlayers() {
         return players;
     }
@@ -113,22 +112,6 @@ public class Room implements Serializable{
 				50 + (int)(Math.random() * (Room.ROOM_SIZE - 100))
 		);
 		items.add(new ItemInstance(item, Direction.random(), position));
-	}
-
-	// Logic
-
-	public boolean containsItem(Item item) {
-		return false; //TODO
-	}
-
-	public boolean allowsEntry(Player player) {
-		if (color == null) {
-			return true;
-		}
-		else {
-			Item item = player.getHeldItem();
-			return item instanceof Key && ((Key)item).getColor() == color;
-		}
 	}
 
 	/**

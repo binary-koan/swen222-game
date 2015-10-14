@@ -4,9 +4,8 @@ import org.jdom2.Element;
 
 public class Monster extends Item{
 
-	public Monster(String id, String name, String description, String spriteName, Weapon weapon) {
+	public Monster(String id, String name, String description, String spriteName) {
 		super(id, name, description, spriteName);
-		//TODO something with weapon
 	}
 
 	public void attack(){
@@ -23,7 +22,4 @@ public class Monster extends Item{
 		super.loadXML(game, objectElement);
 	}
 
-	public boolean fight(Player player) {
-		return false; //TODO
-	}
 }

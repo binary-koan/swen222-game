@@ -8,7 +8,7 @@ public class MockPlayer {
     private static int playerCount = 0;
 
     public static Player create() {
-        return create(MockRoom.create(null));
+        return create(MockRoom.create());
     }
 
     public static Player create(Room room) {
@@ -16,8 +16,9 @@ public class MockPlayer {
         return new Player("Player " + playerCount, "", room);
     }
 
-    public static Player createWithHeldItem(Item item) {
+    public static Player createWithHeldItem() {
         Player player = create();
+        Item item = MockItem.createKey();
         player.pickUp(item);
         return player;
     }

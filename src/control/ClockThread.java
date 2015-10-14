@@ -1,5 +1,7 @@
 package control;
 
+import game.Game;
+
 /**
  * The Clock Thread is responsible for producing a consistent "pulse" which is
  * used to showObject the game state, and refresh the display. Setting the pulse
@@ -16,7 +18,7 @@ package control;
 public class ClockThread extends Thread {
 	private final int delay; // delay between pulses in us
 	
-	public ClockThread(int delay) {
+	public ClockThread(int delay, Game game) {
 		this.delay = delay;
 	}
 	
