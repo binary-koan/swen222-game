@@ -16,6 +16,7 @@ public class PlayerTest {
 
         assertTrue(player.move(Direction.NORTH));
         assertEquals(room.getConnection(Direction.NORTH), player.getRoom());
+        assertEquals(StateChangeListener.Type.MOVE, MockPlayer.getLastEventType(player));
 
         assertTrue(player.move(Direction.SOUTH));
         assertEquals(room, player.getRoom());
@@ -27,6 +28,7 @@ public class PlayerTest {
         Player player = MockPlayer.create(room);
 
         assertFalse(player.move(Direction.NORTH));
+        assertNull(MockPlayer.getLastEventType(player));
     }
 
     @Test
@@ -37,6 +39,7 @@ public class PlayerTest {
         player.pickUp(MockItem.createKey(Key.Color.BLUE), null);
 
         assertTrue(player.move(Direction.NORTH));
+        assertEquals(StateChangeListener.Type.MOVE, MockPlayer.getLastEventType(player));
     }
 
     @Test
@@ -46,6 +49,7 @@ public class PlayerTest {
         Player player = MockPlayer.create(room2);
 
         assertFalse(player.move(Direction.NORTH));
+        assertNull(MockPlayer.getLastEventType(player));
     }
 
     @Test
@@ -55,6 +59,7 @@ public class PlayerTest {
 
         assertTrue(player.pickUp(item, null));
         assertEquals(item, player.getHeldItem());
+        assertEquals(StateChangeListener.Type.PICK_UP, MockPlayer.getLastEventType(player));
     }
 
     @Test
@@ -95,6 +100,7 @@ public class PlayerTest {
 
         assertEquals(item, player.dropItem());
         assertTrue(player.getRoom().containsItem(item));
+        assertEquals(StateChangeListener.Type.DROP, MockPlayer.getLastEventType(player));
     }
 
     @Test
@@ -103,5 +109,6 @@ public class PlayerTest {
 
         assertNull(player.dropItem());
         assertFalse(player.getRoom().containsItem(null));
+        assertNull(MockPlayer.getLastEventType(player));
     }
 }
