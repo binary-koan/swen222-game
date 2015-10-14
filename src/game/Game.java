@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import storage.GameLoader;
+import storage.GameData;
 
 public class Game implements StateChangeListener {
 	private List<StateChangeListener> stateChangeListeners = new ArrayList<>();
@@ -13,18 +13,18 @@ public class Game implements StateChangeListener {
 	private Map<String, Item> items;
 	private Map<String, Room> rooms;
 	private Map<String, Player> players = new HashMap<>();
-    private GameLoader loader;
+    private GameData data;
 
     public Game(String filenameBase, String filenameGame){
-    	this.loader = new GameLoader(this, filenameBase);
-    	this.loader.setXMLFilename(filenameGame);
+    	this.data = new GameData(this, filenameBase);
+    	this.data.setXMLFilename(filenameGame);
     	//Now we are shifting to read and write from a copied file,
     	//so the base file is not overwritten.
-    	this.loader.saveWholeGame();
+    	this.data.saveWholeGame();
     }
 
-	public GameLoader getData() {
-		return loader;
+	public GameData getData() {
+		return data;
 	}
 
 	public Map<String, Item> getItems() {
@@ -57,6 +57,10 @@ public class Game implements StateChangeListener {
 
 	public Player getPlayer(String playerName) {
 		return players.get(playerName);
+	}
+
+	public void saveGame(){
+		data.saveWholeGame();
 	}
 
 	public void addPlayer(Player player) {

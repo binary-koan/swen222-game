@@ -723,7 +723,7 @@
       <name>Torch</name>
       <description>An E-class 2187 pattern-A torch (second generation).</description>
       <spriteName>objects/torch.png</spriteName>
-      <subClass>class game.Holdable</subClass>
+      <subClass>class game.Furniture</subClass>
     </item>
 
 
@@ -732,7 +732,7 @@
       <name>Torch</name>
       <description>An E-class 2187 pattern-A torch (second generation).</description>
       <spriteName>objects/torch.png</spriteName>
-      <subClass>class game.Holdable</subClass>
+      <subClass>class game.Furniture</subClass>
     </item>
 
 
@@ -946,7 +946,7 @@
       <name>Torch</name>
       <description>An E-class 2187 pattern-A torch (second generation).</description>
       <spriteName>objects/torch.png</spriteName>
-      <subClass>class game.Holdable</subClass>
+      <subClass>class game.Furniture</subClass>
     </item>
 
 
@@ -955,7 +955,7 @@
       <name>Torch</name>
       <description>An E-class 2187 pattern-A torch (second generation).</description>
       <spriteName>objects/torch.png</spriteName>
-      <subClass>class game.Holdable</subClass>
+      <subClass>class game.Furniture</subClass>
     </item>
 
 
@@ -1024,7 +1024,7 @@
       <id>fire0</id>
       <name>Fire</name>
       <description>In all civilized alien cultures you have encountered, fire on an engine is considered bad.</description>
-      <spriteName>decoration/red-light.png</spriteName>
+      <spriteName>decoration/fire.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
 
@@ -1032,7 +1032,7 @@
       <id>fire1</id>
       <name>Fire</name>
       <description>In all civilized alien cultures you have encountered, fire on an engine is considered bad.</description>
-      <spriteName>decoration/red-light.png</spriteName>
+      <spriteName>decoration/fire.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
 
@@ -1040,7 +1040,7 @@
       <id>fire2</id>
       <name>Fire</name>
       <description>In all civilized alien cultures you have encountered, fire on an engine is considered bad.</description>
-      <spriteName>decoration/red-light.png</spriteName>
+      <spriteName>decoration/fire.png</spriteName>
       <subClass>class game.Furniture</subClass>
     </item>
 

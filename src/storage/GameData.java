@@ -16,7 +16,7 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
-public class GameLoader {
+public class GameData {
 	private String XMLFilename;
 	private Document gameDoc;
 	private Game game;
@@ -27,7 +27,7 @@ public class GameLoader {
 	 * @param game The game whose collectons it will populate.
 	 * @param filename The xml file to be read
 	 */
-	public GameLoader(Game game, String filename){
+	public GameData(Game game, String filename){
 		this.game = game;
 		this.XMLFilename = filename;
 		SAXBuilder builder = new SAXBuilder();
