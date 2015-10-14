@@ -184,6 +184,13 @@ public class GameActions {
 			}
 			return false;
 		}
+
+		@Override
+		public String serialize() {
+			Map<String, String> values = new HashMap<>();
+			values.put("target", target.getID());
+			return super.serialize(values);
+		}
     	
     }
 
