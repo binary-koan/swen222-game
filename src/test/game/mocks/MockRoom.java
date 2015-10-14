@@ -16,15 +16,15 @@ public class MockRoom {
     public static Room createWithConnection(Direction connectionDirection) {
         Room room1 = create(null);
         Room room2 = create(null);
-        room1.setConnection(connectionDirection, room2, true);
-        room2.setConnection(connectionDirection.opposite(), room1, true);
+        room1.setConnection(connectionDirection, room2);
+        room2.setConnection(connectionDirection.opposite(), room1);
         return room1;
     }
 
     public static Room createWithConnection(Direction connectionDirection, Room room2) {
         Room room1 = create(null);
-        room1.setConnection(connectionDirection, room2, true);
-        room2.setConnection(connectionDirection.opposite(), room1, true);
+        room1.setConnection(connectionDirection, room2);
+        room2.setConnection(connectionDirection.opposite(), room1);
         return room1;
     }
 

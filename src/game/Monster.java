@@ -21,6 +21,12 @@ public class Monster extends Item {
 		return soundEffect;
 	}
 
+	/**
+	 * Called when the player clicks on the monster. If the player has the correct weapon, the
+	 * state change listener will broadcast the kill monster event. If not, the player is killed.
+	 * @param player The player clicking on the monster.
+	 * @return Whether the attack was successful or not.
+	 */
 	public boolean fight(Player player) {
 		// Sanity check to make sure the player and monster are in the same room
 		Room.ItemInstance instance = player.getRoom().getMonster();

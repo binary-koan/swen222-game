@@ -89,9 +89,9 @@ public class Room implements Serializable{
         return roomConnections.get(direction);
     }
 
-	public void setConnection(Direction direction, Room other, boolean isWall) {
+	public void setConnection(Direction direction, Room other) {
 		roomConnections.put(direction, other);
-		wallConnections.put(direction, isWall);
+		//wallConnections.put(direction, isWall);
 	}
 
 	public List<Player> getPlayers() {

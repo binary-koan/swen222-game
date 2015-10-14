@@ -70,6 +70,10 @@ public class Game implements StateChangeListener {
 		data.saveWholeGame();
 	}
 
+	/**
+	 * Adds a player to the game.
+	 * @param player The player to be added.
+	 */
 	public void addPlayer(Player player) {
 		this.players.put(player.getName(), player);
 

@@ -1,0 +1,926 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game>
+  <gameItems>
+    <item>
+      <id>controlPanel</id>
+      <name>Control Panel</name>
+      <description>The main control panel of the ship.</description>
+      <spriteName>objects/control-panel.png</spriteName>
+      <subClass>class game.ControlPanel</subClass>
+    </item>
+    <item>
+      <id>plasmouth</id>
+      <name>Plasmouth</name>
+      <description>The cursed Plasmouth!</description>
+      <spriteName>enemies/plasmouth.png</spriteName>
+      <subClass>class game.Monster</subClass>
+      <deadlyWeapon>plasmaCannon</deadlyWeapon>
+      <soundEffect>audio/monster-plasmouth.wav</soundEffect>
+      <killMessage>Burning plasma melts your brain!</killMessage>
+    </item>
+    <item>
+      <id>lightSwitchrx0y3</id>
+      <name>Light</name>
+      <description>A light for the engine room.</description>
+      <spriteName>objects/light-switch-on.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>lightSwitchrx0y2</id>
+      <name>Port Light</name>
+      <description>Port illumination light.</description>
+      <spriteName>objects/light-switch-off.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>lightSwitchrx0y1</id>
+      <name>Light</name>
+      <description>A light for the storage room.</description>
+      <spriteName>objects/light-switch-on.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>redKey</id>
+      <name>Key</name>
+      <description>A red key.</description>
+      <spriteName>objects/key-red.png</spriteName>
+      <subClass>class game.Key</subClass>
+      <color>RED</color>
+    </item>
+    <item>
+      <id>waterCooler</id>
+      <name>Water cooler</name>
+      <description>Your species has evolved to the point where this water cooler will sustain them for a four year space journey.</description>
+      <spriteName>objects/water-cooler.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>rogueAI</id>
+      <name>JCN-9000</name>
+      <description>Stop the ship! "I'm sorry Davgorlzul, I'm afraid I can't do that."</description>
+      <spriteName>enemies/rogue-ai.png</spriteName>
+      <subClass>class game.Monster</subClass>
+      <deadlyWeapon>empBomb</deadlyWeapon>
+      <soundEffect>audio/monster-rogue-ai.wav</soundEffect>
+      <killMessage>JCN drains the air from the ship, suffocating you</killMessage>
+    </item>
+    <item>
+      <id>engineFunctional</id>
+      <name>Engine</name>
+      <description>Port engine of the spacecraft. It's working fine.</description>
+      <spriteName>objects/engine-working.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>empBomb</id>
+      <name>EMP Bomb</name>
+      <description>A dangerous looking electronic device.</description>
+      <spriteName>objects/emp-bomb.png</spriteName>
+      <subClass>class game.Weapon</subClass>
+    </item>
+    <item>
+      <id>snailmouse</id>
+      <name>Snailmouse</name>
+      <description>Oh no! What weapon could work against this ungodly fusion of- hang on...</description>
+      <spriteName>enemies/snailmouse.png</spriteName>
+      <subClass>class game.Monster</subClass>
+      <deadlyWeapon>fusionPistol</deadlyWeapon>
+      <soundEffect>audio/monster-snailmouse.wav</soundEffect>
+      <killMessage>This tiny thing managed to kill you? Really?</killMessage>
+    </item>
+    <item>
+      <id>containerx2y3</id>
+      <name>Container</name>
+      <description>A green container. You sneer at the ease with which you can force the lock open.</description>
+      <spriteName>objects/chest-green.png</spriteName>
+      <subClass>class game.Container</subClass>
+      <containerItems>
+        <item>greenKey</item>
+      </containerItems>
+    </item>
+    <item>
+      <id>greenLightrx2y2</id>
+      <name>Starboard light</name>
+      <description>Starboard illumination light.</description>
+      <spriteName>decoration/green-light.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>lavaSnake</id>
+      <name>Lava Snake</name>
+      <description>I have had it with these goddamn monsters on this goddamn spaceship!</description>
+      <spriteName>enemies/lava-snake.png</spriteName>
+      <subClass>class game.Monster</subClass>
+      <deadlyWeapon>fullBucketrx2y4</deadlyWeapon>
+      <soundEffect>audio/monster-lava-snake.wav</soundEffect>
+      <killMessage>A painful, fiery death.</killMessage>
+    </item>
+    <item>
+      <id>craterx0y10</id>
+      <name>Crate</name>
+      <description>A simple storage crate. It looks empty, and you don't have time to investigate further.</description>
+      <spriteName>objects/chest-empty.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>craterx0y11</id>
+      <name>Crate</name>
+      <description>A simple storage crate. It looks empty, and you don't have time to investigate further.</description>
+      <spriteName>objects/chest-empty.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>table</id>
+      <name>Table</name>
+      <description>A large dining table. Looks like Zorophlag mahogany. Nice.</description>
+      <spriteName>objects/big-table.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>plasmaCannon</id>
+      <name>Plasma cannon</name>
+      <description>A high velocity plasma launcher!</description>
+      <spriteName>objects/plasma-cannon.png</spriteName>
+      <subClass>class game.Weapon</subClass>
+    </item>
+    <item>
+      <id>craterx0y12</id>
+      <name>Crate</name>
+      <description>A simple storage crate. It looks empty, and you don't have time to investigate further.</description>
+      <spriteName>objects/chest-empty.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>yellowKey</id>
+      <name>Key</name>
+      <description>A yellow key.</description>
+      <spriteName>objects/key-yellow.png</spriteName>
+      <subClass>class game.Key</subClass>
+      <color>YELLOW</color>
+    </item>
+    <item>
+      <id>lightSwitchrx1y11</id>
+      <name>Light</name>
+      <description>A simple light.</description>
+      <spriteName>objects/light-switch-on.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>greenKey</id>
+      <name>Key</name>
+      <description>A green key.</description>
+      <spriteName>objects/key-green.png</spriteName>
+      <subClass>class game.Key</subClass>
+      <color>GREEN</color>
+    </item>
+    <item>
+      <id>blueKey</id>
+      <name>Key</name>
+      <description>A blue key.</description>
+      <spriteName>objects/key-blue.png</spriteName>
+      <subClass>class game.Key</subClass>
+      <color>BLUE</color>
+    </item>
+    <item>
+      <id>lightSwitchrx1y10</id>
+      <name>Light</name>
+      <description>A simple light.</description>
+      <spriteName>objects/light-switch-on.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>containerrx0y4</id>
+      <name>Container</name>
+      <description>A blue container. You sneer at the ease with which you can force the lock open.</description>
+      <spriteName>objects/chest-blue.png</spriteName>
+      <subClass>class game.Container</subClass>
+      <containerItems>
+        <item>fusionPistol</item>
+      </containerItems>
+    </item>
+    <item>
+      <id>containerrx2y2</id>
+      <name>Container</name>
+      <description>A reddish orangeish container. You sneer at the ease with which you can force the lock open.</description>
+      <spriteName>objects/chest-red.png</spriteName>
+      <subClass>class game.Container</subClass>
+      <containerItems>
+        <item>plasmaCannon</item>
+      </containerItems>
+    </item>
+    <item>
+      <id>redLightrx0y2</id>
+      <name>Port Light</name>
+      <description>Port illumination light.</description>
+      <spriteName>decoration/red-light.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>bucketrx1y3</id>
+      <name>Bucket</name>
+      <description>A standard spaceship bucket. Functionally useless.</description>
+      <spriteName>objects/bucket.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>fullBucketrx2y4</id>
+      <name>Bucket</name>
+      <description>A standard spaceship bucket. But this is full of water!</description>
+      <spriteName>objects/bucket-full.png</spriteName>
+      <subClass>class game.Weapon</subClass>
+    </item>
+    <item>
+      <id>bucketrx0y2</id>
+      <name>Bucket</name>
+      <description>A standard spaceship bucket. Functionally useless.</description>
+      <spriteName>objects/bucket.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>containerrx0y3</id>
+      <name>Container</name>
+      <description>A yellow container. You sneer at the ease with which you can force the lock open.</description>
+      <spriteName>objects/chest-yellow.png</spriteName>
+      <subClass>class game.Container</subClass>
+      <containerItems>
+        <item>torch0</item>
+        <item>torch1</item>
+      </containerItems>
+    </item>
+    <item>
+      <id>engineDamaged</id>
+      <name>Engine</name>
+      <description>Port engine of the spacecraft. It's on fire!</description>
+      <spriteName>objects/engine-working.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>fire2</id>
+      <name>Fire</name>
+      <description>In all civilized alien cultures you have encountered, fire on an engine is considered bad.</description>
+      <spriteName>decoration/fire.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>fire0</id>
+      <name>Fire</name>
+      <description>In all civilized alien cultures you have encountered, fire on an engine is considered bad.</description>
+      <spriteName>decoration/fire.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>fusionPistol</id>
+      <name>Fusion Pistol</name>
+      <description>A standard issue alien sidearm.</description>
+      <spriteName>objects/fusion-pistol.png</spriteName>
+      <subClass>class game.Weapon</subClass>
+    </item>
+    <item>
+      <id>fire1</id>
+      <name>Fire</name>
+      <description>In all civilized alien cultures you have encountered, fire on an engine is considered bad.</description>
+      <spriteName>decoration/fire.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>torch1</id>
+      <name>Torch</name>
+      <description>An E-class 2187 pattern-A torch (second generation).</description>
+      <spriteName>objects/torch.png</spriteName>
+      <subClass>class game.Holdable</subClass>
+    </item>
+    <item>
+      <id>torch0</id>
+      <name>Torch</name>
+      <description>An E-class 2187 pattern-A torch (second generation).</description>
+      <spriteName>objects/torch.png</spriteName>
+      <subClass>class game.Holdable</subClass>
+    </item>
+    <item>
+      <id>windowrx1y3</id>
+      <name>Window</name>
+      <description>The aft window.</description>
+      <spriteName>objects/window.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>windowrx2y1</id>
+      <name>Window</name>
+      <description>Oh lonely stars...</description>
+      <spriteName>objects/window.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>lightSwitchrx2y1</id>
+      <name>Light</name>
+      <description>A light for the living room.</description>
+      <spriteName>objects/light-switch-on.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>lightSwitchrx2y2</id>
+      <name>Starboard light</name>
+      <description>Starboard illumination light.</description>
+      <spriteName>objects/light-switch-off.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>lightSwitchrx2y3</id>
+      <name>Light</name>
+      <description>A light for the engine room.</description>
+      <spriteName>objects/light-switch-on.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>windowrx0y1</id>
+      <name>Window</name>
+      <description>You see your home planet getting closer alarmingly quickly.</description>
+      <spriteName>objects/window.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+    <item>
+      <id>windowrx1y0</id>
+      <name>Window</name>
+      <description>The bridge window.</description>
+      <spriteName>objects/window.png</spriteName>
+      <subClass>class game.Furniture</subClass>
+    </item>
+  </gameItems>
+  <gameRooms>
+    <room>
+      <id>rx0y4</id>
+      <name>Engine Room - Port - Aft</name>
+      <color>null</color>
+      <roomItems>
+        <itemInstance>
+          <item>engineFunctional</item>
+          <facingDirection>NORTH</facingDirection>
+          <point>
+            <x>x160</x>
+            <y>y0</y>
+            <z>z39</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>containerrx0y4</item>
+          <facingDirection>WEST</facingDirection>
+          <point>
+            <x>x39</x>
+            <y>y0</y>
+            <z>z160</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>empBomb</item>
+          <facingDirection>NORTH</facingDirection>
+          <point>
+            <x>x210</x>
+            <y>y0</y>
+            <z>z90</z>
+          </point>
+        </itemInstance>
+      </roomItems>
+      <roomPlayers />
+      <roomConnections>
+        <entry>NORTH-rx0y3</entry>
+      </roomConnections>
+      <wallConnections>
+        <entry>WEST-true</entry>
+        <entry>SOUTH-true</entry>
+        <entry>NORTH-false</entry>
+        <entry>EAST-true</entry>
+      </wallConnections>
+    </room>
+    <room>
+      <id>rx1y3</id>
+      <name>Corridor - Aft</name>
+      <color>null</color>
+      <roomItems>
+        <itemInstance>
+          <item>bucketrx1y3</item>
+          <facingDirection>NORTH</facingDirection>
+          <point>
+            <x>x160</x>
+            <y>y0</y>
+            <z>z39</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>windowrx1y3</item>
+          <facingDirection>NORTH</facingDirection>
+          <point>
+            <x>x160</x>
+            <y>y96</y>
+            <z>z0</z>
+          </point>
+        </itemInstance>
+      </roomItems>
+      <roomPlayers />
+      <roomConnections>
+        <entry>WEST-rx0y3</entry>
+        <entry>NORTH-rx1y2</entry>
+        <entry>EAST-rx2y3</entry>
+      </roomConnections>
+      <wallConnections>
+        <entry>WEST-true</entry>
+        <entry>SOUTH-true</entry>
+        <entry>NORTH-false</entry>
+        <entry>EAST-true</entry>
+      </wallConnections>
+    </room>
+    <room>
+      <id>rx2y2</id>
+      <name>Corridor - Starboard</name>
+      <color>null</color>
+      <roomItems>
+        <itemInstance>
+          <item>containerrx2y2</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x160</x>
+            <y>y0</y>
+            <z>z39</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>lightSwitchrx2y2</item>
+          <facingDirection>WEST</facingDirection>
+          <point>
+            <x>x320</x>
+            <y>y92</y>
+            <z>z160</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>greenLightrx2y2</item>
+          <facingDirection>WEST</facingDirection>
+          <point>
+            <x>x320</x>
+            <y>y92</y>
+            <z>z160</z>
+          </point>
+        </itemInstance>
+      </roomItems>
+      <roomPlayers />
+      <roomConnections>
+        <entry>WEST-rx1y2</entry>
+        <entry>NORTH-rx2y1</entry>
+      </roomConnections>
+      <wallConnections>
+        <entry>WEST-false</entry>
+        <entry>SOUTH-true</entry>
+        <entry>NORTH-true</entry>
+        <entry>EAST-true</entry>
+      </wallConnections>
+    </room>
+    <room>
+      <id>rx0y3</id>
+      <name>Engine Room - Port - Mid</name>
+      <color>null</color>
+      <roomItems>
+        <itemInstance>
+          <item>containerrx0y3</item>
+          <facingDirection>NORTH</facingDirection>
+          <point>
+            <x>x281</x>
+            <y>y0</y>
+            <z>z281</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>lightSwitchrx0y3</item>
+          <facingDirection>EAST</facingDirection>
+          <point>
+            <x>x0</x>
+            <y>y80</y>
+            <z>z160</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>snailmouse</item>
+          <facingDirection>EAST</facingDirection>
+          <point>
+            <x>x160</x>
+            <y>y0</y>
+            <z>z160</z>
+          </point>
+        </itemInstance>
+      </roomItems>
+      <roomPlayers />
+      <roomConnections>
+        <entry>SOUTH-rx0y4</entry>
+        <entry>EAST-rx1y3</entry>
+      </roomConnections>
+      <wallConnections>
+        <entry>WEST-true</entry>
+        <entry>SOUTH-false</entry>
+        <entry>NORTH-true</entry>
+        <entry>EAST-true</entry>
+      </wallConnections>
+    </room>
+    <room>
+      <id>rx1y2</id>
+      <name>Corridor - Mid</name>
+      <color>null</color>
+      <roomItems />
+      <roomPlayers />
+      <roomConnections>
+        <entry>WEST-rx0y2</entry>
+        <entry>SOUTH-rx1y3</entry>
+        <entry>NORTH-rx1y1</entry>
+        <entry>EAST-rx2y2</entry>
+      </roomConnections>
+      <wallConnections>
+        <entry>WEST-false</entry>
+        <entry>SOUTH-false</entry>
+        <entry>NORTH-false</entry>
+        <entry>EAST-false</entry>
+      </wallConnections>
+    </room>
+    <room>
+      <id>rx2y1</id>
+      <name>Living Room</name>
+      <color>YELLOW</color>
+      <roomItems>
+        <itemInstance>
+          <item>windowrx2y1</item>
+          <facingDirection>WEST</facingDirection>
+          <point>
+            <x>x320</x>
+            <y>y92</y>
+            <z>z160</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>lightSwitchrx2y1</item>
+          <facingDirection>EAST</facingDirection>
+          <point>
+            <x>x0</x>
+            <y>y92</y>
+            <z>z160</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>table</item>
+          <facingDirection>NORTH</facingDirection>
+          <point>
+            <x>x160</x>
+            <y>y0</y>
+            <z>z160</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>waterCooler</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x160</x>
+            <y>y0</y>
+            <z>z281</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>yellowKey</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x142</x>
+            <y>y0</y>
+            <z>z218</z>
+          </point>
+        </itemInstance>
+      </roomItems>
+      <roomPlayers />
+      <roomConnections>
+        <entry>SOUTH-rx2y2</entry>
+      </roomConnections>
+      <wallConnections>
+        <entry>WEST-true</entry>
+        <entry>SOUTH-true</entry>
+        <entry>NORTH-true</entry>
+        <entry>EAST-true</entry>
+      </wallConnections>
+    </room>
+    <room>
+      <id>rx2y4</id>
+      <name>Engine Room - Starboard-aft</name>
+      <color>null</color>
+      <roomItems>
+        <itemInstance>
+          <item>engineDamaged</item>
+          <facingDirection>NORTH</facingDirection>
+          <point>
+            <x>x160</x>
+            <y>y0</y>
+            <z>z39</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>fire0</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x140</x>
+            <y>y30</y>
+            <z>z39</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>fire1</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x150</x>
+            <y>y30</y>
+            <z>z39</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>fire2</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x160</x>
+            <y>y30</y>
+            <z>z39</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>blueKey</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x62</x>
+            <y>y0</y>
+            <z>z124</z>
+          </point>
+        </itemInstance>
+      </roomItems>
+      <roomPlayers>
+        <name>Seeyiyay</name>
+      </roomPlayers>
+      <roomConnections>
+        <entry>NORTH-rx2y3</entry>
+      </roomConnections>
+      <wallConnections>
+        <entry>WEST-true</entry>
+        <entry>SOUTH-true</entry>
+        <entry>NORTH-false</entry>
+        <entry>EAST-true</entry>
+      </wallConnections>
+    </room>
+    <room>
+      <id>rx2y3</id>
+      <name>Engine Room - Starboard-mid</name>
+      <color>BLUE</color>
+      <roomItems>
+        <itemInstance>
+          <item>containerx2y3</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x39</x>
+            <y>y0</y>
+            <z>z281</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>lightSwitchrx2y3</item>
+          <facingDirection>WEST</facingDirection>
+          <point>
+            <x>x320</x>
+            <y>y96</y>
+            <z>z160</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>lavaSnake</item>
+          <facingDirection>WEST</facingDirection>
+          <point>
+            <x>x160</x>
+            <y>y0</y>
+            <z>z160</z>
+          </point>
+        </itemInstance>
+      </roomItems>
+      <roomPlayers />
+      <roomConnections>
+        <entry>WEST-rx1y3</entry>
+        <entry>SOUTH-rx2y4</entry>
+      </roomConnections>
+      <wallConnections>
+        <entry>WEST-true</entry>
+        <entry>SOUTH-false</entry>
+        <entry>NORTH-true</entry>
+        <entry>EAST-true</entry>
+      </wallConnections>
+    </room>
+    <room>
+      <id>rx0y2</id>
+      <name>Corridor - Port</name>
+      <color>null</color>
+      <roomItems>
+        <itemInstance>
+          <item>bucketrx0y2</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x39</x>
+            <y>y0</y>
+            <z>z39</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>lightSwitchrx0y2</item>
+          <facingDirection>EAST</facingDirection>
+          <point>
+            <x>x0</x>
+            <y>y96</y>
+            <z>z160</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>redLightrx0y2</item>
+          <facingDirection>WEST</facingDirection>
+          <point>
+            <x>x0</x>
+            <y>y96</y>
+            <z>z160</z>
+          </point>
+        </itemInstance>
+      </roomItems>
+      <roomPlayers />
+      <roomConnections>
+        <entry>EAST-rx1y2</entry>
+      </roomConnections>
+      <wallConnections>
+        <entry>WEST-true</entry>
+        <entry>SOUTH-true</entry>
+        <entry>NORTH-true</entry>
+        <entry>EAST-false</entry>
+      </wallConnections>
+    </room>
+    <room>
+      <id>rx1y1</id>
+      <name>Corridor - Fore</name>
+      <color>null</color>
+      <roomItems>
+        <itemInstance>
+          <item>lightSwitchrx1y10</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x80</x>
+            <y>y96</y>
+            <z>z320</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>lightSwitchrx1y11</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x240</x>
+            <y>y96</y>
+            <z>z320</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>plasmouth</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x160</x>
+            <y>y0</y>
+            <z>z160</z>
+          </point>
+        </itemInstance>
+      </roomItems>
+      <roomPlayers />
+      <roomConnections>
+        <entry>WEST-rx0y1</entry>
+        <entry>SOUTH-rx1y2</entry>
+        <entry>NORTH-rx1y0</entry>
+      </roomConnections>
+      <wallConnections>
+        <entry>WEST-true</entry>
+        <entry>SOUTH-false</entry>
+        <entry>NORTH-true</entry>
+        <entry>EAST-true</entry>
+      </wallConnections>
+    </room>
+    <room>
+      <id>rx0y1</id>
+      <name>Storage Room</name>
+      <color>RED</color>
+      <roomItems>
+        <itemInstance>
+          <item>craterx0y10</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x60</x>
+            <y>y0</y>
+            <z>z39</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>craterx0y11</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x180</x>
+            <y>y0</y>
+            <z>z39</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>craterx0y12</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x270</x>
+            <y>y0</y>
+            <z>z39</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>lightSwitchrx0y1</item>
+          <facingDirection>WEST</facingDirection>
+          <point>
+            <x>x320</x>
+            <y>y96</y>
+            <z>z160</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>windowrx0y1</item>
+          <facingDirection>EAST</facingDirection>
+          <point>
+            <x>x0</x>
+            <y>y96</y>
+            <z>z160</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>redKey</item>
+          <facingDirection>EAST</facingDirection>
+          <point>
+            <x>x266</x>
+            <y>y0</y>
+            <z>z220</z>
+          </point>
+        </itemInstance>
+      </roomItems>
+      <roomPlayers />
+      <roomConnections>
+        <entry>EAST-rx1y1</entry>
+      </roomConnections>
+      <wallConnections>
+        <entry>WEST-true</entry>
+        <entry>SOUTH-true</entry>
+        <entry>NORTH-true</entry>
+        <entry>EAST-true</entry>
+      </wallConnections>
+    </room>
+    <room>
+      <id>rx1y0</id>
+      <name>Bridge</name>
+      <color>GREEN</color>
+      <roomItems>
+        <itemInstance>
+          <item>controlPanel</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x160</x>
+            <y>y0</y>
+            <z>z281</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>rogueAI</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x160</x>
+            <y>y0</y>
+            <z>z160</z>
+          </point>
+        </itemInstance>
+        <itemInstance>
+          <item>windowrx1y0</item>
+          <facingDirection>SOUTH</facingDirection>
+          <point>
+            <x>x160</x>
+            <y>y96</y>
+            <z>z320</z>
+          </point>
+        </itemInstance>
+      </roomItems>
+      <roomPlayers />
+      <roomConnections>
+        <entry>SOUTH-rx1y1</entry>
+      </roomConnections>
+      <wallConnections>
+        <entry>WEST-true</entry>
+        <entry>SOUTH-true</entry>
+        <entry>NORTH-true</entry>
+        <entry>EAST-true</entry>
+      </wallConnections>
+    </room>
+  </gameRooms>
+  <gamePlayers>
+    <player>
+      <name>Seeyiyay</name>
+      <spriteName>characters/alien1.png</spriteName>
+      <room>rx2y4</room>
+      <facingDirection>SOUTH</facingDirection>
+      <heldItem>fullBucketrx2y4</heldItem>
+    </player>
+  </gamePlayers>
+</game>
